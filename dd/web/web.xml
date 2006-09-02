@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+
+<!--
+	Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3 professionell" (dpunkt).
+	Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+	Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
+	
+	Copyright (C) 2006
+	Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg und Holger Koschek
+	
+	This program is free software; you can redistribute it and/or
+	modify it under the terms of the GNU General Public License
+	as published by the Free Software Foundation; either version 2
+	of the License, or (at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+-->
+
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+
+	<servlet>
+		<servlet-name>DemoServlet</servlet-name>
+		<jsp-file>/DemoTape.jsp</jsp-file>
+	</servlet>
+	<servlet>
+		<servlet-name>BeanStatisticsServlet</servlet-name>
+		<jsp-file>/BeanStatistics.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DemoServlet</servlet-name>
+		<url-pattern>/demo</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>BeanStatisticsServlet</servlet-name>
+		<url-pattern>/statistics</url-pattern>
+	</servlet-mapping>
+</web-app>
