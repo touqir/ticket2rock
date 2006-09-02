@@ -1,0 +1,88 @@
+================================================================================
+ Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3 professionell" (dpunkt).
+ Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
+
+ Copyright (C) 2006
+ Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg und Holger Koschek
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+  
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+  
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+================================================================================
+
+Ticket2Rock lässt sich in Eclipse integrieren sowie mit Hilfe von Ant übersetzen
+und installieren. Es ist für die Nutzung mit dem JBoss 4.0 Application Server
+inklusive JBoss EJB3 Service optimiert. EJB 3.0 benötigt Java 5.0.
+
+---[ Bezugsquellen ]------------------------------------------------------------
+Ticket2Rock ist als Open Source-Projekt bei JavaForge verfügbar:
+  http://www.javaforge.com/proj/summary.do?proj_id=1150
+
+Subversion Repository:
+  http://svn.javaforge.com/svn/ticket2rock
+
+Subversion Repository Browser:
+  http://www.javaforge.com/proj/sources/sccBrowse.do?proj_id=1150
+
+Mehr Informationen zu Ticket2Rock und dem Buch "EJB 3 professionell":
+  http://www.ejb3buch.de
+
+---[ Testumgebung ]-------------------------------------------------------------
+Getestet wurde Ticket2Rock mit
+* Sun J2SE Development Kit 5.0 
+* JBoss 4.0.4 GA Patch 1
+* JBoss EJB 3.0 RC8 FD
+
+---[ JBoss-Konfiguration ]------------------------------------------------------
+Im JBoss muss eine Queue namens 'queue/ticket2rock' eingerichtet sein, um die
+Stornierung der Ticketbestellung mittels JMS-Nachricht durchführen zu können.
+Zum Einrichten der Queue geht man wie folgt vor:
+* JBoss JMX Management Console starten: http://localhost:8080/jmx-console/
+* In der Domäne 'jboss.mq' den Service 'DestinationManager' auswählen.
+* In der MBean-Operation 'void createQueue(p1)' (ACHTUNG: Nicht die gleich-
+  lautende Methode mit zwei Parametern verwenden) den Queue-Namen 'ticket2rock'
+  eintragen und 'Invoke' klicken.
+* Zum Agent View zurückkehren.
+* In der Domäne 'jboss.mq.destination' sollte es jetzt einen Eintrag
+  'name=ticket2rock,service=Queue' geben.
+
+---[ Eclipse ]------------------------------------------------------------------
+Das Modul enthält eine Eclipse-Projektdatei (.project).
+
+Ticket2Rock benötigt Java 5.0. Es muss sichergestellt sein, dass der Compiler
+Compliance Level ('Properties/Java Compiler/JDK Compliance) auf '5.0' gesetzt
+ist.
+
+Das Eclipse-Projekt erwartet die folgenden JARs im Klassenpfad des Projekts:
+  $JBOSS_HOME/client/ejb3-persistence.jar
+  $JBOSS_HOME/client/jboss-ejb3x.jar
+  $JBOSS_HOME/client/jboss-j2ee.jar
+Es wird empfohlen, diese JARs in einer User Library zusammenzufassen. Diese kann
+dann für weitere JBoss-EJB3-Projekte wiederverwendet werden.
+
+---[ Ant ]----------------------------------------------------------------------
+
+Ticket2Rock enthält ein Ant-Buildskript (build.xml).
+Der Aufruf von Ant mit der Option '-p' listet die verfügbaren Targets auf:
+
+> ant -p
+Buildfile: build.xml
+
+Main targets:
+
+ assemble-app  Builds the J2EE application (*.ear)
+ clean         Removes all generated code and build artifacts
+...
+
+---[ ENDE ]---------------------------------------------------------------------

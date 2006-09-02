@@ -1,0 +1,116 @@
+<?xml version="1.0" ?>
+
+<!--
+  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3 professionell" (dpunkt).
+  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+  Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
+	
+  Copyright (C) 2006
+  Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg und Holger Koschek
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+-->
+
+<project name="ticket2rock" default="main" basedir=".">
+	<property name="home.dir" value="." />
+	<property name="src.dir" value="${home.dir}/src" />
+	<property name="build.dir" value="${home.dir}/build" />
+	<property name="jboss.dir" value="D:/jboss-4.0.4.GA" />
+	<property name="jboss.server.dir" value="${jboss.dir}/server/default" />
+	<property name="jboss.deploy.dir" value="${jboss.server.dir}/deploy" />
+
+	<path id="build.classpath">
+		<fileset dir="${jboss.dir}/client">
+			<include name="ejb3-persistence.jar" />
+			<include name="jboss-ejb3x.jar" />
+			<include name="jboss-j2ee.jar" />
+		</fileset>
+	</path>
+
+	<target name="main" description="Does a full build of the J2EE application">
+		<antcall target="clean" />
+		<antcall target="package-ejb" />
+		<antcall target="package-web" />
+		<antcall target="assemble-app" />
+	</target>
+
+	<target name="clean" description="Removes all generated code and build artifacts">
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="prepare" description="Creates the build target directories">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.dir}/classes" />
+		<mkdir dir="${build.dir}/jar" />
+	</target>
+
+	<target name="compile" depends="prepare" description="Compiles the source code">
+		<javac destdir="${build.dir}/classes" classpathref="build.classpath" debug="on">
+			<src path="${src.dir}" />
+		</javac>
+	</target>
+
+	<target name="package-ejb" depends="compile" description="Builds the EJB module (*.jar)">
+		<jar jarfile="${build.dir}/jar/${ant.project.name}.jar">
+			<fileset dir="${build.dir}/classes">
+				<include name="de/ejb3buch/${ant.project.name}/**" />
+			</fileset>
+
+			<fileset dir="dd/ejb">
+				<include name="import.sql" />
+				<include name="*.properties" />
+			</fileset>
+
+			<metainf dir="dd/ejb">
+				<include name="ejb-jar.xml" />
+				<include name="persistence.xml" />
+			</metainf>
+		</jar>
+	</target>
+
+	<target name="package-web" depends="compile" description="Builds the Web module (*.war)">
+		<war warfile="${build.dir}/jar/${ant.project.name}.war" webxml="dd/web/web.xml">
+
+			<fileset dir="web">
+				<include name="**/*" />
+			</fileset>
+			<!--			<webinf dir="dd/web">
+				<include name="jboss-web.xml" />
+			</webinf>-->
+		</war>
+	</target>
+
+	<target name="assemble-app" description="Builds the J2EE application (*.ear)">
+		<jar jarfile="${build.dir}/${ant.project.name}.ear">
+
+			<metainf dir="dd/ear">
+				<include name="application.xml" />
+				<!--				<include name="jboss-app.xml" />-->
+			</metainf>
+
+			<fileset dir="${build.dir}/jar" includes="${ant.project.name}.jar,${ant.project.name}.war" />
+		</jar>
+	</target>
+
+	<target name="deploy" description="Deploys the J2EE application to JBoss">
+		<echo message="Deploying to JBoss" />
+		<copy file="${build.dir}/${ant.project.name}.ear" todir="${jboss.deploy.dir}" overwrite="true" />
+	</target>
+
+	<target name="undeploy" description="Undeploys the J2EE application from JBoss">
+		<echo message="Undeploying from JBoss" />
+		<delete file="${jboss.deploy.dir}/${ant.project.name}.ear" />
+	</target>
+</project>
