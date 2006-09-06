@@ -28,7 +28,7 @@ import javax.ejb.EJB;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 
-import de.ejb3buch.ticket2rock.session.BeanStatisticsLocal;
+import de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsLocal;
 
 public class BeanStatisticsInterceptor {
 

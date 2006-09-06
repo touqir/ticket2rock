@@ -22,7 +22,7 @@
 -->
 
 <%@ page
-	import="javax.naming.*,java.util.*,java.text.SimpleDateFormat,de.ejb3buch.ticket2rock.entity.*,de.ejb3buch.ticket2rock.session.*"%>
+	import="javax.naming.*,java.util.*,java.text.SimpleDateFormat,de.ejb3buch.ticket2rock.entity.*,de.ejb3buch.ticket2rock.session.demo.*"%>
 
 <%!private DemoTape demo = null;
 
@@ -40,7 +40,8 @@
 		}
 	}
 
-	%>
+	
+%>
 
 <html>
 <head>

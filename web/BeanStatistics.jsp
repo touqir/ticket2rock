@@ -22,7 +22,7 @@
 -->
 
 <%@ page
-	import="javax.naming.InitialContext,java.util.Map,java.lang.reflect.Method,java.util.Iterator,de.ejb3buch.ticket2rock.session.BeanStatisticsLocal"%>
+	import="javax.naming.InitialContext,java.util.Map,java.lang.reflect.Method,java.util.Iterator,de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsLocal"%>
 
 <%!private BeanStatisticsLocal beanstats = null;
 
@@ -36,7 +36,8 @@
 		}
 	}
 
-	%>
+	
+%>
 
 <html>
 <head>
