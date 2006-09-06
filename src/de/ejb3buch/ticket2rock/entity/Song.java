@@ -30,9 +30,8 @@ import javax.persistence.ManyToOne;
 
 /**
  * Ein Song ist ein Musikstück, das von einem Interpreten (Musiker oder Band)
- * veröffentlicht wird. Ein Song hat einen Titel und optional einen Songtext.
- * Ferner lässt sich ein Song einem Musikgenre zuordnen. Ein Song kann
- * Bestandteil eines Albums sein.
+ * veröffentlicht wird. Ein Song hat einen Titel. Ferner lässt sich ein Song
+ * einem Musikgenre zuordnen. Ein Song kann Bestandteil eines Albums sein.
  */
 
 @Entity
@@ -43,8 +42,6 @@ public class Song {
 	private String titel;
 
 	private Interpret interpret;
-
-	private String text;
 
 	private Musikgenre genre;
 
@@ -75,14 +72,6 @@ public class Song {
 
 	public void setInterpret(Interpret interpret) {
 		this.interpret = interpret;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
 	}
 
 	@ManyToOne
