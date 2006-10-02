@@ -42,6 +42,10 @@ public class BeanStatisticsBean implements BeanStatisticsLocal,
 		return BeanStatisticsRecord.methodUsage;
 	}
 
+	public Map<Method, Long> getMethodTotalDuration() {
+		return BeanStatisticsRecord.methodDuration;
+	}
+
 	public void reportNewObject(Object object) {
 		if (!BeanStatisticsRecord.classUsage.containsKey(object.getClass())) {
 			// First object of the given class
@@ -66,6 +70,19 @@ public class BeanStatisticsBean implements BeanStatisticsLocal,
 			currentCount++;
 			BeanStatisticsRecord.methodUsage.put(method, currentCount);
 			BeanStatisticsRecord.methodUsage.put(method, currentCount++);
+		}
+	}
+
+	public void reportMethodDuration(Method method, long duration) {
+		if (!BeanStatisticsRecord.methodDuration.containsKey(method)) {
+			// First object of the given class
+			BeanStatisticsRecord.methodDuration.put(method, duration);
+		} else {
+			// Other objects of this class already exist
+			Long totalDuration = BeanStatisticsRecord.methodDuration
+					.get(method);
+			totalDuration += duration;
+			BeanStatisticsRecord.methodDuration.put(method, totalDuration);
 		}
 	}
 }

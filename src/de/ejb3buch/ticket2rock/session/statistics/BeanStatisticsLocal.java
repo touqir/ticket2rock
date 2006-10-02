@@ -35,6 +35,8 @@ public interface BeanStatisticsLocal {
 
 	public Map<Method, Integer> getMethodUsage();
 
+	public Map<Method, Long> getMethodTotalDuration();
+
 	// Die folgenden beiden Methoden sind im Remote-Interface
 	// BeanStatisticsRemote nicht verfügbar - sie werden nur lokal
 	// zum Melden von Objektinstanziierungen und Methodenaufrufen
@@ -43,4 +45,6 @@ public interface BeanStatisticsLocal {
 	public void reportNewObject(Object object);
 
 	public void reportMethodCall(Method method);
+
+	public void reportMethodDuration(Method method, long duration);
 }

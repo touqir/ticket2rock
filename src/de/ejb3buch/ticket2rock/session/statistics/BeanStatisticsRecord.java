@@ -33,4 +33,6 @@ public class BeanStatisticsRecord {
 
 	public static Map<Method, Integer> methodUsage = new HashMap<Method, Integer>();
 
+	public static Map<Method, Long> methodDuration = new HashMap<Method, Long>();
+
 }

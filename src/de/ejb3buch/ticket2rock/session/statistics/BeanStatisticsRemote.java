@@ -35,6 +35,8 @@ public interface BeanStatisticsRemote {
 
 	public Map<Method, Integer> getMethodUsage();
 
+	public Map<Method, Long> getMethodTotalDuration();
+
 	// Das lokale Interface BeanStatisticsLocal hat weitere
 	// Methoden zu bieten.
 }
