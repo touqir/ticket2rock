@@ -48,6 +48,12 @@ public class BeanStatisticsInterceptor {
 	@AroundInvoke
 	public Object onMethodCall(InvocationContext ctx) throws Exception {
 		beanstats.reportMethodCall(ctx.getMethod());
-		return ctx.proceed();
+		long startTime = System.currentTimeMillis();
+		try {
+			return ctx.proceed();
+		} finally {
+			long duration = System.currentTimeMillis() - startTime;
+			beanstats.reportMethodDuration(ctx.getMethod(), duration);
+		}
 	}
 }
