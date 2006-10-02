@@ -64,13 +64,14 @@
 <h3>Method calls</h3>
 <ul>
 	<%Map methodUsage = beanstats.getMethodUsage();
+	Map methodTotalDuration = beanstats.getMethodTotalDuration();
 			for (Iterator iter = methodUsage.keySet().iterator(); iter
 					.hasNext();) {
 				Method theMethod = (Method) iter.next();
 %>
 
-	<li><%=theMethod.getName()%>: called <%=methodUsage.get(theMethod)%>
-	time(s)</li>
+	<li><%=theMethod.getDeclaringClass().getName()%>.<%=theMethod.getName()%>: called <%=methodUsage.get(theMethod)%>
+	time(s), total execution time: <%=methodTotalDuration.get(theMethod)%> ms</li>
 
 	<%}
 
