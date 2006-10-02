@@ -28,12 +28,64 @@
 	xsi.schemaLocation="http://java.sun.com/xml/ns/javaee
 						http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd"
 	version="3.0">
+	<enterprise-beans>
+		<session>
+ 			<ejb-name>AbfangjaegerBeanKlasseninterzeptor</ejb-name>
+			<ejb-class>de.ejb3buch.ticket2rock.session.demo.klasseninterzeptor.AbfangjaegerBean</ejb-class>
+		</session>	
+		<session>
+ 			<ejb-name>AbfangjaegerBeanKlasseninterzeptorDD</ejb-name>
+ 			<local>de.ejb3buch.ticket2rock.session.demo.AbfangjaegerLocal</local>
+			<ejb-class>de.ejb3buch.ticket2rock.session.demo.klasseninterzeptor.dd.AbfangjaegerBean</ejb-class>
+			<session-type>Stateless</session-type>
+		</session>	
+		<session>
+			<ejb-name>AbfangjaegerBeanMethodeninterzeptor</ejb-name>
+			<ejb-class>de.ejb3buch.ticket2rock.session.demo.methodeninterzeptor.AbfangjaegerBean</ejb-class>
+		</session>	
+		<session>
+			<ejb-name>AbfangjaegerBeanMethodeninterzeptorDD</ejb-name>
+ 			<local>de.ejb3buch.ticket2rock.session.demo.AbfangjaegerLocal</local>
+			<ejb-class>de.ejb3buch.ticket2rock.session.demo.methodeninterzeptor.dd.AbfangjaegerBean</ejb-class>
+			<session-type>Stateless</session-type>
+		</session>	
+	</enterprise-beans>
+	<interceptors>
+		<interceptor>
+			<interceptor-class>de.ejb3buch.ticket2rock.session.demo.Abfangjaeger</interceptor-class>
+			<around-invoke>
+				<method-name>onMethodCall</method-name>
+			</around-invoke>
+		</interceptor>
+	</interceptors>
  	<assembly-descriptor>
-		<interceptor-binding>
+ 		<interceptor-binding>
 			<ejb-name>*</ejb-name>
 			<interceptor-class>
 				de.ejb3buch.ticket2rock.session.interceptor.BeanStatisticsInterceptor
 			</interceptor-class>
 		</interceptor-binding>
+ 		<interceptor-binding>
+ 			<ejb-name>AbfangjaegerBeanKlasseninterzeptorDD</ejb-name>
+ 			<interceptor-class>de.ejb3buch.ticket2rock.session.demo.Abfangjaeger</interceptor-class>
+ 		</interceptor-binding>
+ 		<interceptor-binding>
+ 			<ejb-name>AbfangjaegerBeanKlasseninterzeptorDD</ejb-name>
+ 			<exclude-class-interceptors/>
+ 			<method-name>michNicht</method-name>
+ 		</interceptor-binding>
+ 		<interceptor-binding>
+ 			<ejb-name>AbfangjaegerBeanMethodeninterzeptorDD</ejb-name>
+ 			<interceptor-class>de.ejb3buch.ticket2rock.session.demo.Abfangjaeger</interceptor-class>
+ 			<method-name>fangMichAb</method-name>
+ 		</interceptor-binding>
+		<interceptor-binding>
+ 			<ejb-name>AbfangjaegerBeanMethodeninterzeptorDD</ejb-name>
+ 			<interceptor-class>de.ejb3buch.ticket2rock.session.demo.Abfangjaeger</interceptor-class>
+ 			<method-name>michAuch</method-name>
+ 			<method-params>
+ 				<method-param>java.lang.Object</method-param>
+ 			</method-params>
+ 		</interceptor-binding>
 	</assembly-descriptor>
 </ejb-jar>
