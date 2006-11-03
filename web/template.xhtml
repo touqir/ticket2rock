@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+<head>
+	<meta http-equiv="Content-Type" content="text/html" />
+	<title>JBoss Seam Facelets Test</title>
+	<link href="style/screen.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css" href="style/office_xp/office_xp.css" />
+    <script type="text/javascript" src="./js/jsdomenu.js"></script>
+    <script type="text/javascript" src="./js/jsdomenubar.js"></script>
+    <script type="text/javascript" src="js/ticket2rock.inc.js"></script>
+</head>
+<body onload="initjsDOMenu()">
+<f:loadBundle basename="de.ejb3buch.ticket2rock.applikation.resources.Message" var="msg" />
+<div id="document">
+	<div id="header">
+		<div id="title"><img src="images/Ticket2Rock-Logo.jpg" /></div>
+	</div>
+	<div id="menu">
+	   <div id="menubar" />
+	</div>
+	<div id="container">
+		<div id="sidebar">
+			<ui:insert name="sidebar">
+			  Default Inhalt fuer die Sidebar
+			</ui:insert>	
+		</div>
+		<div id="content">
+			<ui:insert name="content"/>
+		</div>
+	</div>
+	<div id="footer">Created with JBoss EJB 3.0, JSF and Facelets</div>
+</div>
+</body>
+</html>

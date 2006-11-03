@@ -1,0 +1,51 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+				template="template.xhtml">
+
+<ui:define name="content">
+  <div class="section">
+    <h1><h:outputText value="#{msg.bandform_title}" /></h1>
+  </div>
+  
+  <div class="section"> 
+	<h:form id="bandForm">
+      
+	  <fieldset>
+		<div class="entry">
+			<div class="label"><h:outputLabel for="bandname" value="#{msg.bandform_name}" /></div>
+			<div class="input">
+				<h:inputText id="bandname" value="#{T2RManagerBean.band.name}"
+		      							 required="true" />
+		    </div>
+		    <span class="errors"><h:message for="bandname" /></span>
+		
+		</div>
+
+        <div class="entry errors"><h:messages globalOnly="true" /></div>
+        
+		<div class="entry">
+			<div class="label">&#160;</div>
+			<div class="input">
+				 <h:commandButton id="submitAdd" class="button" action="#{T2RManagerBean.addBand}" 
+							value="#{msg.bandform_save}" rendered="#{not T2RManagerBean.editMode}" />
+		         <h:commandButton id="submitUpdate" class="button" action="#{T2RManagerBean.updateBand}" 
+		        	value="#{msg.bandform_save}" rendered="#{T2RManagerBean.editMode}" />
+			</div>
+	    </div>
+	  </fieldset>
+
+      
+   </h:form>
+  
+  </div>
+</ui:define>
+
+<!-- sidebar -->
+<ui:define name="sidebar">
+<p>Definition einer Band. Ein neues Band Entity Bean entsteht.</p>
+</ui:define>
+
+</ui:composition>

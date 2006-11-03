@@ -1,0 +1,48 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:c="http://java.sun.com/jstl/core"
+				template="template.xhtml">
+
+<!-- content -->
+<ui:define name="content">
+  <div class="section">
+  		<h:form>
+			<h:dataTable id="items" value="#{T2RManagerBean.bands}" var="band"
+				rowClasses="oddRow, evenRow" headerClass="tableHeader">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Bandname" />
+					</f:facet>
+					<h:commandLink action="#{T2RManagerBean.editBand}">
+					    <h:outputText value="#{band.name}" />
+				    </h:commandLink>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Musiker" />
+					</f:facet>
+				    <c:forEach items="${band.musikerNamensListe}" var="musikerName">
+				      <h:outputText value="#{musikerName}" />&#160;
+				    </c:forEach>
+   				</h:column>
+				<h:column>
+					<h:commandButton id="deleteBand" class="button" action="#{T2RManagerBean.deleteBand}" 
+							value="#{msg.bandlist_delete}"/>
+				</h:column>
+			</h:dataTable>
+			<br />
+			<h:commandButton class="button" action="#{T2RManagerBean.addNewBand}" value="#{msg.bandlist_add}" />			
+		</h:form>
+  </div>		
+</ui:define>
+
+<!-- sidebar -->
+<ui:define name="sidebar">
+Diese Seite zeigt die Liste der Bands an, die als Band Entities existieren. Ueber den Button Loeschen wird ein Band
+Entity geloescht. Hierbei werden ebenfalls cascadierend alle zugehoerigen Songs und Alben der Band geloescht.
+</ui:define>
+
+</ui:composition>

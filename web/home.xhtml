@@ -1,0 +1,29 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+				template="template.xhtml">
+
+<!-- content -->
+<ui:define name="content">
+  <div class="section">
+    <h1>Willkommen zur Ticket2Rock Beispielanwendung</h1>   
+    <p>Die JSF-basierte Webanwendung kommuniziert &#252;ber einen Business Delegates mit einer 
+    Session Beans, die als Session Facade entprechenden Dienste anbieten.
+    
+    </p>  
+  </div>
+ 	
+</ui:define>
+
+<!-- sidebar -->
+<ui:define name="sidebar">
+ <p>
+ Mit dem dem Menuepunkt <em>Verwaltung</em> koennen Entitaeten
+(Datensaetze) in den Ticket2Rock Datenbanktabellen angelegt, veraendert bzw. geloescht werden.
+Der Menuepunkt <em>Andwendungsfall</em> dient zur Ausfuehrung diverser Anwendungsfaelle.
+</p> 
+</ui:define>
+
+</ui:composition>
