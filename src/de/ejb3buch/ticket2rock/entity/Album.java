@@ -26,6 +26,7 @@ package de.ejb3buch.ticket2rock.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -96,7 +97,7 @@ public class Album {
 	// failed to lazily initialize a collection of role:
 	// de.ejb3buch.ticket2rock.entity.Album.songs,
 	// no session or session was closed")
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "album")
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "album")
 	public List<Song> getSongs() {
 		return songs;
 	}
