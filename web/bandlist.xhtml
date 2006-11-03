@@ -3,7 +3,6 @@
 	    		xmlns:ui="http://java.sun.com/jsf/facelets"
 	  			xmlns:h="http://java.sun.com/jsf/html"
 	  			xmlns:f="http://java.sun.com/jsf/core"
-	  			xmlns:c="http://java.sun.com/jstl/core"
 				template="template.xhtml">
 
 <!-- content -->
@@ -24,9 +23,9 @@
 					<f:facet name="header">
 						<h:outputText value="Musiker" />
 					</f:facet>
-				    <c:forEach items="${band.musikerNamensListe}" var="musikerName">
-				      <h:outputText value="#{musikerName}" />&#160;
-				    </c:forEach>
+				    <ui:repeat value="#{band.musikerNamensListe}" var="musikerName">
+                      #{musikerName}
+		            </ui:repeat>
    				</h:column>
 				<h:column>
 					<h:commandButton id="deleteBand" class="button" action="#{T2RManagerBean.deleteBand}" 
