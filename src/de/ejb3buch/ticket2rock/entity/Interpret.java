@@ -23,13 +23,19 @@
 
 package de.ejb3buch.ticket2rock.entity;
 
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
 
 /**
  * Ein Interpret ist entweder ein Musiker oder eine Band. Er hat einen Namen,
@@ -45,6 +51,14 @@ public abstract class Interpret {
 	private int id;
 
 	private String name;
+	
+	private Set<Album> alben;
+	
+	private List<Song> songs;
+
+	public void setSongs(List<Song> songs) {
+		this.songs = songs;
+	}
 
 	@Id
 	@GeneratedValue
@@ -62,5 +76,19 @@ public abstract class Interpret {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="interpret")
+	public Set<Album> getAlben() {
+	      return alben;
+	}
+
+	public void setAlben(Set<Album> alben) {
+		this.alben = alben;
+	}
+	
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "interpret")
+	public List<Song> getSongs() {
+		return songs;
 	}
 }
