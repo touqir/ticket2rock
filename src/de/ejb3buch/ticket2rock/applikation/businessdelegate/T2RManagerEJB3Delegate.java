@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.naming.InitialContext;
 
+import org.apache.log4j.Logger;
+
 import de.ejb3buch.ticket2rock.applikation.model.BandBakingBean;
 import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Musiker;
@@ -14,6 +16,7 @@ import de.ejb3buch.ticket2rock.session.manager.T2RManagerLocal;
 public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
 
 	T2RManagerLocal myT2RManager;
+	static Logger logger = Logger.getLogger(T2RManagerEJB3Delegate.class);
 
 	/**
 	 * Konstruktor des BusinessDelegates. Über den InitialContext wird eine
@@ -46,11 +49,13 @@ public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
 		for (Band bandEBean : bandEntityBeans) {
 			BandBakingBean bandBBean = new BandBakingBean(bandEBean.getId(),
 					bandEBean.getName());
-
+            logger.debug("processing band bbean " + bandEBean.getName());
 			Set<Musiker> musikerList = bandEBean.getMusiker();
 			List musikerNamen = new ArrayList();
 			if ((musikerList != null) && (!musikerList.isEmpty())) {
+				logger.debug("musiker list is not empty and not null");
 				for (Musiker musiker : musikerList) {
+				  logger.debug("adding musiker name to band: " + musiker.getName() );
                   musikerNamen.add(musiker.getName());
 				}
 			}            
