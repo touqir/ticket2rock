@@ -28,6 +28,30 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	version="2.4">
 
+
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>client</param-value>
+    </context-param>
+	
+    <context-param>
+        <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+        <param-value>.xhtml</param-value>
+    </context-param>
+	
+    <!-- MyFaces -->
+
+    <listener>
+        <listener-class>org.apache.myfaces.webapp.StartupServletContextListener</listener-class>
+    </listener>
+    
+	<servlet>
+		<servlet-name>Faces Servlet</servlet-name>
+		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>   
+    <!-- end of MyFaces servlet definition  -->
+
 	<servlet>
 		<servlet-name>DemoServlet</servlet-name>
 		<jsp-file>/DemoTape.jsp</jsp-file>
@@ -36,6 +60,8 @@
 		<servlet-name>BeanStatisticsServlet</servlet-name>
 		<jsp-file>/BeanStatistics.jsp</jsp-file>
 	</servlet>
+	
+	
 	<servlet-mapping>
 		<servlet-name>DemoServlet</servlet-name>
 		<url-pattern>/demo</url-pattern>
@@ -44,4 +70,16 @@
 		<servlet-name>BeanStatisticsServlet</servlet-name>
 		<url-pattern>/statistics</url-pattern>
 	</servlet-mapping>
+
+	<!-- Faces Servlet Mapping -->
+	<servlet-mapping>
+		<servlet-name>Faces Servlet</servlet-name>
+		<url-pattern>*.faces</url-pattern>
+	</servlet-mapping>	
+	
+	<welcome-file-list>
+		<welcome-file>facesindex.html</welcome-file>
+	</welcome-file-list>
+	
+	
 </web-app>

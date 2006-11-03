@@ -30,12 +30,18 @@
 	<property name="jboss.dir" value="D:/jboss-4.0.4.GA" />
 	<property name="jboss.server.dir" value="${jboss.dir}/server/default" />
 	<property name="jboss.deploy.dir" value="${jboss.server.dir}/deploy" />
+	<property name="webapp_lib.dir" value="${home.dir}/lib" />
 
+	
 	<path id="build.classpath">
 		<fileset dir="${jboss.dir}/client">
 			<include name="ejb3-persistence.jar" />
 			<include name="jboss-ejb3x.jar" />
 			<include name="jboss-j2ee.jar" />
+		</fileset>
+		<fileset dir="${webapp_lib.dir}">
+			<include name="jsf-api.jar" />
+			<include name="log4j-1.2.14.jar" />
 		</fileset>
 	</path>
 
@@ -66,8 +72,9 @@
 		<jar jarfile="${build.dir}/jar/${ant.project.name}.jar">
 			<fileset dir="${build.dir}/classes">
 				<include name="de/ejb3buch/${ant.project.name}/**" />
+				<exclude name="de/ejb3buch/${ant.project.name}/applikation/**"/>
 			</fileset>
-
+			
 			<fileset dir="dd/ejb">
 				<include name="import.sql" />
 				<include name="*.properties" />
@@ -86,9 +93,21 @@
 			<fileset dir="web">
 				<include name="**/*" />
 			</fileset>
-			<!--			<webinf dir="dd/web">
-				<include name="jboss-web.xml" />
-			</webinf>-->
+			<webinf dir="dd/web">
+			   <include name="*.xml"/>
+			   <exclude name="web.xml"/>
+			</webinf>
+			<classes dir="${build.dir}/classes">
+				<include name="de/ejb3buch/${ant.project.name}/applikation/**" />			
+			</classes>
+			<classes dir="${src.dir}">
+				<include name="de/ejb3buch/${ant.project.name}/applikation/resources/**" />			
+			</classes>
+			<lib dir="${webapp_lib.dir}">		        
+				<include name="jsf-facelets.jar"/>
+				<include name="el-api.jar"/>
+				<include name="el-ri.jar"/>
+			</lib>
 		</war>
 	</target>
 
