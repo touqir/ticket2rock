@@ -1,5 +1,6 @@
 package de.ejb3buch.ticket2rock.session.manager;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -95,6 +96,16 @@ public class T2RManagerBean implements T2RManagerLocal, T2RManagerRemote {
 		logger.debug("removed band " + band.getName());
 		logger.debug("end of method deleteBand()");
 
+	}
+
+	@SuppressWarnings("unchecked")
+	public Collection<Musiker> getMusiker() {
+		Query query = em.createQuery("from Musiker");
+		return (Collection<Musiker>) query.getResultList();
+	}
+
+	public Band getBandById(Integer bandId) {
+		return em.find(Band.class,bandId);
 	}
 
 }

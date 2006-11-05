@@ -1,14 +1,17 @@
 package de.ejb3buch.ticket2rock.applikation.businessdelegate;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.naming.InitialContext;
 
 import org.apache.log4j.Logger;
 
-import de.ejb3buch.ticket2rock.applikation.model.BandBakingBean;
+import de.ejb3buch.ticket2rock.applikation.model.BandBackingBean;
 import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Musiker;
 import de.ejb3buch.ticket2rock.session.manager.T2RManagerLocal;
@@ -16,6 +19,7 @@ import de.ejb3buch.ticket2rock.session.manager.T2RManagerLocal;
 public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
 
 	T2RManagerLocal myT2RManager;
+
 	static Logger logger = Logger.getLogger(T2RManagerEJB3Delegate.class);
 
 	/**
@@ -40,25 +44,26 @@ public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
 	 * @return Liste von BandcBakingBeans
 	 */
 	@SuppressWarnings("unchecked")
-	public List<BandBakingBean> getBands() {
+	public List<BandBackingBean> getBands() {
 		List<Band> bandEntityBeans = myT2RManager.getBands();
 		if (bandEntityBeans == null) {
 			return new ArrayList();
 		}
 		List bandBakingBeans = new ArrayList();
 		for (Band bandEBean : bandEntityBeans) {
-			BandBakingBean bandBBean = new BandBakingBean(bandEBean.getId(),
+			BandBackingBean bandBBean = new BandBackingBean(bandEBean.getId(),
 					bandEBean.getName());
-            logger.debug("processing band bbean " + bandEBean.getName());
+			logger.debug("processing band bbean " + bandEBean.getName());
 			Set<Musiker> musikerList = bandEBean.getMusiker();
 			List musikerNamen = new ArrayList();
 			if ((musikerList != null) && (!musikerList.isEmpty())) {
 				logger.debug("musiker list is not empty and not null");
 				for (Musiker musiker : musikerList) {
-				  logger.debug("adding musiker name to band: " + musiker.getName() );
-                  musikerNamen.add(musiker.getName());
+					logger.debug("adding musiker name to band: "
+							+ musiker.getName());
+					musikerNamen.add(musiker.getName());
 				}
-			}            
+			}
 			bandBBean.setMusikerNamensListe(musikerNamen);
 			bandBakingBeans.add(bandBBean);
 		}
@@ -71,21 +76,21 @@ public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
 	 * @param name
 	 * @return BandBackingBean
 	 */
-	public BandBakingBean getBandByName(String name) {
+	public BandBackingBean getBandByName(String name) {
 		Band band = myT2RManager.getBandByName(name);
 		if (band != null) {
-			return new BandBakingBean(band.getId(), band.getName());
+			return new BandBackingBean(band.getId(), band.getName());
 		}
 		return null;
 	}
 
-	public void createBand(BandBakingBean bandBackingBean) {
+	public void createBand(BandBackingBean bandBackingBean) {
 		Band band = new Band();
 		band.setName(bandBackingBean.getName());
 		this.myT2RManager.createBand(band);
 	}
 
-	public void updateBand(BandBakingBean bandBackingBean) {
+	public void updateBand(BandBackingBean bandBackingBean) {
 		Band band = new Band();
 		band.setId(bandBackingBean.getId());
 		band.setName(bandBackingBean.getName());
@@ -93,11 +98,32 @@ public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
 
 	}
 
-	public void deleteBand(BandBakingBean bandBackingBean) {
+	public void deleteBand(BandBackingBean bandBackingBean) {
 		Band band = new Band();
 		band.setId(bandBackingBean.getId());
 		band.setName(bandBackingBean.getName());
 		myT2RManager.deleteBand(band);
 
+	}
+
+	public Map<String,Integer> getMusikerMap() {
+		Collection<Musiker> musikerSet = myT2RManager.getMusiker();
+		return convertToMusikerMap(musikerSet);
+	}
+
+	private Map<String, Integer> convertToMusikerMap(Collection<Musiker> musikerSet) {
+		Map<String,Integer> musikerMap = new HashMap<String,Integer>();
+		if (musikerSet != null) {
+			for (Musiker musiker : musikerSet) {
+              musikerMap.put(musiker.getName(),Integer.valueOf(musiker.getId()));
+			}
+		}
+		return musikerMap;
+	}
+
+	public Map<String, Integer> getBandMusikerMap(Integer bandId) {
+		Band band = myT2RManager.getBandById(bandId);
+		Set<Musiker> musikerSet = band.getMusiker();
+		return convertToMusikerMap(musikerSet);
 	}
 }

@@ -131,6 +131,12 @@ fieldset {
 	width: 250px;
 	text-align: left;
 }
+
+.gridtable {
+  border: 0px;
+}
+
+
 /* Sidebar
 ----------------------------------------------- */
 .notes {

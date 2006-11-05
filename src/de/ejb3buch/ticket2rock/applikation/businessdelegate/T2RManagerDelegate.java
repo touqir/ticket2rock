@@ -1,18 +1,23 @@
 package de.ejb3buch.ticket2rock.applikation.businessdelegate;
 
 import java.util.List;
+import java.util.Map;
 
-import de.ejb3buch.ticket2rock.applikation.model.BandBakingBean;
+import de.ejb3buch.ticket2rock.applikation.model.BandBackingBean;
 
 
 public interface T2RManagerDelegate {
-	public List<BandBakingBean> getBands();
+	public List<BandBackingBean> getBands();
 
-	public void createBand(BandBakingBean band);
+	public void createBand(BandBackingBean band);
 	
-	public BandBakingBean getBandByName(String name);
+	public BandBackingBean getBandByName(String name);
 
-	public void updateBand(BandBakingBean bandBackingBean);
+	public void updateBand(BandBackingBean bandBackingBean);
 
-	public void deleteBand(BandBakingBean bandBackingBean);
+	public void deleteBand(BandBackingBean bandBackingBean);
+
+	public Map<String, Integer> getMusikerMap();
+
+	public Map<String, Integer> getBandMusikerMap(Integer bandId);
 }

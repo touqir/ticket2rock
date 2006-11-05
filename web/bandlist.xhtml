@@ -3,6 +3,7 @@
 	    		xmlns:ui="http://java.sun.com/jsf/facelets"
 	  			xmlns:h="http://java.sun.com/jsf/html"
 	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:c="http://java.sun.com/jsp/jstl/core"
 				template="template.xhtml">
 
 <!-- content -->
@@ -23,9 +24,11 @@
 					<f:facet name="header">
 						<h:outputText value="Musiker" />
 					</f:facet>
-				    <ui:repeat value="#{band.musikerNamensListe}" var="musikerName">
-                      #{musikerName}
+				    <ui:repeat value="#{band.musikerListeKommaGetrennt}" var="musikerName">
+                      #{musikerName}                      
 		            </ui:repeat>
+		                  
+		            
    				</h:column>
 				<h:column>
 					<h:commandButton id="deleteBand" class="button" action="#{T2RManagerBean.deleteBand}" 
@@ -40,8 +43,8 @@
 
 <!-- sidebar -->
 <ui:define name="sidebar">
-Diese Seite zeigt die Liste der Bands an, die als Band Entities existieren. Ueber den Button Loeschen wird ein Band
-Entity geloescht. Hierbei werden ebenfalls cascadierend alle zugehoerigen Songs und Alben der Band geloescht.
+Diese Seite zeigt die Liste der Bands an, die als Band Entities existieren. &#220;ber den Button L&#246;schen wird ein Band
+Entity gel&#246;scht. Hierbei werden ebenfalls cascadierend alle zugeh&#246;rigen Songs und Alben der Band gel&#246;scht.
 </ui:define>
 
 </ui:composition>

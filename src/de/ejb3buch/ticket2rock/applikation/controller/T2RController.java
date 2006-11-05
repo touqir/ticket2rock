@@ -1,5 +1,9 @@
 package de.ejb3buch.ticket2rock.applikation.controller;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
@@ -9,7 +13,7 @@ import org.apache.log4j.Logger;
 
 import de.ejb3buch.ticket2rock.applikation.businessdelegate.T2RManagerDelegate;
 import de.ejb3buch.ticket2rock.applikation.businessdelegate.T2RManagerEJB3Delegate;
-import de.ejb3buch.ticket2rock.applikation.model.BandBakingBean;
+import de.ejb3buch.ticket2rock.applikation.model.BandBackingBean;
 
 public class T2RController {
 
@@ -19,9 +23,13 @@ public class T2RController {
 
 	private boolean editMode = false;
 
-	private BandBakingBean band = null;
-
+	private BandBackingBean band = null;
+	
 	private DataModel bandListDataModel = new ListDataModel();
+	
+	private Map<String,Integer> musikerMap;
+	
+	private Map<String,Integer> bandMusikerMap;
 
 	/**
 	 * Über den BusinessDelegate alle Bands aus der Datenbank selektieren und in
@@ -37,24 +45,34 @@ public class T2RController {
 
 	/**
 	 * Vorbereitungen treffen, um eine weiter Band anzulegen
-	 * 
-	 * @return success
 	 */
 	public String addNewBand() {
 		logger.debug("preparing band input form");
 		editMode = false;
-		band = new BandBakingBean();
+		band = new BandBackingBean();
+        // fülle die Musiker Maps
+		this.bandMusikerMap = new HashMap<String,Integer>();
+		this.musikerMap = this.populateMusikerMap();
 		return "bandform";
 	}
 
 	/**
 	 * Vorbereitungen treffen, um eine Band zu editieren
-	 * 
-	 * @return success
 	 */
 	public String editBand() {
-		band = (BandBakingBean) bandListDataModel.getRowData();
+		band = (BandBackingBean) bandListDataModel.getRowData();
 		this.editMode = true;
+		// fülle die Musiker Maps
+		this.bandMusikerMap = this.populateBandMusikerMap();
+		this.musikerMap = this.populateMusikerMap();
+		// entferne die Musiker der Band von der Map der zu Verfügung
+		// stehenden Musiker
+		if (bandMusikerMap != null) {
+          Collection<String> bandMusikerNamen = bandMusikerMap.keySet();
+          for (String bandMusikerName:bandMusikerNamen) {
+        	 musikerMap.remove(bandMusikerName); 
+          }
+		}
 		return "bandform";
 	}
 
@@ -84,19 +102,35 @@ public class T2RController {
 
 	public String deleteBand() {
 		logger.debug("about to delete a band");
-		band = (BandBakingBean) bandListDataModel.getRowData();
+		band = (BandBackingBean) bandListDataModel.getRowData();
 		myT2RManager.deleteBand(band);
 
 		logger.debug("deleted a band");
 		return "bandlist";
 	}
 
-	public BandBakingBean getBand() {
+	public BandBackingBean getBand() {
 		return band;
 	}
 
-	public void setBand(BandBakingBean band) {
+	public void setBand(BandBackingBean band) {
 		this.band = band;
 	}
 
+	private Map<String,Integer> populateMusikerMap() {
+		return myT2RManager.getMusikerMap();
+	}
+
+	
+	private Map<String,Integer> populateBandMusikerMap() {
+		return myT2RManager.getBandMusikerMap(band.getId());
+	}
+
+	public Map<String, Integer> getBandMusikerMap() {
+		return bandMusikerMap;
+	}
+
+	public Map<String, Integer> getMusikerMap() {
+		return musikerMap;
+	}
 }

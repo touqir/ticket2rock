@@ -26,6 +26,25 @@
 
         <div class="entry errors"><h:messages globalOnly="true" /></div>
         
+        <h:panelGrid columns="3" styleClass="gridtable" rowClasses="gridtable">
+			
+             <h:selectManyListbox id="bandMusikerList" size="8" value="" style="width:170px">
+               <f:convertNumber/>
+               <f:selectItems value="#{T2RManagerBean.bandMusikerMap}" />
+             </h:selectManyListbox>
+			
+			 <span>
+			 <button name="test1" value="test1" onClick="moveList('bandMusikerList','musikerList')">test1</button><br/>
+			 <button name="test2" value="test2">test2</button>
+			 </span>
+             <h:selectManyListbox id="musikerList" size="8" value="" style="width:170px">
+               <f:convertNumber/>
+               <f:selectItems value="#{T2RManagerBean.musikerMap}" />
+             </h:selectManyListbox>
+			
+	    </h:panelGrid>
+        
+        
 		<div class="entry">
 			<div class="label">&#160;</div>
 			<div class="input">
@@ -36,6 +55,7 @@
 			</div>
 	    </div>
 	  </fieldset>
+	  
 
       
    </h:form>
