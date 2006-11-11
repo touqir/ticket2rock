@@ -108,4 +108,8 @@ public class T2RManagerBean implements T2RManagerLocal, T2RManagerRemote {
 		return em.find(Band.class,bandId);
 	}
 
+	public Musiker getMusikerById(Integer musikerId) {
+		return em.find(Musiker.class,musikerId);
+	}
+
 }

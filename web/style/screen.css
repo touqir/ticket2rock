@@ -132,11 +132,6 @@ fieldset {
 	text-align: left;
 }
 
-.gridtable {
-  border: 0px;
-}
-
-
 /* Sidebar
 ----------------------------------------------- */
 .notes {
@@ -199,6 +194,9 @@ fieldset {
 	border: 1px solid #D2C9C4;
 	border-collapse: collapse;
 }
+
+
+
 #content table caption {
 	padding-bottom: 6px;
 	text-align: left;
@@ -213,11 +211,19 @@ fieldset {
 	font-size: small;
 }
 #content table tbody td {
-	border-left: 1px solid #E4DBD5;
+	border-left: 1px solid #E4DBD5; 
 	padding: 4px;
-	border-bottom: 1px solid #D2C9C4;
+	border-bottom: 1px solid #D2C9C4; 
 	font-size: small;
 }
+
+#content .gridtable table tbody td {
+	border-left: 0;
+	padding: 4px;
+	border-bottom: 0;
+	font-size: small;
+}
+
 #content dt {
 	font-weight: bold;
 	float: left;
@@ -236,6 +242,13 @@ fieldset {
 	border-left: 0px;
 	border-bottom: 0px;
 }
+
+.pairselection {
+  border:0;
+  border-bottom:0;
+  border-left:0
+}
+
 /* Header
 ----------------------------------------------- */
 #title {

@@ -11,6 +11,12 @@
   </div>
   
   <div class="section"> 
+    <script type="text/javascript">
+      function changeTitle() {
+        document.title='it worked';
+      }
+    </script>
+    
 	<h:form id="bandForm">
       
 	  <fieldset>
@@ -26,25 +32,33 @@
 
         <div class="entry errors"><h:messages globalOnly="true" /></div>
         
-        <h:panelGrid columns="3" styleClass="gridtable" rowClasses="gridtable">
-			
-             <h:selectManyListbox id="bandMusikerList" size="8" value="" style="width:170px">
+       
+		<table align="center" style="border:0;border-bottom:0;border-left:0">
+		  <tr style="border:0;border-bottom:0;border-left:0">
+		    <td style="border:0;border-bottom:0;border-left:0;text-align:center">
+             <h:selectManyListbox id="bandMusikerList" size="8" value="#{T2RManagerBean.bandMusikerList}" 
+             immediate="true" valueChangeListener="#{T2RManagerBean.bandMusikerSelected}" 
+             binding="#{T2RManagerBean.bandMusikerSelectComponent}" style="width:170px">
                <f:convertNumber/>
-               <f:selectItems value="#{T2RManagerBean.bandMusikerMap}" />
+               <f:selectItems value="#{T2RManagerBean.bandMusikerSelectItems}" />
              </h:selectManyListbox>
+			</td>
 			
-			 <span>
-			 <button name="test1" value="test1" onClick="moveList('bandMusikerList','musikerList')">test1</button><br/>
-			 <button name="test2" value="test2">test2</button>
-			 </span>
-             <h:selectManyListbox id="musikerList" size="8" value="" style="width:170px">
+			<td style="border:0;border-bottom:0;border-left:0;text-align:center">
+			   <h:commandButton id="submit" class="button" value="&#60;&#60;"/><br/>
+			   <h:commandButton id="submit" class="button" value="&#62;&#62;"/>
+			</td>
+			<td style="border:0;border-bottom:0;border-left:0;text-align:center"> 
+             <h:selectManyListbox id="musikerList" size="8" 
+                value="#{T2RManagerBean.musikerList}" immediate="true" 
+                valueChangeListener="#{T2RManagerBean.musikerSelected}" 
+                binding="#{T2RManagerBean.musikerSelectComponent}" style="width:170px">
                <f:convertNumber/>
-               <f:selectItems value="#{T2RManagerBean.musikerMap}" />
+               <f:selectItems value="#{T2RManagerBean.musikerSelectItems}" />
              </h:selectManyListbox>
-			
-	    </h:panelGrid>
-        
-        
+			</td>
+		   </tr>
+		 </table>  
 		<div class="entry">
 			<div class="label">&#160;</div>
 			<div class="input">

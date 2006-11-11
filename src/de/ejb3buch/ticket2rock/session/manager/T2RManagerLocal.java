@@ -25,4 +25,6 @@ public interface T2RManagerLocal {
 
 	public Band getBandById(Integer bandId);
 
+	public Musiker getMusikerById(Integer musikerId);
+
 }

@@ -1,18 +1,24 @@
 package de.ejb3buch.ticket2rock.applikation.controller;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.html.HtmlSelectManyListbox;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.faces.model.SelectItem;
 
 import org.apache.log4j.Logger;
 
 import de.ejb3buch.ticket2rock.applikation.businessdelegate.T2RManagerDelegate;
 import de.ejb3buch.ticket2rock.applikation.businessdelegate.T2RManagerEJB3Delegate;
+import de.ejb3buch.ticket2rock.applikation.helper.SelectItemsMapBuilder;
 import de.ejb3buch.ticket2rock.applikation.model.BandBackingBean;
 
 public class T2RController {
@@ -24,16 +30,24 @@ public class T2RController {
 	private boolean editMode = false;
 
 	private BandBackingBean band = null;
-	
+
 	private DataModel bandListDataModel = new ListDataModel();
-	
-	private Map<String,Integer> musikerMap;
-	
-	private Map<String,Integer> bandMusikerMap;
+
+	private Map<String, SelectItem> musikerMap;
+
+	private Map<String, SelectItem> bandMusikerMap;
+
+	private List<String> musikerList = new ArrayList<String>();
+
+	private List<String> bandMusikerList = new ArrayList<String>();
+
+	private HtmlSelectManyListbox musikerSelectComponent;
+
+	private HtmlSelectManyListbox bandMusikerSelectComponent;
 
 	/**
 	 * Über den BusinessDelegate alle Bands aus der Datenbank selektieren und in
-	 * Form eine DataModel Objektes zurückgeben. Ein DataModel Objekt kann in
+	 * Form eines DataModel Objektes zurückgeben. Ein DataModel Objekt kann in
 	 * einer jsp mit dem dataTable-Tag zur Anzeige gebracht werden
 	 * 
 	 * @return DataModel Objekt, das alle Bands beinhaltet.
@@ -50,8 +64,8 @@ public class T2RController {
 		logger.debug("preparing band input form");
 		editMode = false;
 		band = new BandBackingBean();
-        // fülle die Musiker Maps
-		this.bandMusikerMap = new HashMap<String,Integer>();
+		// fülle die Musiker Maps
+		this.bandMusikerMap = new HashMap<String, SelectItem>();
 		this.musikerMap = this.populateMusikerMap();
 		return "bandform";
 	}
@@ -68,10 +82,10 @@ public class T2RController {
 		// entferne die Musiker der Band von der Map der zu Verfügung
 		// stehenden Musiker
 		if (bandMusikerMap != null) {
-          Collection<String> bandMusikerNamen = bandMusikerMap.keySet();
-          for (String bandMusikerName:bandMusikerNamen) {
-        	 musikerMap.remove(bandMusikerName); 
-          }
+			Collection<String> bandMusikerNamen = bandMusikerMap.keySet();
+			for (String bandMusikerName : bandMusikerNamen) {
+				musikerMap.remove(bandMusikerName);
+			}
 		}
 		return "bandform";
 	}
@@ -96,6 +110,8 @@ public class T2RController {
 	}
 
 	public String updateBand() {
+		logger.debug("T2RController.updateBand() called ");
+		band.setMusikerIdListe(this.bandMusikerMap.keySet());
 		myT2RManager.updateBand(band);
 		return "bandlist";
 	}
@@ -117,20 +133,112 @@ public class T2RController {
 		this.band = band;
 	}
 
-	private Map<String,Integer> populateMusikerMap() {
-		return myT2RManager.getMusikerMap();
+	private Map<String, SelectItem> populateMusikerMap() {
+		SelectItemsMapBuilder mapBuilder = new SelectItemsMapBuilder();
+		myT2RManager.buildMusikerCollection(mapBuilder);
+		return mapBuilder.getSelectItemsMap();
 	}
 
-	
-	private Map<String,Integer> populateBandMusikerMap() {
-		return myT2RManager.getBandMusikerMap(band.getId());
+	private Map<String, SelectItem> populateBandMusikerMap() {
+		SelectItemsMapBuilder mapBuilder = new SelectItemsMapBuilder();
+		myT2RManager.buildBandMusikerCollection(mapBuilder, band.getId());
+		return mapBuilder.getSelectItemsMap();
 	}
 
-	public Map<String, Integer> getBandMusikerMap() {
-		return bandMusikerMap;
+	public Collection<SelectItem> getBandMusiker() {
+		return bandMusikerMap.values();
 	}
 
-	public Map<String, Integer> getMusikerMap() {
-		return musikerMap;
+	public Collection<SelectItem> getMusiker() {
+		return musikerMap.values();
 	}
+
+	@SuppressWarnings("unchecked")
+	public void musikerSelected(ValueChangeEvent event) {
+
+		logger.debug(" -------  musikerSelected is called");
+		logger.debug("new value: " + event.getNewValue());
+		List<Long> newValues = (ArrayList<Long>) event.getNewValue();
+		boolean removedItem = false;
+		for (Long musikerId : newValues) {
+			SelectItem musikerSelectItem = musikerMap.get(musikerId.toString());
+			bandMusikerMap.put(musikerId.toString(), musikerSelectItem);
+			musikerMap.remove(musikerId.toString());
+			removedItem = true;
+		}
+		if (removedItem) {
+			// nowendig, damit sich das Entfernen eines Items nicht als
+			// valueChange in der Komponente registriert wird
+			musikerSelectComponent.setSubmittedValue(null);
+			musikerSelectComponent.setValue(null);
+		}
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.renderResponse();
+	}
+
+	@SuppressWarnings("unchecked")
+	public void bandMusikerSelected(ValueChangeEvent event) {
+		logger.debug(" -------  bandMusikerSelected is called");
+		logger.debug("new value: " + event.getNewValue());
+		List<Long> newValues = (ArrayList<Long>) event.getNewValue();
+		boolean removedItem = false;
+		for (Long musikerId : newValues) {
+			SelectItem selectItem = bandMusikerMap.get(musikerId.toString());
+			musikerMap.put(musikerId.toString(), selectItem);
+			bandMusikerMap.remove(musikerId.toString());
+			removedItem = true;
+		}
+		if (removedItem) {
+			// nowendig, damit sich das Entfernen eines Items nicht als
+			// valueChange in der Komponente registriert wird
+			bandMusikerSelectComponent.setSubmittedValue(null);
+			bandMusikerSelectComponent.setValue(null);
+		}
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.renderResponse();
+	}
+
+	public List<String> getMusikerList() {
+		return musikerList;
+	}
+
+	public void setMusikerList(List<String> musikerList) {
+		this.musikerList = musikerList;
+	}
+
+	public Collection<SelectItem> getMusikerSelectItems() {
+		return this.musikerMap.values();
+	}
+
+	public Collection<SelectItem> getBandMusikerSelectItems() {
+		return this.bandMusikerMap.values();
+	}
+
+	public List<String> getBandMusikerList() {
+		return bandMusikerList;
+	}
+
+	public void setBandMusikerList(List<String> bandMusikerList) {
+		this.bandMusikerList = bandMusikerList;
+	}
+
+	public HtmlSelectManyListbox getBandMusikerSelectComponent() {
+		return bandMusikerSelectComponent;
+	}
+
+	public void setBandMusikerSelectComponent(
+			HtmlSelectManyListbox bandMusikerSelectComponent) {
+		this.bandMusikerSelectComponent = bandMusikerSelectComponent;
+	}
+
+	public HtmlSelectManyListbox getMusikerSelectComponent() {
+		return musikerSelectComponent;
+	}
+
+	public void setMusikerSelectComponent(
+			HtmlSelectManyListbox musikerSelectComponent) {
+		this.musikerSelectComponent = musikerSelectComponent;
+	}
+
 }

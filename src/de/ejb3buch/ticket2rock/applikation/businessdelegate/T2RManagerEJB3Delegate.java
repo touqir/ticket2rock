@@ -2,15 +2,15 @@ package de.ejb3buch.ticket2rock.applikation.businessdelegate;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.naming.InitialContext;
 
 import org.apache.log4j.Logger;
 
+import de.ejb3buch.ticket2rock.applikation.helper.IViewCollectionBuilder;
 import de.ejb3buch.ticket2rock.applikation.model.BandBackingBean;
 import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Musiker;
@@ -93,7 +93,16 @@ public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
 	public void updateBand(BandBackingBean bandBackingBean) {
 		Band band = new Band();
 		band.setId(bandBackingBean.getId());
-		band.setName(bandBackingBean.getName());
+		band.setName(bandBackingBean.getName());		
+		Set<Musiker> bandMusikerSet = new HashSet<Musiker>();
+        // für alle musikerIds der BandBackingBean hole entsprechende
+		// Musiker Entittäten und weise diese der Band zu
+		for (String musikerId:bandBackingBean.getMusikerIdListe()) {
+			System.out.println("Musiker id which is assigned to band: " + musikerId);
+			Musiker musiker = myT2RManager.getMusikerById(Integer.valueOf(musikerId));
+			bandMusikerSet.add(musiker);
+		}
+		band.setMusiker(bandMusikerSet);		
 		this.myT2RManager.updateBand(band);
 
 	}
@@ -106,24 +115,23 @@ public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
 
 	}
 
-	public Map<String,Integer> getMusikerMap() {
-		Collection<Musiker> musikerSet = myT2RManager.getMusiker();
-		return convertToMusikerMap(musikerSet);
-	}
-
-	private Map<String, Integer> convertToMusikerMap(Collection<Musiker> musikerSet) {
-		Map<String,Integer> musikerMap = new HashMap<String,Integer>();
-		if (musikerSet != null) {
-			for (Musiker musiker : musikerSet) {
-              musikerMap.put(musiker.getName(),Integer.valueOf(musiker.getId()));
-			}
-		}
-		return musikerMap;
-	}
-
-	public Map<String, Integer> getBandMusikerMap(Integer bandId) {
+	public void buildBandMusikerCollection(IViewCollectionBuilder collectionBuilder,Integer bandId) {
 		Band band = myT2RManager.getBandById(bandId);
 		Set<Musiker> musikerSet = band.getMusiker();
-		return convertToMusikerMap(musikerSet);
+		if (musikerSet != null) {
+			for (Musiker musiker : musikerSet) {
+              collectionBuilder.buildItem(Integer.toString(musiker.getId()),musiker.getName());
+			}
+		}
 	}
+	
+	public void buildMusikerCollection(IViewCollectionBuilder collectionBuilder) {
+		Collection<Musiker> musikerSet = myT2RManager.getMusiker();
+		if (musikerSet != null) {
+			for (Musiker musiker : musikerSet) {
+              collectionBuilder.buildItem(Integer.toString(musiker.getId()),musiker.getName());
+			}
+		}
+	}	
+
 }

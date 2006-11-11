@@ -1,6 +1,7 @@
 package de.ejb3buch.ticket2rock.applikation.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -12,7 +13,8 @@ public class BandBackingBean {
    
 	private Integer id = null;
 	private String name = null;;
-	private List<String> musikerNamensListe = null;;
+	private Collection<String> musikerNamensListe = null;;
+	private Collection<String> musikerIdListe = null;
 	
 	public BandBackingBean () {
 
@@ -36,11 +38,11 @@ public class BandBackingBean {
 	}
 
 
-	public void setMusikerNamensListe(List<String> musikerNamen) {
+	public void setMusikerNamensListe(Collection<String> musikerNamen) {
 		this.musikerNamensListe = musikerNamen;		
 	}
 
-	public List<String> getMusikerNamensListe() {
+	public Collection<String> getMusikerNamensListe() {
 		return musikerNamensListe;
 	}
 	
@@ -62,6 +64,14 @@ public class BandBackingBean {
 			}			
 		}
 		return list;
+	}
+
+	public Collection<String> getMusikerIdListe() {
+		return musikerIdListe;
+	}
+
+	public void setMusikerIdListe(Collection<String> musikerIdListe) {
+		this.musikerIdListe = musikerIdListe;
 	}
 
 	
