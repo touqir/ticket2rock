@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.html.HtmlSelectManyListbox;
@@ -18,6 +20,7 @@ import org.apache.log4j.Logger;
 
 import de.ejb3buch.ticket2rock.applikation.businessdelegate.T2RManagerDelegate;
 import de.ejb3buch.ticket2rock.applikation.businessdelegate.T2RManagerEJB3Delegate;
+import de.ejb3buch.ticket2rock.applikation.helper.SelectItemsComparator;
 import de.ejb3buch.ticket2rock.applikation.helper.SelectItemsMapBuilder;
 import de.ejb3buch.ticket2rock.applikation.model.BandBackingBean;
 
@@ -100,6 +103,7 @@ public class T2RController {
 			context.addMessage("bandForm:bandname", msg);
 			return "error";
 		}
+		band.setMusikerIdListe(this.bandMusikerMap.keySet());
 		myT2RManager.createBand(band);
 		logger.debug("added a band, returning to bandlist");
 		return "bandlist";
@@ -152,7 +156,9 @@ public class T2RController {
 	public Collection<SelectItem> getMusiker() {
 		return musikerMap.values();
 	}
-
+    
+	
+	//TODO refacture next to methods 
 	@SuppressWarnings("unchecked")
 	public void musikerSelected(ValueChangeEvent event) {
 
@@ -207,12 +213,24 @@ public class T2RController {
 		this.musikerList = musikerList;
 	}
 
+	
+	@SuppressWarnings("unchecked")
 	public Collection<SelectItem> getMusikerSelectItems() {
-		return this.musikerMap.values();
+       return sortSelectedItems(musikerMap.values());
 	}
 
+	
+	@SuppressWarnings("unchecked")
 	public Collection<SelectItem> getBandMusikerSelectItems() {
-		return this.bandMusikerMap.values();
+		return sortSelectedItems(bandMusikerMap.values());
+	}
+	
+	@SuppressWarnings("unchecked")
+	private Collection sortSelectedItems(Collection<SelectItem> selectItems) {
+		SortedSet sortedSet = new TreeSet<SelectItem>(new SelectItemsComparator());
+		sortedSet.addAll(selectItems);
+		return sortedSet;
+		
 	}
 
 	public List<String> getBandMusikerList() {

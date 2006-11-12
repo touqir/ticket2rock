@@ -87,13 +87,12 @@ public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
 	public void createBand(BandBackingBean bandBackingBean) {
 		Band band = new Band();
 		band.setName(bandBackingBean.getName());
+		Set<Musiker> bandMusikerSet = getMusikerEntitiesForIds(bandBackingBean);
+		band.setMusiker(bandMusikerSet);	
 		this.myT2RManager.createBand(band);
 	}
 
-	public void updateBand(BandBackingBean bandBackingBean) {
-		Band band = new Band();
-		band.setId(bandBackingBean.getId());
-		band.setName(bandBackingBean.getName());		
+	private Set<Musiker> getMusikerEntitiesForIds(BandBackingBean bandBackingBean) {
 		Set<Musiker> bandMusikerSet = new HashSet<Musiker>();
         // für alle musikerIds der BandBackingBean hole entsprechende
 		// Musiker Entittäten und weise diese der Band zu
@@ -102,6 +101,14 @@ public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
 			Musiker musiker = myT2RManager.getMusikerById(Integer.valueOf(musikerId));
 			bandMusikerSet.add(musiker);
 		}
+		return bandMusikerSet;
+	}
+
+	public void updateBand(BandBackingBean bandBackingBean) {
+		Band band = new Band();
+		band.setId(bandBackingBean.getId());
+		band.setName(bandBackingBean.getName());		
+		Set<Musiker> bandMusikerSet = getMusikerEntitiesForIds(bandBackingBean);
 		band.setMusiker(bandMusikerSet);		
 		this.myT2RManager.updateBand(band);
 
