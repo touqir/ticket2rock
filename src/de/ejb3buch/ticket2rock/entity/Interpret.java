@@ -55,7 +55,27 @@ public abstract class Interpret {
 	private Set<Album> alben;
 	
 	private List<Song> songs;
+	
+	private List<Konzert> konzerte;
+	
+	private List<Tournee> tourneen;
 
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="interpret")
+	public List<Konzert> getKonzerte() {
+		return konzerte;
+	}
+
+	
+	public void setKonzerte(List<Konzert> konzerte) {
+		this.konzerte = konzerte;
+	}
+
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "interpret")
+	public List<Song> getSongs() {
+		return songs;	
+	}
+	
 	public void setSongs(List<Song> songs) {
 		this.songs = songs;
 	}
@@ -86,9 +106,17 @@ public abstract class Interpret {
 	public void setAlben(Set<Album> alben) {
 		this.alben = alben;
 	}
-	
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "interpret")
-	public List<Song> getSongs() {
-		return songs;
+
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="interpret")
+	public List<Tournee> getTourneen() {
+		return tourneen;
 	}
+
+
+	public void setTourneen(List<Tournee> tourneen) {
+		this.tourneen = tourneen;
+	}
+	
+
 }

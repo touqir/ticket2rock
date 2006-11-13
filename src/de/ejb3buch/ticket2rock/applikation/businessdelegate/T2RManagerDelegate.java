@@ -1,7 +1,6 @@
 package de.ejb3buch.ticket2rock.applikation.businessdelegate;
 
 import java.util.List;
-import java.util.Map;
 
 import de.ejb3buch.ticket2rock.applikation.helper.IViewCollectionBuilder;
 import de.ejb3buch.ticket2rock.applikation.model.BandBackingBean;

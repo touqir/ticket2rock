@@ -128,6 +128,11 @@ public class T2RController {
 		logger.debug("deleted a band");
 		return "bandlist";
 	}
+	
+	
+	public String cancel() {
+	  return "bandlist";	  	
+	}
 
 	public BandBackingBean getBand() {
 		return band;
@@ -149,16 +154,8 @@ public class T2RController {
 		return mapBuilder.getSelectItemsMap();
 	}
 
-	public Collection<SelectItem> getBandMusiker() {
-		return bandMusikerMap.values();
-	}
-
-	public Collection<SelectItem> getMusiker() {
-		return musikerMap.values();
-	}
-    
 	
-	//TODO refacture next to methods 
+	//TODO refacture subsequent two methods 
 	@SuppressWarnings("unchecked")
 	public void musikerSelected(ValueChangeEvent event) {
 
@@ -258,5 +255,6 @@ public class T2RController {
 			HtmlSelectManyListbox musikerSelectComponent) {
 		this.musikerSelectComponent = musikerSelectComponent;
 	}
+	
 
 }

@@ -25,6 +25,7 @@ package de.ejb3buch.ticket2rock.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -79,7 +80,7 @@ public class Tournee {
 	// failed to lazily initialize a collection of role:
 	// de.ejb3buch.ticket2rock.entity.Tournee.konzerte,
 	// no session or session was closed")
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "tournee")
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "tournee")
 	public List<Konzert> getKonzerte() {
 		return konzerte;
 	}

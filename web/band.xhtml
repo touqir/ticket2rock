@@ -65,7 +65,9 @@
 				 <h:commandButton id="submitAdd" class="button" action="#{T2RManagerBean.addBand}" 
 							value="#{msg.bandform_save}" rendered="#{not T2RManagerBean.editMode}" />
 		         <h:commandButton id="submitUpdate" class="button" action="#{T2RManagerBean.updateBand}" 
-		        	value="#{msg.bandform_save}" rendered="#{T2RManagerBean.editMode}" />
+		        	value="#{msg.bandform_save}" rendered="#{T2RManagerBean.editMode}" />&#160;&#160;
+		         <h:commandButton id="submitCancel" class="button" immediate="true" action="#{T2RManagerBean.cancel}" 
+		        	value="#{msg.bandform_cancel}" />		        		        	
 			</div>
 	    </div>
 	  </fieldset>

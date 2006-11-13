@@ -49,7 +49,7 @@ public class Konzert {
 	private Veranstaltungsort ort;
 
 	private Tournee tournee;
-
+	
 	private int ticketkontingent;
 
 	@Id
@@ -112,4 +112,6 @@ public class Konzert {
 	public void setTicketkontingent(int ticketkontingent) {
 		this.ticketkontingent = ticketkontingent;
 	}
+
+
 }
