@@ -23,7 +23,7 @@
 		<div class="entry">
 			<div class="label"><h:outputLabel for="bandname" value="#{msg.bandform_name}" /></div>
 			<div class="input">
-				<h:inputText id="bandname" value="#{T2RManagerBean.band.name}"
+				<h:inputText id="bandname" value="#{BandController.band.name}"
 		      							 required="true" />
 		    </div>
 		    <span class="errors"><h:message for="bandname" /></span>
@@ -34,27 +34,37 @@
         
        
 		<table align="center" style="border:0;border-bottom:0;border-left:0">
-		  <tr style="border:0;border-bottom:0;border-left:0">
-		    <td style="border:0;border-bottom:0;border-left:0;text-align:center">
-             <h:selectManyListbox id="bandMusikerList" size="8" value="#{T2RManagerBean.bandMusikerList}" 
-             immediate="true" valueChangeListener="#{T2RManagerBean.bandMusikerSelected}" 
-             binding="#{T2RManagerBean.bandMusikerSelectComponent}" style="width:170px">
+		  <tr>
+		    <td>
+		      <h:outputLabel value="#{msg.bandform_bandmusicians}" />
+		    </td>
+		    <td>
+		    </td>
+		    <td>
+		    <h:outputLabel value="#{msg.bandform_availablemusicians}" />
+		    </td>
+		  </tr>  		    
+		  <tr>
+		    <td>
+             <h:selectManyListbox id="bandMusikerList" label="Zugewiesene Musiker:" size="8" value="#{BandController.bandMusikerList}" 
+             immediate="true" valueChangeListener="#{BandController.bandMusikerSelected}" 
+             binding="#{BandController.bandMusikerSelectComponent}" style="width:170px">
                <f:convertNumber/>
-               <f:selectItems value="#{T2RManagerBean.bandMusikerSelectItems}" />
+               <f:selectItems value="#{BandController.bandMusikerSelectItems}" />
              </h:selectManyListbox>
 			</td>
 			
-			<td style="border:0;border-bottom:0;border-left:0;text-align:center">
+			<td>
 			   <h:commandButton id="submit" class="button" value="&#60;&#60;"/><br/>
 			   <h:commandButton id="submit" class="button" value="&#62;&#62;"/>
 			</td>
-			<td style="border:0;border-bottom:0;border-left:0;text-align:center"> 
+			<td> 
              <h:selectManyListbox id="musikerList" size="8" 
-                value="#{T2RManagerBean.musikerList}" immediate="true" 
-                valueChangeListener="#{T2RManagerBean.musikerSelected}" 
-                binding="#{T2RManagerBean.musikerSelectComponent}" style="width:170px">
+                value="#{BandController.musikerList}" immediate="true" 
+                valueChangeListener="#{BandController.musikerSelected}" 
+                binding="#{BandController.musikerSelectComponent}" style="width:170px">
                <f:convertNumber/>
-               <f:selectItems value="#{T2RManagerBean.musikerSelectItems}" />
+               <f:selectItems value="#{BandController.musikerSelectItems}" />
              </h:selectManyListbox>
 			</td>
 		   </tr>
@@ -62,18 +72,15 @@
 		<div class="entry">
 			<div class="label">&#160;</div>
 			<div class="input">
-				 <h:commandButton id="submitAdd" class="button" action="#{T2RManagerBean.addBand}" 
-							value="#{msg.bandform_save}" rendered="#{not T2RManagerBean.editMode}" />
-		         <h:commandButton id="submitUpdate" class="button" action="#{T2RManagerBean.updateBand}" 
-		        	value="#{msg.bandform_save}" rendered="#{T2RManagerBean.editMode}" />&#160;&#160;
-		         <h:commandButton id="submitCancel" class="button" immediate="true" action="#{T2RManagerBean.cancel}" 
+				 <h:commandButton id="submitAdd" class="button" action="#{BandController.addBand}" 
+							value="#{msg.bandform_save}" rendered="#{not BandController.editMode}" />
+		         <h:commandButton id="submitUpdate" class="button" action="#{BandController.updateBand}" 
+		        	value="#{msg.bandform_save}" rendered="#{BandController.editMode}" />&#160;&#160;
+		         <h:commandButton id="submitCancel" class="button" immediate="true" action="#{BandController.cancel}" 
 		        	value="#{msg.bandform_cancel}" />		        		        	
 			</div>
 	    </div>
 	  </fieldset>
-	  
-
-      
    </h:form>
   
   </div>
@@ -81,7 +88,7 @@
 
 <!-- sidebar -->
 <ui:define name="sidebar">
-<p>Definition einer Band. Ein neues Band Entity Bean entsteht.</p>
+<p>Verwaltung einer Band-Entit&#228;t. Hier erfolgt die Definition des Bandnamens, sowie die Zuweisung zu ein oder mehreren Bandmusikern.</p>
 </ui:define>
 
 </ui:composition>

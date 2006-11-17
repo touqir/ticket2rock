@@ -195,6 +195,13 @@ fieldset {
 	border-collapse: collapse;
 }
 
+#content fieldset table tr td {
+   border:0;
+   border-bottom:0;
+   border-left:0;
+   text-align:center
+}
+
 
 
 #content table caption {

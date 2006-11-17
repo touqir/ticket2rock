@@ -10,13 +10,13 @@
 <ui:define name="content">
   <div class="section">
   		<h:form>
-			<h:dataTable id="items" value="#{T2RManagerBean.bands}" var="band"
+			<h:dataTable id="items" value="#{BandController.bands}" var="band"
 				 styleClass="datatable">
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Bandname" />
 					</f:facet>
-					<h:commandLink action="#{T2RManagerBean.editBand}">
+					<h:commandLink action="#{BandController.editBand}">
 					    <h:outputText value="#{band.name}" />
 				    </h:commandLink>
 				</h:column>
@@ -31,12 +31,12 @@
 		            
    				</h:column>
 				<h:column>
-					<h:commandButton id="deleteBand" class="button" action="#{T2RManagerBean.deleteBand}" 
+					<h:commandButton id="deleteBand" class="button" action="#{BandController.deleteBand}" 
 							value="#{msg.bandlist_delete}"/>
 				</h:column>
 			</h:dataTable>
 			<br />
-			<h:commandButton class="button" action="#{T2RManagerBean.addNewBand}" value="#{msg.bandlist_add}" />			
+			<h:commandButton class="button" action="#{BandController.addNewBand}" value="#{msg.bandlist_add}" />			
 		</h:form>
   </div>		
 </ui:define>
