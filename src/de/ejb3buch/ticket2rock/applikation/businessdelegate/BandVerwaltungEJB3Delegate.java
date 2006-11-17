@@ -14,24 +14,28 @@ import de.ejb3buch.ticket2rock.applikation.helper.IViewCollectionBuilder;
 import de.ejb3buch.ticket2rock.applikation.model.BandBackingBean;
 import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Musiker;
-import de.ejb3buch.ticket2rock.session.manager.T2RManagerLocal;
+import de.ejb3buch.ticket2rock.session.crud.BandVerwaltungLocal;
 
-public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
+/**
+ * BusinessDelegate, der die Dienste an EJB3 Session Beans delegiert. 
+ *
+ */
+public class BandVerwaltungEJB3Delegate implements BandVerwaltungDelegate {
 
-	T2RManagerLocal myT2RManager;
+	BandVerwaltungLocal myBandVerwaltung;
 
-	static Logger logger = Logger.getLogger(T2RManagerEJB3Delegate.class);
+	static Logger logger = Logger.getLogger(BandVerwaltungEJB3Delegate.class);
 
 	/**
 	 * Konstruktor des BusinessDelegates. Über den InitialContext wird eine
 	 * lokale Referenz der Session Bean geholt
 	 * 
 	 */
-	public T2RManagerEJB3Delegate() {
+	public BandVerwaltungEJB3Delegate() {
 		try {
 			InitialContext ctx = new InitialContext();
-			myT2RManager = (T2RManagerLocal) ctx
-					.lookup("ticket2rock/T2RManagerBean/local");
+			myBandVerwaltung = (BandVerwaltungLocal) ctx
+					.lookup("ticket2rock/BandVerwaltungBean/local");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -39,13 +43,13 @@ public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
 
 	/**
 	 * Hole die Liste aller Band EJBs und konvertiere diese in eine Liste von
-	 * BandBacking Beans
+	 * BandBacking Beans. 
 	 * 
-	 * @return Liste von BandcBakingBeans
+	 * @return Liste von BandBackingBeans
 	 */
 	@SuppressWarnings("unchecked")
 	public List<BandBackingBean> getBands() {
-		List<Band> bandEntityBeans = myT2RManager.getBands();
+		List<Band> bandEntityBeans = myBandVerwaltung.getBands();
 		if (bandEntityBeans == null) {
 			return new ArrayList();
 		}
@@ -53,14 +57,11 @@ public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
 		for (Band bandEBean : bandEntityBeans) {
 			BandBackingBean bandBBean = new BandBackingBean(bandEBean.getId(),
 					bandEBean.getName());
-			logger.debug("processing band bbean " + bandEBean.getName());
+			// Generiere Musikernamensliste und setze sie in der BackingBean  
 			Set<Musiker> musikerList = bandEBean.getMusiker();
 			List musikerNamen = new ArrayList();
 			if ((musikerList != null) && (!musikerList.isEmpty())) {
-				logger.debug("musiker list is not empty and not null");
 				for (Musiker musiker : musikerList) {
-					logger.debug("adding musiker name to band: "
-							+ musiker.getName());
 					musikerNamen.add(musiker.getName());
 				}
 			}
@@ -73,11 +74,11 @@ public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
 	/**
 	 * Selektiere die Band mit einem gegebenen Namen
 	 * 
-	 * @param name
-	 * @return BandBackingBean
+	 * @param name Name der Band
+	 * @return BandBackingBean mit dem gegebenen Namen
 	 */
 	public BandBackingBean getBandByName(String name) {
-		Band band = myT2RManager.getBandByName(name);
+		Band band = myBandVerwaltung.getBandByName(name);
 		if (band != null) {
 			return new BandBackingBean(band.getId(), band.getName());
 		}
@@ -89,7 +90,7 @@ public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
 		band.setName(bandBackingBean.getName());
 		Set<Musiker> bandMusikerSet = getMusikerEntitiesForIds(bandBackingBean);
 		band.setMusiker(bandMusikerSet);	
-		this.myT2RManager.createBand(band);
+		this.myBandVerwaltung.createBand(band);
 	}
 
 	private Set<Musiker> getMusikerEntitiesForIds(BandBackingBean bandBackingBean) {
@@ -98,7 +99,7 @@ public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
 		// Musiker Entittäten und weise diese der Band zu
 		for (String musikerId:bandBackingBean.getMusikerIdListe()) {
 			System.out.println("Musiker id which is assigned to band: " + musikerId);
-			Musiker musiker = myT2RManager.getMusikerById(Integer.valueOf(musikerId));
+			Musiker musiker = myBandVerwaltung.getMusikerById(Integer.valueOf(musikerId));
 			bandMusikerSet.add(musiker);
 		}
 		return bandMusikerSet;
@@ -110,20 +111,16 @@ public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
 		band.setName(bandBackingBean.getName());		
 		Set<Musiker> bandMusikerSet = getMusikerEntitiesForIds(bandBackingBean);
 		band.setMusiker(bandMusikerSet);		
-		this.myT2RManager.updateBand(band);
+		this.myBandVerwaltung.updateBand(band);
 
 	}
 
-	public void deleteBand(BandBackingBean bandBackingBean) {
-		Band band = new Band();
-		band.setId(bandBackingBean.getId());
-		band.setName(bandBackingBean.getName());
-		myT2RManager.deleteBand(band);
-
+	public void deleteBand(Integer bandId) {
+		myBandVerwaltung.deleteBand(bandId);
 	}
 
 	public void buildBandMusikerCollection(IViewCollectionBuilder collectionBuilder,Integer bandId) {
-		Band band = myT2RManager.getBandById(bandId);
+		Band band = myBandVerwaltung.getBandById(bandId);
 		Set<Musiker> musikerSet = band.getMusiker();
 		if (musikerSet != null) {
 			for (Musiker musiker : musikerSet) {
@@ -133,7 +130,7 @@ public class T2RManagerEJB3Delegate implements T2RManagerDelegate {
 	}
 	
 	public void buildMusikerCollection(IViewCollectionBuilder collectionBuilder) {
-		Collection<Musiker> musikerSet = myT2RManager.getMusiker();
+		Collection<Musiker> musikerSet = myBandVerwaltung.getMusiker();
 		if (musikerSet != null) {
 			for (Musiker musiker : musikerSet) {
               collectionBuilder.buildItem(Integer.toString(musiker.getId()),musiker.getName());
