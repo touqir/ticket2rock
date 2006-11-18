@@ -41,8 +41,8 @@ Mehr Informationen zu Ticket2Rock und dem Buch "EJB 3 professionell":
 ---[ Testumgebung ]-------------------------------------------------------------
 Getestet wurde Ticket2Rock mit
 * Sun J2SE Development Kit 5.0 
-* JBoss 4.0.4 GA Patch 1
-* JBoss EJB 3.0 RC8 FD
+* JBoss 4.0.5 GA Patch 1
+* JBoss EJB 3.0 RC9 FD
 
 ---[ JBoss-Konfiguration ]------------------------------------------------------
 Im JBoss muss eine Queue namens 'queue/ticket2rock' eingerichtet sein, um die
