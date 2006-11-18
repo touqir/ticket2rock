@@ -65,6 +65,15 @@
 				de.ejb3buch.ticket2rock.session.interceptor.BeanStatisticsInterceptor
 			</interceptor-class>
 		</interceptor-binding>
+		<!-- 
+		    Die folgende Definition dient nur Demonstrationszwecken -
+		    BeanStatisticsBean wurde bereits per Annotation vom Default-
+		    Interzeptor entbunden
+		-->
+		<interceptor-binding>
+			<ejb-name>BeanStatisticsBean</ejb-name>
+			<exclude-default-interceptors/>
+		</interceptor-binding>
  		<interceptor-binding>
  			<ejb-name>AbfangjaegerBeanKlasseninterzeptorDD</ejb-name>
  			<interceptor-class>de.ejb3buch.ticket2rock.session.demo.Abfangjaeger</interceptor-class>
