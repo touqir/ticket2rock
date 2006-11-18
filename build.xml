@@ -24,17 +24,19 @@
 -->
 
 <project name="ticket2rock" default="main" basedir=".">
+	
+	<property file="build.properties"/>
+	
 	<property name="home.dir" value="." />
 	<property name="src.dir" value="${home.dir}/src" />
 	<property name="build.dir" value="${home.dir}/build" />
-	<property name="jboss.dir" value="D:/jboss-4.0.4.GA" />
-	<property name="jboss.server.dir" value="${jboss.dir}/server/default" />
+	<property name="jboss.server.dir" value="${jboss.home}/server/${jboss.server}" />
 	<property name="jboss.deploy.dir" value="${jboss.server.dir}/deploy" />
 	<property name="webapp_lib.dir" value="${home.dir}/lib" />
 
 	
 	<path id="build.classpath">
-		<fileset dir="${jboss.dir}/client">
+		<fileset dir="${jboss.home}/client">
 			<include name="ejb3-persistence.jar" />
 			<include name="jboss-ejb3x.jar" />
 			<include name="jboss-j2ee.jar" />
