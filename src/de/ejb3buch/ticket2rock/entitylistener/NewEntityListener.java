@@ -21,28 +21,39 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package de.ejb3buch.ticket2rock.session.demo;
+package de.ejb3buch.ticket2rock.entitylistener;
 
-import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.PostPersist;
 
-import de.ejb3buch.ticket2rock.entity.Album;
-import de.ejb3buch.ticket2rock.entity.Band;
-import de.ejb3buch.ticket2rock.entity.Musiker;
 import de.ejb3buch.ticket2rock.entity.News;
-import de.ejb3buch.ticket2rock.entity.Song;
-import de.ejb3buch.ticket2rock.entity.Tournee;
 
-public interface DemoTape {
+/**
+ * Der NewEntityListener "lauscht" auf neue Entitäten in der ticket2rock-
+ * Datenbank. Für bestimmte Objekttypen (z.B. Konzerte) wird ein News- Objekt
+ * erzeugt, das wiederum über verschiedene Kanäle publiziert wird (siehe Klasse
+ * de.ejb3buch.ticket2rock.entity.News).
+ */
 
-	public List<Band> getBands();
+public class NewEntityListener {
 
-	public List<Musiker> getMusiker();
+	private static EntityManager em = null;
 
-	public List<Song> getSongs();
+	public static void setEntityManager(EntityManager em) {
+		if (em != null && NewEntityListener.em != em) {
+			NewEntityListener.em = em;
+		}
+	}
 
-	public List<Album> getAlben();
-
-	public List<Tournee> getTourneen();
-
-	public List<News> getNews();
+	@PostPersist
+	protected void newEntity(Object entity) {
+		try {
+			News news = new News(entity);
+			if (em != null) {
+				em.persist(news);
+			}
+		} catch (Exception e) {
+			// Keine Nachrichten sind gute Nachrichten ;-)
+		}
+	}
 }

@@ -32,6 +32,7 @@ import javax.persistence.PersistenceContext;
 import de.ejb3buch.ticket2rock.entity.Album;
 import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Musiker;
+import de.ejb3buch.ticket2rock.entity.News;
 import de.ejb3buch.ticket2rock.entity.Song;
 import de.ejb3buch.ticket2rock.entity.Tournee;
 
@@ -40,6 +41,7 @@ import de.ejb3buch.ticket2rock.entity.Tournee;
  * neugierige EJB3-Forscher.
  */
 
+@SuppressWarnings("unchecked")
 @Stateless
 public class DemoTapeBean implements DemoTape {
 
@@ -67,5 +69,11 @@ public class DemoTapeBean implements DemoTape {
 
 	public List<Tournee> getTourneen() {
 		return em.createQuery("FROM Tournee t").getResultList();
+	}
+
+	public List<News> getNews() {
+		List resultList = em.createQuery("FROM News n ORDER BY datum")
+				.getResultList();
+		return resultList;
 	}
 }

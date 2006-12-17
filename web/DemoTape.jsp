@@ -35,6 +35,9 @@ private AbfangjaegerLocal falcon_methode_dd = null;
 	private SimpleDateFormat datumsformat_TagMonatJahr = new SimpleDateFormat(
 			"dd.MM.yyyy");
 
+	private SimpleDateFormat datumsformat_TagMonatJahrStundeMinute = new SimpleDateFormat(
+			"dd.MM.yyyy HH:MM");
+
 	public void jspInit() {
 		try {
 			InitialContext ctx = new InitialContext();
@@ -80,6 +83,17 @@ private AbfangjaegerLocal falcon_methode_dd = null;
 <h1>Demo Tape</h1>
 
 <a href="statistics">Bean-Statistik</a>
+
+<h3>News</h3>
+<ul>
+	<%for (Iterator iter = demo.getNews().iterator(); iter.hasNext();) {
+				News news = (News) iter.next();
+%>
+
+	<li><%=datumsformat_TagMonatJahrStundeMinute.format(news.getDatum())%> - <%=news.getNachricht()%></li>
+
+	<%}%>
+</ul>
 
 <h3>Tourneen</h3>
 <ul>

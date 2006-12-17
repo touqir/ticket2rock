@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -14,10 +15,11 @@ import org.apache.log4j.Logger;
 
 import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Musiker;
+import de.ejb3buch.ticket2rock.entitylistener.NewEntityListener;
 
 /**
  * Stateless Session Bean zur Verwaltung der Band Entitäten.
- *
+ * 
  */
 @Stateless
 public class BandVerwaltungBean implements BandVerwaltungLocal {
@@ -26,6 +28,15 @@ public class BandVerwaltungBean implements BandVerwaltungLocal {
 
 	@PersistenceContext
 	private EntityManager em;
+
+	@PostConstruct
+	protected void afterCreation() {
+		// Der Entity Listener "NewEntityListener" muss "von irgendwo her"
+		// (genauer: aus einem EJB-Objekt) mit einem Entity Manager
+		// versorgt werden. Zugegeben - es ist fraglich, ob dies (immer)
+		// die richtige Stelle ist. Bessere Ideen werden gerne entgegengenommen.
+		NewEntityListener.setEntityManager(em);
+	}
 
 	@SuppressWarnings("unchecked")
 	public List<Band> getBands() {
@@ -55,7 +66,6 @@ public class BandVerwaltungBean implements BandVerwaltungLocal {
 		return bands.iterator().next();
 	}
 
-
 	public void createBand(Band band) {
 		em.persist(band);
 	}
@@ -65,16 +75,16 @@ public class BandVerwaltungBean implements BandVerwaltungLocal {
 	}
 
 	public void deleteBand(Integer bandId) {
-		Band band = em.find(Band.class,bandId.intValue());
+		Band band = em.find(Band.class, bandId.intValue());
 		try {
-			
+
 			if (band == null) {
 				logger.debug("band is null");
 			} else {
 				logger.debug("band is not null");
 			}
-			//em.merge(band);
-			//logger.debug("after merge");
+			// em.merge(band);
+			// logger.debug("after merge");
 			Set<Musiker> bandmusiker = (Set<Musiker>) band.getMusiker();
 			if (bandmusiker == null) {
 				logger.debug("bandmusiker is null");
@@ -110,11 +120,11 @@ public class BandVerwaltungBean implements BandVerwaltungLocal {
 	}
 
 	public Band getBandById(Integer bandId) {
-		return em.find(Band.class,bandId);
+		return em.find(Band.class, bandId);
 	}
 
 	public Musiker getMusikerById(Integer musikerId) {
-		return em.find(Musiker.class,musikerId);
+		return em.find(Musiker.class, musikerId);
 	}
 
 }
