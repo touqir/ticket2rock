@@ -23,6 +23,8 @@
 
 package de.ejb3buch.ticket2rock.entitylistener;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PostPersist;
 
@@ -37,23 +39,27 @@ import de.ejb3buch.ticket2rock.entity.News;
 
 public class NewEntityListener {
 
-	private static EntityManager em = null;
-
-	public static void setEntityManager(EntityManager em) {
-		if (em != null && NewEntityListener.em != em) {
-			NewEntityListener.em = em;
-		}
-	}
-
 	@PostPersist
 	protected void newEntity(Object entity) {
 		try {
 			News news = new News(entity);
+			EntityManager em = getEntityManager();
 			if (em != null) {
 				em.persist(news);
 			}
 		} catch (Exception e) {
 			// Keine Nachrichten sind gute Nachrichten ;-)
+		}
+	}
+
+	private EntityManager getEntityManager() {
+		try {
+			Context ctx = new InitialContext(System.getProperties());
+			EntityManager em = (EntityManager) ctx
+					.lookup("java:/ticket2rockEntityManager");
+			return em;
+		} catch (Exception e) {
+			return null;
 		}
 	}
 }
