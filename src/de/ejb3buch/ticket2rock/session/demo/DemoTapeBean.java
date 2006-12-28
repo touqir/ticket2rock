@@ -72,7 +72,7 @@ public class DemoTapeBean implements DemoTape {
 	}
 
 	public List<News> getNews() {
-		List resultList = em.createQuery("FROM News n ORDER BY datum")
+		List resultList = em.createQuery("FROM News n ORDER BY datum DESC")
 				.getResultList();
 		return resultList;
 	}
