@@ -32,6 +32,8 @@
 		<jta-data-source>java:/DefaultDS</jta-data-source>
 		<properties>
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
+			<!-- EntityManager-Zugriff per JNDI aktivieren -->
+			<property name="jboss.entity.manager.jndi.name" value="java:/ticket2rockEntityManager"/>
 		</properties>
 	</persistence-unit>
 </persistence>
