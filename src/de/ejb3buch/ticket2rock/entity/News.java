@@ -26,6 +26,7 @@ package de.ejb3buch.ticket2rock.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.ExcludeDefaultListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.PostLoad;
@@ -37,6 +38,7 @@ import javax.persistence.PostLoad;
  */
 
 @Entity
+@ExcludeDefaultListeners
 public class News {
 
 	private int id;
@@ -47,7 +49,7 @@ public class News {
 
 	public static final int MAX_ALTER = 20;
 
-	public News() {
+	protected News() {
 		super();
 	}
 
