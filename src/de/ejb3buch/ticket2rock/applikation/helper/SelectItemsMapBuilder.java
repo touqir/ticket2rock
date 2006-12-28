@@ -1,9 +1,6 @@
 package de.ejb3buch.ticket2rock.applikation.helper;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.faces.model.SelectItem;
