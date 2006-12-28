@@ -36,7 +36,7 @@ private AbfangjaegerLocal falcon_methode_dd = null;
 			"dd.MM.yyyy");
 
 	private SimpleDateFormat datumsformat_TagMonatJahrStundeMinute = new SimpleDateFormat(
-			"dd.MM.yyyy HH:MM");
+			"dd.MM.yyyy HH:mm");
 
 	public void jspInit() {
 		try {
