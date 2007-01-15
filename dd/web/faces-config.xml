@@ -25,13 +25,14 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
         <navigation-case>
             <from-outcome>bandlist</from-outcome>
             <to-view-id>/bandlist.xhtml</to-view-id>
-        </navigation-case>	
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>ajaxtest</from-outcome>
+            <to-view-id>/ajaxtest.xhtml</to-view-id>
+        </navigation-case>	        	
 	</navigation-rule>
 	
-		
-   <!-- Facelets support -->
-   <application>
-	 <view-handler>com.sun.facelets.FaceletViewHandler</view-handler>	 
+   <application>	 
      <locale-config>
        <default-locale>de</default-locale>
        <supported-locale>de</supported-locale>
@@ -43,12 +44,27 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
 
   <managed-bean>
     <description>
-      Controller Bean fuer Ticket2Rock
+      Band Controller
     </description>
     <managed-bean-name>BandController</managed-bean-name>
     <managed-bean-class>de.ejb3buch.ticket2rock.applikation.controller.BandController</managed-bean-class>
     <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{ejb3ServiceLocator}</value>
+    </managed-property>     
   </managed-bean>
 		
-	
+  
+  <managed-bean>
+    <description>
+      ServiceLocator für EJB3 Beans
+    </description>
+    <managed-bean-name>ejb3ServiceLocator</managed-bean-name>
+    <managed-bean-class>de.ejb3buch.ticket2rock.applikation.servicelocator.EJB3ServiceLocatorBean</managed-bean-class>
+    <managed-bean-scope>application</managed-bean-scope>
+  </managed-bean>
+
+  
+  			
 </faces-config>
