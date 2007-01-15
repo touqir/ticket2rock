@@ -27,7 +27,7 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 					.lookup("ticket2rock/BandVerwaltungBean/local");
 			logger.info("Service BandVerwaltung steht zur Verfügung");
 			
-			myMusikerVerwaltung = (MusikerVerwaltung) ctx.lookup("ticket2rock/MusikerVerwaltung/local");
+			myMusikerVerwaltung = (MusikerVerwaltung) ctx.lookup("ticket2rock/MusikerVerwaltungBean/local");
 			logger.info("Service MusikerVerwaltung steht zur Verfügung");
 		} catch (Exception e) {
 			e.printStackTrace();
