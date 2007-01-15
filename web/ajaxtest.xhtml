@@ -1,0 +1,26 @@
+ <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"	  			
+	  			xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
+				template="template.xhtml">
+
+<!-- content -->
+<ui:define name="content">
+   <h:form>
+        <h:inputText size="50" value="#{BandController.textAjax}" > 
+           <a4j:support event="onkeyup" reRender="rep"/>
+         </h:inputText>
+     <h:outputText value="#{BandController.textAjax}" id="rep"/>
+   </h:form>
+</ui:define>
+
+<!-- sidebar -->
+<ui:define name="sidebar">
+ <p>
+ Dies ist ein Test
+</p> 
+</ui:define>
+
+</ui:composition>
