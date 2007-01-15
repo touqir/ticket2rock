@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -18,21 +19,25 @@ import javax.faces.model.SelectItem;
 
 import org.apache.log4j.Logger;
 
-import de.ejb3buch.ticket2rock.applikation.businessdelegate.BandVerwaltungDelegate;
-import de.ejb3buch.ticket2rock.applikation.businessdelegate.BandVerwaltungEJB3Delegate;
+import de.ejb3buch.ticket2rock.applikation.helper.IViewCollectionBuilder;
 import de.ejb3buch.ticket2rock.applikation.helper.SelectItemsComparator;
 import de.ejb3buch.ticket2rock.applikation.helper.SelectItemsMapBuilder;
 import de.ejb3buch.ticket2rock.applikation.model.BandBackingBean;
+import de.ejb3buch.ticket2rock.applikation.servicelocator.ServiceLocator;
+import de.ejb3buch.ticket2rock.entity.Band;
+import de.ejb3buch.ticket2rock.entity.Musiker;
+import de.ejb3buch.ticket2rock.session.crud.BandVerwaltung;
 
 public class BandController {
 
 	static Logger logger = Logger.getLogger(BandController.class);
 
-	private BandVerwaltungDelegate myBandVerwalter = new BandVerwaltungEJB3Delegate();
+	
+	private ServiceLocator serviceLocator;
 
 	private boolean editMode = false;
 
-	private BandBackingBean band = null;
+	private BandBackingBean bandBackingBean = null;
 
 	private DataModel bandListDataModel = new ListDataModel();
 
@@ -40,23 +45,40 @@ public class BandController {
 
 	private Map<String, SelectItem> bandMusikerMap;
 
+	//TODO might be obsolete
 	private List<String> musikerList = new ArrayList<String>();
 
+	//TODO might be obsolete
 	private List<String> bandMusikerList = new ArrayList<String>();
 
 	private HtmlSelectManyListbox musikerSelectComponent;
 
 	private HtmlSelectManyListbox bandMusikerSelectComponent;
 
+	// ajax test
+	private String textAjax;
+	public String getTextAjax() {
+		return textAjax;
+	}
+
+	public void setTextAjax(String textAjax) {
+		this.textAjax = textAjax;
+	}
+
 	/**
-	 * Über den BusinessDelegate alle Bands aus der Datenbank selektieren und in
-	 * Form eines DataModel Objektes zurückgeben. Ein DataModel Objekt kann in
-	 * einer jsp mit dem dataTable-Tag zur Anzeige gebracht werden
+	 * Hole die Liste aller Band EJBs und konvertiere diese in eine Liste von
+	 * BandBacking Beans, die anschließend im DataModel Objekt gesetzt
+	 * wird
 	 * 
 	 * @return DataModel Objekt, das alle Bands beinhaltet.
 	 */
 	public DataModel getBands() {
-		bandListDataModel.setWrappedData(myBandVerwalter.getBands());
+		List<BandBackingBean> bandBackingBeans = new ArrayList<BandBackingBean>();
+		Collection<Band> bands = serviceLocator.getBandVerwaltung().getBands();
+		for (Band band:bands) {
+		   	bandBackingBeans.add(new BandBackingBean(band));
+		}
+		bandListDataModel.setWrappedData(bandBackingBeans);
 		return bandListDataModel;
 	}
 
@@ -64,9 +86,9 @@ public class BandController {
 	 * Vorbereitungen treffen, um eine weiter Band anzulegen
 	 */
 	public String addNewBand() {
-		logger.debug("preparing band input form");
+		logger.debug("preparing bandBackingBean input form");
 		editMode = false;
-		band = new BandBackingBean();
+		bandBackingBean = new BandBackingBean();
 		// fülle die Musiker Maps
 		this.bandMusikerMap = new HashMap<String, SelectItem>();
 		this.musikerMap = this.populateMusikerMap();
@@ -77,12 +99,12 @@ public class BandController {
 	 * Vorbereitungen treffen, um eine Band zu editieren
 	 */
 	public String editBand() {
-		band = (BandBackingBean) bandListDataModel.getRowData();
+		bandBackingBean = (BandBackingBean) bandListDataModel.getRowData();
 		this.editMode = true;
 		// fülle die Musiker Maps
 		this.bandMusikerMap = this.populateBandMusikerMap();
 		this.musikerMap = this.populateMusikerMap();
-		// entferne die Musiker der Band von der Map der zu Verfügung
+		// entferne die bereits zugeordeneten Musiker von der Map der zu Verfügung
 		// stehenden Musiker
 		if (bandMusikerMap != null) {
 			Collection<String> bandMusikerNamen = bandMusikerMap.keySet();
@@ -93,19 +115,23 @@ public class BandController {
 		return "bandform";
 	}
 
+	/**
+	 * erstellt und persistiert eine neue Band Entität
+	 * @return Identifier für die JSF Navigation
+	 */
 	public String addBand() {
-		logger.debug("adding a band");
-		if ((myBandVerwalter.getBandByName(band.getName())) != null) {
-
+		BandVerwaltung bandVerwaltung = serviceLocator.getBandVerwaltung();
+		// Überprüfe, ob es eine Band mit diesem Namen bereits gibt		
+		if (bandVerwaltung.getBandByName(bandBackingBean.getName()) != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			FacesMessage msg = MessageUtils.createErrorMessage(
 					"bandform_error_bandexists", context);
 			context.addMessage("bandForm:bandname", msg);
 			return "error";
 		}
-		band.setMusikerIdListe(this.bandMusikerMap.keySet());
-		myBandVerwalter.createBand(band);
-		logger.debug("added a band, returning to bandlist");
+		// setzen der ausgewählten Bandmusiker im BandBackingBean
+		bandBackingBean.setMusikerIdListe(this.bandMusikerMap.keySet());
+		bandVerwaltung.createBand(bandBackingBean.getBand());
 		return "bandlist";
 	}
 
@@ -113,54 +139,60 @@ public class BandController {
 		return editMode;
 	}
 
+	/**
+	 * Aktualisiert eine Band Entität mit den aktuellen Werten und persistiert 
+	 * diese in der Datenbank.
+	 * @return Identifier für die JSF Navigation
+	 */
 	public String updateBand() {
 		logger.debug("T2RController.updateBand() called ");
-		band.setMusikerIdListe(this.bandMusikerMap.keySet());
-		myBandVerwalter.updateBand(band);
+		bandBackingBean.setMusikerIdListe(this.bandMusikerMap.keySet());
+		serviceLocator.getBandVerwaltung().updateBand(bandBackingBean.getBand());
 		return "bandlist";
 	}
 
+	/**
+	 * Löscht eine Band Entität
+	 * @return Identifier für die JSF Navigation
+	 */
 	public String deleteBand() {
-		logger.debug("about to delete a band");
-		band = (BandBackingBean) bandListDataModel.getRowData();
-		myBandVerwalter.deleteBand(band.getId());
-
-		logger.debug("deleted a band");
+		bandBackingBean = (BandBackingBean) bandListDataModel.getRowData();
+		serviceLocator.getBandVerwaltung().deleteBand(bandBackingBean.getId());
 		return "bandlist";
 	}
-	
-	
+
+	/**
+	 * 
+	 * @return Identifier für die JSF Navigation
+	 */
 	public String cancel() {
-	  return "bandlist";	  	
+		return "bandlist";
 	}
 
 	public BandBackingBean getBand() {
-		return band;
+		return bandBackingBean;
 	}
 
 	public void setBand(BandBackingBean band) {
-		this.band = band;
+		this.bandBackingBean = band;
 	}
 
 	private Map<String, SelectItem> populateMusikerMap() {
 		SelectItemsMapBuilder mapBuilder = new SelectItemsMapBuilder();
-		myBandVerwalter.buildMusikerCollection(mapBuilder);
+		this.buildMusikerCollection(mapBuilder);
 		return mapBuilder.getSelectItemsMap();
 	}
 
 	private Map<String, SelectItem> populateBandMusikerMap() {
 		SelectItemsMapBuilder mapBuilder = new SelectItemsMapBuilder();
-		myBandVerwalter.buildBandMusikerCollection(mapBuilder, band.getId());
+		this.buildBandMusikerCollection(mapBuilder, bandBackingBean.getId());
 		return mapBuilder.getSelectItemsMap();
 	}
 
-	
-	//TODO refacture subsequent two methods 
+	// TODO refacture subsequent two methods
 	@SuppressWarnings("unchecked")
 	public void musikerSelected(ValueChangeEvent event) {
 
-		logger.debug(" -------  musikerSelected is called");
-		logger.debug("new value: " + event.getNewValue());
 		List<Long> newValues = (ArrayList<Long>) event.getNewValue();
 		boolean removedItem = false;
 		for (Long musikerId : newValues) {
@@ -175,15 +207,13 @@ public class BandController {
 			musikerSelectComponent.setSubmittedValue(null);
 			musikerSelectComponent.setValue(null);
 		}
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		context.renderResponse();
 	}
 
 	@SuppressWarnings("unchecked")
 	public void bandMusikerSelected(ValueChangeEvent event) {
-		logger.debug(" -------  bandMusikerSelected is called");
-		logger.debug("new value: " + event.getNewValue());
 		List<Long> newValues = (ArrayList<Long>) event.getNewValue();
 		boolean removedItem = false;
 		for (Long musikerId : newValues) {
@@ -202,33 +232,68 @@ public class BandController {
 		context.renderResponse();
 	}
 
+	//TODO might be obsolete
 	public List<String> getMusikerList() {
 		return musikerList;
 	}
 
+	//TODO might be obsolete
 	public void setMusikerList(List<String> musikerList) {
 		this.musikerList = musikerList;
 	}
 
-	
 	@SuppressWarnings("unchecked")
 	public Collection<SelectItem> getMusikerSelectItems() {
-       return sortSelectedItems(musikerMap.values());
+		return sortSelectedItems(musikerMap.values());
 	}
 
-	
 	@SuppressWarnings("unchecked")
 	public Collection<SelectItem> getBandMusikerSelectItems() {
 		return sortSelectedItems(bandMusikerMap.values());
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private Collection sortSelectedItems(Collection<SelectItem> selectItems) {
-		SortedSet sortedSet = new TreeSet<SelectItem>(new SelectItemsComparator());
+		SortedSet sortedSet = new TreeSet<SelectItem>(
+				new SelectItemsComparator());
 		sortedSet.addAll(selectItems);
 		return sortedSet;
-		
+
 	}
+	
+    /**
+     * generiere eine Kollektion der Musiker-Entitäten. 
+     * Die Representation der Kollektion ist abhängig vom übergebenen
+     * Builder Objekt (Anwendung des GoF Builder-Patterns)
+     * @param collectionBuilder Ein Builder, der eine Kollektion erstellt, die
+     * im View verwendet werden kann
+     */
+	private void buildBandMusikerCollection(IViewCollectionBuilder collectionBuilder,Integer bandId) {
+		Band band = serviceLocator.getBandVerwaltung().getBandById(bandId);
+		Set<Musiker> musikerSet = band.getMusiker();
+		if (musikerSet != null) {
+			for (Musiker musiker : musikerSet) {
+              collectionBuilder.buildItem(Integer.toString(musiker.getId()),musiker.getName());
+			}
+		}
+	}
+	
+	 /**
+     * generiere eine Kollektion der Musiker einer Band. 
+     * Die Representation der Kollektion ist abhängig vom übergebenen
+     * Builder Objekt (Anwendung des GoF Builder-Patterns)
+     * @param collectionBuilder Ein Builder, der eine Kollektion erstellt, die
+     * im View verwendet werden kann
+     */
+	private void buildMusikerCollection(IViewCollectionBuilder collectionBuilder) {
+		Collection<Musiker> musikerSet = serviceLocator.getBandVerwaltung().getMusiker();
+		if (musikerSet != null) {
+			for (Musiker musiker : musikerSet) {
+              collectionBuilder.buildItem(Integer.toString(musiker.getId()),musiker.getName());
+			}
+		}
+	}	
+	
 
 	public List<String> getBandMusikerList() {
 		return bandMusikerList;
@@ -255,6 +320,13 @@ public class BandController {
 			HtmlSelectManyListbox musikerSelectComponent) {
 		this.musikerSelectComponent = musikerSelectComponent;
 	}
-	
+
+	public ServiceLocator getServiceLocator() {
+		return serviceLocator;
+	}
+
+	public void setServiceLocator(ServiceLocator serviceLocator) {
+		this.serviceLocator = serviceLocator;
+	}
 
 }
