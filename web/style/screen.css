@@ -203,6 +203,10 @@ fieldset {
 }
 
 
+#content .filterinput {   
+   width:110px;
+   font-size:small
+}
 
 #content table caption {
 	padding-bottom: 6px;
@@ -250,11 +254,6 @@ fieldset {
 	border-bottom: 0px;
 }
 
-.pairselection {
-  border:0;
-  border-bottom:0;
-  border-left:0
-}
 
 /* Header
 ----------------------------------------------- */
