@@ -21,7 +21,7 @@ import de.ejb3buch.ticket2rock.entity.Musiker;
  */
 @SuppressWarnings("unchecked")
 @Stateless
-public class BandVerwaltungBean implements BandVerwaltungLocal {
+public class BandVerwaltungBean implements BandVerwaltung {
 
 	static Logger logger = Logger.getLogger(BandVerwaltungBean.class);
 
@@ -35,14 +35,9 @@ public class BandVerwaltungBean implements BandVerwaltungLocal {
 		return resultList;
 	}
 
-	/**
-	 * Selektiere eine Band mit einem bestimmten Namen.
-	 * 
-	 * @param name
-	 *            Name der Band
-	 * @return Band Entity als POJO. Falls es keine Band mit diesem Namen gibt,
-	 *         ist der Rückgabewert null.
-	 */
+    /**
+     *@inheritDoc
+     */
 	public Band getBandByName(String name) {
 		Query query = em.createQuery("from Band i where i.name = :name");
 		query.setParameter("name", name);
@@ -54,14 +49,24 @@ public class BandVerwaltungBean implements BandVerwaltungLocal {
 		return bands.iterator().next();
 	}
 
+
+    /**
+     *@inheritDoc
+     */
 	public void createBand(Band band) {
 		em.persist(band);
 	}
 
+    /**
+     *@inheritDoc
+     */
 	public void updateBand(Band band) {
 		em.merge(band);
 	}
 
+    /**
+     *@inheritDoc
+     */	
 	public void deleteBand(Integer bandId) {
 		Band band = em.find(Band.class, bandId.intValue());
 		try {
@@ -100,16 +105,26 @@ public class BandVerwaltungBean implements BandVerwaltungLocal {
 		logger.debug("end of method deleteBand()");
 
 	}
-
+	
+	
+    /**
+     *@inheritDoc
+     */
 	public Collection<Musiker> getMusiker() {
 		Query query = em.createQuery("from Musiker");
 		return (Collection<Musiker>) query.getResultList();
 	}
 
+    /**
+     *@inheritDoc
+     */	
 	public Band getBandById(Integer bandId) {
 		return em.find(Band.class, bandId);
 	}
 
+    /**
+     *@inheritDoc
+     */	
 	public Musiker getMusikerById(Integer musikerId) {
 		return em.find(Musiker.class, musikerId);
 	}
