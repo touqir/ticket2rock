@@ -3,6 +3,7 @@
 	    		xmlns:ui="http://java.sun.com/jsf/facelets"
 	  			xmlns:h="http://java.sun.com/jsf/html"
 	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
 				template="template.xhtml">
 
 <ui:define name="content">
@@ -10,21 +11,14 @@
     <h1><h:outputText value="#{msg.bandform_title}" /></h1>
   </div>
   
-  <div class="section"> 
-    <script type="text/javascript">
-      function changeTitle() {
-        document.title='it worked';
-      }
-    </script>
-    
+  <div class="section">     
 	<h:form id="bandForm">
       
 	  <fieldset>
 		<div class="entry">
 			<div class="label"><h:outputLabel for="bandname" value="#{msg.bandform_name}" /></div>
 			<div class="input">
-				<h:inputText id="bandname" value="#{BandController.band.name}"
-		      							 required="true" />
+				<h:inputText id="bandname" value="#{BandController.band.name}" required="true" />
 		    </div>
 		    <span class="errors"><h:message for="bandname" /></span>
 		
@@ -43,23 +37,22 @@
 		    <td>
 		    <h:outputLabel value="#{msg.bandform_availablemusicians}" />
 		    </td>
-		  </tr>  		    
+		  </tr>
 		  <tr>
 		    <td>
-             <h:selectManyListbox id="bandMusikerList" label="Zugewiesene Musiker:" size="8" value="#{BandController.bandMusikerList}" 
+             <h:selectManyListbox id="bandMusikerList" size="8" value="#{BandController.bandMusikerList}" 
              immediate="true" valueChangeListener="#{BandController.bandMusikerSelected}" 
              binding="#{BandController.bandMusikerSelectComponent}" style="width:170px">
                <f:convertNumber/>
                <f:selectItems value="#{BandController.bandMusikerSelectItems}" />
              </h:selectManyListbox>
-			</td>
-			
+			</td>		
 			<td>
-			   <h:commandButton id="submit" class="button" value="&#60;&#60;"/><br/>
-			   <h:commandButton id="submit" class="button" value="&#62;&#62;"/>
+			   <h:commandButton id="deselectButton" class="button" value="&#60;&#60;"/><br/>
+			   <h:commandButton id="selectButton" class="button" value="&#62;&#62;"/>
 			</td>
-			<td> 
-             <h:selectManyListbox id="musikerList" size="8" 
+			<td>
+	         <h:selectManyListbox id="musikerList" size="7" 
                 value="#{BandController.musikerList}" immediate="true" 
                 valueChangeListener="#{BandController.musikerSelected}" 
                 binding="#{BandController.musikerSelectComponent}" style="width:170px">
@@ -81,7 +74,12 @@
 			</div>
 	    </div>
 	  </fieldset>
+   <h:commandLink action="ajaxtest">
+	  <h:outputText value="ajaxtest" />
+   </h:commandLink>						 
+   
    </h:form>
+
   
   </div>
 </ui:define>
