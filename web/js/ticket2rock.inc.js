@@ -8,7 +8,7 @@ function createjsDOMenu() {
   
   fixedMenu2 = new jsDOMenu(120);
   with (fixedMenu2) {
-    addMenuItem(new menuItem("Home", "", "home.faces"));
+    addMenuItem(new menuItem("Konzertsuche", "", "konzertsuche.faces"));
   }
   
     

@@ -4,6 +4,7 @@ import javax.naming.InitialContext;
 
 import org.apache.log4j.Logger;
 
+import de.ejb3buch.ticket2rock.session.Auskunft;
 import de.ejb3buch.ticket2rock.session.crud.BandVerwaltung;
 import de.ejb3buch.ticket2rock.session.crud.MusikerVerwaltung;
 
@@ -19,6 +20,7 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 	static Logger logger = Logger.getLogger(EJB3ServiceLocatorBean.class);
 	private BandVerwaltung myBandVerwaltung;
 	private MusikerVerwaltung myMusikerVerwaltung;
+	private Auskunft myAuskunft;
 
 	public EJB3ServiceLocatorBean() {
 		try {
@@ -29,6 +31,9 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 			
 			myMusikerVerwaltung = (MusikerVerwaltung) ctx.lookup("ticket2rock/MusikerVerwaltungBean/local");
 			logger.info("Service MusikerVerwaltung steht zur Verfügung");
+		
+			myAuskunft = (Auskunft) ctx.lookup("ticket2rock/AuskunftBean/local");
+			logger.info("Service Auskunft steht zur Verfügung");			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
@@ -40,6 +45,10 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 
 	public MusikerVerwaltung getMusikerVerwaltung() {
        return myMusikerVerwaltung;
+	}
+
+	public Auskunft getAuskunft() {
+		return myAuskunft;
 	}
 	
 	

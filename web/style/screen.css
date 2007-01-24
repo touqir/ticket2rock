@@ -139,10 +139,10 @@ fieldset {
 	font-size: small;
 }
 .errors {
-	font-size: small;
+    font: normal 0.8em/1.2em Verdana, Arial, Helvetica, sans-serif;
 	font-weight: bold;
-	text-align: center;
-	color: #600;
+	text-align: left;
+	color: red;
 }
 .errors ul {
 	list-style: none;

@@ -1,0 +1,56 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:c="http://java.sun.com/jsp/jstl/core"
+				template="template.xhtml">
+
+<!-- content -->
+<ui:define name="content">
+  <div class="section">
+    <h1><h:outputText value="#{msg.konzertsuchergebnis_title}" /></h1>
+  </div>
+  <div class="section">
+  		<h:form>
+			<h:dataTable id="items" value="#{SuchController.konzertSuchErgebnis}" var="konzert"
+				 styleClass="datatable">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.konzertsuchergebnis_location}" />
+					</f:facet>
+					<h:outputText value="#{konzert.ort.name}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.konzertsuchergebnis_date}" />
+					</f:facet>
+					<h:outputText value="#{konzert.datum}">
+					 <f:convertDateTime pattern="#{msg.konzertsuchergebnis_dateformat}" />
+					</h:outputText>
+				</h:column>								 
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.konzertsuchergebnis_interpret}" />
+					</f:facet>
+					<h:outputText value="#{konzert.interpret.name}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.konzertsuchergebnis_tournee}" />
+					</f:facet>
+					<h:outputText value="#{konzert.tournee.name}" />
+				</h:column>
+			</h:dataTable>
+			<br />
+            <h:commandButton class="button" action="newSearch" value="#{msg.konzertsuchergebnis_newsearch}" />						
+		</h:form>
+  </div>		
+</ui:define>
+
+<!-- sidebar -->
+<ui:define name="sidebar">
+Ergebnis einer Suche nach Konzerten.
+</ui:define>
+
+</ui:composition>

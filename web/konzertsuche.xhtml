@@ -1,0 +1,65 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+				template="template.xhtml">
+
+<ui:define name="content">
+  <div class="section">
+    <h1><h:outputText value="#{msg.konzertsuche_title}" /></h1>
+  </div>
+  
+  <div class="section">     
+	<h:form id="konzertsucheForm">
+      
+	  <fieldset>
+		<div class="entry">
+			<div class="label"><h:outputLabel for="ort" value="#{msg.konzertsuche_ort}" /></div>
+			<div class="input">
+				<h:inputText id="ort" value="#{SuchController.ortsName}" required="false" />
+		    </div>
+		    <span class="errors"><h:message for="ort" /></span>
+		</div>
+		<div class="entry">
+			<div class="label"><h:outputLabel for="von" value="#{msg.konzertsuche_fromdate}" /></div>
+		    <h:inputText id="von" value="#{SuchController.vonDatum}" required="false" >
+			      <f:convertDateTime pattern="#{msg.konzertsuche_dateformat}" />
+			 </h:inputText>&nbsp;&nbsp;
+			 <h:outputText value="#{msg.konzertsuche_dateformatlabel}" />
+			 <div class="errors"><h:message for="von" /></div>		
+		</div>		
+
+		<div class="entry">
+			<div class="label"><h:outputLabel for="bis" value="#{msg.konzertsuche_todate}" /></div>
+		    <h:inputText id="bis" value="#{SuchController.bisDatum}" required="false" >
+			      <f:convertDateTime pattern="#{msg.konzertsuche_dateformat}" />
+			 </h:inputText>&nbsp;&nbsp;
+			 <h:outputText value="#{msg.konzertsuche_dateformatlabel}" />
+			 <div class="errors"><h:message for="bis" /></div>		
+		</div>	
+
+        <div class="errors"><h:messages globalOnly="true" /></div>
+        
+ 		<div class="entry">
+			<div class="label">&#160;</div>
+			<div class="input">
+				 <h:commandButton id="submitSearch" class="button" action="#{SuchController.search}" 
+							value="#{msg.konzertsuche_search}" />&#160;&#160;
+		         <h:commandButton id="submitCancel" class="button" immediate="true" action="cancel" 
+		        	value="#{msg.konzertsuche_cancel}" />		        		        	
+			</div>
+	    </div>
+	  </fieldset>
+   </h:form>
+
+  
+  </div>
+</ui:define>
+
+<!-- sidebar -->
+<ui:define name="sidebar">
+<p>Suche nach Konzert-Events. Anhand des Veranstaltungsort und eines Zeitraums wird nach Konzerten gesucht.</p>
+</ui:define>
+
+</ui:composition>
