@@ -38,7 +38,7 @@
 	<path id="build.classpath">
 		<fileset dir="${jboss.home}/client">
 			<include name="ejb3-persistence.jar" />
-			<include name="jboss-ejb3-client.jar" />
+			<include name="jboss-ejb3x.jar" />
 			<include name="jboss-j2ee.jar" />
 		</fileset>
 		<fileset dir="${webapp_lib.dir}">
