@@ -31,6 +31,30 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
             <to-view-id>/ajaxtest.xhtml</to-view-id>
         </navigation-case>	        	
 	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/konzertsuche.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>cancel</from-outcome>
+            <to-view-id>/home.xhtml</to-view-id>
+        </navigation-case>
+ 	</navigation-rule>
+ 	
+	<navigation-rule>
+		<from-view-id>/konzertsuche.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>konzertsuchergebnis</from-outcome>
+            <to-view-id>/konzertsuchErgebnis.xhtml</to-view-id>
+        </navigation-case>
+ 	</navigation-rule> 
+ 	
+ 	<navigation-rule>
+		<from-view-id>/konzertsuchErgebnis.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>newSearch</from-outcome>
+            <to-view-id>/konzertsuche.xhtml</to-view-id>
+        </navigation-case>
+ 	</navigation-rule> 			
 	
    <application>	 
      <locale-config>
@@ -55,6 +79,19 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
     </managed-property>     
   </managed-bean>
 		
+  <managed-bean>
+    <description>
+      Such Controller
+    </description>
+    <managed-bean-name>SuchController</managed-bean-name>
+    <managed-bean-class>de.ejb3buch.ticket2rock.applikation.controller.SuchController</managed-bean-class>
+    <managed-bean-scope>request</managed-bean-scope>
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{ejb3ServiceLocator}</value>
+    </managed-property>     
+  </managed-bean>
+
   
   <managed-bean>
     <description>
