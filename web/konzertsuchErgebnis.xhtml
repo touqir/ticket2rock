@@ -26,7 +26,7 @@
 						<h:outputText value="#{msg.konzertsuchergebnis_date}" />
 					</f:facet>
 					<h:outputText value="#{konzert.datum}">
-					 <f:convertDateTime pattern="#{msg.konzertsuchergebnis_dateformat}" />
+					 <f:convertDateTime timeZone="GMT+1" pattern="#{msg.konzertsuchergebnis_dateformat}" />
 					</h:outputText>
 				</h:column>								 
 				<h:column>

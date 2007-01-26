@@ -1,14 +1,13 @@
 package de.ejb3buch.ticket2rock.session;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 import org.apache.log4j.Logger;
 
@@ -65,14 +64,10 @@ public class AuskunftBean implements Auskunft {
 			query.setParameter("ortsName","%" + ortsName.toUpperCase() + "%");
 		}
 		if (vonDatum != null) {
-			query.setParameter("vonDatum",vonDatum);
+			query.setParameter("vonDatum",vonDatum,TemporalType.DATE);
 		}
 		if (bisDatum != null) {
-			// erhöhe bisDatum um einen Tag
-			Calendar cal = new GregorianCalendar();
-		    cal.setTime(bisDatum);
-		    cal.add(Calendar.DAY_OF_YEAR,1);
-			query.setParameter("bisDatum",cal.getTime());	
+			query.setParameter("bisDatum",bisDatum,TemporalType.DATE);	
 		}
 		
 		List resultList = query.getResultList();

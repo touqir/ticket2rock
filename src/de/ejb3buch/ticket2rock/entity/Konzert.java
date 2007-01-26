@@ -30,6 +30,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Ein Konzert ist eine Veranstaltung, bei dem ein Interpreten einige seiner
@@ -77,6 +79,7 @@ public class Konzert {
 		this.interpret = interpret;
 	}
 
+	@Temporal(TemporalType.DATE)
 	public Date getDatum() {
 		return datum;
 	}
