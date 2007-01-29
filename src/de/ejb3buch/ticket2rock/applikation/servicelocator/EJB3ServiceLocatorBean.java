@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import de.ejb3buch.ticket2rock.session.Auskunft;
 import de.ejb3buch.ticket2rock.session.crud.BandVerwaltung;
 import de.ejb3buch.ticket2rock.session.crud.MusikerVerwaltung;
+import de.ejb3buch.ticket2rock.session.crud.TourneeVerwaltung;
 
 /**
  * ServiceLocator Implementierung. Services werden in Form von Session Bean Facaden
@@ -20,6 +21,7 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 	static Logger logger = Logger.getLogger(EJB3ServiceLocatorBean.class);
 	private BandVerwaltung myBandVerwaltung;
 	private MusikerVerwaltung myMusikerVerwaltung;
+	private TourneeVerwaltung myTourneeVerwaltung;
 	private Auskunft myAuskunft;
 
 	public EJB3ServiceLocatorBean() {
@@ -31,6 +33,9 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 			
 			myMusikerVerwaltung = (MusikerVerwaltung) ctx.lookup("ticket2rock/MusikerVerwaltungBean/local");
 			logger.info("Service MusikerVerwaltung steht zur Verfügung");
+			
+			myTourneeVerwaltung = (TourneeVerwaltung) ctx.lookup("ticket2rock/TourneeVerwaltungBean/local");
+			logger.info("Service TourneeVerwaltung steht zur Verfügung");
 		
 			myAuskunft = (Auskunft) ctx.lookup("ticket2rock/AuskunftBean/local");
 			logger.info("Service Auskunft steht zur Verfügung");			
@@ -51,6 +56,7 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 		return myAuskunft;
 	}
 	
-	
-
+	public TourneeVerwaltung getTourneeVerwaltung() {
+	       return myTourneeVerwaltung;
+		}
 }

@@ -81,6 +81,18 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
 		
   <managed-bean>
     <description>
+      Tournee Controller
+    </description>
+    <managed-bean-name>TourneeController</managed-bean-name>
+    <managed-bean-class>de.ejb3buch.ticket2rock.applikation.controller.TourneeController</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{ejb3ServiceLocator}</value>
+    </managed-property>     
+  </managed-bean>
+  <managed-bean>
+    <description>
       Such Controller
     </description>
     <managed-bean-name>SuchController</managed-bean-name>
