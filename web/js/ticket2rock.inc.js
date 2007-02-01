@@ -16,7 +16,7 @@ function createjsDOMenu() {
   fixedMenuBar = new jsDOMenuBar("static","menubar");
   with (fixedMenuBar) {
     addMenuBarItem(new menuBarItem("Verwaltung", fixedMenu1));
-    addMenuBarItem(new menuBarItem("Anwendungsfaelle", fixedMenu2));
+    addMenuBarItem(new menuBarItem(unescape("Anwendungsf%E4lle"), fixedMenu2));
     moveTo(10, 100);
   }
 }
