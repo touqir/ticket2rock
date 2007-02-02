@@ -1,3 +1,25 @@
+/**
+ *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3 professionell" (dpunkt).
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
+ *
+ *  Copyright (C) 2006
+ *  Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg und Holger Koschek
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 2
+ *  of the License, or (at your option) any later version.
+ *  
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
 package de.ejb3buch.ticket2rock.session;
 
 import java.util.Date;
@@ -12,7 +34,6 @@ import javax.persistence.TemporalType;
 import org.apache.log4j.Logger;
 
 import de.ejb3buch.ticket2rock.entity.Konzert;
-import de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean;
 
 @Stateless
 @SuppressWarnings("unchecked")
@@ -28,7 +49,7 @@ public class AuskunftBean implements Auskunft {
 	 */
 	public List<Konzert> sucheKonzerte(String ortsName, Date vonDatum,
 			Date bisDatum) {
-		
+
 		// generiere den query String dynamisch abhängig von der
 		// Belegung der Übergabeparameter
 		StringBuffer buf = new StringBuffer();
@@ -48,7 +69,7 @@ public class AuskunftBean implements Auskunft {
 			buf.append("k.datum >= :vonDatum");
 			firstPredicate = false;
 		}
-		
+
 		if (bisDatum != null) {
 			if (firstPredicate) {
 				buf.append("where ");
@@ -57,19 +78,19 @@ public class AuskunftBean implements Auskunft {
 			}
 			buf.append("k.datum <= :bisDatum");
 		}
-       
+
 		// setze die Query Parameter dynamisch
 		Query query = em.createQuery(buf.toString());
 		if ((ortsName != null) && (ortsName.length() > 0)) {
-			query.setParameter("ortsName","%" + ortsName.toUpperCase() + "%");
+			query.setParameter("ortsName", "%" + ortsName.toUpperCase() + "%");
 		}
 		if (vonDatum != null) {
-			query.setParameter("vonDatum",vonDatum,TemporalType.DATE);
+			query.setParameter("vonDatum", vonDatum, TemporalType.DATE);
 		}
 		if (bisDatum != null) {
-			query.setParameter("bisDatum",bisDatum,TemporalType.DATE);	
+			query.setParameter("bisDatum", bisDatum, TemporalType.DATE);
 		}
-		
+
 		List resultList = query.getResultList();
 		logger.debug("Anzahl der gefundenen Konzerte: " + resultList.size());
 		return resultList;
