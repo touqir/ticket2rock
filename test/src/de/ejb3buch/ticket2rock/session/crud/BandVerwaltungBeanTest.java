@@ -35,6 +35,7 @@ import junit.framework.JUnit4TestAdapter;
 import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import de.ejb3buch.ticket2rock.EmbeddedContainerTestHelper;
@@ -86,6 +87,7 @@ public class BandVerwaltungBeanTest {
 	@Test
 	public void testGetBandByName() throws Exception {
 		Band dieBand = getBandVerwaltung().getBandByName("Green Day");
+		assertTrue(dieBand.getKonzerte().size() > 0);
 		assertTrue(dieBand.getAlben().size() > 0);
 	}
 
@@ -158,6 +160,7 @@ public class BandVerwaltungBeanTest {
 	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getMusiker()}.
 	 */
 	@Test
+	@Ignore
 	public void testGetMusiker() {
 		fail("Not yet implemented"); // TODO
 	}
@@ -167,6 +170,7 @@ public class BandVerwaltungBeanTest {
 	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getBandById(java.lang.Integer)}.
 	 */
 	@Test
+	@Ignore
 	public void testGetBandById() {
 		fail("Not yet implemented"); // TODO
 	}
@@ -176,6 +180,7 @@ public class BandVerwaltungBeanTest {
 	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getMusikerById(java.lang.Integer)}.
 	 */
 	@Test
+	@Ignore
 	public void testGetMusikerById() {
 		fail("Not yet implemented"); // TODO
 	}
