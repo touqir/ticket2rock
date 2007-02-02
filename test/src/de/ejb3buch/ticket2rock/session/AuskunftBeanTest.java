@@ -27,6 +27,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import junit.framework.JUnit4TestAdapter;
+
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -39,7 +41,10 @@ import de.ejb3buch.ticket2rock.entity.Konzert;
  * 
  */
 public class AuskunftBeanTest {
-
+	
+	public static junit.framework.Test suite() {
+		return new JUnit4TestAdapter(AuskunftBeanTest.class);
+	}
 	/**
 	 * @throws java.lang.Exception
 	 */

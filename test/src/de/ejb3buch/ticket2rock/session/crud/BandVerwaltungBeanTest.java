@@ -1,26 +1,57 @@
 /**
- * 
+ *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3 professionell" (dpunkt).
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
+ *
+ *  Copyright (C) 2006
+ *  Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg und Holger Koschek
+ *
+ *  This program is free software; you can redistribute it and/or
+ *  modify it under the terms of the GNU General Public License
+ *  as published by the Free Software Foundation; either version 2
+ *  of the License, or (at your option) any later version.
+ *  
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package de.ejb3buch.ticket2rock.session.crud;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Collection;
 
+import javax.naming.NamingException;
+
+import junit.framework.JUnit4TestAdapter;
+
+import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.ejb3buch.ticket2rock.EmbeddedContainerTestHelper;
 import de.ejb3buch.ticket2rock.entity.Band;
-import de.ejb3buch.ticket2rock.session.Auskunft;
 
 /**
  * @author Dierk
- *
+ * 
  */
 public class BandVerwaltungBeanTest {
+	private static final Logger logger = Logger
+			.getLogger(BandVerwaltungBeanTest.class);
 
+	
+	public static junit.framework.Test suite() {
+		return new JUnit4TestAdapter(BandVerwaltungBeanTest.class);
+	}
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -38,67 +69,93 @@ public class BandVerwaltungBeanTest {
 	}
 
 	/**
-	 * Test method for {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getBands()}.
+	 * Test method for
+	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getBands()}.
 	 */
 	@Test
 	public void testGetBands() throws Exception {
-		BandVerwaltung bandVerwaltung = (BandVerwaltung) EmbeddedContainerTestHelper
-		.getInitialContext().lookup("BandVerwaltungBean/local");
-		
-		Collection<Band> alleBands = bandVerwaltung.getBands();
+
+		Collection<Band> alleBands = getBandVerwaltung().getBands();
 		assertTrue(alleBands.size() > 0);
 	}
 
 	/**
-	 * Test method for {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getBandByName(java.lang.String)}.
+	 * Test method for
+	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getBandByName(java.lang.String)}.
 	 */
 	@Test
-	public void testGetBandByName() {
-		fail("Not yet implemented"); // TODO
+	public void testGetBandByName() throws Exception {
+		Band dieBand = getBandVerwaltung().getBandByName("Green Day");
+		assertTrue(dieBand.getAlben().size() > 0);
 	}
 
 	/**
-	 * Test method for {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#createBand(de.ejb3buch.ticket2rock.entity.Band)}.
+	 * Test method for
+	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#createBand(de.ejb3buch.ticket2rock.entity.Band)}.
 	 */
 	@Test
-	public void testCreateBand() throws Exception{
+	public void testCreateBand() throws Exception {
+		Band dieBand = new Band();
+		dieBand.setName("Baumanns Tod");
+
+
+		BandVerwaltung bandVerwaltung = getBandVerwaltung();
+		int anzahlVorher = bandVerwaltung.getBands().size();
 		
-		Band trashMakers = new Band();
-		trashMakers.setId(999);
-		trashMakers.setName("TrashMakers");
-		trashMakers.setAlben(null);
-		trashMakers.setKonzerte(null);
-		trashMakers.setMusiker(null);
-		trashMakers.setSongs(null);
-		trashMakers.setTourneen(null);
-	
+		logger.debug("Versuche eine neue Band zu erzeugen...");
+		bandVerwaltung.createBand(dieBand);
+
+		assertEquals(anzahlVorher+1, bandVerwaltung.getBands().size());		
+		
+		assertEquals(bandVerwaltung.getBandByName("Baumanns Tod").getName(), dieBand.getName());
+	}
+
+	/**
+	 * Test method for
+	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#updateBand(de.ejb3buch.ticket2rock.entity.Band)}.
+	 */
+	@Test
+	public void testUpdateBand() throws Exception {
+		BandVerwaltung bandVerwaltung = getBandVerwaltung();
+
+		logger.debug("Versuche eine neue Band zu modifizieren...");
+		Band dieBand = bandVerwaltung.getBandById(10);
+
+		dieBand.setName("Die Neue Band");
+
+		bandVerwaltung.updateBand(dieBand);
+
+		assertEquals(dieBand.getName(), bandVerwaltung.getBandById(10)
+				.getName());
+	}
+
+	private BandVerwaltung getBandVerwaltung() throws NamingException,
+			Exception {
 		BandVerwaltung bandVerwaltung = (BandVerwaltung) EmbeddedContainerTestHelper
-		.getInitialContext().lookup("BandVerwaltungBean/local");
-	
-	
-		bandVerwaltung.createBand(trashMakers);
+				.getInitialContext().lookup("BandVerwaltungBean/local");
+		return bandVerwaltung;
+	}
+
+	/**
+	 * Test method for
+	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#deleteBand(java.lang.Integer)}.
+	 */
+	@Test (expected=NullPointerException.class)
+	public void testDeleteBand() throws Exception {
+		BandVerwaltung bv = getBandVerwaltung();
 		
-		assertEquals(trashMakers, bandVerwaltung.getBandById(999));
+		logger.debug("Versuche eine neue Band zu loeschen");
+		int anzahlVorher = bv.getBands().size();
+		bv.deleteBand(10);
+		
+		assertEquals(anzahlVorher-1, bv.getBands().size());
+		
+		bv.getBandById(10).getName();
 	}
 
 	/**
-	 * Test method for {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#updateBand(de.ejb3buch.ticket2rock.entity.Band)}.
-	 */
-	@Test
-	public void testUpdateBand() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#deleteBand(java.lang.Integer)}.
-	 */
-	@Test
-	public void testDeleteBand() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getMusiker()}.
+	 * Test method for
+	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getMusiker()}.
 	 */
 	@Test
 	public void testGetMusiker() {
@@ -106,7 +163,8 @@ public class BandVerwaltungBeanTest {
 	}
 
 	/**
-	 * Test method for {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getBandById(java.lang.Integer)}.
+	 * Test method for
+	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getBandById(java.lang.Integer)}.
 	 */
 	@Test
 	public void testGetBandById() {
@@ -114,7 +172,8 @@ public class BandVerwaltungBeanTest {
 	}
 
 	/**
-	 * Test method for {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getMusikerById(java.lang.Integer)}.
+	 * Test method for
+	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getMusikerById(java.lang.Integer)}.
 	 */
 	@Test
 	public void testGetMusikerById() {

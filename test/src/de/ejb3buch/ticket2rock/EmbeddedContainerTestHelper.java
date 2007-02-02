@@ -41,6 +41,8 @@ public class EmbeddedContainerTestHelper {
 
 	private EJB3StandaloneDeployer deployer = null;
 
+	private int runlevel = 0;
+
 	private static EmbeddedContainerTestHelper INSTANCE = new EmbeddedContainerTestHelper();
 
 	/**
@@ -72,33 +74,40 @@ public class EmbeddedContainerTestHelper {
 	}
 
 	// ------------------------- private Methods ---------------------------
-	private void startup(List<String> extraResources)
-			throws Exception {
-		log.info("Starting Embedded JBoss");
-		long clock = System.currentTimeMillis();
+	private void startup(List<String> extraResources) throws Exception {
+		if (runlevel == 0) {
+			log.info("Starting Embedded JBoss");
+			long clock = System.currentTimeMillis();
 
-		try {
-			setSystemJNDIProperties();
+			try {
+				setSystemJNDIProperties();
 
-			EJB3StandaloneBootstrap.boot(null);
+				EJB3StandaloneBootstrap.boot(null);
 
-			if (extraResources != null) {
-				for (String resource : extraResources) {
-					EJB3StandaloneBootstrap.deployXmlResource(resource);
+				if (extraResources != null) {
+					for (String resource : extraResources) {
+						EJB3StandaloneBootstrap.deployXmlResource(resource);
+					}
 				}
+
+				deployer = EJB3StandaloneBootstrap.createDeployer();
+				deployer.getArchives().add(getArchiveURL());
+				deployer.create();
+				deployer.start();
+				runlevel++;
+			} catch (Exception ex) {
+				log.fatal(ex);
+				throw new RuntimeException(ex);
+			} finally {
+				long duration = System.currentTimeMillis() - clock;
+				log.info("Embedded JBoss started, duration = " + duration
+						+ "ms");
 			}
-
-			deployer = EJB3StandaloneBootstrap.createDeployer();
-			deployer.getArchives().add(getArchiveURL());
-			deployer.create();
-			deployer.start();
-
-		} catch (Exception ex) {
-			log.fatal(ex);
-			throw new RuntimeException(ex);
-		} finally {
-			long duration = System.currentTimeMillis() - clock;
-			log.info("Embedded JBoss started, duration = " + duration + "ms");
+		}
+		else
+		{
+			runlevel++;
+			log.debug("Embedded JBoss activated " + runlevel + " times");
 		}
 	}
 
@@ -157,8 +166,13 @@ public class EmbeddedContainerTestHelper {
 	 */
 	private void shutdown() {
 
+		if (--runlevel > 0) {
+			return;
+		}
+
 		ctx = null;
 		try {
+
 			if (deployer != null) {
 				deployer.stop();
 				deployer.destroy();
