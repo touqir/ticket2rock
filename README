@@ -43,6 +43,7 @@ Getestet wurde Ticket2Rock mit
 * Sun J2SE Development Kit 5.0 
 * JBoss 4.0.5 GA Patch 1
 * JBoss EJB 3.0 RC9 FD
+* JBoss EJB 3.0 Embeddable APLHA9
 
 ---[ JBoss-Konfiguration ]------------------------------------------------------
 Im JBoss muss eine Queue namens 'queue/ticket2rock' eingerichtet sein, um die
@@ -85,4 +86,18 @@ Main targets:
  clean         Removes all generated code and build artifacts
 ...
 
+---[ Unit-Tests ]------------------------------------------------------------------
+Die Unit Tests basieren auf JUnit 4.x, teilweise benoetigen sie den JBoss Embedded
+Container. Derzeit sind die Unit-Tests aus Eclipse heraus lauffaehig, eine Inte-
+gration in das Ant-Buildfile fehlt noch.
+
+Der JBoss Embedded Container kann heruntergeladen werden unter
+http://downloads.sourceforge.net/jboss/jboss-EJB-3.0_Embeddable_ALPHA_9.zip
+
+Man sollte fuer den Embedded Container, wie auch fuer die EJB3 Libs empfohlen (s.o.),
+eine User-Library anlegen, die den Inhalt des /libs Verzeichnisses des Containers
+umfasst. Wird diese User-Library eingebunden in das Projekt, sind die EJB3 Libs
+aus der JBoss Distribution nicht mehr notwendig....
+
+Daneben muessen die JUnit 4.x Libraries eingebunden werden.
 ---[ ENDE ]---------------------------------------------------------------------
