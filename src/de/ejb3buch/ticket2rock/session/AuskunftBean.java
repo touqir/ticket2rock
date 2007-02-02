@@ -18,7 +18,7 @@ import de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean;
 @SuppressWarnings("unchecked")
 public class AuskunftBean implements Auskunft {
 
-	static Logger logger = Logger.getLogger(BandVerwaltungBean.class);
+	static Logger logger = Logger.getLogger(AuskunftBean.class);
 
 	@PersistenceContext
 	private EntityManager em;
