@@ -29,6 +29,7 @@ import static org.junit.Assert.fail;
 import java.util.Collection;
 
 import javax.naming.NamingException;
+import javax.transaction.UserTransaction;
 
 import junit.framework.JUnit4TestAdapter;
 
@@ -49,10 +50,10 @@ public class BandVerwaltungBeanTest {
 	private static final Logger logger = Logger
 			.getLogger(BandVerwaltungBeanTest.class);
 
-	
 	public static junit.framework.Test suite() {
 		return new JUnit4TestAdapter(BandVerwaltungBeanTest.class);
 	}
+
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -86,9 +87,18 @@ public class BandVerwaltungBeanTest {
 	 */
 	@Test
 	public void testGetBandByName() throws Exception {
-		Band dieBand = getBandVerwaltung().getBandByName("Green Day");
-		assertTrue(dieBand.getKonzerte().size() > 0);
-		assertTrue(dieBand.getAlben().size() > 0);
+
+		UserTransaction utx = (UserTransaction) EmbeddedContainerTestHelper
+				.getInitialContext().lookup("UserTransaction");
+		utx.begin();
+
+		try {
+			Band dieBand = getBandVerwaltung().getBandByName("Green Day");
+			assertTrue(dieBand.getAlben().size() > 0);
+			assertTrue(dieBand.getMusiker().size() > 0);
+		} finally {
+			utx.rollback();
+		}
 	}
 
 	/**
@@ -100,16 +110,16 @@ public class BandVerwaltungBeanTest {
 		Band dieBand = new Band();
 		dieBand.setName("Baumanns Tod");
 
-
 		BandVerwaltung bandVerwaltung = getBandVerwaltung();
 		int anzahlVorher = bandVerwaltung.getBands().size();
-		
+
 		logger.debug("Versuche eine neue Band zu erzeugen...");
 		bandVerwaltung.createBand(dieBand);
 
-		assertEquals(anzahlVorher+1, bandVerwaltung.getBands().size());		
-		
-		assertEquals(bandVerwaltung.getBandByName("Baumanns Tod").getName(), dieBand.getName());
+		assertEquals(anzahlVorher + 1, bandVerwaltung.getBands().size());
+
+		assertEquals(bandVerwaltung.getBandByName("Baumanns Tod").getName(),
+				dieBand.getName());
 	}
 
 	/**
@@ -142,16 +152,16 @@ public class BandVerwaltungBeanTest {
 	 * Test method for
 	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#deleteBand(java.lang.Integer)}.
 	 */
-	@Test (expected=NullPointerException.class)
+	@Test(expected = NullPointerException.class)
 	public void testDeleteBand() throws Exception {
 		BandVerwaltung bv = getBandVerwaltung();
-		
+
 		logger.debug("Versuche eine neue Band zu loeschen");
 		int anzahlVorher = bv.getBands().size();
 		bv.deleteBand(10);
-		
-		assertEquals(anzahlVorher-1, bv.getBands().size());
-		
+
+		assertEquals(anzahlVorher - 1, bv.getBands().size());
+
 		bv.getBandById(10).getName();
 	}
 
