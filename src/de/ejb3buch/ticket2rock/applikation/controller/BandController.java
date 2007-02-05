@@ -286,7 +286,7 @@ public class BandController {
      * im View verwendet werden kann
      */
 	private void buildMusikerCollection(IViewCollectionBuilder collectionBuilder) {
-		Collection<Musiker> musikerSet = serviceLocator.getBandVerwaltung().getMusiker();
+		Collection<Musiker> musikerSet = serviceLocator.getMusikerVerwaltung().getMusiker();
 		if (musikerSet != null) {
 			for (Musiker musiker : musikerSet) {
               collectionBuilder.buildItem(Integer.toString(musiker.getId()),musiker.getName());

@@ -17,13 +17,13 @@
 		<div class="entry">
 			<div class="label"><h:outputLabel for="ort" value="#{msg.konzertsuche_ort}" /></div>
 			<div class="input">
-				<h:inputText id="ort" value="#{SuchController.ortsName}" required="false" />
+				<h:inputText id="ort" value="#{KonzertController.ortsName}" required="false" />
 		    </div>
 		    <span class="errors"><h:message for="ort" /></span>
 		</div>
 		<div class="entry">
 			<div class="label"><h:outputLabel for="von" value="#{msg.konzertsuche_fromdate}" /></div>
-		    <h:inputText id="von" value="#{SuchController.vonDatum}" required="false" >
+		    <h:inputText id="von" value="#{KonzertController.vonDatum}" required="false" >
 			      <f:convertDateTime pattern="#{msg.konzertsuche_dateformat}" />
 			 </h:inputText>&nbsp;&nbsp;
 			 <h:outputText value="#{msg.konzertsuche_dateformatlabel}" />
@@ -32,7 +32,7 @@
 
 		<div class="entry">
 			<div class="label"><h:outputLabel for="bis" value="#{msg.konzertsuche_todate}" /></div>
-		    <h:inputText id="bis" value="#{SuchController.bisDatum}" required="false" >
+		    <h:inputText id="bis" value="#{KonzertController.bisDatum}" required="false" >
 			      <f:convertDateTime pattern="#{msg.konzertsuche_dateformat}" />
 			 </h:inputText>&nbsp;&nbsp;
 			 <h:outputText value="#{msg.konzertsuche_dateformatlabel}" />
@@ -44,7 +44,7 @@
  		<div class="entry">
 			<div class="label">&#160;</div>
 			<div class="input">
-				 <h:commandButton id="submitSearch" class="button" action="#{SuchController.search}" 
+				 <h:commandButton id="submitSearch" class="button" action="#{KonzertController.search}" 
 							value="#{msg.konzertsuche_search}" />&#160;&#160;
 		         <h:commandButton id="submitCancel" class="button" immediate="true" action="cancel" 
 		        	value="#{msg.konzertsuche_cancel}" />		        		        	

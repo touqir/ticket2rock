@@ -11,12 +11,12 @@ import org.apache.log4j.Logger;
 import de.ejb3buch.ticket2rock.applikation.servicelocator.ServiceLocator;
 import de.ejb3buch.ticket2rock.entity.Konzert;
 
-public class SuchController {
+public class KonzertController {
 
-	static Logger logger = Logger.getLogger(SuchController.class);
+	static Logger logger = Logger.getLogger(KonzertController.class);
 
-	
 	private ServiceLocator serviceLocator;
+	private TicketController ticketController;
 	
 	private String ortsName;
 	
@@ -25,6 +25,8 @@ public class SuchController {
 	private Date bisDatum;
 	
 	private DataModel konzertListDataModel = new ListDataModel();
+	
+	private Konzert konzert;
 	
 	public ServiceLocator getServiceLocator() {
 		return serviceLocator;
@@ -49,6 +51,13 @@ public class SuchController {
 		this.konzertListDataModel.setWrappedData(konzerte);
 		return "konzertsuchergebnis";
 	}
+	
+	public String selectConcert() {
+		konzert = (Konzert) this.konzertListDataModel.getRowData();	
+		ticketController.setKonzert(konzert);
+		return "ticketbestellung";
+	}	
+	
 
 	public DataModel getKonzertSuchErgebnis() {
 		return konzertListDataModel;
@@ -68,6 +77,22 @@ public class SuchController {
 
 	public void setBisDatum(Date bisDatum) {
 		this.bisDatum = bisDatum;
+	}
+
+	public Konzert getKonzert() {
+		return konzert;
+	}
+
+	public void setKonzert(Konzert konzert) {
+		this.konzert = konzert;
+	}
+
+	public TicketController getTicketController() {
+		return ticketController;
+	}
+
+	public void setTicketController(TicketController ticketController) {
+		this.ticketController = ticketController;
 	}
 
 }

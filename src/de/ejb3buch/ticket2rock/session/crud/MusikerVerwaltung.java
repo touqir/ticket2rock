@@ -4,7 +4,6 @@ import java.util.Collection;
 
 import javax.ejb.Local;
 
-import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Musiker;
 
 @Local
@@ -35,26 +34,12 @@ public interface MusikerVerwaltung {
 	 */
 	public void deleteMusiker(Integer musikerId);
 
-//TODO move the band-methods to the interface for bandverwaltung
 	/**
 	 * selektiert alle Musiker-Entitäten
 	 * @return Musiker-Entitäten
 	 */
 	public Collection<Musiker> getMusiker();
-	
-	/**
-	 * selektiert alle Band-Entitäten
-	 * @return Band-Entitäten
-	 */
-	public Collection<Band> getBands();
-	
-	/**
-	 * Selektiert eine Band für eine gegebene Id
-	 * @param bandId
-	 * @return Band Entität, null fallse keine Band-Entität
-	 * mit dieser id existiert
-	 */
-	public Band getBandById(Integer bandId);
+
     
 	/**
 	 * Selektiert einen Musiker für eine gegebene Id

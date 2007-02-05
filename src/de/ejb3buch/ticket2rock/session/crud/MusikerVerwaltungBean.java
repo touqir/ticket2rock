@@ -96,21 +96,6 @@ public class MusikerVerwaltungBean implements MusikerVerwaltung {
 		return (Collection<Musiker>) query.getResultList();
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<Band> getBands() {
-		List resultList = em.createQuery(
-				"FROM Interpret i WHERE typ='B' ORDER BY name").getResultList();
-		logger.debug("Anzahl der gefundenen Bands: " + resultList.size());
-		return resultList;
-	}
-
-    /**
-     *@inheritDoc
-     */	
-	public Band getBandById(Integer bandId) {
-		return em.find(Band.class,bandId);
-	}
-
     /**
      *@inheritDoc
      */	

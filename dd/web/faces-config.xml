@@ -54,7 +54,15 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
             <from-outcome>newSearch</from-outcome>
             <to-view-id>/konzertsuche.xhtml</to-view-id>
         </navigation-case>
- 	</navigation-rule> 			
+ 	</navigation-rule> 
+ 	
+  	<navigation-rule>
+		<from-view-id>/konzertsuchErgebnis.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>ticketbestellung</from-outcome>
+            <to-view-id>/ticketbestellung.xhtml</to-view-id>
+        </navigation-case>
+ 	</navigation-rule>				
 	
    <application>	 
      <locale-config>
@@ -91,18 +99,38 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
     	<value>#{ejb3ServiceLocator}</value>
     </managed-property>     
   </managed-bean>
+  
   <managed-bean>
     <description>
-      Such Controller
+      Ticket Controller
     </description>
-    <managed-bean-name>SuchController</managed-bean-name>
-    <managed-bean-class>de.ejb3buch.ticket2rock.applikation.controller.SuchController</managed-bean-class>
-    <managed-bean-scope>request</managed-bean-scope>
+    <managed-bean-name>TicketController</managed-bean-name>
+    <managed-bean-class>de.ejb3buch.ticket2rock.applikation.controller.TicketController</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
     <managed-property>
     	<property-name>serviceLocator</property-name>
     	<value>#{ejb3ServiceLocator}</value>
     </managed-property>     
+  </managed-bean>  
+
+  <managed-bean>
+    <description>
+      Konzert Controller
+    </description>
+    <managed-bean-name>KonzertController</managed-bean-name>
+    <managed-bean-class>de.ejb3buch.ticket2rock.applikation.controller.KonzertController</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{ejb3ServiceLocator}</value>
+    </managed-property> 
+    <managed-property>
+    	<property-name>ticketController</property-name>
+    	<value>#{TicketController}</value>
+    </managed-property>         
   </managed-bean>
+  
+
 
   
   <managed-bean>

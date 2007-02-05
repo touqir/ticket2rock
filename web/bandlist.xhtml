@@ -9,12 +9,15 @@
 <!-- content -->
 <ui:define name="content">
   <div class="section">
+    <h1><h:outputText value="#{msg.bandlist_title}" /></h1>
+  </div>
+  <div class="section">
   		<h:form>
 			<h:dataTable id="items" value="#{BandController.bands}" var="band"
 				 styleClass="datatable">
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="Bandname" />
+						<h:outputText value="#{msg.bandlist_name}" />
 					</f:facet>
 					<h:commandLink action="#{BandController.editBand}">
 					    <h:outputText value="#{band.name}" />
@@ -22,7 +25,7 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="Musiker" />
+						<h:outputText value="#{msg.bandlist_musicians}" />
 					</f:facet>
 				    <ui:repeat value="#{band.musikerListeKommaGetrennt}" var="musikerName">
                       #{musikerName}                      
@@ -30,9 +33,12 @@
 		                  
 		            
    				</h:column>
-				<h:column>
-					<h:commandButton id="deleteBand" class="button" action="#{BandController.deleteBand}" 
-							value="#{msg.bandlist_delete}"/>
+ 				<h:column>
+  				  <f:facet name="header">
+						<h:outputText value="#{msg.bandlist_actionheader}" />
+				  </f:facet>
+			      <h:commandButton id="deleteBand" class="button" action="#{BandController.deleteBand}" 
+						value="#{msg.bandlist_delete}"/>
 				</h:column>
 			</h:dataTable>
 			<br />
