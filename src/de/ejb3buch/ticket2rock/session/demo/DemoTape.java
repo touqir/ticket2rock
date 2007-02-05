@@ -30,6 +30,7 @@ import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Musiker;
 import de.ejb3buch.ticket2rock.entity.News;
 import de.ejb3buch.ticket2rock.entity.Song;
+import de.ejb3buch.ticket2rock.entity.Ticketreservierung;
 import de.ejb3buch.ticket2rock.entity.Tournee;
 
 public interface DemoTape {
@@ -45,4 +46,6 @@ public interface DemoTape {
 	public List<Tournee> getTourneen();
 
 	public List<News> getNews();
+	
+	public List<Ticketreservierung> getReservierungen();
 }

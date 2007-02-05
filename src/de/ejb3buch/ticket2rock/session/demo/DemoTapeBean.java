@@ -34,6 +34,7 @@ import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Musiker;
 import de.ejb3buch.ticket2rock.entity.News;
 import de.ejb3buch.ticket2rock.entity.Song;
+import de.ejb3buch.ticket2rock.entity.Ticketreservierung;
 import de.ejb3buch.ticket2rock.entity.Tournee;
 
 /**
@@ -49,9 +50,8 @@ public class DemoTapeBean implements DemoTape {
 	protected EntityManager em;
 
 	public List<Band> getBands() {
-		List resultList = em.createQuery(
-				"FROM Interpret i WHERE typ='B' ORDER BY name").getResultList();
-		return resultList;
+		return em.createQuery("FROM Interpret i WHERE typ='B' ORDER BY name")
+				.getResultList();
 	}
 
 	public List<Musiker> getMusiker() {
@@ -59,7 +59,7 @@ public class DemoTapeBean implements DemoTape {
 	}
 
 	public List<Song> getSongs() {
-		return em.createQuery("FROM Song s").getResultList();
+		return em.createQuery("FROM Song").getResultList();
 	}
 
 	public List<Album> getAlben() {
@@ -68,12 +68,15 @@ public class DemoTapeBean implements DemoTape {
 	}
 
 	public List<Tournee> getTourneen() {
-		return em.createQuery("FROM Tournee t").getResultList();
+		return em.createQuery("FROM Tournee").getResultList();
 	}
 
 	public List<News> getNews() {
-		List resultList = em.createQuery("FROM News n ORDER BY datum DESC")
+		return em.createQuery("FROM News n ORDER BY datum DESC")
 				.getResultList();
-		return resultList;
+	}
+
+	public List<Ticketreservierung> getReservierungen() {
+		return em.createQuery("FROM Ticketreservierung").getResultList();
 	}
 }
