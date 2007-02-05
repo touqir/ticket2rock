@@ -1,0 +1,40 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+				template="template.xhtml">
+
+<ui:define name="content">
+  <div class="section">
+    <h1><h:outputText value="#{msg.ticketbestellung_title}" /></h1>
+  </div>
+  
+  <div class="section">     
+	<h:form id="ticketbestellungForm">
+	
+	  <h:panelGrid columns="2" rowClasses="centered" border="0">
+          <h:outputLabel for="interpret" value="#{msg.ticketbestellung_interpret}"/>
+          <h:outputText id="interpret" value="#{TicketController.konzert.interpret.name}" />
+          <h:outputLabel for="date" value="#{msg.ticketbestellung_date}" />
+          <h:outputText id="date" value="#{TicketController.konzert.datum}" />
+          <h:outputLabel value="#{msg.ticketbestellung_location}" />
+          <h:outputText value="#{TicketController.konzert.ort.name}" />
+          <h:outputLabel value="#{msg.ticketbestellung_address}" />
+          <h:outputText value="#{TicketController.konzert.ort.adresse}" />
+          <h:outputLabel value="#{msg.ticketbestellung_tournee}" />
+          <h:outputText value="#{TicketController.konzert.tournee.name}" />        
+      </h:panelGrid>    
+          
+   </h:form>
+
+  
+  </div>
+</ui:define>
+
+<!-- sidebar -->
+<ui:define name="sidebar">
+<p>Hier kann ein Benutzer Konzerttickets bestellen -- under construction</p>
+</ui:define>
+
+</ui:composition>
