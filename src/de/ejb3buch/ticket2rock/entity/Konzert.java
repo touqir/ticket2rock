@@ -33,6 +33,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import de.ejb3buch.ticket2rock.exception.KapazitaetErschoepftException;
+
 /**
  * Ein Konzert ist eine Veranstaltung, bei dem ein Interpreten einige seiner
  * Songs vorträgt. Ein Konzert findet zu einem Zeitpunkt an einem
@@ -51,7 +53,7 @@ public class Konzert {
 	private Veranstaltungsort ort;
 
 	private Tournee tournee;
-	
+
 	private int ticketkontingent;
 
 	@Id
@@ -97,6 +99,11 @@ public class Konzert {
 
 	public void setOrt(Veranstaltungsort ort) {
 		this.ort = ort;
+		if (ort != null) {
+			// Das Ticketkontingent wird mit der Kapazität des
+			// Veranstaltungsortes initialisiert.
+			this.ticketkontingent = ort.getKapazitaet();
+		}
 	}
 
 	@ManyToOne
@@ -112,9 +119,48 @@ public class Konzert {
 		return ticketkontingent;
 	}
 
-	public void setTicketkontingent(int ticketkontingent) {
+	// Das Ticketkontingent kann nicht direkt gesetzt werden;
+	// es wird der EInfachheit halber über die Kapazität des
+	// Veranstaltungsortes bestimmt.
+	protected void setTicketkontingent(int ticketkontingent) {
 		this.ticketkontingent = ticketkontingent;
 	}
 
+	/**
+	 * Bestellt eine Anzahl von Tickets für dieses Konzert. Prüft die
+	 * Verfügbarkeit und reduziert das Ticketkontingent entsprechend.
+	 * 
+	 * @param anzahl
+	 *            die Anzahl der bestellten Tickets
+	 * @return das verbleibende Ticketkontingent
+	 * @throws KapazitaetErschoepftException
+	 *             wenn das Ticketkontingent nicht ausreicht, um die Bestellung
+	 *             auszuführen
+	 */
+	public synchronized int bestelleTickets(int anzahl)
+			throws KapazitaetErschoepftException {
+		if (anzahl <= this.ticketkontingent) {
+			this.ticketkontingent -= anzahl;
+		} else {
+			throw new KapazitaetErschoepftException(this, anzahl);
+		}
+		return this.ticketkontingent;
+	}
 
+	/**
+	 * Storniert eine Anzahl von Tickets für dieses Konzert und erhöht das
+	 * Ticketkontingent entsprechend.
+	 * 
+	 * @param anzahl
+	 *            die Anzahl der stornierten Tickets
+	 */
+	public synchronized void storniereTickets(int anzahl) {
+		this.ticketkontingent += anzahl;
+		if (this.ort != null
+				&& this.ticketkontingent > this.ort.getKapazitaet()) {
+			// Das maximale Kontingent ist begrenzt durch die
+			// Kapazität des Veranstaltungsorts.
+			this.ticketkontingent = this.ort.getKapazitaet();
+		}
+	}
 }
