@@ -32,13 +32,14 @@ import org.junit.runners.Suite;
 import de.ejb3buch.ticket2rock.session.AuskunftBeanTest;
 import de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBeanTest;
 import de.ejb3buch.ticket2rock.session.interceptor.BeanStatisticsInterceptorTest;
+import de.ejb3buch.ticket2rock.session.interceptor.BeanStatisticsInterceptorTestSimple;
 import de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsBeanTest;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses( 
-		{ BandVerwaltungBeanTest.class, 
+		{ AllPOJTests.class,
+		  BandVerwaltungBeanTest.class, 
 		  AuskunftBeanTest.class,
-		  BeanStatisticsBeanTest.class,
 		  BeanStatisticsInterceptorTest.class})
 public class AllTests {
 
