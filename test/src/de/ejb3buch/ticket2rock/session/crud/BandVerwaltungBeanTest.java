@@ -29,16 +29,12 @@ import static org.junit.Assert.fail;
 import java.util.Collection;
 
 import javax.naming.NamingException;
-import javax.transaction.UserTransaction;
-
-import junit.framework.JUnit4TestAdapter;
 
 import org.apache.log4j.Logger;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import de.ejb3buch.ticket2rock.EmbeddedContainerTestBase;
 import de.ejb3buch.ticket2rock.EmbeddedContainerTestHelper;
 import de.ejb3buch.ticket2rock.entity.Band;
 
@@ -46,29 +42,9 @@ import de.ejb3buch.ticket2rock.entity.Band;
  * @author Dierk
  * 
  */
-public class BandVerwaltungBeanTest {
+public class BandVerwaltungBeanTest extends EmbeddedContainerTestBase {
 	private static final Logger logger = Logger
 			.getLogger(BandVerwaltungBeanTest.class);
-
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(BandVerwaltungBeanTest.class);
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		EmbeddedContainerTestHelper.startupEmbeddedContainer(null);
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		EmbeddedContainerTestHelper.shutdownEmbeddedContainer();
-	}
 
 	/**
 	 * Test method for
@@ -81,6 +57,13 @@ public class BandVerwaltungBeanTest {
 		assertTrue(alleBands.size() > 0);
 	}
 
+	private BandVerwaltung getBandVerwaltung() throws NamingException,
+			Exception {
+		BandVerwaltung bandVerwaltung = (BandVerwaltung) EmbeddedContainerTestHelper
+				.lookup("BandVerwaltungBean/local");
+		return bandVerwaltung;
+	}
+
 	/**
 	 * Test method for
 	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getBandByName(java.lang.String)}.
@@ -88,17 +71,9 @@ public class BandVerwaltungBeanTest {
 	@Test
 	public void testGetBandByName() throws Exception {
 
-		UserTransaction utx = (UserTransaction) EmbeddedContainerTestHelper
-				.getInitialContext().lookup("UserTransaction");
-		utx.begin();
-
-		try {
-			Band dieBand = getBandVerwaltung().getBandByName("Green Day");
-			assertTrue(dieBand.getAlben().size() > 0);
-			assertTrue(dieBand.getMusiker().size() > 0);
-		} finally {
-			utx.rollback();
-		}
+		Band dieBand = getBandVerwaltung().getBandByName("Green Day");
+		assertTrue(dieBand.getAlben().size() > 0);
+		assertTrue(dieBand.getMusiker().size() > 0);
 	}
 
 	/**
@@ -108,7 +83,8 @@ public class BandVerwaltungBeanTest {
 	@Test
 	public void testCreateBand() throws Exception {
 		Band dieBand = new Band();
-		dieBand.setName("Baumanns Tod");
+		final String BANDNAME = "Baumanns Tod";
+		dieBand.setName(BANDNAME);
 
 		BandVerwaltung bandVerwaltung = getBandVerwaltung();
 		int anzahlVorher = bandVerwaltung.getBands().size();
@@ -118,8 +94,8 @@ public class BandVerwaltungBeanTest {
 
 		assertEquals(anzahlVorher + 1, bandVerwaltung.getBands().size());
 
-		assertEquals(bandVerwaltung.getBandByName("Baumanns Tod").getName(),
-				dieBand.getName());
+		assertEquals(bandVerwaltung.getBandByName(BANDNAME).getName(), dieBand
+				.getName());
 	}
 
 	/**
@@ -139,13 +115,6 @@ public class BandVerwaltungBeanTest {
 
 		assertEquals(dieBand.getName(), bandVerwaltung.getBandById(10)
 				.getName());
-	}
-
-	private BandVerwaltung getBandVerwaltung() throws NamingException,
-			Exception {
-		BandVerwaltung bandVerwaltung = (BandVerwaltung) EmbeddedContainerTestHelper
-				.getInitialContext().lookup("BandVerwaltungBean/local");
-		return bandVerwaltung;
 	}
 
 	/**
