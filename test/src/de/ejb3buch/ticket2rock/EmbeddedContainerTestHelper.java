@@ -27,11 +27,21 @@ import java.util.Hashtable;
 import java.util.List;
 
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.transaction.UserTransaction;
 
 import org.apache.log4j.Logger;
 import org.jboss.ejb3.embedded.EJB3StandaloneBootstrap;
 import org.jboss.ejb3.embedded.EJB3StandaloneDeployer;
 
+/**
+ * Diese Klasse kapselt die Zugriffe auf den Embedded Jboss Server. Um den
+ * Server nicht unnoetig zu stopenn und zu starten, wird ein wenig Buch gefuehrt
+ * ueber die Anzahl der Start und Stoppanfragen.
+ * 
+ * @author Dierk
+ * 
+ */
 public class EmbeddedContainerTestHelper {
 
 	private static final Logger log = Logger
@@ -57,20 +67,48 @@ public class EmbeddedContainerTestHelper {
 	}
 
 	/*
-	 * Hier tricksen wir ein bisschen mit einer Instanz dieser Klasse, damitwir
-	 * den Context cachen koennen.
+	 * Liefert den InitialContext, der innerhalb dieser Klasse im Cache gehalten
+	 * wird.
 	 */
 	public static InitialContext getInitialContext() throws Exception {
 		return INSTANCE.getTheInitialContext();
 	}
 
 	/**
-	 * Faehrt den Container wieder runter, zerstoert ausserdem das gecachte cts
-	 * Object
+	 * Faehrt den Container wieder runter, zerstoert ausserdem das gecachte
+	 * InitialContext Object
 	 * 
 	 */
 	public static void shutdownEmbeddedContainer() {
 		INSTANCE.shutdown();
+	}
+
+	/**
+	 * Startet eine UserTransaction. Wir benoetigen eine Transaction um die
+	 * Operationen der Persistenzschicht herum, weil sonst u.U. Objektnetze
+	 * nicht mehr verfuegbar sind.
+	 * 
+	 * @return die gestartete UserTransaction
+	 * @throws Exception
+	 */
+	public static UserTransaction startUserTransaction() throws Exception {
+		UserTransaction utx = (UserTransaction) EmbeddedContainerTestHelper
+				.lookup("UserTransaction");
+		utx.begin();
+		return utx;
+	}
+
+	/**
+	 * Sucht ein Object im JNDI Baum
+	 * 
+	 * @param name
+	 *            Name des gesuchten Objektes
+	 * @return das Object
+	 * @throws NamingException
+	 * @throws Exception
+	 */
+	public static Object lookup(String name) throws NamingException, Exception {
+		return getInitialContext().lookup(name);
 	}
 
 	// ------------------------- private Methods ---------------------------
@@ -92,6 +130,7 @@ public class EmbeddedContainerTestHelper {
 
 				deployer = EJB3StandaloneBootstrap.createDeployer();
 				deployer.getArchives().add(getArchiveURL());
+
 				deployer.create();
 				deployer.start();
 				runlevel++;
@@ -103,9 +142,7 @@ public class EmbeddedContainerTestHelper {
 				log.info("Embedded JBoss started, duration = " + duration
 						+ "ms");
 			}
-		}
-		else
-		{
+		} else {
 			runlevel++;
 			log.debug("Embedded JBoss activated " + runlevel + " times");
 		}
@@ -156,7 +193,6 @@ public class EmbeddedContainerTestHelper {
 		for (String elem : props.keySet()) {
 			System.setProperty(elem, props.get(elem));
 		}
-
 	}
 
 	/**
@@ -185,5 +221,4 @@ public class EmbeddedContainerTestHelper {
 			log.info("Shutdown of Embedded JBoss completed");
 		}
 	}
-
 }

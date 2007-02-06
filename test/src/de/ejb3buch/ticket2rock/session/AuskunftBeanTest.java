@@ -27,12 +27,9 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import junit.framework.JUnit4TestAdapter;
-
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.ejb3buch.ticket2rock.EmbeddedContainerTestBase;
 import de.ejb3buch.ticket2rock.EmbeddedContainerTestHelper;
 import de.ejb3buch.ticket2rock.entity.Konzert;
 
@@ -40,28 +37,7 @@ import de.ejb3buch.ticket2rock.entity.Konzert;
  * @author Dierk
  * 
  */
-public class AuskunftBeanTest {
-	
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(AuskunftBeanTest.class);
-	}
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		EmbeddedContainerTestHelper.startupEmbeddedContainer(null);
-
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		EmbeddedContainerTestHelper.shutdownEmbeddedContainer();
-
-	}
+public class AuskunftBeanTest extends EmbeddedContainerTestBase {
 
 	/**
 	 * Test method for
@@ -70,7 +46,7 @@ public class AuskunftBeanTest {
 	@Test
 	public void sucheAlleKonzerte() throws Exception {
 		Auskunft alleKonzerte = (Auskunft) EmbeddedContainerTestHelper
-				.getInitialContext().lookup("AuskunftBean/local");
+				.lookup("AuskunftBean/local");
 
 		// wir suchen alle Konzerte, daher keine Einschränkung....
 		List<Konzert> konzerte = alleKonzerte.sucheKonzerte(null, null, null);
@@ -85,7 +61,7 @@ public class AuskunftBeanTest {
 	@Test
 	public void sucheHamburgerKonzerte() throws Exception {
 		Auskunft alleKonzerte = (Auskunft) EmbeddedContainerTestHelper
-				.getInitialContext().lookup("AuskunftBean/local");
+				.lookup("AuskunftBean/local");
 
 		// wir suchen ein Konzert in der Colorline Arena....
 		List<Konzert> konzerte = alleKonzerte.sucheKonzerte("Colorline", null,
@@ -101,7 +77,7 @@ public class AuskunftBeanTest {
 	@Test
 	public void sucheFalschesKonzert() throws Exception {
 		Auskunft alleKonzerte = (Auskunft) EmbeddedContainerTestHelper
-				.getInitialContext().lookup("AuskunftBean/local");
+				.lookup("AuskunftBean/local");
 
 		// wir suchen ein Konzert im Kuhstall....
 		List<Konzert> konzerte = alleKonzerte.sucheKonzerte("Kuhstall", null,
