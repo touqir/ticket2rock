@@ -1,5 +1,6 @@
 package de.ejb3buch.ticket2rock;
 
+import javax.naming.InitialContext;
 import javax.transaction.UserTransaction;
 
 import org.junit.After;
@@ -48,4 +49,13 @@ public class EmbeddedContainerTestBase {
 		utx.rollback();
 	}
 
+	protected Object lookup(String name) throws Exception
+	{
+		return EmbeddedContainerTestHelper.lookup(name);
+	}
+	
+	protected InitialContext getInitialContext() throws Exception
+	{
+		return EmbeddedContainerTestHelper.getInitialContext();
+	}
 }

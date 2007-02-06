@@ -59,8 +59,7 @@ public class BandVerwaltungBeanTest extends EmbeddedContainerTestBase {
 
 	private BandVerwaltung getBandVerwaltung() throws NamingException,
 			Exception {
-		BandVerwaltung bandVerwaltung = (BandVerwaltung) EmbeddedContainerTestHelper
-				.lookup("BandVerwaltungBean/local");
+		BandVerwaltung bandVerwaltung = (BandVerwaltung) lookup("BandVerwaltungBean/local");
 		return bandVerwaltung;
 	}
 

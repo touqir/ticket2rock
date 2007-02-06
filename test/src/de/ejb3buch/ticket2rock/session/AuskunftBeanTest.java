@@ -45,8 +45,7 @@ public class AuskunftBeanTest extends EmbeddedContainerTestBase {
 	 */
 	@Test
 	public void sucheAlleKonzerte() throws Exception {
-		Auskunft alleKonzerte = (Auskunft) EmbeddedContainerTestHelper
-				.lookup("AuskunftBean/local");
+		Auskunft alleKonzerte = (Auskunft) lookup("AuskunftBean/local");
 
 		// wir suchen alle Konzerte, daher keine Einschränkung....
 		List<Konzert> konzerte = alleKonzerte.sucheKonzerte(null, null, null);
@@ -60,8 +59,7 @@ public class AuskunftBeanTest extends EmbeddedContainerTestBase {
 	 */
 	@Test
 	public void sucheHamburgerKonzerte() throws Exception {
-		Auskunft alleKonzerte = (Auskunft) EmbeddedContainerTestHelper
-				.lookup("AuskunftBean/local");
+		Auskunft alleKonzerte = (Auskunft) lookup("AuskunftBean/local");
 
 		// wir suchen ein Konzert in der Colorline Arena....
 		List<Konzert> konzerte = alleKonzerte.sucheKonzerte("Colorline", null,
@@ -76,8 +74,7 @@ public class AuskunftBeanTest extends EmbeddedContainerTestBase {
 	 */
 	@Test
 	public void sucheFalschesKonzert() throws Exception {
-		Auskunft alleKonzerte = (Auskunft) EmbeddedContainerTestHelper
-				.lookup("AuskunftBean/local");
+		Auskunft alleKonzerte = (Auskunft) lookup("AuskunftBean/local");
 
 		// wir suchen ein Konzert im Kuhstall....
 		List<Konzert> konzerte = alleKonzerte.sucheKonzerte("Kuhstall", null,
