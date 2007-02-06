@@ -32,8 +32,12 @@ import de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsLocal;
 
 public class BeanStatisticsInterceptor {
 
-	@EJB
-	BeanStatisticsLocal beanstats;
+	private BeanStatisticsLocal beanstats;
+
+	@EJB(beanName = "BeanStatisticsBean")
+	public void setBeanStatisticsBean(BeanStatisticsLocal c) {
+		beanstats = c;
+	}
 
 	// Lebenszyklus-Interzeptoren und Geschäftsmethoden-Interzeptoren
 	// können in derselben Interzeptor-Klasse definiert werden.
