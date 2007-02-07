@@ -12,12 +12,12 @@
 	</appender>
 
 	<logger name="de.ejb3buch" additivity="false">
-		<level value="debug" />
+		<level value="INFO" />
 		<appender-ref ref="SCREEN" />
 	</logger>
 
 	<root>
-		<level value="INFO" />
+		<level value="ERROR" />
 		<appender-ref ref="SCREEN" />
 	</root>
 

@@ -109,9 +109,8 @@
 	
 	<target name="junit" depends="compile-test,prepare-test">
 	    <junit fork="false" 
-	    	   printsummary="true"
-	           haltonfailure="true"
-	           showoutput="true">
+	    	   haltonfailure="true"
+	           showoutput="false">
 
 	      <classpath refid="test.classpath"/>
 	      <formatter type="plain" usefile="false"/>
