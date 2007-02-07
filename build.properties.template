@@ -2,3 +2,4 @@
 
 jboss.home=D:/jboss-4.0.5.GA
 jboss.server=default
+jboss.embedded.home=d:/jboss-EJB-3.0_Embeddable_ALPHA_9
