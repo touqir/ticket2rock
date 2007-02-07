@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="dd/ejb"/>
+	<classpathentry kind="src" path="test/conf"/>
+	<classpathentry kind="src" path="test/src"/>
+	<classpathentry kind="src" path="web"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/ajax4jsf.jar"/>
+	<classpathentry kind="lib" path="lib/el-api.jar"/>
+	<classpathentry kind="lib" path="lib/el-ri.jar"/>
+	<classpathentry kind="lib" path="lib/jsf-api.jar"/>
+	<classpathentry kind="lib" path="lib/jsf-facelets.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="lib/oscache-2.3.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JBoss Embedded EJB 3 Container"/>
+	<classpathentry kind="lib" path="lib/easymock.jar"/>
+	<classpathentry kind="lib" path="lib/javax.servlet.jar"/>
+	<classpathentry kind="output" path="classes"/>
+</classpath>
