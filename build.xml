@@ -108,14 +108,13 @@
 	</target>
 	
 	<target name="junit" depends="compile-test,prepare-test">
-	    <junit printsummary="on" 
-	           fork="false" 
-	           haltonfailure="false"
-	           failureproperty="tests.failed"
+	    <junit fork="false" 
+	    	   printsummary="true"
+	           haltonfailure="true"
 	           showoutput="true">
 
 	      <classpath refid="test.classpath"/>
-	      <formatter type="brief" usefile="false"/>
+	      <formatter type="plain" usefile="false"/>
 
 	      <test name="de.ejb3buch.ticket2rock.AllTests"/>
 	    
