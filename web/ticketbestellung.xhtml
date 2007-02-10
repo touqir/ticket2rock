@@ -23,8 +23,31 @@
           <h:outputLabel value="#{msg.ticketbestellung_address}" />
           <h:outputText value="#{TicketController.konzert.ort.adresse}" />
           <h:outputLabel value="#{msg.ticketbestellung_tournee}" />
-          <h:outputText value="#{TicketController.konzert.tournee.name}" />        
-      </h:panelGrid>    
+          <h:outputText value="#{TicketController.konzert.tournee.name}" />
+          <h:outputLabel value="#{msg.ticketbestellung_ticketkontingent}" />
+          <h:outputText value="#{TicketController.availableTicketsExpression}" />
+       </h:panelGrid>
+      
+	  <fieldset>
+		<div class="entry">
+			<div class="label"><h:outputLabel value="#{msg.ticketbestellung_ticketanzahl}" /></div>
+			<div class="input">
+				<h:inputText id="ticketnumber" value="#{TicketController.ticketanzahl}" required="true" />
+		    </div>
+		    <span class="errors"><h:message for="bandname" /></span>
+		
+		</div>
+        <div class="entry errors"><h:messages globalOnly="true" /></div>
+        <div class="entry">
+			<div class="label">&#160;</div>
+			<div class="input">
+				 <h:commandButton id="submitOrder" class="button" action="#{TicketController.orderTickets}" 
+							value="#{msg.ticketbestellung_order}" />&#160;&#160;
+				 <h:commandButton id="submitCancel" class="button" immediate="true" action="cancel" 
+		        	value="#{msg.ticketbestellung_cancel}" />		        		        	
+			</div>
+	    </div>
+      </fieldset>            
           
    </h:form>
 
