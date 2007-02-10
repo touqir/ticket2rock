@@ -33,36 +33,18 @@
 	<property name="build.dir" value="${home.dir}/build" />
 	<property name="jboss.server.dir" value="${jboss.home}/server/${jboss.server}" />
 	<property name="jboss.deploy.dir" value="${jboss.server.dir}/deploy" />
-	<property name="webapp_lib.dir" value="${home.dir}/lib" />
+	<property name="lib.dir" value="${home.dir}/lib" />
 
 	
 	<path id="build.classpath">
-		<fileset dir="${jboss.home}/client">
-			<include name="ejb3-persistence.jar" />
-			<include name="jboss-ejb3-client.jar" />
-			<include name="jboss-ejb3x.jar" />
-			<include name="jboss-j2ee.jar" />
-		</fileset>
-		<fileset dir="${webapp_lib.dir}">
-			<include name="jsf-api.jar" />
-			<include name="log4j-1.2.14.jar" />
-			<include name="javax.servlet.jar" />
+		<fileset dir="${lib.dir}" casesensitive="yes">
+		  <include name="*.jar"/>
 		</fileset>
 	</path>
 
 	<path id="test.classpath">
-		<fileset dir="${jboss.embedded.home}/lib">
-			<include name="jboss-ejb3-all.jar" />
-			<include name="hibernate-all.jar" />
-			<include name="thirdparty-all.jar" />
-			<include name="jms-ra.jar" />
-		</fileset>
-		<fileset dir="${webapp_lib.dir}">
-			<include name="jsf-api.jar" />
-			<include name="log4j-1.2.14.jar" />
-			<include name="javax.servlet.jar" />
-			<include name="easymock.jar"/>
-			<include name="junit-4.1.jar"/>
+		<fileset dir="${lib.dir}" casesensitive="yes">
+		  <include name="*.jar"/>
 		</fileset>
 		<pathelement location="${build.dir}/classes"/>		
 		<pathelement location="${build.dir}/test"/>
@@ -156,7 +138,7 @@
 			<classes dir="${src.dir}">
 				<include name="de/ejb3buch/${ant.project.name}/applikation/resources/**" />			
 			</classes>
-			<lib dir="${webapp_lib.dir}">		        
+			<lib dir="${lib.dir}">		        
 				<include name="jsf-facelets.jar"/>
 				<include name="el-api.jar"/>
 				<include name="el-ri.jar"/>

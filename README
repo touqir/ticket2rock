@@ -65,12 +65,9 @@ Ticket2Rock benötigt Java 5.0. Es muss sichergestellt sein, dass der Compiler
 Compliance Level ('Properties/Java Compiler/JDK Compliance) auf '5.0' gesetzt
 ist.
 
-Das Eclipse-Projekt erwartet die folgenden JARs im Klassenpfad des Projekts:
-  $JBOSS_HOME/client/ejb3-persistence.jar
-  $JBOSS_HOME/client/jboss-ejb3x.jar
-  $JBOSS_HOME/client/jboss-j2ee.jar
-Es wird empfohlen, diese JARs in einer User Library zusammenzufassen. Diese kann
-dann für weitere JBoss-EJB3-Projekte wiederverwendet werden.
+Wir haben alle notwendigen Libraries mit ins Repository gelegt, sodass das
+Uebersetzen der Quelltexte und die Ausfuehrung der Tests ohne weitere 
+Abhaengigkeiten funktioniert.
 
 ---[ Ant ]----------------------------------------------------------------------
 
@@ -86,19 +83,13 @@ Main targets:
  clean         Removes all generated code and build artifacts
 ...
 
+Fuer das Deployen der Anwendung in den JBoss muss in der build.properties
+der Pfad, wo der JBoss installiert ist, sowie der Name der Konfiguration
+hinterlegt werden.
+
 ---[ Unit-Tests ]------------------------------------------------------------------
 Die Unit Tests basieren auf JUnit 4.x, teilweise benoetigen sie den JBoss Embedded
-Container. 
-
-Der JBoss Embedded Container kann heruntergeladen werden unter
-http://downloads.sourceforge.net/jboss/jboss-EJB-3.0_Embeddable_ALPHA_9.zip
-
-Man sollte fuer den Embedded Container, wie auch fuer die EJB3 Libs empfohlen (s.o.),
-eine User-Library anlegen, die den Inhalt des /libs Verzeichnisses des Containers
-umfasst. Wird diese User-Library eingebunden in das Projekt, sind die EJB3 Libs
-aus der JBoss Distribution nicht mehr notwendig....
-
-Daneben muessen die JUnit 4.x Libraries eingebunden werden.
+Container, welcher mit im Repository vorhanden ist.
 
 Das entsprechende Ant-Target ist "junit"
 
