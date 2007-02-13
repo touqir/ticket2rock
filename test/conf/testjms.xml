@@ -1,0 +1,15 @@
+<deployment
+	xsi:schemaLocation="urn:jboss:bean-deployer bean-deployer_1_0.xsd">
+	<bean name="jboss.mq.destination:service=Queue,name=ticket2rock"
+		class="org.jboss.mq.kernel.Topic">
+
+		<property name="destinationManagerPojo">
+			<inject bean="jboss.mq:service=DestinationManager" />
+		</property>
+
+		<property name="initialContextProperties">
+			<inject bean="InitialContextProperties" />
+		</property>
+		<property name="destinationName">ticket2rock</property>
+	</bean>
+</deployment>
