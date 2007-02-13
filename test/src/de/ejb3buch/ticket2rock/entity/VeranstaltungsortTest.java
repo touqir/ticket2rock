@@ -36,14 +36,19 @@ import javax.persistence.Query;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
+ * Beispiel fuer einen Unit-Test, der ohne Container laeuft, sondern direkt den
+ * Entitymanager nutzt
+ * 
  * @author Carsten
  */
 public class VeranstaltungsortTest {
+	private static final Logger log = Logger
+			.getLogger(VeranstaltungsortTest.class);
 
 	private static final String AOL_ARENA = "AOL-Arena";
 
@@ -51,21 +56,22 @@ public class VeranstaltungsortTest {
 
 	private static final int KAPAZITAET = 51500;
 
-	private EntityManagerFactory emf = null;
+	private static EntityManagerFactory emf = null;
 
-	private EntityManager em = null;
+	private static EntityManager em = null;
 
 	/**
 	 * Initialisieren des JPA Kontexts. Weil die Einstellungen in der
 	 * persistence.xml automatisch geladen werden, hier aber nicht passen,
 	 * werden sie hier ueberschrieben.
+	 * 
 	 */
-	@Before
-	public void setUpEntityManager() throws Exception {
+	@BeforeClass
+	public static void setUpEntityManager() throws Exception {
 
 		BasicConfigurator.configure();
 		Logger.getLogger("org").setLevel(Level.OFF);
-
+		long start = System.currentTimeMillis();
 		Map<String, String> configOverrides = new HashMap<String, String>();
 		configOverrides.put("javax.persistence.transactionType",
 				"RESOURCE_LOCAL");
@@ -82,13 +88,16 @@ public class VeranstaltungsortTest {
 				configOverrides);
 
 		em = emf.createEntityManager();
+		long stop = System.currentTimeMillis();
+		log.setLevel(Level.INFO);
+		log.info("Dauer fuer den Start des Entitymanagers: " + (stop-start) + " Millisekunden");
 	}
 
 	/**
 	 * @throws java.lang.Exception
 	 */
-	@After
-	public void tearDownEntityManager() throws Exception {
+	@AfterClass
+	public static void tearDownEntityManager() throws Exception {
 		em.close();
 		emf.close();
 	}
@@ -102,7 +111,7 @@ public class VeranstaltungsortTest {
 		ort.setKapazitaet(KAPAZITAET);
 
 		em.getTransaction().begin(); // ohne Transaktion geht hier
-										// garnichts...
+		// garnichts...
 		em.persist(ort);
 
 		// und die neue automatisch vergebene ID ist im Objekt vorhanden
@@ -118,7 +127,7 @@ public class VeranstaltungsortTest {
 		assertEquals(KAPAZITAET, ort2.getKapazitaet());
 
 		em.getTransaction().rollback(); // jetzt koennen wir den Kram auch
-										// wegschmeissen
+		// wegschmeissen
 	}
 
 }
