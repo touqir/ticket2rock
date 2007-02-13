@@ -52,7 +52,7 @@ public class BeanStatisticsInterceptorTestSimple {
 		BeanStatisticsLocal bslMock = EasyMock.createMock(BeanStatisticsLocal.class);
 	
 		bslMock.reportMethodCall(interceptedMethod);
-		bslMock.reportMethodDuration(interceptedMethod, 0);	
+		bslMock.reportMethodDuration(interceptedMethod, 100);	
 		EasyMock.replay(bslMock);
 
 		// injizieren der BeanStatistic in den Interzeptor
