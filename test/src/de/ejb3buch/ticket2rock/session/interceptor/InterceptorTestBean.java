@@ -37,12 +37,23 @@ import javax.interceptor.Interceptors;
 public class InterceptorTestBean implements InterceptorTest {
 
 	public void interceptedCall(String str) {
-		System.gc();
+		doWasteSomeTime();
 	}
+
 
 	@ExcludeClassInterceptors
 	public void nonInterceptedCall(String str) {
-		System.gc();
+		doWasteSomeTime();
 
+	}
+
+
+	private void doWasteSomeTime() {
+		long wait = Math.round(Math.random() * 200.0);
+
+		long start = System.currentTimeMillis();
+
+		while ((start + wait) > System.currentTimeMillis()) {
+		}
 	}
 }
