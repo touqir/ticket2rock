@@ -92,7 +92,10 @@ public class AuskunftBean implements Auskunft {
 		}
 
 		List resultList = query.getResultList();
-		logger.debug("Anzahl der gefundenen Konzerte: " + resultList.size());
+		if (logger.isDebugEnabled() && resultList != null) {
+			logger.debug("Anzahl der gefundenen Konzerte: "
+							+ resultList.size());
+		}
 		return resultList;
 	}
 
