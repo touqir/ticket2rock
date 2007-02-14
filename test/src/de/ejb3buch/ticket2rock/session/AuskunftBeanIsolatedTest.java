@@ -32,7 +32,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
-import org.easymock.EasyMock;
+import static org.easymock.EasyMock.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -59,13 +59,13 @@ public class AuskunftBeanIsolatedTest {
 
     @Before
     public void umgebungAufbauen() {
-	em = EasyMock.createMock(EntityManager.class);
-	query = EasyMock.createMock(Query.class);
+	em = createMock(EntityManager.class);
+	query = createMock(Query.class);
 	gloss = new JavaEEGloss();
 	gloss.addEM(em);
+	
 	Konzert a = new Konzert();
 	Konzert b = new Konzert();
-
 	data = new ArrayList<Konzert>();
 	data.add(a);
 	data.add(b);
@@ -73,17 +73,17 @@ public class AuskunftBeanIsolatedTest {
 
     @After
     public void mocksChecken() {
-	EasyMock.verify(query);
-	EasyMock.verify(em);
+	verify(query);
+	verify(em);
     }
 
     @Test
     public void findeKeinKonzert() {
 
-	EasyMock.expect(em.createQuery("FROM Konzert k ")).andReturn(query);
-	EasyMock.expect(query.getResultList()).andReturn(null);
-	EasyMock.replay(query);
-	EasyMock.replay(em);
+	expect(em.createQuery("FROM Konzert k ")).andReturn(query);
+	expect(query.getResultList()).andReturn(null);
+	replay(query);
+	replay(em);
 
 	AuskunftBean auskunft = gloss.make(AuskunftBean.class);
 	auskunft.sucheKonzerte(null, null, null);
@@ -93,14 +93,13 @@ public class AuskunftBeanIsolatedTest {
     @Test
     public void findeKonzertMitEinemParameter() {
 
-	EasyMock.expect(
-		em.createQuery("FROM Konzert k where upper(k.ort.name) like :ortsName"))
+	expect(em
+		.createQuery("FROM Konzert k where upper(k.ort.name) like :ortsName"))
 		.andReturn(query);
-	EasyMock.expect(query.setParameter("ortsName", "%HAMBURG%")).andReturn(
-		query);
-	EasyMock.expect(query.getResultList()).andReturn(null);
-	EasyMock.replay(query);
-	EasyMock.replay(em);
+	expect(query.setParameter("ortsName", "%HAMBURG%")).andReturn(query);
+	expect(query.getResultList()).andReturn(null);
+	replay(query);
+	replay(em);
 
 	AuskunftBean auskunft = gloss.make(AuskunftBean.class);
 	auskunft.sucheKonzerte("Hamburg", null, null);
@@ -110,18 +109,18 @@ public class AuskunftBeanIsolatedTest {
     @Test
     public void findeKonzertMitZweiParametern() {
 	Date datum = new Date();
-	EasyMock.expect(
-		em.createQuery("FROM Konzert k where upper(k.ort.name) like :ortsName and k.datum >= :vonDatum"))
+	expect(	em
+		.createQuery("FROM Konzert k where upper(k.ort.name) like :ortsName and k.datum >= :vonDatum"))
 		.andReturn(query);
-	EasyMock.expect(query.setParameter("ortsName", "%HAMBURG%")).andReturn(
+	expect(query.setParameter("ortsName", "%HAMBURG%")).andReturn(
 		query);
-	EasyMock.expect(
+	expect(
 		query.setParameter("vonDatum", datum, TemporalType.DATE))
 		.andReturn(query);
 
-	EasyMock.expect(query.getResultList()).andReturn(null);
-	EasyMock.replay(query);
-	EasyMock.replay(em);
+	expect(query.getResultList()).andReturn(null);
+	replay(query);
+	replay(em);
 
 	AuskunftBean auskunft = gloss.make(AuskunftBean.class);
 	auskunft.sucheKonzerte("Hamburg", datum, null);
@@ -130,10 +129,10 @@ public class AuskunftBeanIsolatedTest {
     @Test
     public void findeZweiKonzerte() {
 
-	EasyMock.expect(em.createQuery("FROM Konzert k ")).andReturn(query);
-	EasyMock.expect(query.getResultList()).andReturn(data);
-	EasyMock.replay(query);
-	EasyMock.replay(em);
+	expect(em.createQuery("FROM Konzert k ")).andReturn(query);
+	expect(query.getResultList()).andReturn(data);
+	replay(query);
+	replay(em);
 
 	AuskunftBean auskunft = gloss.make(AuskunftBean.class);
 	List result = auskunft.sucheKonzerte(null, null, null);
