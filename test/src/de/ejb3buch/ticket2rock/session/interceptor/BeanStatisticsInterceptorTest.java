@@ -34,72 +34,71 @@ import org.junit.Test;
 import de.ejb3buch.ticket2rock.EmbeddedContainerTestHelper;
 import de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsLocal;
 
-public class BeanStatisticsInterceptorTest {
+public class BeanStatisticsInterceptorTest
+{
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		EmbeddedContainerTestHelper.startupEmbeddedContainer(null);
-	}
+    /**
+     * @throws java.lang.Exception
+     */
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception
+    {
+        EmbeddedContainerTestHelper.startupEmbeddedContainer(null);
+    }
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		EmbeddedContainerTestHelper.shutdownEmbeddedContainer();
-	}
+    /**
+     * @throws java.lang.Exception
+     */
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception
+    {
+        EmbeddedContainerTestHelper.shutdownEmbeddedContainer();
+    }
 
-	/**
-	 * Testen, ob der Interceptor gerufen wird und ordentlich funktioniert
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void interceptedMethodCall() throws Exception {
-		Method interceptedMethod = InterceptorTestBean.class.getMethod(
-				"interceptedCall", new Class[] { String.class });
+    /**
+     * Testen, ob der Interceptor gerufen wird und ordentlich funktioniert
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void interceptedMethodCall() throws Exception
+    {
+        Method interceptedMethod = InterceptorTestBean.class.getMethod("interceptedCall", new Class[] { String.class });
 
-		InterceptorTest it = (InterceptorTest) EmbeddedContainerTestHelper
-				.lookup("InterceptorTestBean/local");
-		BeanStatisticsLocal bsl = (BeanStatisticsLocal) EmbeddedContainerTestHelper
-				.lookup("BeanStatisticsBean/local");
+        InterceptorTest it = (InterceptorTest) EmbeddedContainerTestHelper.lookup("InterceptorTestBean/local");
+        BeanStatisticsLocal bsl = (BeanStatisticsLocal) EmbeddedContainerTestHelper.lookup("BeanStatisticsBean/local");
 
-		it.interceptedCall("");
-		long duration = bsl.getMethodTotalDuration().get(interceptedMethod).longValue();
+        it.interceptedCall("");
+        long duration = bsl.getMethodTotalDuration().get(interceptedMethod).longValue();
 
-		it.nonInterceptedCall("");
-		assertEquals(duration, bsl.getMethodTotalDuration().get(interceptedMethod));
-		
-		it.interceptedCall("");
+        it.nonInterceptedCall("");
+        assertEquals(duration, bsl.getMethodTotalDuration().get(interceptedMethod));
 
-		long secondDuration = bsl.getMethodTotalDuration().get(interceptedMethod).longValue();
-		
-		System.out.println(duration + " / " + secondDuration);
-		assertNotSame(duration,secondDuration);
-		
-		
-	}
+        it.interceptedCall("");
 
-	/**
-	 * Testen, ob die nicht aufzurufende Methode evtl. doch gerufen wird.
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void nonInterceptedMethodCall() throws Exception {
+        long secondDuration = bsl.getMethodTotalDuration().get(interceptedMethod).longValue();
 
-		InterceptorTest it = (InterceptorTest) EmbeddedContainerTestHelper
-				.lookup("InterceptorTestBean/local");
-		BeanStatisticsLocal bsl = (BeanStatisticsLocal) EmbeddedContainerTestHelper
-				.lookup("BeanStatisticsBean/local");
+        System.out.println(duration + " / " + secondDuration);
+        assertNotSame(duration, secondDuration);
 
-		int startsize = bsl.getMethodUsage().size();
-		it.nonInterceptedCall("");
+    }
 
-		assertEquals(startsize, bsl.getMethodUsage().size());
-	}
+    /**
+     * Testen, ob die nicht aufzurufende Methode evtl. doch gerufen wird.
+     * 
+     * @throws Exception
+     */
+    @Test
+    public void nonInterceptedMethodCall() throws Exception
+    {
+
+        InterceptorTest it = (InterceptorTest) EmbeddedContainerTestHelper.lookup("InterceptorTestBean/local");
+        BeanStatisticsLocal bsl = (BeanStatisticsLocal) EmbeddedContainerTestHelper.lookup("BeanStatisticsBean/local");
+
+        int startsize = bsl.getMethodUsage().size();
+        it.nonInterceptedCall("");
+
+        assertEquals(startsize, bsl.getMethodUsage().size());
+    }
 
 }

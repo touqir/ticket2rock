@@ -34,33 +34,34 @@ import de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBeanTest;
 import de.ejb3buch.ticket2rock.session.interceptor.BeanStatisticsInterceptorTest;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( 
-		{ AllPOJTests.class,
-		  BandVerwaltungBeanTest.class, 
-		  AuskunftBeanTest.class,
-		  BeanStatisticsInterceptorTest.class})
-public class AllTests {
+@Suite.SuiteClasses( { AllPOJTests.class, BandVerwaltungBeanTest.class, AuskunftBeanTest.class,
+        BeanStatisticsInterceptorTest.class })
+public class AllTests
+{
 
-	/**
-	 * Den eingebetteten EJB Container starten. Die Tests in der Suite machen
-	 * das zwar auch noch mal, aber unsere Hilfsklasse wacht darueber und macht
-	 * eine Buchhaltung, sodass mehrfaches Starten vermieden wird.
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		EmbeddedContainerTestHelper.startupEmbeddedContainer(null);
-	}
+    /**
+     * Den eingebetteten EJB Container starten. Die Tests in der Suite machen
+     * das zwar auch noch mal, aber unsere Hilfsklasse wacht darueber und macht
+     * eine Buchhaltung, sodass mehrfaches Starten vermieden wird.
+     */
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception
+    {
+        EmbeddedContainerTestHelper.startupEmbeddedContainer(null);
+    }
 
-	/**
-	 * Den eingebetteten EJB Container fahren wir hier ganz brav wieder runter.
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		EmbeddedContainerTestHelper.shutdownEmbeddedContainer();
-	}
+    /**
+     * Den eingebetteten EJB Container fahren wir hier ganz brav wieder runter.
+     */
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception
+    {
+        EmbeddedContainerTestHelper.shutdownEmbeddedContainer();
+    }
 
-	// Used for backward compatibility (IDEs, Ant and JUnit 3 text runner)
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(AllTests.class);
-	}
+    // Used for backward compatibility (IDEs, Ant and JUnit 3 text runner)
+    public static junit.framework.Test suite()
+    {
+        return new JUnit4TestAdapter(AllTests.class);
+    }
 }

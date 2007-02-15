@@ -47,7 +47,8 @@ import de.ejb3buch.ticket2rock.entity.Konzert;
  * @author Dierk
  * 
  */
-public class AuskunftBeanIsolatedTest {
+public class AuskunftBeanIsolatedTest
+{
 
     private EntityManager em;
 
@@ -58,85 +59,85 @@ public class AuskunftBeanIsolatedTest {
     private List<Konzert> data;
 
     @Before
-    public void umgebungAufbauen() {
-	em = createMock(EntityManager.class);
-	query = createMock(Query.class);
-	gloss = new JavaEEGloss();
-	gloss.addEM(em);
-	
-	Konzert a = new Konzert();
-	Konzert b = new Konzert();
-	data = new ArrayList<Konzert>();
-	data.add(a);
-	data.add(b);
+    public void umgebungAufbauen()
+    {
+        em = createMock(EntityManager.class);
+        query = createMock(Query.class);
+        gloss = new JavaEEGloss();
+        gloss.addEM(em);
+
+        Konzert a = new Konzert();
+        Konzert b = new Konzert();
+        data = new ArrayList<Konzert>();
+        data.add(a);
+        data.add(b);
     }
 
     @After
-    public void mocksChecken() {
-	verify(query);
-	verify(em);
+    public void mocksChecken()
+    {
+        verify(query);
+        verify(em);
     }
 
     @Test
-    public void findeKeinKonzert() {
+    public void findeKeinKonzert()
+    {
 
-	expect(em.createQuery("FROM Konzert k ")).andReturn(query);
-	expect(query.getResultList()).andReturn(null);
-	replay(query);
-	replay(em);
+        expect(em.createQuery("FROM Konzert k ")).andReturn(query);
+        expect(query.getResultList()).andReturn(null);
+        replay(query);
+        replay(em);
 
-	AuskunftBean auskunft = gloss.make(AuskunftBean.class);
-	auskunft.sucheKonzerte(null, null, null);
-
-    }
-
-    @Test
-    public void findeKonzertMitEinemParameter() {
-
-	expect(em
-		.createQuery("FROM Konzert k where upper(k.ort.name) like :ortsName"))
-		.andReturn(query);
-	expect(query.setParameter("ortsName", "%HAMBURG%")).andReturn(query);
-	expect(query.getResultList()).andReturn(null);
-	replay(query);
-	replay(em);
-
-	AuskunftBean auskunft = gloss.make(AuskunftBean.class);
-	auskunft.sucheKonzerte("Hamburg", null, null);
+        AuskunftBean auskunft = gloss.make(AuskunftBean.class);
+        auskunft.sucheKonzerte(null, null, null);
 
     }
 
     @Test
-    public void findeKonzertMitZweiParametern() {
-	Date datum = new Date();
-	expect(	em
-		.createQuery("FROM Konzert k where upper(k.ort.name) like :ortsName and k.datum >= :vonDatum"))
-		.andReturn(query);
-	expect(query.setParameter("ortsName", "%HAMBURG%")).andReturn(
-		query);
-	expect(
-		query.setParameter("vonDatum", datum, TemporalType.DATE))
-		.andReturn(query);
+    public void findeKonzertMitEinemParameter()
+    {
 
-	expect(query.getResultList()).andReturn(null);
-	replay(query);
-	replay(em);
+        expect(em.createQuery("FROM Konzert k where upper(k.ort.name) like :ortsName")).andReturn(query);
+        expect(query.setParameter("ortsName", "%HAMBURG%")).andReturn(query);
+        expect(query.getResultList()).andReturn(null);
+        replay(query);
+        replay(em);
 
-	AuskunftBean auskunft = gloss.make(AuskunftBean.class);
-	auskunft.sucheKonzerte("Hamburg", datum, null);
+        AuskunftBean auskunft = gloss.make(AuskunftBean.class);
+        auskunft.sucheKonzerte("Hamburg", null, null);
+
     }
 
     @Test
-    public void findeZweiKonzerte() {
+    public void findeKonzertMitZweiParametern()
+    {
+        Date datum = new Date();
+        expect(em.createQuery("FROM Konzert k where upper(k.ort.name) like :ortsName and k.datum >= :vonDatum"))
+                .andReturn(query);
+        expect(query.setParameter("ortsName", "%HAMBURG%")).andReturn(query);
+        expect(query.setParameter("vonDatum", datum, TemporalType.DATE)).andReturn(query);
 
-	expect(em.createQuery("FROM Konzert k ")).andReturn(query);
-	expect(query.getResultList()).andReturn(data);
-	replay(query);
-	replay(em);
+        expect(query.getResultList()).andReturn(null);
+        replay(query);
+        replay(em);
 
-	AuskunftBean auskunft = gloss.make(AuskunftBean.class);
-	List result = auskunft.sucheKonzerte(null, null, null);
+        AuskunftBean auskunft = gloss.make(AuskunftBean.class);
+        auskunft.sucheKonzerte("Hamburg", datum, null);
+    }
 
-	assertEquals(result, data);
+    @Test
+    public void findeZweiKonzerte()
+    {
+
+        expect(em.createQuery("FROM Konzert k ")).andReturn(query);
+        expect(query.getResultList()).andReturn(data);
+        replay(query);
+        replay(em);
+
+        AuskunftBean auskunft = gloss.make(AuskunftBean.class);
+        List result = auskunft.sucheKonzerte(null, null, null);
+
+        assertEquals(result, data);
     }
 }

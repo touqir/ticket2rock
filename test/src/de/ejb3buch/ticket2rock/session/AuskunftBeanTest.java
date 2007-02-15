@@ -30,56 +30,57 @@ import java.util.List;
 import org.junit.Test;
 
 import de.ejb3buch.ticket2rock.EmbeddedContainerTestBase;
-import de.ejb3buch.ticket2rock.EmbeddedContainerTestHelper;
 import de.ejb3buch.ticket2rock.entity.Konzert;
 
 /**
  * @author Dierk
  * 
  */
-public class AuskunftBeanTest extends EmbeddedContainerTestBase {
+public class AuskunftBeanTest extends EmbeddedContainerTestBase
+{
 
-	/**
-	 * Test method for
-	 * {@link de.ejb3buch.ticket2rock.session.AuskunftBean#sucheKonzerte(java.lang.String, java.util.Date, java.util.Date)}.
-	 */
-	@Test
-	public void sucheAlleKonzerte() throws Exception {
-		Auskunft alleKonzerte = (Auskunft) lookup("AuskunftBean/local");
+    /**
+     * Test method for
+     * {@link de.ejb3buch.ticket2rock.session.AuskunftBean#sucheKonzerte(java.lang.String, java.util.Date, java.util.Date)}.
+     */
+    @Test
+    public void sucheAlleKonzerte() throws Exception
+    {
+        Auskunft alleKonzerte = (Auskunft) lookup("AuskunftBean/local");
 
-		// wir suchen alle Konzerte, daher keine Einschränkung....
-		List<Konzert> konzerte = alleKonzerte.sucheKonzerte(null, null, null);
+        // wir suchen alle Konzerte, daher keine Einschränkung....
+        List<Konzert> konzerte = alleKonzerte.sucheKonzerte(null, null, null);
 
-		assertTrue(konzerte.size() > 1);
-	}
+        assertTrue(konzerte.size() > 1);
+    }
 
-	/**
-	 * Test method for
-	 * {@link de.ejb3buch.ticket2rock.session.AuskunftBean#sucheKonzerte(java.lang.String, java.util.Date, java.util.Date)}.
-	 */
-	@Test
-	public void sucheHamburgerKonzerte() throws Exception {
-		Auskunft alleKonzerte = (Auskunft) lookup("AuskunftBean/local");
+    /**
+     * Test method for
+     * {@link de.ejb3buch.ticket2rock.session.AuskunftBean#sucheKonzerte(java.lang.String, java.util.Date, java.util.Date)}.
+     */
+    @Test
+    public void sucheHamburgerKonzerte() throws Exception
+    {
+        Auskunft alleKonzerte = (Auskunft) lookup("AuskunftBean/local");
 
-		// wir suchen ein Konzert in der Colorline Arena....
-		List<Konzert> konzerte = alleKonzerte.sucheKonzerte("Colorline", null,
-				null);
+        // wir suchen ein Konzert in der Colorline Arena....
+        List<Konzert> konzerte = alleKonzerte.sucheKonzerte("Colorline", null, null);
 
-		assertEquals(konzerte.size(), 1);
-	}
+        assertEquals(konzerte.size(), 1);
+    }
 
-	/**
-	 * Test method for
-	 * {@link de.ejb3buch.ticket2rock.session.AuskunftBean#sucheKonzerte(java.lang.String, java.util.Date, java.util.Date)}.
-	 */
-	@Test
-	public void sucheFalschesKonzert() throws Exception {
-		Auskunft alleKonzerte = (Auskunft) lookup("AuskunftBean/local");
+    /**
+     * Test method for
+     * {@link de.ejb3buch.ticket2rock.session.AuskunftBean#sucheKonzerte(java.lang.String, java.util.Date, java.util.Date)}.
+     */
+    @Test
+    public void sucheFalschesKonzert() throws Exception
+    {
+        Auskunft alleKonzerte = (Auskunft) lookup("AuskunftBean/local");
 
-		// wir suchen ein Konzert im Kuhstall....
-		List<Konzert> konzerte = alleKonzerte.sucheKonzerte("Kuhstall", null,
-				null);
+        // wir suchen ein Konzert im Kuhstall....
+        List<Konzert> konzerte = alleKonzerte.sucheKonzerte("Kuhstall", null, null);
 
-		assertEquals(konzerte.size(), 0);
-	}
+        assertEquals(konzerte.size(), 0);
+    }
 }

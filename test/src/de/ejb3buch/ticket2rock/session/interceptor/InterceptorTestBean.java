@@ -34,26 +34,29 @@ import javax.interceptor.Interceptors;
 
 @Stateless
 @Interceptors(BeanStatisticsInterceptor.class)
-public class InterceptorTestBean implements InterceptorTest {
+public class InterceptorTestBean implements InterceptorTest
+{
 
-	public void interceptedCall(String str) {
-		doWasteSomeTime();
-	}
+    public void interceptedCall(String str)
+    {
+        doWasteSomeTime();
+    }
 
+    @ExcludeClassInterceptors
+    public void nonInterceptedCall(String str)
+    {
+        doWasteSomeTime();
 
-	@ExcludeClassInterceptors
-	public void nonInterceptedCall(String str) {
-		doWasteSomeTime();
+    }
 
-	}
+    private void doWasteSomeTime()
+    {
+        long wait = Math.round(Math.random() * 200.0);
 
+        long start = System.currentTimeMillis();
 
-	private void doWasteSomeTime() {
-		long wait = Math.round(Math.random() * 200.0);
-
-		long start = System.currentTimeMillis();
-
-		while ((start + wait) > System.currentTimeMillis()) {
-		}
-	}
+        while ((start + wait) > System.currentTimeMillis())
+        {
+        }
+    }
 }

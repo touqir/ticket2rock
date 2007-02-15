@@ -21,6 +21,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package de.ejb3buch.ticket2rock;
+
 import junit.framework.JUnit4TestAdapter;
 
 import org.junit.runner.RunWith;
@@ -31,14 +32,13 @@ import de.ejb3buch.ticket2rock.session.interceptor.BeanStatisticsInterceptorTest
 import de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsBeanTest;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( 
-		{ BeanStatisticsBeanTest.class,
-		  BeanStatisticsInterceptorTestSimple.class,
-		  AuskunftBeanIsolatedTest.class})
-
-public class AllPOJTests {
-	// Used for backward compatibility (IDEs, Ant and JUnit 3 text runner)
-	public static junit.framework.Test suite() {
-		return new JUnit4TestAdapter(AllTests.class);
-	}
+@Suite.SuiteClasses( { BeanStatisticsBeanTest.class, BeanStatisticsInterceptorTestSimple.class,
+        AuskunftBeanIsolatedTest.class })
+public class AllPOJTests
+{
+    // Used for backward compatibility (IDEs, Ant and JUnit 3 text runner)
+    public static junit.framework.Test suite()
+    {
+        return new JUnit4TestAdapter(AllTests.class);
+    }
 }

@@ -20,48 +20,48 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
- package de.ejb3buch.ticket2rock.session.interceptor;
+package de.ejb3buch.ticket2rock.session.interceptor;
 
 import java.lang.reflect.Method;
 
 import javax.interceptor.InvocationContext;
 
-import org.easymock.EasyMock;
+import static org.easymock.EasyMock.*;
 import org.junit.Test;
 
 import de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsLocal;
 
-public class BeanStatisticsInterceptorTestSimple {
+public class BeanStatisticsInterceptorTestSimple
+{
 
-	@Test
-	public void testOnMethodCall() throws Exception {
-		Method interceptedMethod = InterceptorTestBean.class.getMethod(
-				"interceptedCall", new Class[] { String.class });
+    @Test
+    public void testOnMethodCall() throws Exception
+    {
+        Method interceptedMethod = InterceptorTestBean.class.getMethod("interceptedCall", new Class[] { String.class });
 
-		BeanStatisticsInterceptor classUnderTest = new BeanStatisticsInterceptor();
+        BeanStatisticsInterceptor classUnderTest = new BeanStatisticsInterceptor();
 
-		// Mockobjekt fuer den InvocationContext zusammenbauen
-		InvocationContext icMock = EasyMock.createMock(InvocationContext.class);
-		EasyMock.expect(icMock.getMethod()).andReturn(interceptedMethod);
-		EasyMock.expect(icMock.proceed()).andReturn(null);
-		EasyMock.expect(icMock.getMethod()).andReturn(interceptedMethod);
-        EasyMock.replay(icMock);
-		
-		
-		// Mockobject fuer die Beanstatistics zusammenbauen
-		BeanStatisticsLocal bslMock = EasyMock.createMock(BeanStatisticsLocal.class);
-	
-		bslMock.reportMethodCall(interceptedMethod);
-		bslMock.reportMethodDuration(interceptedMethod, 0);	
-		EasyMock.replay(bslMock);
+        // Mockobjekt fuer den InvocationContext zusammenbauen
+        InvocationContext icMock = createMock(InvocationContext.class);
+        expect(icMock.getMethod()).andReturn(interceptedMethod);
+        expect(icMock.proceed()).andReturn(null);
+        expect(icMock.getMethod()).andReturn(interceptedMethod);
+        replay(icMock);
 
-		// injizieren der BeanStatistic in den Interzeptor
-		classUnderTest.setBeanStatisticsBean(bslMock);
-		
-		classUnderTest.onMethodCall(icMock);
-		
-		// pruefen, ob das Ergebnis dem Erwarteten entspricht
-		EasyMock.verify(bslMock);
-	}
+        // Mockobject fuer die Beanstatistics zusammenbauen
+        BeanStatisticsLocal bslMock = createMock(BeanStatisticsLocal.class);
+
+        bslMock.reportMethodCall(interceptedMethod);
+        bslMock.reportMethodDuration(interceptedMethod, 0);
+        replay(bslMock);
+
+        // injizieren der BeanStatistic in den Interzeptor
+        classUnderTest.setBeanStatisticsBean(bslMock);
+
+        classUnderTest.onMethodCall(icMock);
+
+        // pruefen, ob das Ergebnis dem Erwarteten entspricht
+        verify(bslMock);
+    }
 
 }

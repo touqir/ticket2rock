@@ -8,54 +8,59 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
+public class EmbeddedContainerTestBase
+{
 
-public class EmbeddedContainerTestBase {
+    private UserTransaction utx = null;
 
-	private UserTransaction utx = null;
+    /**
+     * @throws java.lang.Exception
+     */
+    @BeforeClass
+    public static void setUpBeforeClass() throws Exception
+    {
+        EmbeddedContainerTestHelper.startupEmbeddedContainer(null);
+    }
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		EmbeddedContainerTestHelper.startupEmbeddedContainer(null);
-	}
+    /**
+     * @throws java.lang.Exception
+     */
+    @AfterClass
+    public static void tearDownAfterClass() throws Exception
+    {
+        EmbeddedContainerTestHelper.shutdownEmbeddedContainer();
+    }
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-		EmbeddedContainerTestHelper.shutdownEmbeddedContainer();
-	}
+    public EmbeddedContainerTestBase()
+    {
+        super();
+    }
 
-	public EmbeddedContainerTestBase() {
-		super();
-	}
+    /**
+     * Startet eine UserTransaction vor jedem Test
+     */
+    @Before
+    public void startTransaction() throws Exception
+    {
+        utx = EmbeddedContainerTestHelper.startUserTransaction();
+    }
 
-	/**
-	 * Startet eine UserTransaction vor jedem Test
-	 */
-	@Before
-	public void startTransaction() throws Exception {
-		utx = EmbeddedContainerTestHelper.startUserTransaction();
-	}
+    /**
+     * und nach jedem Test schmeissen wir die Aenderungen an der DB weg.
+     */
+    @After
+    public void rollbackTransaction() throws Exception
+    {
+        utx.rollback();
+    }
 
-	/**
-	 * und nach jedem Test schmeissen wir die Aenderungen an der DB weg.
-	 */
-	@After
-	public void rollbackTransaction() throws Exception {
-		utx.rollback();
-	}
+    protected Object lookup(String name) throws Exception
+    {
+        return EmbeddedContainerTestHelper.lookup(name);
+    }
 
-	protected Object lookup(String name) throws Exception
-	{
-		return EmbeddedContainerTestHelper.lookup(name);
-	}
-	
-	protected InitialContext getInitialContext() throws Exception
-	{
-		return EmbeddedContainerTestHelper.getInitialContext();
-	}
+    protected InitialContext getInitialContext() throws Exception
+    {
+        return EmbeddedContainerTestHelper.getInitialContext();
+    }
 }
