@@ -117,6 +117,7 @@
 
 			<metainf dir="dd/ejb">
 				<include name="ejb-jar.xml" />
+				<include name="orm.xml" />
 				<include name="persistence.xml" />
 			</metainf>
 		</jar>
