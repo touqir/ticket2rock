@@ -26,6 +26,10 @@ import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
+import javax.jws.soap.SOAPBinding.Style;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -37,6 +41,8 @@ import de.ejb3buch.ticket2rock.entity.Konzert;
 
 @Stateless
 @SuppressWarnings("unchecked")
+@WebService
+@SOAPBinding(style=Style.RPC)
 public class AuskunftBean implements Auskunft {
 
 	static Logger logger = Logger.getLogger(AuskunftBean.class);
@@ -47,6 +53,7 @@ public class AuskunftBean implements Auskunft {
 	/**
 	 * @inheritDoc
 	 */
+	@WebMethod
 	public List<Konzert> sucheKonzerte(String ortsName, Date vonDatum,
 			Date bisDatum) {
 
