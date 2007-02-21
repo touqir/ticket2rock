@@ -30,17 +30,23 @@ import javax.ejb.PrePassivate;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 
+import org.apache.log4j.Logger;
+
+import de.ejb3buch.ticket2rock.session.demo.klasseninterzeptor.dd.AbfangjaegerBean;
+
 /**
  * Diese Session Bean dient der Online-Reservierung und -Bestellung von Tickets.
- * Reservierungen für Tickets können storniert werden. Die Bean führt eine
+ * Bestellungen für Tickets können storniert werden. Die Bean führt eine
  * Live-Statistik über ihre Nutzung.
  */
 
 @Stateful
 public class TicketbestellungBean implements Ticketbestellung {
 
-	public void storniereReservierung(long reservierungsnr) {
-		System.err.println("Storniere Reservierung " + reservierungsnr);
+	static Logger logger = Logger.getLogger(TicketbestellungBean.class);
+
+	public void storniereBestellung(long bestellnr) {
+		logger.info("Storniere Bestellung Nr. " + bestellnr);
 		// TODO: Reservierung stornieren
 	}
 

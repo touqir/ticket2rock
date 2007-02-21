@@ -24,5 +24,5 @@
 package de.ejb3buch.ticket2rock.session.ticketbestellung;
 
 public interface Ticketbestellung {
-	public void storniereReservierung(long reservierungsnr);
+	public void storniereBestellung(long bestellnr);
 }
