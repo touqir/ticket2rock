@@ -9,7 +9,8 @@ function createjsDOMenu() {
   
   fixedMenu2 = new jsDOMenu(120);
   with (fixedMenu2) {
-    addMenuItem(new menuItem("Konzertsuche", "", "konzertsuche.faces"));
+    addMenuItem(new menuItem("Konzert suchen", "", "konzertsuche.faces"));
+    addMenuItem(new menuItem("Bestellung stornieren", "", "stornierung.faces"));
   }
   
     

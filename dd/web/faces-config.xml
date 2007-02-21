@@ -72,6 +72,14 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
         </navigation-case>
  	</navigation-rule> 				
 	
+	<navigation-rule>
+		<from-view-id>/stornierung.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>stornierungsergebnis</from-outcome>
+            <to-view-id>/stornierungErgebnis.xhtml</to-view-id>
+        </navigation-case>
+ 	</navigation-rule> 
+ 	
    <application>	 
      <locale-config>
        <default-locale>de</default-locale>
@@ -138,6 +146,22 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
     </managed-property>         
   </managed-bean>
   
+  <managed-bean>
+    <description>
+      Stornierungs-Controller
+    </description>
+    <managed-bean-name>StornierungController</managed-bean-name>
+    <managed-bean-class>de.ejb3buch.ticket2rock.applikation.controller.StornierungController</managed-bean-class>
+    <managed-bean-scope>session</managed-bean-scope>
+    <managed-property>
+    	<property-name>serviceLocator</property-name>
+    	<value>#{ejb3ServiceLocator}</value>
+    </managed-property> 
+    <managed-property>
+    	<property-name>messageQueue</property-name>
+    	<value>queue/ticket2rock</value>
+    </managed-property>         
+  </managed-bean>
 
 
   
