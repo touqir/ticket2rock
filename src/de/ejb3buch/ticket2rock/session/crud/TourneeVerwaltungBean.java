@@ -76,8 +76,7 @@ public class TourneeVerwaltungBean implements TourneeVerwaltung {
 			em.remove(tournee);
 
 		} catch (Exception ex) {
-			logger.error(ex.getMessage());
-			ex.printStackTrace();
+			logger.error(ex);
 			throw new EJBException("Error while deleting a tournee");
 		}
 		logger.debug("removed tournee " + tournee.getName());

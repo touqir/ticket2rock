@@ -97,8 +97,7 @@ public class BandVerwaltungBean implements BandVerwaltung {
 			em.remove(band);
 
 		} catch (Exception ex) {
-			logger.error(ex.getMessage());
-			ex.printStackTrace();
+			logger.error(ex);
 			throw new EJBException("Error while deleting a band");
 		}
 		logger.debug("removed band " + band.getName());

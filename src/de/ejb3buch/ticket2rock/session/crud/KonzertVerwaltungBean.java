@@ -54,8 +54,7 @@ public class KonzertVerwaltungBean implements KonzertVerwaltung {
 			em.remove(konzert);
 
 		} catch (Exception ex) {
-			logger.error(ex.getMessage());
-			ex.printStackTrace();
+			logger.error(ex);
 			throw new EJBException("Fehler beim Löschen eines Konzertes");
 		}
 

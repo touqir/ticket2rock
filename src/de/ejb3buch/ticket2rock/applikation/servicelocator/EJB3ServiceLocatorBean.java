@@ -54,7 +54,7 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 					.lookup("ticket2rock/AuskunftBean/local");
 			logger.info("Service Auskunft steht zur Verfügung");
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error(e);
 		}
 	}
 

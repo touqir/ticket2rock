@@ -25,12 +25,19 @@ package de.ejb3buch.ticket2rock.session.demo;
 
 import javax.interceptor.InvocationContext;
 
+import org.apache.log4j.Logger;
+
+import de.ejb3buch.ticket2rock.session.demo.klasseninterzeptor.dd.AbfangjaegerBean;
+
 // Eine Interzeptor-Klasse, die im Deployment-Deskriptor ejb-jar.xml
 // als solche definiert ist.
 
 public class Abfangjaeger {
+
+	static Logger logger = Logger.getLogger(AbfangjaegerBean.class);
+
 	public Object onMethodCall(InvocationContext ctx) throws Exception {
-		System.out.println(ctx.getMethod());
+		logger.info(ctx.getMethod());
 		return ctx.proceed();
 	}
 }

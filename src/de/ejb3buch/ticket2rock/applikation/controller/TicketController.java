@@ -11,12 +11,13 @@ import de.ejb3buch.ticket2rock.entity.Konzert;
 public class TicketController {
 
 	static Logger logger = Logger.getLogger(TicketController.class);
-	
+
 	private ServiceLocator serviceLocator;
-	
+
 	private Konzert konzert;
-	
+
 	private String availableTicketsExpression;
+
 	private int ticketanzahl;
 
 	public ServiceLocator getServiceLocator() {
@@ -26,7 +27,6 @@ public class TicketController {
 	public void setServiceLocator(ServiceLocator serviceLocator) {
 		this.serviceLocator = serviceLocator;
 	}
-	
 
 	public Konzert getKonzert() {
 		return konzert;
@@ -34,17 +34,19 @@ public class TicketController {
 
 	public void setKonzert(Konzert konzert) {
 		this.konzert = konzert;
-		
-		// set the expression for available Ticktes based on the available koncert ticktets
+
+		// set the expression for available Ticktes based on the available
+		// koncert ticktets
 		if (konzert.getTicketkontingent() <= 100) {
-			availableTicketsExpression = Integer.toString(konzert.getTicketkontingent());
-		}
-		else {
+			availableTicketsExpression = Integer.toString(konzert
+					.getTicketkontingent());
+		} else {
 			FacesContext context = FacesContext.getCurrentInstance();
 
-			availableTicketsExpression = FacesUtils.getMessageResourceString(context.getApplication()
-					.getMessageBundle(), "ticketbestellung_moreThanHundred", null, context.getViewRoot()
-					.getLocale());
+			availableTicketsExpression = FacesUtils.getMessageResourceString(
+					context.getApplication().getMessageBundle(),
+					"ticketbestellung_moreThanHundred", null, context
+							.getViewRoot().getLocale());
 		}
 	}
 
@@ -55,10 +57,11 @@ public class TicketController {
 	public void setTicketanzahl(int ticketanzahl) {
 		this.ticketanzahl = ticketanzahl;
 	}
-	
+
 	public String orderTickets() {
-		System.out.println("ordering ticktes: " + ticketanzahl);
-		System.out.println("available Ticketbestellung String: " + this.availableTicketsExpression);
+		logger.info("ordering ticktes: " + ticketanzahl);
+		logger.info("available Ticketbestellung String: "
+				+ this.availableTicketsExpression);
 		return "";
 	}
 

@@ -79,8 +79,7 @@ public class MusikerVerwaltungBean implements MusikerVerwaltung {
 			em.remove(musiker);
 
 		} catch (Exception ex) {
-			logger.error(ex.getMessage());
-			ex.printStackTrace();
+			logger.error(ex);
 			throw new EJBException("Fehler beim Löschen eines Musikers");
 		}
 

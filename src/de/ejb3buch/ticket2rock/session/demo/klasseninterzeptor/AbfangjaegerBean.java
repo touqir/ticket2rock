@@ -29,6 +29,8 @@ import javax.interceptor.ExcludeClassInterceptors;
 import javax.interceptor.Interceptors;
 import javax.interceptor.InvocationContext;
 
+import org.apache.log4j.Logger;
+
 import de.ejb3buch.ticket2rock.session.demo.Abfangjaeger;
 import de.ejb3buch.ticket2rock.session.demo.AbfangjaegerLocal;
 
@@ -38,6 +40,9 @@ import de.ejb3buch.ticket2rock.session.demo.AbfangjaegerLocal;
 @Stateless
 @Interceptors(Abfangjaeger.class)
 public class AbfangjaegerBean implements AbfangjaegerLocal {
+
+	static Logger logger = Logger.getLogger(AbfangjaegerBean.class);
+
 	public void fangMichAb() {
 	}
 
@@ -53,11 +58,11 @@ public class AbfangjaegerBean implements AbfangjaegerLocal {
 	public Object beanKlassenInterzeptor(InvocationContext ctx)
 			throws Exception {
 		try {
-			System.out.println("Bean-Klassen-Interzeptor [" + ctx.getMethod()
+			logger.info("Bean-Klassen-Interzeptor [" + ctx.getMethod()
 					+ "] - vor dem Methodenaufruf");
 			return ctx.proceed();
 		} finally {
-			System.out.println("Bean-Klassen-Interzeptor [" + ctx.getMethod()
+			logger.info("Bean-Klassen-Interzeptor [" + ctx.getMethod()
 					+ "] - nach dem Methodenaufruf");
 		}
 	}

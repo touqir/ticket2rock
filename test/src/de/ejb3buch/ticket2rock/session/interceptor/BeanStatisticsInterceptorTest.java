@@ -23,10 +23,11 @@
 package de.ejb3buch.ticket2rock.session.interceptor;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotSame;
 
 import java.lang.reflect.Method;
 
+import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -36,6 +37,8 @@ import de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsLocal;
 
 public class BeanStatisticsInterceptorTest
 {
+
+	static Logger logger = Logger.getLogger(BeanStatisticsInterceptorTest.class);
 
     /**
      * @throws java.lang.Exception
@@ -78,7 +81,7 @@ public class BeanStatisticsInterceptorTest
 
         long secondDuration = bsl.getMethodTotalDuration().get(interceptedMethod).longValue();
 
-        System.out.println(duration + " / " + secondDuration);
+        logger.info(duration + " / " + secondDuration);
         assertNotSame(duration, secondDuration);
 
     }
