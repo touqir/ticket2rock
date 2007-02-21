@@ -32,8 +32,6 @@ import javax.ejb.Stateful;
 
 import org.apache.log4j.Logger;
 
-import de.ejb3buch.ticket2rock.session.demo.klasseninterzeptor.dd.AbfangjaegerBean;
-
 /**
  * Diese Session Bean dient der Online-Reservierung und -Bestellung von Tickets.
  * Bestellungen für Tickets können storniert werden. Die Bean führt eine
