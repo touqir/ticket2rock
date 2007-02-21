@@ -1,0 +1,48 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+				template="template.xhtml">
+
+<ui:define name="content">
+  <div class="section">
+    <h1><h:outputText value="#{msg.stornierung_title}" /></h1>
+  </div>
+  
+  <div class="section">     
+	<h:form id="stornierungForm">
+      
+	  <fieldset>
+		<div class="entry">
+			<div class="label"><h:outputLabel for="bestellnummer" value="#{msg.stornierung_bestellnummer}" /></div>
+			<div class="input">
+				<h:inputText id="bestellnummer" value="#{StornierungController.bestellnummer}" required="true" />
+		    </div>
+		    <span class="errors"><h:message for="bestellnummer" /></span>
+		</div>
+
+        <div class="errors"><h:messages globalOnly="true" /></div>
+        
+ 		<div class="entry">
+			<div class="label">&#160;</div>
+			<div class="input">
+				 <h:commandButton id="submitSearch" class="button" action="#{StornierungController.storno}" 
+							value="#{msg.stornierung_storno}" />&#160;&#160;
+		         <h:commandButton id="submitCancel" class="button" immediate="true" action="cancel" 
+		        	value="#{msg.stornierung_cancel}" />		        		        	
+			</div>
+	    </div>
+	  </fieldset>
+   </h:form>
+
+  
+  </div>
+</ui:define>
+
+<!-- sidebar -->
+<ui:define name="sidebar">
+<p>Stornieren einer Ticketbestellung. Anhand der Bestellnummer wird die Bestellung identifiziert und storniert. Die Stornierung wird als JMS-Nachricht an das ticket2rock-system gesendet.</p>
+</ui:define>
+
+</ui:composition>
