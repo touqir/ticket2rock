@@ -35,4 +35,9 @@
 			</entity-listeners>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
+	<entity class="de.ejb3buch.ticket2rock.entity.News" access="PROPERTY">
+		<attributes>
+			<id name="id"/>
+		</attributes>
+	</entity>
 </entity-mappings>
