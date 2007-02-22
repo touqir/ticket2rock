@@ -25,10 +25,17 @@ package de.ejb3buch.ticket2rock.session.ticketbestellung;
 
 import javax.ejb.Stateless;
 
+import org.apache.log4j.Logger;
+
 @Stateless
 public class StornatorBean implements Stornator {
 
+	static Logger logger = Logger.getLogger(StornatorBean.class);
+
 	public void storniereBestellung(long bestellnr) {
-		// TODO Auto-generated method stub
+
+		// TODO: Storniere Bestellung
+
+		logger.info("Storniere Bestellung Nr. " + bestellnr);
 	}
 }
