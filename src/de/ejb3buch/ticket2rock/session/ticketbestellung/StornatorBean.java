@@ -21,31 +21,14 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package de.ejb3buch.ticket2rock.session.demo;
+package de.ejb3buch.ticket2rock.session.ticketbestellung;
 
-import java.util.List;
+import javax.ejb.Stateless;
 
-import de.ejb3buch.ticket2rock.entity.Album;
-import de.ejb3buch.ticket2rock.entity.Band;
-import de.ejb3buch.ticket2rock.entity.Musiker;
-import de.ejb3buch.ticket2rock.entity.News;
-import de.ejb3buch.ticket2rock.entity.Song;
-import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
-import de.ejb3buch.ticket2rock.entity.Tournee;
+@Stateless
+public class StornatorBean implements Stornator {
 
-public interface DemoTape {
-
-	public List<Band> getBands();
-
-	public List<Musiker> getMusiker();
-
-	public List<Song> getSongs();
-
-	public List<Album> getAlben();
-
-	public List<Tournee> getTourneen();
-
-	public List<News> getNews();
-	
-	public List<Ticketbestellung> getBestellungen();
+	public void storniereBestellung(long bestellnr) {
+		// TODO Auto-generated method stub
+	}
 }

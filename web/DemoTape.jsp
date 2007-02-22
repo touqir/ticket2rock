@@ -84,15 +84,15 @@ private AbfangjaegerLocal falcon_methode_dd = null;
 
 <a href="statistics">Bean-Statistik</a>
 
-<h3>Reservierungen</h3>
+<h3>Bestellungen</h3>
 <ul>
-	<%for (Iterator iter = demo.getReservierungen().iterator(); iter.hasNext();) {
-				Ticketreservierung reservierung = (Ticketreservierung) iter.next();
-				Konzert konzert = reservierung.getKonzert();
+	<%for (Iterator iter = demo.getBestellungen().iterator(); iter.hasNext();) {
+				Ticketbestellung bestellung = (Ticketbestellung) iter.next();
+				Konzert konzert = bestellung.getKonzert();
 				konzert.bestelleTickets(2);
 %>
 
-	<li><%=reservierung.getKunde().getEmail()%>:  <%=reservierung.getAnzahl()%> Tickets f&uuml;r <%=konzert.getInterpret().getName()%> am <%=datumsformat_TagMonatJahr.format(konzert
+	<li><%=bestellung.getKunde().getEmail()%>:  <%=bestellung.getAnzahl()%> Tickets f&uuml;r <%=konzert.getInterpret().getName()%> am <%=datumsformat_TagMonatJahr.format(konzert
 									.getDatum())%> in <%=konzert.getOrt().getAdresse()%> (Kapazität: <%=konzert.getOrt().getKapazitaet()%>, Restkontingent: <%=konzert.getTicketkontingent()%>)</li>
 
 	<%}%>

@@ -1,11 +1,11 @@
-package de.ejb3buch.ticket2rock.session;
+package de.ejb3buch.ticket2rock.session.ticketbestellung;
 
 import javax.ejb.Local;
 
 import de.ejb3buch.ticket2rock.entity.Konzert;
 
 @Local
-public interface BuchungsVorgang {
+public interface Bestellvorgang {
 
 	/**
 	 * bucht eine Anzahl von Tickets zu einer Konzertveranstaltung. Falls das Konzert

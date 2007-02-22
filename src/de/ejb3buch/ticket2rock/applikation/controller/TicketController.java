@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import de.ejb3buch.ticket2rock.applikation.helper.FacesUtils;
 import de.ejb3buch.ticket2rock.applikation.servicelocator.ServiceLocator;
 import de.ejb3buch.ticket2rock.entity.Konzert;
-import de.ejb3buch.ticket2rock.session.BuchungsVorgang;
+import de.ejb3buch.ticket2rock.session.ticketbestellung.Bestellvorgang;
 
 public class TicketController {
 
@@ -20,7 +20,7 @@ public class TicketController {
 
 	private boolean hasOrderedTicket = false;
 
-	private BuchungsVorgang buchungsVorgang;
+	private Bestellvorgang bestellvorgang;
 
 	private Konzert konzert;
 
@@ -81,13 +81,13 @@ public class TicketController {
 	 */
 	public String orderTickets() {
 
-		// hole über den ServiceLocator einen BuchungsVorgang, falls dies für
+		// hole über den ServiceLocator einen Bestellvorgang, falls dies für
 		// diese
 		// für diese Session noch nicht geschehen ist
-		if (buchungsVorgang == null) {
-			buchungsVorgang = serviceLocator.getWarenkorb();
+		if (bestellvorgang == null) {
+			bestellvorgang = serviceLocator.getWarenkorb();
 		}
-		buchungsVorgang.reserviereTickets(this.konzert, ticketanzahl);
+		bestellvorgang.reserviereTickets(this.konzert, ticketanzahl);
 		this.hasOrderedTicket = true;
 		return "reservierungsmeldung";
 	}

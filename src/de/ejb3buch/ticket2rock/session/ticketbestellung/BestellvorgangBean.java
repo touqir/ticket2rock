@@ -20,11 +20,15 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.ejb3buch.ticket2rock.session;
+package de.ejb3buch.ticket2rock.session.ticketbestellung;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.ejb.PostActivate;
+import javax.ejb.PrePassivate;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
@@ -33,14 +37,14 @@ import javax.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 
 import de.ejb3buch.ticket2rock.entity.Konzert;
-import de.ejb3buch.ticket2rock.entity.Ticketreservierung;
+import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
 
 @Stateful
 @SuppressWarnings("unchecked")
-public class BuchungsVorgangBean implements BuchungsVorgang {
+public class BestellvorgangBean implements Bestellvorgang {
 
-	static Logger logger = Logger.getLogger(BuchungsVorgangBean.class);
-	Collection<Ticketreservierung> ticketReservierungen = new ArrayList<Ticketreservierung>();
+	static Logger logger = Logger.getLogger(BestellvorgangBean.class);
+	Collection<Ticketbestellung> ticketReservierungen = new ArrayList<Ticketbestellung>();
 
 	@PersistenceContext
 	private EntityManager em;
@@ -49,7 +53,7 @@ public class BuchungsVorgangBean implements BuchungsVorgang {
 	 * @inheritDoc
 	 */
 	public void reserviereTickets(Konzert konzert, int ticketAnzahl) {
-		Ticketreservierung ticketReservierung = new Ticketreservierung();
+		Ticketbestellung ticketReservierung = new Ticketbestellung();
 		ticketReservierung.setKonzert(konzert);
 		ticketReservierung.setAnzahl(ticketAnzahl);
 		ticketReservierungen.add(ticketReservierung);
@@ -73,4 +77,33 @@ public class BuchungsVorgangBean implements BuchungsVorgang {
 		
 	}
 	
+	// Live-Statistik zur Nutzung dieser Bean
+
+	@PostConstruct
+	public void onPostConstruct() {
+		// Session-Statistik aktualisieren
+		BestellvorgangSessionStatistics.totalSessions++;
+		BestellvorgangSessionStatistics.activeSessions++;
+	}
+
+	@PreDestroy
+	public void onPreDestroy() {
+		// Session-Statistik aktualisieren
+		BestellvorgangSessionStatistics.totalSessions--;
+		BestellvorgangSessionStatistics.activeSessions--;
+	}
+
+	@PrePassivate
+	public void onPrePassivate() {
+		// Session-Statistik aktualisieren
+		BestellvorgangSessionStatistics.passivatedSessions++;
+		BestellvorgangSessionStatistics.activeSessions--;
+	}
+
+	@PostActivate
+	public void onPostActivate() {
+		// Session-Statistik aktualisieren
+		BestellvorgangSessionStatistics.passivatedSessions--;
+		BestellvorgangSessionStatistics.activeSessions++;
+	}
 }

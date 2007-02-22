@@ -34,7 +34,7 @@ import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Musiker;
 import de.ejb3buch.ticket2rock.entity.News;
 import de.ejb3buch.ticket2rock.entity.Song;
-import de.ejb3buch.ticket2rock.entity.Ticketreservierung;
+import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
 import de.ejb3buch.ticket2rock.entity.Tournee;
 
 /**
@@ -76,7 +76,7 @@ public class DemoTapeBean implements DemoTape {
 				.getResultList();
 	}
 
-	public List<Ticketreservierung> getReservierungen() {
-		return em.createQuery("FROM Ticketreservierung").getResultList();
+	public List<Ticketbestellung> getBestellungen() {
+		return em.createQuery("FROM Ticketbestellung").getResultList();
 	}
 }

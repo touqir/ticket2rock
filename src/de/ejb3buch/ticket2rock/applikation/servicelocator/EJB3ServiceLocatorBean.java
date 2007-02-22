@@ -7,11 +7,11 @@ import javax.naming.NamingException;
 import org.apache.log4j.Logger;
 
 import de.ejb3buch.ticket2rock.session.Auskunft;
-import de.ejb3buch.ticket2rock.session.BuchungsVorgang;
 import de.ejb3buch.ticket2rock.session.crud.BandVerwaltung;
 import de.ejb3buch.ticket2rock.session.crud.KonzertVerwaltung;
 import de.ejb3buch.ticket2rock.session.crud.MusikerVerwaltung;
 import de.ejb3buch.ticket2rock.session.crud.TourneeVerwaltung;
+import de.ejb3buch.ticket2rock.session.ticketbestellung.Bestellvorgang;
 
 /**
  * ServiceLocator Implementierung. Services werden in Form von Session Bean
@@ -85,16 +85,16 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 		return myKonzertVerwaltung;
 	}
 	
-	public BuchungsVorgang getWarenkorb() {
-		BuchungsVorgang einkaufskorb;
+	public Bestellvorgang getWarenkorb() {
+		Bestellvorgang einkaufskorb;
 		try {
-			einkaufskorb = (BuchungsVorgang) ctx
-			.lookup("ticket2rock/BuchungsVorgangBean/local");
+			einkaufskorb = (Bestellvorgang) ctx
+			.lookup("ticket2rock/BestellvorgangBean/local");
 		} catch (NamingException e) {
 			e.printStackTrace();
-			throw new EJBException("BuchungsVorgang konnte nicht allokiert werden",e);
+			throw new EJBException("Bestellvorgang konnte nicht allokiert werden",e);
 		}
-      logger.info("Stateful Session Bean BuchungsVorgang wurde allokiert");
+      logger.info("Stateful Session Bean Bestellvorgang wurde allokiert");
       return einkaufskorb;
 	}
 

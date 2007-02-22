@@ -21,64 +21,11 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package de.ejb3buch.ticket2rock.entity;
+package de.ejb3buch.ticket2rock.session.ticketbestellung;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.ejb.Local;
 
-/**
- * Eine Ticketreservierung bezieht sich immer auf ein einzelnes Konzert, kann
- * aber mehrere Tickets umfassen.
- */
-
-@Entity
-public class Ticketreservierung {
-	private int id;
-
-	private Konzert konzert;
-
-	private Kunde kunde;
-
-	private int anzahl;
-
-	/**
-	 * ID ist zugleich Primärschlüssel und (fachliche) Bestell-ID
-	 */
-	@Id
-	@GeneratedValue
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	@ManyToOne
-	public Konzert getKonzert() {
-		return konzert;
-	}
-
-	public void setKonzert(Konzert konzert) {
-		this.konzert = konzert;
-	}
-
-	@ManyToOne
-	public Kunde getKunde() {
-		return kunde;
-	}
-
-	public void setKunde(Kunde kunde) {
-		this.kunde = kunde;
-	}
-
-	public int getAnzahl() {
-		return anzahl;
-	}
-
-	public void setAnzahl(int anzahl) {
-		this.anzahl = anzahl;
-	}
+@Local
+public interface Stornator {
+	public void storniereBestellung(long bestellnr);
 }

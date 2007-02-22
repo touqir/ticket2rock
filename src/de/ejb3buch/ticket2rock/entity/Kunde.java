@@ -44,7 +44,7 @@ public class Kunde {
 
 	private String email;
 
-	private List<Ticketreservierung> bestellungen;
+	private List<Ticketbestellung> bestellungen;
 
 	@Id
 	@GeneratedValue
@@ -65,11 +65,11 @@ public class Kunde {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "kunde")
-	public List<Ticketreservierung> getBestellungen() {
+	public List<Ticketbestellung> getBestellungen() {
 		return this.bestellungen;
 	}
 
-	public void setBestellungen(List<Ticketreservierung> bestellungen) {
+	public void setBestellungen(List<Ticketbestellung> bestellungen) {
 		this.bestellungen = bestellungen;
 	}
 }

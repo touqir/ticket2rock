@@ -34,7 +34,7 @@ import javax.jms.TextMessage;
 
 import org.apache.log4j.Logger;
 
-import de.ejb3buch.ticket2rock.session.ticketbestellung.Ticketbestellung;
+import de.ejb3buch.ticket2rock.session.ticketbestellung.Stornator;
 
 @MessageDriven
 public class StornierungsnachrichtVerarbeitungsBean implements MessageListener {
@@ -43,7 +43,7 @@ public class StornierungsnachrichtVerarbeitungsBean implements MessageListener {
 			.getLogger(StornierungsnachrichtVerarbeitungsBean.class);
 
 	@EJB
-	private Ticketbestellung ticketbestellung;
+	private Stornator stornator;
 
 	public void onMessage(Message msg) {
 		try {
@@ -66,7 +66,7 @@ public class StornierungsnachrichtVerarbeitungsBean implements MessageListener {
 				}
 
 				logger.info("Storniere Bestellung Nr. " + bestellnr);
-				ticketbestellung.storniereBestellung(bestellnr);
+				stornator.storniereBestellung(bestellnr);
 
 			} else {
 				throw new EJBException("'" + tmsg.getText().trim()

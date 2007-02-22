@@ -78,6 +78,7 @@ public class BandVerwaltungBean implements BandVerwaltung {
 			}
 			// em.merge(band);
 			// logger.debug("after merge");
+			//TODO move into entity Band
 			Set<Musiker> bandmusiker = (Set<Musiker>) band.getMusiker();
 			if (bandmusiker == null) {
 				logger.debug("bandmusiker is null");
