@@ -42,7 +42,7 @@ import de.ejb3buch.ticket2rock.entity.Konzert;
 @Stateless
 @SuppressWarnings("unchecked")
 @WebService
-@SOAPBinding(style=Style.RPC)
+@SOAPBinding(style = Style.RPC)
 public class AuskunftBean implements Auskunft {
 
 	static Logger logger = Logger.getLogger(AuskunftBean.class);
@@ -54,6 +54,32 @@ public class AuskunftBean implements Auskunft {
 	 * @inheritDoc
 	 */
 	@WebMethod
+	public String sucheKonzerteWeb(String ortsName, Date vonDatum, Date bisDatum) {
+		List<Konzert> konzerte = sucheKonzerte(ortsName, vonDatum, bisDatum);
+		StringBuffer resultate = new StringBuffer("<konzert-liste>\n");
+		for (Konzert konzert : konzerte) {
+			resultate.append("  <konzert>\n");
+			resultate.append("    <ort>");
+			resultate.append(konzert.getOrt().getName());
+			resultate.append("</ort>\n");
+			resultate.append("    <location>");
+			resultate.append(konzert.getOrt().getAdresse());
+			resultate.append("</location>\n");
+			resultate.append("    <datum>");
+			resultate.append(konzert.getDatum());
+			resultate.append("</datum>\n");
+			resultate.append("    <interpret>");
+			resultate.append(konzert.getInterpret().getName());
+			resultate.append("</interpret>\n");
+			resultate.append("    <tournee>");
+			resultate.append(konzert.getTournee().getName());
+			resultate.append("</tournee>\n");
+			resultate.append("  </konzert>\n");
+		}
+		resultate.append("</konzert-liste>");
+		return resultate.toString();
+	}
+
 	public List<Konzert> sucheKonzerte(String ortsName, Date vonDatum,
 			Date bisDatum) {
 
@@ -100,7 +126,8 @@ public class AuskunftBean implements Auskunft {
 
 		List resultList = query.getResultList();
 		if (logger.isDebugEnabled() && resultList != null) {
-			logger.debug("Anzahl der gefundenen Konzerte: "
+			logger
+					.debug("Anzahl der gefundenen Konzerte: "
 							+ resultList.size());
 		}
 		return resultList;
