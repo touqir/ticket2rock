@@ -48,7 +48,8 @@ Getestet wurde Ticket2Rock mit
 ---[ JBoss-Konfiguration ]------------------------------------------------------
 Im JBoss muss eine Queue namens 'queue/ticket2rock' eingerichtet sein, um die
 Stornierung der Ticketbestellung mittels JMS-Nachricht durchführen zu können.
-Zum Einrichten der Queue geht man wie folgt vor:
+JBoss richtet die Queue automatisch ein wenn sie nicht vorhanden ist.
+Zum manuellen Einrichten der Queue geht man wie folgt vor:
 * JBoss JMX Management Console starten: http://localhost:8080/jmx-console/
 * In der Domäne 'jboss.mq' den Service 'DestinationManager' auswählen.
 * In der MBean-Operation 'void createQueue(p1)' (ACHTUNG: Nicht die gleich-
