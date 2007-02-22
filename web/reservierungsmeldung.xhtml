@@ -1,0 +1,41 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+				template="template.xhtml">
+
+<ui:define name="content">
+  <div class="section">
+    <h1><h:outputText value="#{msg.reservierungsmeldung_title}" /></h1>
+  </div>
+  <div class="section">
+    <h:outputText value="#{msg.reservierungsmeldung_text}" />
+  </div>
+  
+  <div class="section">        
+	<h:form id="reservierungsmeldungForm">
+	<fieldset>
+		<div class="entry">
+			<div class="input">
+				 <h:commandButton id="showReservationsButton" class="button" action="#{TicketController.showReservations}" 
+							value="#{msg.reservierungsmeldung_showreservations}" />&#160;&#160;
+		         <h:commandButton id="suchButton" class="button" immediate="true" action="newSearch" 
+		        	value="#{msg.reservierungsmeldung_newsearch}" />		        		        	
+			</div>
+	    </div>	
+	</fieldset>
+	
+          
+   </h:form>
+
+  
+  </div>
+</ui:define>
+
+<!-- sidebar -->
+<ui:define name="sidebar">
+<p>Reservierte Tickets werden mit Hilfe einer Stateful Session Bean verwaltet.</p>
+</ui:define>
+
+</ui:composition>
