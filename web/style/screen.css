@@ -261,6 +261,11 @@ fieldset {
 	float: left;
 	padding: 1px 0 6px 120px;
 }
+
+#title .bag {
+	padding: 10px 10px 10px 10px;
+}
+
 #status {
 	color: #C7B299;
 	float: right;

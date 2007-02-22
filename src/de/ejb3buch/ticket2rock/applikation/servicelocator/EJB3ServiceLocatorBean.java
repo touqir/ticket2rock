@@ -1,10 +1,13 @@
 package de.ejb3buch.ticket2rock.applikation.servicelocator;
 
+import javax.ejb.EJBException;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
 
 import de.ejb3buch.ticket2rock.session.Auskunft;
+import de.ejb3buch.ticket2rock.session.BuchungsVorgang;
 import de.ejb3buch.ticket2rock.session.crud.BandVerwaltung;
 import de.ejb3buch.ticket2rock.session.crud.KonzertVerwaltung;
 import de.ejb3buch.ticket2rock.session.crud.MusikerVerwaltung;
@@ -30,10 +33,12 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 	private KonzertVerwaltung myKonzertVerwaltung;
 
 	private Auskunft myAuskunft;
+	
+	private InitialContext ctx;
 
 	public EJB3ServiceLocatorBean() {
 		try {
-			InitialContext ctx = new InitialContext();
+			ctx = new InitialContext();
 			myBandVerwaltung = (BandVerwaltung) ctx
 					.lookup("ticket2rock/BandVerwaltungBean/local");
 			logger.info("Service BandVerwaltung steht zur Verfügung");
@@ -54,7 +59,9 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 					.lookup("ticket2rock/AuskunftBean/local");
 			logger.info("Service Auskunft steht zur Verfügung");
 		} catch (Exception e) {
-			logger.error(e);
+		    logger.error(e);
+			e.printStackTrace();
+			throw new EJBException("Bei der Allokierung der ServiceBeans ist ein Fehler aufgetreten",e);
 		}
 	}
 
@@ -76,6 +83,19 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 
 	public KonzertVerwaltung getKonzertVerwaltung() {
 		return myKonzertVerwaltung;
+	}
+	
+	public BuchungsVorgang getWarenkorb() {
+		BuchungsVorgang einkaufskorb;
+		try {
+			einkaufskorb = (BuchungsVorgang) ctx
+			.lookup("ticket2rock/BuchungsVorgangBean/local");
+		} catch (NamingException e) {
+			e.printStackTrace();
+			throw new EJBException("BuchungsVorgang konnte nicht allokiert werden",e);
+		}
+      logger.info("Stateful Session Bean BuchungsVorgang wurde allokiert");
+      return einkaufskorb;
 	}
 
 }

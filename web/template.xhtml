@@ -16,8 +16,13 @@
 <body onload="initjsDOMenu()">
 <f:loadBundle basename="de.ejb3buch.ticket2rock.applikation.resources.Message" var="msg" />
 <div id="document">
-	<div id="header">
-		<div id="title"><img src="images/Ticket2Rock-Logo.jpg" /></div>
+	<div id="header">	
+	   <ui:insert name="header">
+          <div id="title"><img src="images/Ticket2Rock-Logo.jpg" />&nbsp;&nbsp;
+           <h:graphicImage styleClass="bag" url="/images/tuete_leer.jpg" rendered="#{!TicketController.ticketOrdered}"/>
+           <h:graphicImage styleClass="bag" url="/images/tuete_ticket.jpg" rendered="#{TicketController.ticketOrdered}"/> 
+          </div>
+	   </ui:insert>		
 	</div>
 	<div id="menu">
 	   <div id="menubar" />
