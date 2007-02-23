@@ -132,6 +132,26 @@ private AbfangjaegerLocal falcon_methode_dd = null;
 	<%}%>
 </ul>
 
+<h3>Konzerte</h3>
+<ul>
+	<%for (Iterator iter2 = demo.getKonzerte().iterator(); iter2
+					.hasNext();) {
+				Konzert konzert = (Konzert) iter2.next();
+	%>
+		<li>
+		<%=konzert.getInterpret().getName()%>
+		<%if (konzert.getTournee() != null) {%>
+		(<%=konzert.getTournee().getName()%>)
+		<%}%>
+		-
+		<%=datumsformat_TagMonatJahr.format(konzert.getDatum())%>
+		<%=konzert.getOrt().getName()%>,
+		<%=konzert.getOrt().getAdresse()%>
+		[<%=konzert.getVeranstalter().getName()%>]
+		</li>
+	<%}%>
+</ul>
+
 <h3>Bands</h3>
 <ul>
 	<%for (Iterator iter = demo.getBands().iterator(); iter.hasNext();) {
