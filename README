@@ -95,4 +95,14 @@ Container, welcher mit im Repository vorhanden ist.
 Das entsprechende Ant-Target ist "junit"
 
 Damit das läuft, muss JUnit als Ant-Extension installiert sein.
+
+---[ Ruby als Web Service Client ]-------------------------------------------------
+* Download Ruby http://rubyforge.org/frs/download.php/12751/ruby185-21.exe
+* Download Package http-access2 http://dev.ctor.org/download/http-access-2_0_6.tar.gz
+* Download Package soap4r http://dev.ctor.org/download/soap4r-1_5_5.tar.gz
+* Ruby installieren
+* Beide Packages entpacken
+* Beide Packages lassen sich mit ''ruby install.rb'' installieren
+* Client-Skript liegt in SVN client/AuskunftWSClient.rb
+* Client-Skript mit SciTE (mit Ruby geliefert) öffnen und ausführen
 ---[ ENDE ]---------------------------------------------------------------------
