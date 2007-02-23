@@ -37,7 +37,9 @@
 	</persistence-unit-metadata>
 	<entity class="de.ejb3buch.ticket2rock.entity.News" access="PROPERTY">
 		<attributes>
-			<id name="id"/>
+			<id name="id">
+				<generated-value strategy="AUTO"/>
+			</id>
 		</attributes>
 	</entity>
 	<entity class="de.ejb3buch.ticket2rock.entity.Veranstalter" access="PROPERTY">
