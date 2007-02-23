@@ -23,5 +23,7 @@
 	<classpathentry kind="lib" path="lib/thirdparty-all.jar"/>
 	<classpathentry kind="lib" path="lib/EasyGloss.jar"/>
 	<classpathentry kind="lib" path="lib/jboss-jaxws.jar"/>
+	<classpathentry kind="lib" path="lib/mail-ra.jar"/>
+	<classpathentry kind="lib" path="lib/mail.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
