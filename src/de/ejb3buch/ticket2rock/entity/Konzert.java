@@ -25,6 +25,7 @@ package de.ejb3buch.ticket2rock.entity;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -51,6 +52,8 @@ public class Konzert {
 	private Date datum;
 
 	private Veranstaltungsort ort;
+	
+	private Veranstalter veranstalter;
 
 	private Tournee tournee;
 
@@ -107,6 +110,15 @@ public class Konzert {
 	}
 
 	@ManyToOne
+	public Veranstalter getVeranstalter() {
+		return veranstalter;
+	}
+
+	public void setVeranstalter(Veranstalter veranstalter) {
+		this.veranstalter = veranstalter;
+	}
+
+	@ManyToOne
 	public Tournee getTournee() {
 		return tournee;
 	}
@@ -115,6 +127,7 @@ public class Konzert {
 		this.tournee = tournee;
 	}
 
+	@Column(name="KONTINGENT")
 	public int getTicketkontingent() {
 		return ticketkontingent;
 	}
