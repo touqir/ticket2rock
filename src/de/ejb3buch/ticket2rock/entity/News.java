@@ -32,9 +32,8 @@ import javax.persistence.Id;
 import javax.persistence.PostLoad;
 
 /**
- * Ein Song ist ein Musikstück, das von einem Interpreten (Musiker oder Band)
- * veröffentlicht wird. Ein Song hat einen Titel. Ferner lässt sich ein Song
- * einem Musikgenre zuordnen. Ein Song kann Bestandteil eines Albums sein.
+ * News sind Nachrichten, die den Ticket2Rock-Benutzer z.B. über neue Konzerte
+ * informieren.
  */
 
 @Entity
