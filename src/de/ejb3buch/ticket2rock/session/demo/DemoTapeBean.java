@@ -31,6 +31,7 @@ import javax.persistence.PersistenceContext;
 
 import de.ejb3buch.ticket2rock.entity.Album;
 import de.ejb3buch.ticket2rock.entity.Band;
+import de.ejb3buch.ticket2rock.entity.Konzert;
 import de.ejb3buch.ticket2rock.entity.Musiker;
 import de.ejb3buch.ticket2rock.entity.News;
 import de.ejb3buch.ticket2rock.entity.Song;
@@ -69,6 +70,10 @@ public class DemoTapeBean implements DemoTape {
 
 	public List<Tournee> getTourneen() {
 		return em.createQuery("FROM Tournee").getResultList();
+	}
+
+	public List<Konzert> getKonzerte() {
+		return em.createQuery("FROM Konzert").getResultList();
 	}
 
 	public List<News> getNews() {

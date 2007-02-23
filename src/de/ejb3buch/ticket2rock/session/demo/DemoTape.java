@@ -27,6 +27,7 @@ import java.util.List;
 
 import de.ejb3buch.ticket2rock.entity.Album;
 import de.ejb3buch.ticket2rock.entity.Band;
+import de.ejb3buch.ticket2rock.entity.Konzert;
 import de.ejb3buch.ticket2rock.entity.Musiker;
 import de.ejb3buch.ticket2rock.entity.News;
 import de.ejb3buch.ticket2rock.entity.Song;
@@ -44,6 +45,8 @@ public interface DemoTape {
 	public List<Album> getAlben();
 
 	public List<Tournee> getTourneen();
+
+	public List<Konzert> getKonzerte();
 
 	public List<News> getNews();
 	
