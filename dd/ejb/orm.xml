@@ -40,4 +40,26 @@
 			<id name="id"/>
 		</attributes>
 	</entity>
+	<entity class="de.ejb3buch.ticket2rock.entity.Veranstalter" access="PROPERTY">
+		<attributes>
+			<embedded-id name="pk">
+				<attribute-override name="handelsregisternummer">
+					<column name="HR_NR"/>
+				</attribute-override>
+				<attribute-override name="amtsgericht">
+					<column name="AMTSGERICHT"/>
+				</attribute-override>
+			</embedded-id>
+		</attributes>
+	</entity>
+	<embeddable class="de.ejb3buch.ticket2rock.entity.primarykey.VeranstalterPK" access="PROPERTY">
+		<attributes>
+			<basic name="handelsregisternummer">
+				<column name="HREG"/>
+			</basic>
+			<basic name="amtsgericht">
+				<column name="GERICHT"/>
+			</basic>
+		</attributes>
+	</embeddable>
 </entity-mappings>
