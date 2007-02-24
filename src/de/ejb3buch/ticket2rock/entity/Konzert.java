@@ -28,9 +28,11 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -52,7 +54,7 @@ public class Konzert {
 	private Date datum;
 
 	private Veranstaltungsort ort;
-	
+
 	private Veranstalter veranstalter;
 
 	private Tournee tournee;
@@ -60,7 +62,8 @@ public class Konzert {
 	private int ticketkontingent;
 
 	@Id
-	@GeneratedValue
+	@TableGenerator(name = "KonzertPKGen", table = "PK_GEN", pkColumnName = "GEN_KEY", valueColumnName = "GEN_VALUE", pkColumnValue = "KONZERT_ID")
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "KonzertPKGen")
 	public int getId() {
 		return id;
 	}
@@ -127,7 +130,7 @@ public class Konzert {
 		this.tournee = tournee;
 	}
 
-	@Column(name="KONTINGENT")
+	@Column(name = "KONTINGENT")
 	public int getTicketkontingent() {
 		return ticketkontingent;
 	}

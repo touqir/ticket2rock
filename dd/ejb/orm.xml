@@ -42,6 +42,22 @@
 			</id>
 		</attributes>
 	</entity>
+	<entity class="de.ejb3buch.ticket2rock.entity.Konzert" access="PROPERTY">
+		<table-generator name="KonzertPKGen" table="PK_GEN" pk-column-name="GEN_KEY" value-column-name="GEN_VALUE" pk-column-value="KONZERT_ID"/>
+		<attributes>
+			<id name="id">
+				<generated-value strategy="TABLE" generator="KonzertPKGen"/>
+			</id>
+		</attributes>
+	</entity>
+	<entity class="de.ejb3buch.ticket2rock.entity.Tournee" access="PROPERTY">
+		<table-generator name="TourneePKGen" table="PK_GEN" pk-column-name="GEN_KEY" value-column-name="GEN_VALUE" pk-column-value="TOURNEE_ID"/>
+		<attributes>
+			<id name="id">
+				<generated-value strategy="TABLE" generator="TourneePKGen"/>
+			</id>
+		</attributes>
+	</entity>
 	<entity class="de.ejb3buch.ticket2rock.entity.Veranstalter" access="PROPERTY">
 		<attributes>
 			<embedded-id name="pk">
