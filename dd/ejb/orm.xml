@@ -36,6 +36,7 @@
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
 	<entity class="de.ejb3buch.ticket2rock.entity.News" access="PROPERTY">
+		<post-load method-name="pruefeAlter()"/>
 		<attributes>
 			<id name="id">
 				<generated-value strategy="AUTO"/>
