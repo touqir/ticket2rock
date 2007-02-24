@@ -104,7 +104,7 @@ public class News {
 	}
 
 	@PostLoad
-	protected void checkAge() {
+	protected void pruefeAlter() {
 		Date heute = new Date();
 
 		long heuteInTagen = heute.getTime() / 86400000;
