@@ -57,6 +57,18 @@
 			</activation-config>
 		</message-driven>
 		<session>
+ 			<ejb-name>Admin</ejb-name>
+			<ejb-class>de.ejb3buch.ticket2rock.session.admin.AdminBean</ejb-class>
+			<!--
+				Die Deklaration der Lebenszyklus-Callbacks ist spezifisch für
+				den JBoss-Applikationsserver, da sich die Spezifikation an dieser
+				Stelle leider ausschweigt.
+			-->
+			<post-construct>
+				<lifecycle-callback-method>onPostConstruct</lifecycle-callback-method>
+			</post-construct>
+		</session>	
+		<session>
  			<ejb-name>AbfangjaegerBeanKlasseninterzeptor</ejb-name>
 			<ejb-class>de.ejb3buch.ticket2rock.session.demo.klasseninterzeptor.AbfangjaegerBean</ejb-class>
 		</session>	
