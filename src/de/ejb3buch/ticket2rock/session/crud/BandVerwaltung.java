@@ -7,7 +7,7 @@ import javax.ejb.Local;
 import de.ejb3buch.ticket2rock.entity.Band;
 
 @Local
-public interface BandVerwaltungLocal {
+public interface BandVerwaltung {
 
     /**
      * Legt eine Band-Entität in der Persistenzschicht an

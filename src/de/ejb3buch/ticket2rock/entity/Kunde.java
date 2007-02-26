@@ -23,6 +23,7 @@
 
 package de.ejb3buch.ticket2rock.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -44,7 +45,7 @@ public class Kunde {
 
 	private String email;
 
-	private List<Ticketbestellung> bestellungen;
+	private List<Ticketbestellung> bestellungen = null;
 
 	@Id
 	@GeneratedValue
@@ -67,6 +68,19 @@ public class Kunde {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "kunde")
 	public List<Ticketbestellung> getBestellungen() {
 		return this.bestellungen;
+	}
+
+	/**
+	 * fügt eine Liste von Ticketbestellungen den Ticketbestellungen, die diesem
+	 * Kunden zugeordnet sind hinzu
+	 * 
+	 * @param bestellungen
+	 */
+	public void addBestellungen(List<Ticketbestellung> dieBestellungen) {
+		if (bestellungen == null) {
+			bestellungen = new ArrayList<Ticketbestellung>();
+		}
+		bestellungen.addAll(dieBestellungen);
 	}
 
 	public void setBestellungen(List<Ticketbestellung> bestellungen) {

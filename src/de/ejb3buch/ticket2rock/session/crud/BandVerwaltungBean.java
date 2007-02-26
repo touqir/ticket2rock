@@ -1,6 +1,5 @@
 package de.ejb3buch.ticket2rock.session.crud;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -105,15 +104,7 @@ public class BandVerwaltungBean implements BandVerwaltungLocal {
 		logger.debug("end of method deleteBand()");
 
 	}
-	
-	
-    /**
-     *@inheritDoc
-     */
-	public Collection<Musiker> getMusiker() {
-		Query query = em.createQuery("from Musiker");
-		return (Collection<Musiker>) query.getResultList();
-	}
+		
 
     /**
      *@inheritDoc
@@ -122,10 +113,4 @@ public class BandVerwaltungBean implements BandVerwaltungLocal {
 		return em.find(Band.class, bandId);
 	}
 
-    /**
-     *@inheritDoc
-     */	
-	public Musiker getMusikerById(Integer musikerId) {
-		return em.find(Musiker.class, musikerId);
-	}
 }

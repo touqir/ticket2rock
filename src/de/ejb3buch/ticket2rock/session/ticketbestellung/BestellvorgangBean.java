@@ -24,9 +24,11 @@ package de.ejb3buch.ticket2rock.session.ticketbestellung;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.EJB;
 import javax.ejb.PostActivate;
 import javax.ejb.PrePassivate;
 import javax.ejb.Remove;
@@ -37,46 +39,86 @@ import javax.persistence.PersistenceContext;
 import org.apache.log4j.Logger;
 
 import de.ejb3buch.ticket2rock.entity.Konzert;
+import de.ejb3buch.ticket2rock.entity.Kunde;
 import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
+import de.ejb3buch.ticket2rock.session.crud.KundenVerwaltungLocal;
 
 @Stateful
 @SuppressWarnings("unchecked")
 public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 
 	static Logger logger = Logger.getLogger(BestellvorgangBean.class);
-
-	Collection<Ticketbestellung> ticketReservierungen = new ArrayList<Ticketbestellung>();
+	List<Ticketbestellung> ticketBestellungen = new ArrayList<Ticketbestellung>();
 
 	@PersistenceContext
 	private EntityManager em;
+	
+	@EJB
+    private KundenVerwaltungLocal kundenverwaltung;
 
 	/**
 	 * @inheritDoc
 	 */
-	public void reserviereTickets(Konzert konzert, int ticketAnzahl) {
+	public void bestelleTickets(Konzert konzert, int ticketAnzahl) {
 		Ticketbestellung ticketReservierung = new Ticketbestellung();
 		ticketReservierung.setKonzert(konzert);
 		ticketReservierung.setAnzahl(ticketAnzahl);
-		ticketReservierungen.add(ticketReservierung);
+		ticketBestellungen.add(ticketReservierung);
+	}
+	
+	
+	/**
+	 * @inheritDoc
+	 */
+	public Collection<Ticketbestellung> getTicketbestellungen() {
+		return ticketBestellungen;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
 	@Remove
-	public void verwerfeTicketReservierungen() {
+	public void verwerfeTicketbestellungen() {
 		// TODO Auto-generated method stub
-
+		
 	}
+	
+    /**
+     * @inheritDoc
+     */
+	 public void verwerfeTicketbestellung(Ticketbestellung bestellung) {
+		 ticketBestellungen.remove(bestellung);		 
+	 }
+	 
+	 /**
+	  * @inheritDoc
+	  */
+	 public boolean hasBestellungen() {
+		return !this.ticketBestellungen.isEmpty(); 
+	 }
+	
 
 	/**
 	 * @inheritDoc
 	 */
-	@Remove
+	 @Remove
 	public void bezahleTickets(String email) {
-
+		
+		Kunde kunde = kundenverwaltung.getKundeByEmail(email);
+		if (kunde == null) {
+		   kunde = new Kunde();
+		   kunde.setEmail(email);
+		   kunde.setBestellungen(ticketBestellungen);
+		   em.persist(kunde);
+		}
+		else {
+		   kunde.setEmail(email);
+		   kunde.addBestellungen(ticketBestellungen);
+		   em.merge(kunde);			
+		}
+		
 	}
-
+	
 	// Live-Statistik zur Nutzung dieser Bean
 
 	@PostConstruct
@@ -106,4 +148,6 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 		BestellvorgangSessionStatistics.passivatedSessions--;
 		BestellvorgangSessionStatistics.activeSessions++;
 	}
+
+
 }

@@ -60,6 +60,7 @@ public class Konzert {
 	private Tournee tournee;
 
 	private int ticketkontingent;
+	
 
 	@Id
 	@TableGenerator(name = "KonzertPKGen", table = "PK_GEN", pkColumnName = "GEN_KEY", valueColumnName = "GEN_VALUE", pkColumnValue = "KONZERT_ID")
@@ -179,4 +180,5 @@ public class Konzert {
 			this.ticketkontingent = this.ort.getKapazitaet();
 		}
 	}
+
 }

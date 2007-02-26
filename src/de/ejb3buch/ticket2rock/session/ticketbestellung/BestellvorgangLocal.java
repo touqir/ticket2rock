@@ -1,8 +1,11 @@
 package de.ejb3buch.ticket2rock.session.ticketbestellung;
 
+import java.util.Collection;
+
 import javax.ejb.Local;
 
 import de.ejb3buch.ticket2rock.entity.Konzert;
+import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
 
 @Local
 public interface BestellvorgangLocal {
@@ -14,16 +17,28 @@ public interface BestellvorgangLocal {
 	 * @param konzert das Konzert, für das Tickets gebucht werden
 	 * @param ticketAnzahl Anzahl der zu buchenden Tickets
 	 */
-	public void reserviereTickets(Konzert konzert, int ticketAnzahl);
+	public void bestelleTickets(Konzert konzert, int ticketAnzahl);
 	
-	
+    /**
+     * 
+     * @return eine Collection der Ticketbestellungen, die diesem Bestellvorgang zugeordnet
+     * sind
+     */
+	public Collection<Ticketbestellung> getTicketbestellungen(); 	
 	
 	/**
-	 * Alle Ticketbuchungen werden verworfen. Die verworfenen Tickets werden dem
-	 * Ticketkontingent des jeweiligen Konzertes wieder gutgeschrieben.
+	 * Alle Ticketbestellungen werden verworfen. 
 	 *
 	 */
-	public void verwerfeTicketReservierungen();
+	public void verwerfeTicketbestellungen();
+	
+	
+    /**
+     * Verwerfe eine Ticketbestellung. Ein Ticketbestellungs Objekt wird von der Collection
+     * entfernt.
+     * @param bestellung
+     */
+	public void verwerfeTicketbestellung(Ticketbestellung bestellung);
 	
 	/**
 	 * alle gebuchten Tickets werden bezahlt.
@@ -31,5 +46,11 @@ public interface BestellvorgangLocal {
 	 * werden.
 	 */
 	public void bezahleTickets(String email);
+	
+    /**
+     * 
+     * @return true falls diesem Bestellvorgang  Bestellungen enthält, false falls nicht
+     */	
+	public boolean hasBestellungen();
 
 }
