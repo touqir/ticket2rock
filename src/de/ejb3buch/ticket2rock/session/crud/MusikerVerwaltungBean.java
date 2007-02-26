@@ -20,7 +20,7 @@ import de.ejb3buch.ticket2rock.entity.Musiker;
  *
  */
 @Stateless
-public class MusikerVerwaltungBean implements MusikerVerwaltung {
+public class MusikerVerwaltungBean implements MusikerVerwaltungLocal {
 
 	static Logger logger = Logger.getLogger(MusikerVerwaltungBean.class);
 

@@ -23,9 +23,9 @@
 
 package de.ejb3buch.ticket2rock.session.ticketbestellung;
 
-import javax.ejb.Local;
+import javax.ejb.Remote;
 
-@Local
+@Remote
 public interface Stornator {
 	public void storniereBestellung(long bestellnr);
 }

@@ -26,7 +26,7 @@ import de.ejb3buch.ticket2rock.applikation.model.BandBackingBean;
 import de.ejb3buch.ticket2rock.applikation.servicelocator.ServiceLocator;
 import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Musiker;
-import de.ejb3buch.ticket2rock.session.crud.BandVerwaltung;
+import de.ejb3buch.ticket2rock.session.crud.BandVerwaltungLocal;
 
 public class BandController {
 
@@ -120,7 +120,7 @@ public class BandController {
 	 * @return Identifier für die JSF Navigation
 	 */
 	public String addBand() {
-		BandVerwaltung bandVerwaltung = serviceLocator.getBandVerwaltung();
+		BandVerwaltungLocal bandVerwaltung = serviceLocator.getBandVerwaltung();
 		// Überprüfe, ob es eine Band mit diesem Namen bereits gibt		
 		if (bandVerwaltung.getBandByName(bandBackingBean.getName()) != null) {
 			FacesContext context = FacesContext.getCurrentInstance();

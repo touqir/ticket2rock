@@ -17,7 +17,7 @@ import de.ejb3buch.ticket2rock.entity.Konzert;
  */
 @SuppressWarnings("unchecked")
 @Stateless
-public class KonzertVerwaltungBean implements KonzertVerwaltung {
+public class KonzertVerwaltungBean implements KonzertVerwaltungLocal {
 
 	static Logger logger = Logger.getLogger(KonzertVerwaltungBean.class);
 

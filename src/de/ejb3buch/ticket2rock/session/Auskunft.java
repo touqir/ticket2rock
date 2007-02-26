@@ -25,11 +25,11 @@ package de.ejb3buch.ticket2rock.session;
 import java.util.Date;
 import java.util.List;
 
-import javax.ejb.Local;
+import javax.ejb.Remote;
 
 import de.ejb3buch.ticket2rock.entity.Konzert;
 
-@Local
+@Remote
 public interface Auskunft {
 
 	/**

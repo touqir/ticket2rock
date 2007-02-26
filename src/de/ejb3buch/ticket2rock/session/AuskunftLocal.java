@@ -20,22 +20,32 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+package de.ejb3buch.ticket2rock.session;
 
-package de.ejb3buch.ticket2rock.session.ticketbestellung;
+import java.util.Date;
+import java.util.List;
 
-import javax.ejb.Stateless;
+import javax.ejb.Local;
 
-import org.apache.log4j.Logger;
+import de.ejb3buch.ticket2rock.entity.Konzert;
 
-@Stateless
-public class StornatorBean implements Stornator, StornatorLocal {
+@Local
+public interface AuskunftLocal {
 
-	static Logger logger = Logger.getLogger(StornatorBean.class);
-
-	public void storniereBestellung(long bestellnr) {
-
-		// TODO: Storniere Bestellung
-
-		logger.info("Storniere Bestellung Nr. " + bestellnr);
-	}
+	/**
+	 * Sucht nach Konzerten anhand übergebener Suchkriterien. Falls ein
+	 * Suchkriterion null oder leer ist, wird es nicht bei der Suche
+	 * berücksichtigt
+	 * 
+	 * @param ortsname
+	 *            Name des Veranstaltungsortes
+	 * @param vonDatum
+	 *            untere Datumsgrenze des Veranstaltungszeitraums
+	 * @param bisDatum
+	 *            obere Datumsgrenze des Veranstaltungszeitraums
+	 * @return Liste von Konzert Entitäten, die anhand der übergebenen Parameter
+	 *         gefunden wurden
+	 */
+	public List<Konzert> sucheKonzerte(String ortsname, Date vonDatum,
+			Date bisDatum);
 }

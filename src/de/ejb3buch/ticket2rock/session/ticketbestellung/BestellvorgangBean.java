@@ -41,9 +41,10 @@ import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
 
 @Stateful
 @SuppressWarnings("unchecked")
-public class BestellvorgangBean implements Bestellvorgang {
+public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 
 	static Logger logger = Logger.getLogger(BestellvorgangBean.class);
+
 	Collection<Ticketbestellung> ticketReservierungen = new ArrayList<Ticketbestellung>();
 
 	@PersistenceContext
@@ -65,7 +66,7 @@ public class BestellvorgangBean implements Bestellvorgang {
 	@Remove
 	public void verwerfeTicketReservierungen() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/**
@@ -73,10 +74,9 @@ public class BestellvorgangBean implements Bestellvorgang {
 	 */
 	@Remove
 	public void bezahleTickets(String email) {
-		
-		
+
 	}
-	
+
 	// Live-Statistik zur Nutzung dieser Bean
 
 	@PostConstruct

@@ -18,7 +18,7 @@ import de.ejb3buch.ticket2rock.entity.Tournee;
  */
 @SuppressWarnings("unchecked")
 @Stateless
-public class TourneeVerwaltungBean implements TourneeVerwaltung {
+public class TourneeVerwaltungBean implements TourneeVerwaltungLocal {
 
 	static Logger logger = Logger.getLogger(TourneeVerwaltungBean.class);
 

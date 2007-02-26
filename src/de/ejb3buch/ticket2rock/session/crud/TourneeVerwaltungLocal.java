@@ -7,7 +7,7 @@ import javax.ejb.Local;
 import de.ejb3buch.ticket2rock.entity.Tournee;
 
 @Local
-public interface TourneeVerwaltung {
+public interface TourneeVerwaltungLocal {
 
     /**
      * Legt eine Tournee-Entität in der Persistenzschicht an

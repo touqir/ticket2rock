@@ -23,19 +23,9 @@
 
 package de.ejb3buch.ticket2rock.session.ticketbestellung;
 
-import javax.ejb.Stateless;
+import javax.ejb.Local;
 
-import org.apache.log4j.Logger;
-
-@Stateless
-public class StornatorBean implements Stornator, StornatorLocal {
-
-	static Logger logger = Logger.getLogger(StornatorBean.class);
-
-	public void storniereBestellung(long bestellnr) {
-
-		// TODO: Storniere Bestellung
-
-		logger.info("Storniere Bestellung Nr. " + bestellnr);
-	}
+@Local
+public interface StornatorLocal {
+	public void storniereBestellung(long bestellnr);
 }

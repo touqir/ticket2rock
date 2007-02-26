@@ -35,7 +35,7 @@ import org.apache.log4j.Logger;
 import org.jboss.annotation.ejb.ResourceAdapter;
 import org.jboss.resource.adapter.mail.inflow.MailListener;
 
-import de.ejb3buch.ticket2rock.session.ticketbestellung.Stornator;
+import de.ejb3buch.ticket2rock.session.ticketbestellung.StornatorLocal;
 
 /**
  * ACHTUNG: Der Mail Resource Adapter funktioniert nur mit IMAP, da er nur auf Mails reagiert, die als neu markiert
@@ -52,7 +52,7 @@ public class MailStornatorBean implements MailListener {
     static Logger logger = Logger.getLogger(MailStornatorBean.class);
 
     @EJB
-    private Stornator stornator;
+    private StornatorLocal stornator;
 
     public void onMessage(Message msg) {
         try {

@@ -57,9 +57,9 @@ public class BandVerwaltungBeanTest extends EmbeddedContainerTestBase
         assertTrue(alleBands.size() > 0);
     }
 
-    private BandVerwaltung getBandVerwaltung() throws NamingException, Exception
+    private BandVerwaltungLocal getBandVerwaltung() throws NamingException, Exception
     {
-        BandVerwaltung bandVerwaltung = (BandVerwaltung) lookup("BandVerwaltungBean/local");
+        BandVerwaltungLocal bandVerwaltung = (BandVerwaltungLocal) lookup("BandVerwaltungBean/local");
         return bandVerwaltung;
     }
 
@@ -87,7 +87,7 @@ public class BandVerwaltungBeanTest extends EmbeddedContainerTestBase
         final String BANDNAME = "Baumanns Tod";
         dieBand.setName(BANDNAME);
 
-        BandVerwaltung bandVerwaltung = getBandVerwaltung();
+        BandVerwaltungLocal bandVerwaltung = getBandVerwaltung();
         int anzahlVorher = bandVerwaltung.getBands().size();
 
         logger.debug("Versuche eine neue Band zu erzeugen...");
@@ -105,7 +105,7 @@ public class BandVerwaltungBeanTest extends EmbeddedContainerTestBase
     @Test
     public void testUpdateBand() throws Exception
     {
-        BandVerwaltung bandVerwaltung = getBandVerwaltung();
+        BandVerwaltungLocal bandVerwaltung = getBandVerwaltung();
 
         logger.debug("Versuche eine neue Band zu modifizieren...");
         Band dieBand = bandVerwaltung.getBandById(10);
@@ -124,7 +124,7 @@ public class BandVerwaltungBeanTest extends EmbeddedContainerTestBase
     @Test(expected = NullPointerException.class)
     public void testDeleteBand() throws Exception
     {
-        BandVerwaltung bv = getBandVerwaltung();
+        BandVerwaltungLocal bv = getBandVerwaltung();
 
         logger.debug("Versuche eine neue Band zu loeschen");
         int anzahlVorher = bv.getBands().size();

@@ -1,23 +1,23 @@
 package de.ejb3buch.ticket2rock.applikation.servicelocator;
 
-import de.ejb3buch.ticket2rock.session.Auskunft;
-import de.ejb3buch.ticket2rock.session.crud.BandVerwaltung;
-import de.ejb3buch.ticket2rock.session.crud.KonzertVerwaltung;
-import de.ejb3buch.ticket2rock.session.crud.MusikerVerwaltung;
-import de.ejb3buch.ticket2rock.session.crud.TourneeVerwaltung;
-import de.ejb3buch.ticket2rock.session.ticketbestellung.Bestellvorgang;
+import de.ejb3buch.ticket2rock.session.AuskunftLocal;
+import de.ejb3buch.ticket2rock.session.crud.BandVerwaltungLocal;
+import de.ejb3buch.ticket2rock.session.crud.KonzertVerwaltungLocal;
+import de.ejb3buch.ticket2rock.session.crud.MusikerVerwaltungLocal;
+import de.ejb3buch.ticket2rock.session.crud.TourneeVerwaltungLocal;
+import de.ejb3buch.ticket2rock.session.ticketbestellung.BestellvorgangLocal;
 
 public interface ServiceLocator {
 
-	public BandVerwaltung getBandVerwaltung();
+	public BandVerwaltungLocal getBandVerwaltung();
 	
-	public MusikerVerwaltung getMusikerVerwaltung();
+	public MusikerVerwaltungLocal getMusikerVerwaltung();
 	
-	public TourneeVerwaltung getTourneeVerwaltung();
+	public TourneeVerwaltungLocal getTourneeVerwaltung();
 	
-	public KonzertVerwaltung getKonzertVerwaltung();
+	public KonzertVerwaltungLocal getKonzertVerwaltung();
 	
-	public Auskunft getAuskunft();
+	public AuskunftLocal getAuskunft();
 	
-	public Bestellvorgang getWarenkorb();
+	public BestellvorgangLocal getWarenkorb();
 }

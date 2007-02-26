@@ -7,7 +7,7 @@ import javax.ejb.Local;
 import de.ejb3buch.ticket2rock.entity.Musiker;
 
 @Local
-public interface MusikerVerwaltung {
+public interface MusikerVerwaltungLocal {
 
     /**
      * Legt eine Musiker-Entität in der Persistenzschicht an

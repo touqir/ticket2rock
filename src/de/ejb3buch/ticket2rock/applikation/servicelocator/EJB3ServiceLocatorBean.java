@@ -6,12 +6,12 @@ import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
 
-import de.ejb3buch.ticket2rock.session.Auskunft;
-import de.ejb3buch.ticket2rock.session.crud.BandVerwaltung;
-import de.ejb3buch.ticket2rock.session.crud.KonzertVerwaltung;
-import de.ejb3buch.ticket2rock.session.crud.MusikerVerwaltung;
-import de.ejb3buch.ticket2rock.session.crud.TourneeVerwaltung;
-import de.ejb3buch.ticket2rock.session.ticketbestellung.Bestellvorgang;
+import de.ejb3buch.ticket2rock.session.AuskunftLocal;
+import de.ejb3buch.ticket2rock.session.crud.BandVerwaltungLocal;
+import de.ejb3buch.ticket2rock.session.crud.KonzertVerwaltungLocal;
+import de.ejb3buch.ticket2rock.session.crud.MusikerVerwaltungLocal;
+import de.ejb3buch.ticket2rock.session.crud.TourneeVerwaltungLocal;
+import de.ejb3buch.ticket2rock.session.ticketbestellung.BestellvorgangLocal;
 
 /**
  * ServiceLocator Implementierung. Services werden in Form von Session Bean
@@ -24,40 +24,40 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 
 	static Logger logger = Logger.getLogger(EJB3ServiceLocatorBean.class);
 
-	private BandVerwaltung myBandVerwaltung;
+	private BandVerwaltungLocal myBandVerwaltung;
 
-	private MusikerVerwaltung myMusikerVerwaltung;
+	private MusikerVerwaltungLocal myMusikerVerwaltung;
 
-	private TourneeVerwaltung myTourneeVerwaltung;
+	private TourneeVerwaltungLocal myTourneeVerwaltung;
 
-	private KonzertVerwaltung myKonzertVerwaltung;
+	private KonzertVerwaltungLocal myKonzertVerwaltung;
 
-	private Auskunft myAuskunft;
+	private AuskunftLocal myAuskunft;
 	
 	private InitialContext ctx;
 
 	public EJB3ServiceLocatorBean() {
 		try {
 			ctx = new InitialContext();
-			myBandVerwaltung = (BandVerwaltung) ctx
+			myBandVerwaltung = (BandVerwaltungLocal) ctx
 					.lookup("ticket2rock/BandVerwaltungBean/local");
-			logger.info("Service BandVerwaltung steht zur Verfügung");
+			logger.info("Service BandVerwaltungLocal steht zur Verfügung");
 
-			myMusikerVerwaltung = (MusikerVerwaltung) ctx
+			myMusikerVerwaltung = (MusikerVerwaltungLocal) ctx
 					.lookup("ticket2rock/MusikerVerwaltungBean/local");
-			logger.info("Service MusikerVerwaltung steht zur Verfügung");
+			logger.info("Service MusikerVerwaltungLocal steht zur Verfügung");
 
-			myTourneeVerwaltung = (TourneeVerwaltung) ctx
+			myTourneeVerwaltung = (TourneeVerwaltungLocal) ctx
 					.lookup("ticket2rock/TourneeVerwaltungBean/local");
-			logger.info("Service TourneeVerwaltung steht zur Verfügung");
+			logger.info("Service TourneeVerwaltungLocal steht zur Verfügung");
 
-			myKonzertVerwaltung = (KonzertVerwaltung) ctx
+			myKonzertVerwaltung = (KonzertVerwaltungLocal) ctx
 					.lookup("ticket2rock/KonzertVerwaltungBean/local");
-			logger.info("Service KonzertVerwaltung steht zur Verfügung");
+			logger.info("Service KonzertVerwaltungLocal steht zur Verfügung");
 
-			myAuskunft = (Auskunft) ctx
+			myAuskunft = (AuskunftLocal) ctx
 					.lookup("ticket2rock/AuskunftBean/local");
-			logger.info("Service Auskunft steht zur Verfügung");
+			logger.info("Service AuskunftLocal steht zur Verfügung");
 		} catch (Exception e) {
 		    logger.error(e);
 			e.printStackTrace();
@@ -65,36 +65,36 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 		}
 	}
 
-	public BandVerwaltung getBandVerwaltung() {
+	public BandVerwaltungLocal getBandVerwaltung() {
 		return myBandVerwaltung;
 	}
 
-	public MusikerVerwaltung getMusikerVerwaltung() {
+	public MusikerVerwaltungLocal getMusikerVerwaltung() {
 		return myMusikerVerwaltung;
 	}
 
-	public Auskunft getAuskunft() {
+	public AuskunftLocal getAuskunft() {
 		return myAuskunft;
 	}
 
-	public TourneeVerwaltung getTourneeVerwaltung() {
+	public TourneeVerwaltungLocal getTourneeVerwaltung() {
 		return myTourneeVerwaltung;
 	}
 
-	public KonzertVerwaltung getKonzertVerwaltung() {
+	public KonzertVerwaltungLocal getKonzertVerwaltung() {
 		return myKonzertVerwaltung;
 	}
 	
-	public Bestellvorgang getWarenkorb() {
-		Bestellvorgang einkaufskorb;
+	public BestellvorgangLocal getWarenkorb() {
+		BestellvorgangLocal einkaufskorb;
 		try {
-			einkaufskorb = (Bestellvorgang) ctx
+			einkaufskorb = (BestellvorgangLocal) ctx
 			.lookup("ticket2rock/BestellvorgangBean/local");
 		} catch (NamingException e) {
 			e.printStackTrace();
-			throw new EJBException("Bestellvorgang konnte nicht allokiert werden",e);
+			throw new EJBException("BestellvorgangLocal konnte nicht allokiert werden",e);
 		}
-      logger.info("Stateful Session Bean Bestellvorgang wurde allokiert");
+      logger.info("Stateful Session Bean BestellvorgangLocal wurde allokiert");
       return einkaufskorb;
 	}
 

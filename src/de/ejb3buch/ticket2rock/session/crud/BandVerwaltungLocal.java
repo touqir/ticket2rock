@@ -8,7 +8,7 @@ import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Musiker;
 
 @Local
-public interface BandVerwaltung {
+public interface BandVerwaltungLocal {
 
     /**
      * Legt eine Band-Entität in der Persistenzschicht an
@@ -36,7 +36,7 @@ public interface BandVerwaltung {
 	 */
 	public void deleteBand(Integer bandId);
 
-//TODO move the Musiker methods to the interface for MusikerVerwaltung	
+//TODO move the Musiker methods to the interface for MusikerVerwaltungLocal	
 	/**
 	 * selektiert alle Musiker-Entitäten
 	 * @return Musiker-Entitäten

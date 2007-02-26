@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import de.ejb3buch.ticket2rock.applikation.helper.FacesUtils;
 import de.ejb3buch.ticket2rock.applikation.servicelocator.ServiceLocator;
 import de.ejb3buch.ticket2rock.entity.Konzert;
-import de.ejb3buch.ticket2rock.session.ticketbestellung.Bestellvorgang;
+import de.ejb3buch.ticket2rock.session.ticketbestellung.BestellvorgangLocal;
 
 public class TicketController {
 
@@ -20,7 +20,7 @@ public class TicketController {
 
 	private boolean hasOrderedTicket = false;
 
-	private Bestellvorgang bestellvorgang;
+	private BestellvorgangLocal bestellvorgang;
 
 	private Konzert konzert;
 
@@ -81,7 +81,7 @@ public class TicketController {
 	 */
 	public String orderTickets() {
 
-		// hole über den ServiceLocator einen Bestellvorgang, falls dies für
+		// hole über den ServiceLocator einen BestellvorgangLocal, falls dies für
 		// diese
 		// für diese Session noch nicht geschehen ist
 		if (bestellvorgang == null) {

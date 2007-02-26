@@ -21,7 +21,7 @@ import de.ejb3buch.ticket2rock.entity.Musiker;
  */
 @SuppressWarnings("unchecked")
 @Stateless
-public class BandVerwaltungBean implements BandVerwaltung {
+public class BandVerwaltungBean implements BandVerwaltungLocal {
 
 	static Logger logger = Logger.getLogger(BandVerwaltungBean.class);
 

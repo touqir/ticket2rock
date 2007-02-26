@@ -88,6 +88,20 @@
 			<ejb-class>de.ejb3buch.ticket2rock.session.demo.methodeninterzeptor.dd.AbfangjaegerBean</ejb-class>
 			<session-type>Stateless</session-type>
 		</session>	
+		<session>
+			<ejb-name>AuskunftBean</ejb-name>
+ 			<local>de.ejb3buch.ticket2rock.session.AuskunftLocal</local>
+ 			<remote>de.ejb3buch.ticket2rock.session.Auskunft</remote>
+			<ejb-class>de.ejb3buch.ticket2rock.session.AuskunftBean</ejb-class>
+			<session-type>Stateless</session-type>
+		</session>	
+		<session>
+			<ejb-name>BestellvorgangBean</ejb-name>
+ 			<local>de.ejb3buch.ticket2rock.session.ticketbestellung.BestellvorgangLocal</local>
+ 			<remote>de.ejb3buch.ticket2rock.session.ticketbestellung.Bestellvorgang</remote>
+			<ejb-class>de.ejb3buch.ticket2rock.session.ticketbestellung.BestellvorgangBean</ejb-class>
+			<session-type>Stateful</session-type>
+		</session>	
 	</enterprise-beans>
 	<interceptors>
 		<interceptor>
@@ -98,6 +112,13 @@
 		</interceptor>
 	</interceptors>
  	<assembly-descriptor>
+ 	    <container-transaction>
+ 	      <method>
+ 	        <ejb-name>AuskunftBean</ejb-name>
+ 	        <method-name>*</method-name>
+ 	      </method>
+ 	      <trans-attribute>Supports</trans-attribute>
+ 	    </container-transaction>
  		<interceptor-binding>
 			<ejb-name>*</ejb-name>
 			<interceptor-class>

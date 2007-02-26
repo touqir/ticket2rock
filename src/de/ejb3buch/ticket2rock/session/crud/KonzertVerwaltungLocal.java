@@ -7,7 +7,7 @@ import javax.ejb.Local;
 import de.ejb3buch.ticket2rock.entity.Konzert;
 
 @Local
-public interface KonzertVerwaltung {
+public interface KonzertVerwaltungLocal {
 
     /**
      * Legt eine Konzert-Entität in der Persistenzschicht an

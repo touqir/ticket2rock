@@ -43,7 +43,7 @@ import de.ejb3buch.ticket2rock.entity.Konzert;
 @SuppressWarnings("unchecked")
 @WebService
 @SOAPBinding(style = Style.RPC)
-public class AuskunftBean implements Auskunft {
+public class AuskunftBean implements Auskunft, AuskunftLocal {
 
 	static Logger logger = Logger.getLogger(AuskunftBean.class);
 
