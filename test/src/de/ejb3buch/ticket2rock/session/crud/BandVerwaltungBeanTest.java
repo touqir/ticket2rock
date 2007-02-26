@@ -135,16 +135,7 @@ public class BandVerwaltungBeanTest extends EmbeddedContainerTestBase
         bv.getBandById(10).getName();
     }
 
-    /**
-     * Test method for
-     * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getMusiker()}.
-     */
-    @Test
-    @Ignore
-    public void testGetMusiker()
-    {
-        fail("Not yet implemented"); // TODO
-    }
+
 
     /**
      * Test method for
@@ -157,15 +148,6 @@ public class BandVerwaltungBeanTest extends EmbeddedContainerTestBase
         fail("Not yet implemented"); // TODO
     }
 
-    /**
-     * Test method for
-     * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getMusikerById(java.lang.Integer)}.
-     */
-    @Test
-    @Ignore
-    public void testGetMusikerById()
-    {
-        fail("Not yet implemented"); // TODO
-    }
+
 
 }

@@ -1,0 +1,78 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:c="http://java.sun.com/jsp/jstl/core"
+				template="template.xhtml">
+
+<!-- content -->
+<ui:define name="content">
+  <div class="section">
+    <h1><h:outputText value="#{msg.kasse_title}" /></h1>
+  </div>
+  <div class="section">
+  		<h:form>
+			<h:dataTable id="items" value="#{TicketController.orders}" var="bestellung"
+				 styleClass="datatable">
+				<h:column>
+					<f:facet name="header">
+					  <h:outputText value="#{msg.kasse_interpret}" />
+					</f:facet>
+					<h:outputText value="#{bestellung.konzert.interpret.name}" />				  
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.kasse_dateOfEvent}" />
+					</f:facet>
+					<h:outputText value="#{bestellung.konzert.datum}">
+					 <f:convertDateTime timeZone="GMT+1" pattern="#{msg.kasse_dateformat}" />
+					</h:outputText>
+				</h:column>								 
+				
+				<h:column>
+				   <f:facet name="header">
+					  <h:outputText value="#{msg.kasse_address}" />
+				   </f:facet>
+				   <h:outputText value="#{bestellung.konzert.ort.adresse}" />
+   				</h:column>
+   			     <h:column>
+				   <f:facet name="header">
+					  <h:outputText value="#{msg.kasse_numberoftickets}" />
+				   </f:facet>
+				   <h:outputText value="#{bestellung.anzahl}" />
+   				</h:column>	
+			</h:dataTable>
+
+           <fieldset>
+		     <div class="entry">
+			   <div class="label"><h:outputLabel value="#{msg.kasse_email}" /></div>
+			   <div class="input">
+				 <h:inputText id="email" value="#{TicketController.email}" required="true" />
+		       </div>
+		       <span class="errors"><h:message for="email" /></span>		
+		     </div>
+             <div class="entry errors"><h:messages globalOnly="true" /></div>
+           </fieldset>  
+			
+			
+			<div class="section">        	
+	          <fieldset>
+		        <div class="entry">
+			      <div class="input">
+				     <h:commandButton id="kassenButton" class="button" action="#{TicketController.pay}" 
+		        	     value="#{msg.kasse_payment}" />		        		        	
+			      </div>
+	            </div>	
+	         </fieldset>   
+           </div>
+		</h:form>
+  </div>		
+</ui:define>
+
+<!-- sidebar -->
+<ui:define name="sidebar">
+Bezahlung der Tickets, die Sie bestellt haben. Mit der Bezahlung werden die Ticketbestellungen persistiert.
+</ui:define>
+
+</ui:composition>

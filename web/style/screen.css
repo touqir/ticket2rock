@@ -19,7 +19,7 @@ body {
 	line-height: 1.25em;
 	color: #362F2D;
 	position: relative;
-	width: 760px;
+	width: 810px;
 	height: 100%;
 	margin-left: auto;
 	margin-right: auto;
@@ -58,18 +58,18 @@ fieldset {
 }
 #header {
 	float: left;
-	width: 758px;
+	width: 808px;
 	height: 110px;
 }
 #menu {
 	float: left;
-	width: 758px;
+	width: 808px;
 	height: 21px;
 }
 #container {
     background: url(../images/container.bg.gif) 0 0 repeat-y;
 	float: left;
-	width: 758px;
+	width: 808px;
 }
 #sidebar {
 	float: left;
@@ -80,7 +80,7 @@ fieldset {
 }
 #content {
 	float: left;
-	width: 548px;
+	width: 598px;
 	margin-top: 0px;
 	padding-top: 5px;
 	background: url(../images/cnt.bg.gif) 0 0 repeat-x;
@@ -92,7 +92,7 @@ fieldset {
 	padding: 20px;
 	border-top: 1px solid #C3BBB6;
 	background-color: #fff;
-	width: 718px;
+	width: 768px;
 	text-align: right;
 }
 /* General

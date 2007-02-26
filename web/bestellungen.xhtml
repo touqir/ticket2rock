@@ -1,0 +1,74 @@
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	    		xmlns:ui="http://java.sun.com/jsf/facelets"
+	  			xmlns:h="http://java.sun.com/jsf/html"
+	  			xmlns:f="http://java.sun.com/jsf/core"
+	  			xmlns:c="http://java.sun.com/jsp/jstl/core"
+				template="template.xhtml">
+
+<!-- content -->
+<ui:define name="content">
+  <div class="section">
+    <h1><h:outputText value="#{msg.bestellungen_title}" /></h1>
+  </div>
+  <div class="section">
+  		<h:form>
+			<h:dataTable id="items" value="#{TicketController.orders}" var="bestellung"
+				 styleClass="datatable">
+				<h:column>
+					<f:facet name="header">
+					  <h:outputText value="#{msg.bestellungen_interpret}" />
+					</f:facet>
+					<h:outputText value="#{bestellung.konzert.interpret.name}" />				  
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.bestellungen_dateOfEvent}" />
+					</f:facet>
+					<h:outputText value="#{bestellung.konzert.datum}">
+					 <f:convertDateTime timeZone="GMT+1" pattern="#{msg.bestellungen_dateformat}" />
+					</h:outputText>
+				</h:column>								 
+				
+				<h:column>
+				   <f:facet name="header">
+					  <h:outputText value="#{msg.bestellungen_address}" />
+				   </f:facet>
+				   <h:outputText value="#{bestellung.konzert.ort.adresse}" />
+   				</h:column>
+   			     <h:column>
+				   <f:facet name="header">
+					  <h:outputText value="#{msg.bestellungen_numberoftickets}" />
+				   </f:facet>
+				   <h:outputText value="#{bestellung.anzahl}" />
+   				</h:column>	
+ 				<h:column>
+  				  <f:facet name="header">
+						<h:outputText value="#{msg.bestellungen_delete}" />
+				  </f:facet>
+			      <h:commandButton id="deleteBestellung" class="button" action="#{TicketController.deleteOrder}" 
+						value="#{msg.bestellungen_delete}"/>
+				</h:column>
+			</h:dataTable>
+			
+			<div class="section">        	
+	          <fieldset>
+		        <div class="entry">
+			      <div class="input">
+				     <h:commandButton id="kassenButton" class="button" immediate="true" action="payment" 
+		        	     value="#{msg.bestellungen_payment}" />		        		        	
+			      </div>
+	            </div>	
+	         </fieldset>   
+           </div>
+		</h:form>
+  </div>		
+</ui:define>
+
+<!-- sidebar -->
+<ui:define name="sidebar">
+Diese Seite zeigt die Bestellungen, die Sie get&#228;tigt haben, aber noch nicht bezahlt wurden. &#220;ber den Button L&#246;schen wird eine Bestellung
+gel&#246;scht.
+</ui:define>
+
+</ui:composition>

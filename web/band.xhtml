@@ -12,30 +12,26 @@
   </div>
   
   <div class="section">     
-	<h:form id="bandForm">
-      
+	<h:form id="bandForm">      
 	  <fieldset>
 		<div class="entry">
-			<div class="label"><h:outputLabel value="#{msg.bandform_name}" /></div>
+			<div class="label"><h:outputLabel for="bandname" value="#{msg.bandform_name}" /></div>
 			<div class="input">
 				<h:inputText id="bandname" value="#{BandController.band.name}" required="true" />
 		    </div>
-		    <span class="errors"><h:message for="bandname" /></span>
-		
+		    <span class="errors"><h:message for="bandname" /></span>		
 		</div>
-
         <div class="entry errors"><h:messages globalOnly="true" /></div>
-        
-       
+            
 		<table align="center" style="border:0;border-bottom:0;border-left:0">
 		  <tr>
 		    <td>
-		      <h:outputLabel value="#{msg.bandform_bandmusicians}" />
+		      <h:outputLabel for="bandMusikerList" value="#{msg.bandform_bandmusicians}" />
 		    </td>
 		    <td>
 		    </td>
 		    <td>
-		    <h:outputLabel value="#{msg.bandform_availablemusicians}" />
+		    <h:outputLabel for="musikerList" value="#{msg.bandform_availablemusicians}" />
 		    </td>
 		  </tr>
 		  <tr>
