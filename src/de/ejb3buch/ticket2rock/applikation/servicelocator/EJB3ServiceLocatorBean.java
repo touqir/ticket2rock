@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import de.ejb3buch.ticket2rock.session.AuskunftLocal;
 import de.ejb3buch.ticket2rock.session.crud.BandVerwaltungLocal;
 import de.ejb3buch.ticket2rock.session.crud.KonzertVerwaltungLocal;
+import de.ejb3buch.ticket2rock.session.crud.KundenVerwaltungLocal;
 import de.ejb3buch.ticket2rock.session.crud.MusikerVerwaltungLocal;
 import de.ejb3buch.ticket2rock.session.crud.TourneeVerwaltungLocal;
 import de.ejb3buch.ticket2rock.session.ticketbestellung.BestellvorgangLocal;
@@ -31,6 +32,9 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 	private TourneeVerwaltungLocal myTourneeVerwaltung;
 
 	private KonzertVerwaltungLocal myKonzertVerwaltung;
+	
+	private KundenVerwaltungLocal myKundenVerwaltung;
+	
 
 	private AuskunftLocal myAuskunft;
 	
@@ -55,9 +59,14 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 					.lookup("ticket2rock/KonzertVerwaltungBean/local");
 			logger.info("Service KonzertVerwaltungLocal steht zur Verfügung");
 
+			myKundenVerwaltung = (KundenVerwaltungLocal) ctx
+			.lookup("ticket2rock/KundenVerwaltungBean/local");
+	        logger.info("Service Kundenverwaltung steht zur Verfügung");			
+			
 			myAuskunft = (AuskunftLocal) ctx
 					.lookup("ticket2rock/AuskunftBean/local");
 			logger.info("Service AuskunftLocal steht zur Verfügung");
+			
 		} catch (Exception e) {
 		    logger.error(e);
 			e.printStackTrace();
@@ -84,8 +93,12 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 	public KonzertVerwaltungLocal getKonzertVerwaltung() {
 		return myKonzertVerwaltung;
 	}
+
+	public KundenVerwaltungLocal getKundenVerwaltung() {
+		return myKundenVerwaltung;
+	}	
 	
-	public BestellvorgangLocal getWarenkorb() {
+	public BestellvorgangLocal getBestellvorgang() {
 		BestellvorgangLocal einkaufskorb;
 		try {
 			einkaufskorb = (BestellvorgangLocal) ctx
@@ -97,5 +110,7 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
       logger.info("Stateful Session Bean BestellvorgangLocal wurde allokiert");
       return einkaufskorb;
 	}
+
+
 
 }

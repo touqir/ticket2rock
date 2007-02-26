@@ -1,15 +1,20 @@
 package de.ejb3buch.ticket2rock.applikation.controller;
 
+import java.util.Collection;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 
 import org.apache.log4j.Logger;
 
 import de.ejb3buch.ticket2rock.applikation.helper.FacesUtils;
 import de.ejb3buch.ticket2rock.applikation.servicelocator.ServiceLocator;
 import de.ejb3buch.ticket2rock.entity.Konzert;
+import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
 import de.ejb3buch.ticket2rock.session.ticketbestellung.BestellvorgangLocal;
 
 public class TicketController {
@@ -18,15 +23,19 @@ public class TicketController {
 
 	private ServiceLocator serviceLocator;
 
-	private boolean hasOrderedTicket = false;
+	private boolean bestellungExistiert = false;
 
 	private BestellvorgangLocal bestellvorgang;
+	
+	private DataModel orderListDataModel = new ListDataModel();
 
 	private Konzert konzert;
 
 	private String availableTicketsExpression;
 
 	private int ticketanzahl;
+	
+	private String email;
 
 	public ServiceLocator getServiceLocator() {
 		return serviceLocator;
@@ -37,7 +46,7 @@ public class TicketController {
 	}
 
 	public boolean isTicketOrdered() {
-		return hasOrderedTicket;
+		return bestellungExistiert;
 	}
 
 	public Konzert getKonzert() {
@@ -74,35 +83,63 @@ public class TicketController {
 	 * legt die ausgewählten Konzerttickets in den Einkaufswagen, sofern diese
 	 * noch zur Verfügung stehen. Falls noch kein Einkaufswagen-Objekt vorhanden
 	 * ist, wird dieses über den ServiceLocator allokiert und implizit der
-	 * Session zugeornet. Deshalb sollte das TicketController Bean unbedingt im
+	 * Session zugeordnet. Deshalb sollte das TicketController Bean unbedingt im
 	 * Scope session Kontext sein.
 	 * 
 	 * @return Identifier für den JSF page flow
 	 */
 	public String orderTickets() {
 
-		// hole über den ServiceLocator einen BestellvorgangLocal, falls dies für
-		// diese
-		// für diese Session noch nicht geschehen ist
+		// hole über den ServiceLocator einen Bestellvorgang, falls dies für
+		// diese Session noch nicht geschehen ist
 		if (bestellvorgang == null) {
-			bestellvorgang = serviceLocator.getWarenkorb();
+			bestellvorgang = serviceLocator.getBestellvorgang();
 		}
-		bestellvorgang.reserviereTickets(this.konzert, ticketanzahl);
-		this.hasOrderedTicket = true;
+		bestellvorgang.bestelleTickets(this.konzert, ticketanzahl);
+		this.bestellungExistiert = true;
+		
+		// nach einer Bestellung wird die ticketanzahl wieder auf 0 gesetzt, so 
+		// dass in der entsprechenden JSF das Eingabefeld nicht den Wert der vorherigen
+		// Bestellung enthält
+		ticketanzahl = 0;
 		return "reservierungsmeldung";
 	}
-
+	
 	/**
-	 * verzweigt den Screenflow zur Anzeige der reservierten Tickets
 	 * 
-	 * @return
+	 * @return DataModel das eine Kollektion von Ticketbestellungen beinhaltet
 	 */
-	public String showReservations() {
-		// TODO implement show reservation use case
-		return "";
-
+	public DataModel getOrders() {
+        Collection<Ticketbestellung> orders = bestellvorgang.getTicketbestellungen();
+		orderListDataModel.setWrappedData(orders);
+		return orderListDataModel;
+	}
+	
+	
+	/**
+	 * Löschen die in der Form selektierte Ticketbestellung 
+	 * @return Rückgabewert zur Definition der Folgeseite	 
+	 */
+	public String deleteOrder() {
+		Ticketbestellung bestellung = (Ticketbestellung) this.orderListDataModel.getRowData();
+		bestellvorgang.verwerfeTicketbestellung(bestellung);
+		bestellungExistiert = bestellvorgang.hasBestellungen();
+		return "showBestellungen";
 	}
 
+
+	/**
+	 * Bezahlung der bestellten Tickets
+	 * @return Rückgabewert zur Definition der Folgeseite
+	 */
+	public String pay() {
+		bestellvorgang.bezahleTickets(email);
+		bestellvorgang = null;
+		bestellungExistiert = false;
+		return "home";
+	}
+	
+	
 	public void validateTicketOrder(FacesContext context,
 			UIComponent toValidate, Object value) {
 		Integer numOfTickets = (Integer) value;
@@ -132,6 +169,14 @@ public class TicketController {
 
 	public String getAvailableTicketsExpression() {
 		return availableTicketsExpression;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 }

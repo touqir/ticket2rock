@@ -1,5 +1,7 @@
 package de.ejb3buch.ticket2rock.applikation.servicelocator;
 
+
+import de.ejb3buch.ticket2rock.session.crud.KundenVerwaltungLocal;
 import de.ejb3buch.ticket2rock.session.AuskunftLocal;
 import de.ejb3buch.ticket2rock.session.crud.BandVerwaltungLocal;
 import de.ejb3buch.ticket2rock.session.crud.KonzertVerwaltungLocal;
@@ -17,7 +19,9 @@ public interface ServiceLocator {
 	
 	public KonzertVerwaltungLocal getKonzertVerwaltung();
 	
+	public KundenVerwaltungLocal getKundenVerwaltung();
+	
 	public AuskunftLocal getAuskunft();
 	
-	public BestellvorgangLocal getWarenkorb();
+	public BestellvorgangLocal getBestellvorgang();
 }

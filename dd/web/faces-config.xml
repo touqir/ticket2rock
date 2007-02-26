@@ -78,15 +78,55 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
             <from-outcome>reservierungsmeldung</from-outcome>
             <to-view-id>/reservierungsmeldung.xhtml</to-view-id>
         </navigation-case>
- 	</navigation-rule>  					
+ 	</navigation-rule>  
+ 	
+	<navigation-rule>
+		<from-view-id>/reservierungsmeldung.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>showBestellungen</from-outcome>
+            <to-view-id>/bestellungen.xhtml</to-view-id>
+        </navigation-case>
+ 	</navigation-rule>   
+ 	
+	<navigation-rule>
+		<from-view-id>/reservierungsmeldung.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>newSearch</from-outcome>
+            <to-view-id>/konzertsuche.xhtml</to-view-id>
+        </navigation-case>
+ 	</navigation-rule> 
+ 	
+	<navigation-rule>
+		<from-view-id>/bestellungen.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>showBestellungen</from-outcome>
+            <to-view-id>/bestellungen.xhtml</to-view-id>
+        </navigation-case>
+ 	</navigation-rule>  	   							
 	
+	<navigation-rule>
+		<from-view-id>/bestellungen.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>payment</from-outcome>
+            <to-view-id>/kasse.xhtml</to-view-id>
+        </navigation-case>
+ 	</navigation-rule> 
+ 	
+ 	<navigation-rule>
+		<from-view-id>/kasse.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>home</from-outcome>
+            <to-view-id>/home.xhtml</to-view-id>
+        </navigation-case>
+ 	</navigation-rule> 	
+ 	
 	<navigation-rule>
 		<from-view-id>/stornierung.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>stornierungsergebnis</from-outcome>
             <to-view-id>/stornierungErgebnis.xhtml</to-view-id>
         </navigation-case>
- 	</navigation-rule> 
+ 	</navigation-rule>  	
  	
    <application>	 
      <locale-config>
@@ -171,8 +211,6 @@ PUBLIC "-//Sun Microsystems, Inc.//DTD JavaServer Faces Config 1.0//EN"
     </managed-property>         
   </managed-bean>
 
-
-  
   <managed-bean>
     <description>
       ServiceLocator für EJB3 Beans
