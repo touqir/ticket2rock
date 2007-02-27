@@ -57,6 +57,12 @@
 			<id name="id">
 				<generated-value strategy="TABLE" generator="TourneePKGen"/>
 			</id>
+			<one-to-many name="konzerte" target-entity="de.ejb3buch.ticket2rock.entity.Konzert" fetch="EAGER">
+				<join-column name="TOURNEE_ID"/>
+				<cascade>
+					<cascade-all/>
+				</cascade>
+			</one-to-many>
 		</attributes>
 	</entity>
 	<entity class="de.ejb3buch.ticket2rock.entity.Veranstalter" access="PROPERTY">
