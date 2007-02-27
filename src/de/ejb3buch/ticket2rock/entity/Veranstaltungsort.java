@@ -23,9 +23,15 @@
 
 package de.ejb3buch.ticket2rock.entity;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
+import de.ejb3buch.ticket2rock.entity.embedded.GeoKoordinaten;
 
 /**
  * An einen Veranstaltungsort finden kommt es zur Durchführung eines oder
@@ -43,6 +49,8 @@ public class Veranstaltungsort {
 	private String adresse;
 
 	private int kapazitaet;
+
+	private GeoKoordinaten koordinaten;
 
 	@Id
 	@GeneratedValue
@@ -76,5 +84,17 @@ public class Veranstaltungsort {
 
 	public void setKapazitaet(int kapazitaet) {
 		this.kapazitaet = kapazitaet;
+	}
+
+	@Embedded
+	@AttributeOverrides( {
+			@AttributeOverride(name = "breite", column = @Column(name = "GEO_BREITE")),
+			@AttributeOverride(name = "laenge", column = @Column(name = "GEO_LAENGE")) })
+	public GeoKoordinaten getKoordinaten() {
+		return koordinaten;
+	}
+
+	public void setKoordinaten(GeoKoordinaten koordinaten) {
+		this.koordinaten = koordinaten;
 	}
 }
