@@ -31,7 +31,8 @@
 	<persistence-unit-metadata>
 		<persistence-unit-defaults>
 			<entity-listeners>
-				<entity-listener class="de.ejb3buch.ticket2rock.entitylistener.NewEntityListener"/>
+				<entity-listener
+					class="de.ejb3buch.ticket2rock.entitylistener.NewEntityListener"/>
 			</entity-listeners>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
@@ -44,7 +45,9 @@
 		</attributes>
 	</entity>
 	<entity class="de.ejb3buch.ticket2rock.entity.Konzert" access="PROPERTY">
-		<table-generator name="KonzertPKGen" table="PK_GEN" pk-column-name="GEN_KEY" value-column-name="GEN_VALUE" pk-column-value="KONZERT_ID"/>
+		<table-generator name="KonzertPKGen" table="PK_GEN"
+			pk-column-name="GEN_KEY" value-column-name="GEN_VALUE"
+			pk-column-value="KONZERT_ID"/>
 		<attributes>
 			<id name="id">
 				<generated-value strategy="TABLE" generator="KonzertPKGen"/>
@@ -52,17 +55,26 @@
 		</attributes>
 	</entity>
 	<entity class="de.ejb3buch.ticket2rock.entity.Tournee" access="PROPERTY">
-		<table-generator name="TourneePKGen" table="PK_GEN" pk-column-name="GEN_KEY" value-column-name="GEN_VALUE" pk-column-value="TOURNEE_ID"/>
+		<table-generator name="TourneePKGen" table="PK_GEN"
+			pk-column-name="GEN_KEY" value-column-name="GEN_VALUE"
+			pk-column-value="TOURNEE_ID"/>
 		<attributes>
 			<id name="id">
 				<generated-value strategy="TABLE" generator="TourneePKGen"/>
 			</id>
-			<one-to-many name="konzerte" target-entity="de.ejb3buch.ticket2rock.entity.Konzert" fetch="EAGER">
+			<one-to-many name="konzerte"
+				target-entity="de.ejb3buch.ticket2rock.entity.Konzert"
+				fetch="EAGER">
 				<join-column name="TOURNEE_ID"/>
 				<cascade>
 					<cascade-all/>
 				</cascade>
 			</one-to-many>
+		</attributes>
+	</entity>
+	<entity class="de.ejb3buch.ticket2rock.entity.Veranstaltungsort" access="PROPERTY">
+		<attributes>
+			<embedded name="koordinaten"/>
 		</attributes>
 	</entity>
 	<entity class="de.ejb3buch.ticket2rock.entity.Veranstalter" access="PROPERTY">
@@ -77,7 +89,19 @@
 			</embedded-id>
 		</attributes>
 	</entity>
-	<embeddable class="de.ejb3buch.ticket2rock.entity.primarykey.VeranstalterPK" access="PROPERTY">
+	<embeddable class="de.ejb3buch.ticket2rock.entity.embedded.GeoKoordinaten"
+		access="PROPERTY">
+		<attributes>
+			<basic name="breite">
+				<column name="GEO_BREITE"/>
+			</basic>
+			<basic name="laenge">
+				<column name="GEO_LAENGE"/>
+			</basic>
+		</attributes>
+	</embeddable>
+	<embeddable class="de.ejb3buch.ticket2rock.entity.primarykey.VeranstalterPK"
+		access="PROPERTY">
 		<attributes>
 			<basic name="handelsregisternummer">
 				<column name="HREG"/>
