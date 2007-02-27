@@ -145,9 +145,15 @@ private AbfangjaegerLocal falcon_methode_dd = null;
 		<%}%>
 		-
 		<%=datumsformat_TagMonatJahr.format(konzert.getDatum())%>
+		<%if (konzert.getOrt().getKoordinaten() != null) {%>
+			<a href="http://<%=konzert.getOrt().getKoordinaten().getGoogleMapsUrlString()%>" target="_newwindow">
+		<%}%>
 		<%=konzert.getOrt().getName()%>,
 		<%=konzert.getOrt().getAdresse()%>
-		[<%=konzert.getVeranstalter().getName()%>]
+		<%if (konzert.getOrt().getKoordinaten() != null) {%>
+			</a>
+		<%}%>
+		- <%=konzert.getVeranstalter().getName()%>
 		</li>
 	<%}%>
 </ul>
