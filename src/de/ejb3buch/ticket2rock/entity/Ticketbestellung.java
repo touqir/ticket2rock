@@ -42,6 +42,7 @@ public class Ticketbestellung {
 	private Kunde kunde;
 
 	private int anzahl;
+	
 
 	/**
 	 * ID ist zugleich Primärschlüssel und (fachliche) Bestell-ID
@@ -81,4 +82,5 @@ public class Ticketbestellung {
 	public void setAnzahl(int anzahl) {
 		this.anzahl = anzahl;
 	}
+	
 }

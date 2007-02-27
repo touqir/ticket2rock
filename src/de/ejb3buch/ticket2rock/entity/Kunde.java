@@ -32,6 +32,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 
 /**
  * Ein Kunde kann Konzerttickets bestellen. Er wird derzeit nur über eine
@@ -86,4 +87,19 @@ public class Kunde {
 	public void setBestellungen(List<Ticketbestellung> bestellungen) {
 		this.bestellungen = bestellungen;
 	}
+	
+	@PrePersist
+    public void assignKundeInTicketbestellungen() {
+		System.out.println("### in assignKundeInTicketbestellungen");
+    	if ((bestellungen == null) || (bestellungen.isEmpty())) {
+    		// kunde hat keine Ticketbestellungen
+    		// --> nichts zu tun
+    		return;
+    	}
+    	for (Ticketbestellung bestellung:bestellungen) {
+    		bestellung.setKunde(this);		
+    	}
+    	System.out.println("### end of assignKundeInTicketbestellungen");
+    }
+	
 }

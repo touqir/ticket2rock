@@ -103,7 +103,6 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 	 */
 	 @Remove
 	public void bezahleTickets(String email) {
-		
 		Kunde kunde = kundenverwaltung.getKundeByEmail(email);
 		if (kunde == null) {
 		   kunde = new Kunde();

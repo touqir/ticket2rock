@@ -136,7 +136,7 @@ public class TicketController {
 		bestellvorgang.bezahleTickets(email);
 		bestellvorgang = null;
 		bestellungExistiert = false;
-		return "home";
+		return "ticketkaufmeldung";
 	}
 	
 	
