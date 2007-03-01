@@ -17,7 +17,9 @@
           <h:outputLabel for="interpret" value="#{msg.ticketbestellung_interpret}"/>
           <h:outputText id="interpret" value="#{TicketController.konzert.interpret.name}" />
           <h:outputLabel for="date" value="#{msg.ticketbestellung_date}" />
-          <h:outputText id="date" value="#{TicketController.konzert.datum}" />
+          <h:outputText value="#{TicketController.konzert.datum}">
+					 <f:convertDateTime timeZone="GMT+1" pattern="#{msg.konzertsuchergebnis_dateformat}" />
+					</h:outputText>
           <h:outputLabel for="location" value="#{msg.ticketbestellung_location}" />
           <h:outputText id="location" value="#{TicketController.konzert.ort.name}" />
           <h:outputLabel for="ort" value="#{msg.ticketbestellung_address}" />
