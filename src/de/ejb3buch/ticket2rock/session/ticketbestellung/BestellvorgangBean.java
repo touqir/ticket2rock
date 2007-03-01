@@ -48,13 +48,17 @@ import de.ejb3buch.ticket2rock.session.crud.KundenVerwaltungLocal;
 public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 
 	static Logger logger = Logger.getLogger(BestellvorgangBean.class);
+
 	List<Ticketbestellung> ticketBestellungen = new ArrayList<Ticketbestellung>();
 
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@EJB
-    private KundenVerwaltungLocal kundenverwaltung;
+	private BenachrichtigungsserviceLocal benachrichtigungsService;
+
+	@EJB
+	private KundenVerwaltungLocal kundenverwaltung;
 
 	/**
 	 * @inheritDoc
@@ -65,8 +69,7 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 		ticketReservierung.setAnzahl(ticketAnzahl);
 		ticketBestellungen.add(ticketReservierung);
 	}
-	
-	
+
 	/**
 	 * @inheritDoc
 	 */
@@ -80,44 +83,43 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 	@Remove
 	public void verwerfeTicketbestellungen() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-    /**
-     * @inheritDoc
-     */
-	 public void verwerfeTicketbestellung(Ticketbestellung bestellung) {
-		 ticketBestellungen.remove(bestellung);		 
-	 }
-	 
-	 /**
-	  * @inheritDoc
-	  */
-	 public boolean hasBestellungen() {
-		return !this.ticketBestellungen.isEmpty(); 
-	 }
-	
 
 	/**
 	 * @inheritDoc
 	 */
-	 @Remove
+	public void verwerfeTicketbestellung(Ticketbestellung bestellung) {
+		ticketBestellungen.remove(bestellung);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public boolean hasBestellungen() {
+		return !this.ticketBestellungen.isEmpty();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	@Remove
 	public void bezahleTickets(String email) {
 		Kunde kunde = kundenverwaltung.getKundeByEmail(email);
 		if (kunde == null) {
-		   kunde = new Kunde();
-		   kunde.setEmail(email);
-		   kunde.setBestellungen(ticketBestellungen);
-		   em.persist(kunde);
+			kunde = new Kunde();
+			kunde.setEmail(email);
+			kunde.setBestellungen(ticketBestellungen);
+			em.persist(kunde);
+		} else {
+			kunde.setEmail(email);
+			kunde.addBestellungen(ticketBestellungen);
+			em.merge(kunde);
 		}
-		else {
-		   kunde.setEmail(email);
-		   kunde.addBestellungen(ticketBestellungen);
-		   em.merge(kunde);			
-		}
-		
+		benachrichtigungsService.installiereKonzerterinnerungen(email,
+				ticketBestellungen);
 	}
-	
+
 	// Live-Statistik zur Nutzung dieser Bean
 
 	@PostConstruct
@@ -147,6 +149,5 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 		BestellvorgangSessionStatistics.passivatedSessions--;
 		BestellvorgangSessionStatistics.activeSessions++;
 	}
-
 
 }
