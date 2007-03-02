@@ -38,37 +38,40 @@ import org.jboss.resource.adapter.mail.inflow.MailListener;
 import de.ejb3buch.ticket2rock.session.ticketbestellung.StornatorLocal;
 
 /**
- * ACHTUNG: Der Mail Resource Adapter funktioniert nur mit IMAP, da er nur auf Mails reagiert, die als neu markiert
- * sind. POP3 kennt diese Markierung nicht.
+ * ACHTUNG: Der Mail Resource Adapter funktioniert nur mit IMAP, da er nur auf
+ * Mails reagiert, die als neu markiert sind. POP3 kennt diese Markierung nicht.
+ * ACHTUNG: ‹berm‰ﬂiges testen kann das Mail-Account sperren!
  */
 @MessageDriven(activationConfig = {
-        @ActivationConfigProperty(propertyName = "mailServer", propertyValue = "mail.messagingengine.com"),
-        @ActivationConfigProperty(propertyName = "mailFolder", propertyValue = "INBOX"),
-        @ActivationConfigProperty(propertyName = "storeProtocol", propertyValue = "imap"),
-        @ActivationConfigProperty(propertyName = "userName", propertyValue = "ejb3buch@fastmail.fm"),
-        @ActivationConfigProperty(propertyName = "password", propertyValue = "ejb3b5ch") })
+		@ActivationConfigProperty(propertyName = "mailServer", propertyValue = "COMMENTED mail.messagingengine.com"),
+		@ActivationConfigProperty(propertyName = "mailFolder", propertyValue = "INBOX"),
+		@ActivationConfigProperty(propertyName = "storeProtocol", propertyValue = "imap"),
+		@ActivationConfigProperty(propertyName = "userName", propertyValue = "COMMENTED ejb3buch@fastmail.fm"),
+		@ActivationConfigProperty(propertyName = "password", propertyValue = "COMMENTED ejb3b5ch") })
 @ResourceAdapter("mail-ra.rar")
 public class MailStornatorBean implements MailListener {
-    static Logger logger = Logger.getLogger(MailStornatorBean.class);
+	static Logger logger = Logger.getLogger(MailStornatorBean.class);
 
-    @EJB
-    private StornatorLocal stornator;
+	@EJB
+	private StornatorLocal stornator;
 
-    public void onMessage(Message msg) {
-        try {
-            String subject = msg.getSubject();
-            StringTokenizer tokenizer = new StringTokenizer(subject, " ");
-            String command = tokenizer.nextToken();
-            if ("STORNO".equalsIgnoreCase(command)) {
-                String bestellNrAsString = tokenizer.nextToken();
-                long bestellnr = Long.parseLong(bestellNrAsString);
-                stornator.storniereBestellung(bestellnr);
-                logger.info("Stornierung von Bestellnr. " + bestellnr + " durchgefuehrt");
-            } else {
-                logger.info("eMail Subject " + subject + " ist nicht zu verarbeiten");
-            }
-        } catch (Exception e) {
-            throw new EJBException(e);
-        }
-    }
+	public void onMessage(Message msg) {
+		try {
+			String subject = msg.getSubject();
+			StringTokenizer tokenizer = new StringTokenizer(subject, " ");
+			String command = tokenizer.nextToken();
+			if ("STORNO".equalsIgnoreCase(command)) {
+				String bestellNrAsString = tokenizer.nextToken();
+				long bestellnr = Long.parseLong(bestellNrAsString);
+				stornator.storniereBestellung(bestellnr);
+				logger.info("Stornierung von Bestellnr. " + bestellnr
+						+ " durchgefuehrt");
+			} else {
+				logger.info("eMail Subject " + subject
+						+ " ist nicht zu verarbeiten");
+			}
+		} catch (Exception e) {
+			throw new EJBException(e);
+		}
+	}
 }
