@@ -18,9 +18,16 @@
 <div id="document">
 	<div id="header">	
 	   <ui:insert name="header">
-          <div id="title"><img src="images/Ticket2Rock-Logo.jpg" />&nbsp;&nbsp;
-           <h:graphicImage styleClass="bag" url="/images/tuete_leer.jpg" rendered="#{!TicketController.ticketOrdered}"/>
-           <h:graphicImage styleClass="bag" url="/images/tuete_ticket.jpg" rendered="#{TicketController.ticketOrdered}"/> 
+          <div id="title">
+          <table border="0" width="100%" align="center">
+            <tr>
+              <td align="left"><img src="images/Ticket2Rock-Logo.jpg" /></td>
+              <td width="45" align="right" valign="bottom">
+                <h:graphicImage styleClass="bag" url="/images/tuete_leer.jpg" rendered="#{!TicketController.ticketOrdered}"/>
+                <h:graphicImage styleClass="bag" url="/images/tuete_ticket.jpg" rendered="#{TicketController.ticketOrdered}"/> 
+              </td>
+            </tr>
+          </table>
           </div>
 	   </ui:insert>		
 	</div>
@@ -37,7 +44,7 @@
 			<ui:insert name="content"/>
 		</div>
 	</div>
-	<div id="footer">Created with JBoss EJB 3.0, JSF and Facelets</div>
+	<div id="footer">Entwickelt mit JBoss EJB 3.0, JSF und Facelets</div>
 </div>
 </body>
 </html>
