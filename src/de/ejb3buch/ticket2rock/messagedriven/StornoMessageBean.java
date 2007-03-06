@@ -1,10 +1,10 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fŸr
  *  Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
  *
  *  Copyright (C) 2006
- *  Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg und Holger Koschek
+ *  Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jšrg, Holger Koschek, Jo Ehm
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
@@ -37,10 +37,9 @@ import org.apache.log4j.Logger;
 import de.ejb3buch.ticket2rock.session.ticketbestellung.StornatorLocal;
 
 @MessageDriven
-public class StornierungsnachrichtVerarbeitungsBean implements MessageListener {
+public class StornoMessageBean implements MessageListener {
 
-	static Logger logger = Logger
-			.getLogger(StornierungsnachrichtVerarbeitungsBean.class);
+	static Logger logger = Logger.getLogger(StornoMessageBean.class);
 
 	@EJB
 	private StornatorLocal stornator;
