@@ -1,10 +1,10 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fŸr
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
  *  Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
  *
  *  Copyright (C) 2006
- *  Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jšrg, Holger Koschek, Jo Ehm
+ *  Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg, Holger Koschek, Jo Ehm
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
@@ -40,7 +40,7 @@ import de.ejb3buch.ticket2rock.session.ticketbestellung.StornatorLocal;
 /**
  * ACHTUNG: Der Mail Resource Adapter funktioniert nur mit IMAP, da er nur auf
  * Mails reagiert, die als neu markiert sind. POP3 kennt diese Markierung nicht.
- * ACHTUNG: ŸbermŠ§iges Testen kann den Mail-Account sperren!
+ * ACHTUNG: übermäßiges Testen kann den Mail-Account sperren!
  */
 @MessageDriven(activationConfig = {
 		@ActivationConfigProperty(propertyName = "mailServer", propertyValue = "COMMENTED mail.messagingengine.com"),

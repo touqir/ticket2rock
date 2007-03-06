@@ -1,10 +1,10 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fŸr
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
  *  Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
  *
  *  Copyright (C) 2006
- *  Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jšrg, Holger Koschek, Jo Ehm
+ *  Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg, Holger Koschek, Jo Ehm
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
@@ -81,8 +81,8 @@ public class StornierungController {
 			// Der Name der JMS-Queue wurde in eine <managed-property>
 			// (in faces-config.xml) ausgelagert, um ihn beim Deployment
 			// an eine konkrete Queue in einer Applikationsserver-Instanz
-			// anpassen zu kšnnen.
-			// FŸr die Message-Driven Bean ist der Queue-Name im
+			// anpassen zu können.
+			// Für die Message-Driven Bean ist der Queue-Name im
 			// Deployment-Deskriptor ejb-jar.xml festgelegt.
 			queue = (Queue) ctx.lookup(this.messageQueue);
 			QueueConnectionFactory factory = (QueueConnectionFactory) ctx
