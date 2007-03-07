@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
@@ -59,5 +60,21 @@ public class FacesUtils {
 		}
 		
 		return text;
+	}
+	
+	
+	/**
+	 * Hilfmethode zur Generierung einer Message. Message im FacesContext gesetzt
+	 * @param clientId id der Client Komponente, der diese Message zuzuornden ist
+	 * @param messageId property name des zu generierenden Message String
+	 */
+	public static void addMessage(String clientId, String messageId) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		String messageString = FacesUtils.getMessageResourceString(
+				context.getApplication().getMessageBundle(),
+				messageId, null, context
+						.getViewRoot().getLocale());
+		FacesMessage message = new FacesMessage(messageString);
+		context.addMessage(clientId,message);
 	}
 }

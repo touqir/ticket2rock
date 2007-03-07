@@ -6,6 +6,7 @@ import javax.ejb.Remote;
 
 import de.ejb3buch.ticket2rock.entity.Konzert;
 import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
+import de.ejb3buch.ticket2rock.exception.KapazitaetErschoepftException;
 
 @Remote
 public interface Bestellvorgang {
@@ -16,6 +17,7 @@ public interface Bestellvorgang {
 	 * geworfen.
 	 * @param konzert das Konzert, für das Tickets gebucht werden
 	 * @param ticketAnzahl Anzahl der zu buchenden Tickets
+	 * @throws KapazitaetErschoepftException 
 	 */
 	public void bestelleTickets(Konzert konzert, int ticketAnzahl);
 	
@@ -41,11 +43,16 @@ public interface Bestellvorgang {
 	public void verwerfeTicketbestellung(Ticketbestellung bestellung);
 	
 	/**
-	 * alle gebuchten Tickets werden bezahlt.
+	 * Alle gebuchten Tickets werden bezahlt.
+	 * Ticketbestellungen werden in der Datenbank persisitiert. Das Ticketkontingent der
+	 * betroffenen Konzerte wird angepasst und in der Datenbank gespeichert. Zusätzlich 
+	 * wird ein Kunden-persistent Entity persistiert. 
+	 * @throws KapazitaetErschoepftException 
 	 * @param email Email Adresse des Kunden, von dem die Tickets reserviert 
 	 * werden.
+	 * @throws KapazitaetErschoepftException 
 	 */
-	public void bezahleTickets(String email);
+	public void bezahleTickets(String email) throws KapazitaetErschoepftException;
 	
     /**
      * 

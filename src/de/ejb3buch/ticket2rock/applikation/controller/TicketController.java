@@ -15,6 +15,7 @@ import de.ejb3buch.ticket2rock.applikation.helper.FacesUtils;
 import de.ejb3buch.ticket2rock.applikation.servicelocator.ServiceLocator;
 import de.ejb3buch.ticket2rock.entity.Konzert;
 import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
+import de.ejb3buch.ticket2rock.exception.KapazitaetErschoepftException;
 import de.ejb3buch.ticket2rock.session.ticketbestellung.BestellvorgangLocal;
 
 public class TicketController {
@@ -26,7 +27,7 @@ public class TicketController {
 	private boolean bestellungExistiert = false;
 
 	private BestellvorgangLocal bestellvorgang;
-	
+
 	private DataModel orderListDataModel = new ListDataModel();
 
 	private Konzert konzert;
@@ -34,7 +35,7 @@ public class TicketController {
 	private String availableTicketsExpression;
 
 	private int ticketanzahl;
-	
+
 	private String email;
 
 	public ServiceLocator getServiceLocator() {
@@ -96,75 +97,78 @@ public class TicketController {
 			bestellvorgang = serviceLocator.getBestellvorgang();
 		}
 		bestellvorgang.bestelleTickets(this.konzert, ticketanzahl);
+
 		this.bestellungExistiert = true;
-		
-		// nach einer Bestellung wird die ticketanzahl wieder auf 0 gesetzt, so 
-		// dass in der entsprechenden JSF das Eingabefeld nicht den Wert der vorherigen
+
+		// nach einer Bestellung wird die ticketanzahl wieder auf 0 gesetzt, so
+		// dass in der entsprechenden JSF das Eingabefeld nicht den Wert der
+		// vorherigen
 		// Bestellung enthält
 		ticketanzahl = 0;
 		return "reservierungsmeldung";
 	}
-	
+
 	/**
 	 * 
 	 * @return DataModel das eine Kollektion von Ticketbestellungen beinhaltet
 	 */
 	public DataModel getOrders() {
-        Collection<Ticketbestellung> orders = bestellvorgang.getTicketbestellungen();
+		Collection<Ticketbestellung> orders = bestellvorgang
+				.getTicketbestellungen();
 		orderListDataModel.setWrappedData(orders);
 		return orderListDataModel;
 	}
-	
-	
+
 	/**
-	 * Löschen die in der Form selektierte Ticketbestellung 
-	 * @return Rückgabewert zur Definition der Folgeseite	 
+	 * Löschen die in der Form selektierte Ticketbestellung
+	 * 
+	 * @return Rückgabewert zur Definition der Folgeseite
 	 */
 	public String deleteOrder() {
-		Ticketbestellung bestellung = (Ticketbestellung) this.orderListDataModel.getRowData();
+		Ticketbestellung bestellung = (Ticketbestellung) this.orderListDataModel
+				.getRowData();
 		bestellvorgang.verwerfeTicketbestellung(bestellung);
 		bestellungExistiert = bestellvorgang.hasBestellungen();
 		return "showBestellungen";
 	}
 
-
 	/**
 	 * Bezahlung der bestellten Tickets
+	 * 
 	 * @return Rückgabewert zur Definition der Folgeseite
 	 */
 	public String pay() {
-		bestellvorgang.bezahleTickets(email);
+		try {
+		  bestellvorgang.bezahleTickets(email);	
+		} catch (KapazitaetErschoepftException e) {
+			FacesUtils.addMessage(null, "ticketbestellung_exceedsContingent");
+		}
+		
 		bestellvorgang = null;
 		bestellungExistiert = false;
 		return "ticketkaufmeldung";
 	}
-	
-	
+
 	public void validateTicketOrder(FacesContext context,
 			UIComponent toValidate, Object value) {
 		Integer numOfTickets = (Integer) value;
 
 		if (numOfTickets.intValue() < 1) {
-			((UIInput)toValidate).setValid(false);
-			String messageString = FacesUtils.getMessageResourceString(
-					context.getApplication().getMessageBundle(),
-					"ticketbestellung_invalidNumber", null, context
-							.getViewRoot().getLocale());
-			FacesMessage message = new FacesMessage(messageString);
-			context.addMessage(toValidate.getClientId(context), message);
+			((UIInput) toValidate).setValid(false);
+			FacesUtils.addMessage(toValidate
+					.getClientId(context), "ticketbestellung_invalidNumber");
 		}
-		 
+
 		if (numOfTickets.intValue() > konzert.getTicketkontingent()) {
-			((UIInput)toValidate).setValid(false);
-			String messageString = FacesUtils.getMessageResourceString(
-					context.getApplication().getMessageBundle(),
+			((UIInput) toValidate).setValid(false);
+			String messageString = FacesUtils.getMessageResourceString(context
+					.getApplication().getMessageBundle(),
 					"ticketbestellung_exceedsContingent", null, context
 							.getViewRoot().getLocale());
 			FacesMessage message = new FacesMessage(messageString);
 			context.addMessage(toValidate.getClientId(context), message);
-		}		
+		}
 
-		
 	}
 
 	public String getAvailableTicketsExpression() {

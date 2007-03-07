@@ -64,7 +64,7 @@ public class AuskunftBeanTest extends EmbeddedContainerTestBase
         AuskunftLocal alleKonzerte = (AuskunftLocal) lookup("AuskunftBean/local");
 
         // wir suchen ein Konzert in der Colorline Arena....
-        List<Konzert> konzerte = alleKonzerte.sucheKonzerte("Colorline", null, null);
+        List<Konzert> konzerte = alleKonzerte.sucheKonzerte("Olympiastadion", null, null);
 
         assertEquals(konzerte.size(), 1);
     }

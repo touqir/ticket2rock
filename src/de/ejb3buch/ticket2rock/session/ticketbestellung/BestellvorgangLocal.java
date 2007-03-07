@@ -6,9 +6,10 @@ import javax.ejb.Local;
 
 import de.ejb3buch.ticket2rock.entity.Konzert;
 import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
+import de.ejb3buch.ticket2rock.exception.KapazitaetErschoepftException;
 
 @Local
-public interface BestellvorgangLocal {
+public interface BestellvorgangLocal  {
 
 	/**
 	 * bucht eine Anzahl von Tickets zu einer Konzertveranstaltung. Falls das Konzert
@@ -45,7 +46,7 @@ public interface BestellvorgangLocal {
 	 * @param email Email Adresse des Kunden, von dem die Tickets reserviert 
 	 * werden.
 	 */
-	public void bezahleTickets(String email);
+	public void bezahleTickets(String email)throws KapazitaetErschoepftException;
 	
     /**
      * 

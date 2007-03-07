@@ -41,6 +41,7 @@ import org.apache.log4j.Logger;
 import de.ejb3buch.ticket2rock.entity.Konzert;
 import de.ejb3buch.ticket2rock.entity.Kunde;
 import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
+import de.ejb3buch.ticket2rock.exception.KapazitaetErschoepftException;
 import de.ejb3buch.ticket2rock.session.crud.KundenVerwaltungLocal;
 
 @Stateful
@@ -61,14 +62,16 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 	private KundenVerwaltungLocal kundenverwaltung;
 
 	/**
+	 * @throws KapazitaetErschoepftException 
 	 * @inheritDoc
 	 */
 	public void bestelleTickets(Konzert konzert, int ticketAnzahl) {
-		Ticketbestellung ticketReservierung = new Ticketbestellung();
-		ticketReservierung.setKonzert(konzert);
-		ticketReservierung.setAnzahl(ticketAnzahl);
-		ticketBestellungen.add(ticketReservierung);
+		Ticketbestellung ticketBestellung = new Ticketbestellung();
+		ticketBestellung.setKonzert(konzert);
+		ticketBestellung.setAnzahl(ticketAnzahl);
+		ticketBestellungen.add(ticketBestellung);
 	}
+
 
 	/**
 	 * @inheritDoc
@@ -104,18 +107,31 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 	 * @inheritDoc
 	 */
 	@Remove
-	public void bezahleTickets(String email) {
+	public void bezahleTickets(String email) throws KapazitaetErschoepftException {
+		
+		// suche nach einen Kunden anhand der übergebenen email Adresse
 		Kunde kunde = kundenverwaltung.getKundeByEmail(email);
 		if (kunde == null) {
+			// kunde gibt es nicht --> persistiere neuen Kunden 
 			kunde = new Kunde();
 			kunde.setEmail(email);
-			kunde.setBestellungen(ticketBestellungen);
 			em.persist(kunde);
 		} else {
-			kunde.setEmail(email);
-			kunde.addBestellungen(ticketBestellungen);
+			// persistiere vorhandenen Kunden
 			em.merge(kunde);
 		}
+		if ((ticketBestellungen != null)&&(!ticketBestellungen.isEmpty())) {
+		   	for (Ticketbestellung bestellung:ticketBestellungen) {
+	    		Konzert konzert = bestellung.getKonzert();
+	    		konzert = em.find(Konzert.class,konzert.getId());
+	    	    konzert.bestelleTickets(bestellung.getAnzahl());
+	  		    em.merge(konzert);
+	  		    bestellung.setKonzert(konzert);
+	  		    bestellung.setKunde(kunde);
+	  		    em.persist(bestellung);
+		   	}
+		}
+		
 		benachrichtigungsService.installiereKonzerterinnerungen(email,
 				ticketBestellungen);
 	}
