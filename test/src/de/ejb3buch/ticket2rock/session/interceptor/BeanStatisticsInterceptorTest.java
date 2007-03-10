@@ -32,31 +32,14 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import de.ejb3buch.ticket2rock.EmbeddedContainerTestBase;
 import de.ejb3buch.ticket2rock.EmbeddedContainerTestHelper;
 import de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsLocal;
 
-public class BeanStatisticsInterceptorTest
+public class BeanStatisticsInterceptorTest extends EmbeddedContainerTestBase
 {
 
 	static Logger logger = Logger.getLogger(BeanStatisticsInterceptorTest.class);
-
-    /**
-     * @throws java.lang.Exception
-     */
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception
-    {
-        EmbeddedContainerTestHelper.startupEmbeddedContainer(null);
-    }
-
-    /**
-     * @throws java.lang.Exception
-     */
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception
-    {
-        EmbeddedContainerTestHelper.shutdownEmbeddedContainer();
-    }
 
     /**
      * Testen, ob der Interceptor gerufen wird und ordentlich funktioniert
@@ -68,8 +51,8 @@ public class BeanStatisticsInterceptorTest
     {
         Method interceptedMethod = InterceptorTestBean.class.getMethod("interceptedCall", new Class[] { String.class });
 
-        InterceptorTest it = (InterceptorTest) EmbeddedContainerTestHelper.lookup("InterceptorTestBean/local");
-        BeanStatisticsLocal bsl = (BeanStatisticsLocal) EmbeddedContainerTestHelper.lookup("BeanStatisticsBean/local");
+        InterceptorTest it = (InterceptorTest) lookup("InterceptorTestBean/local");
+        BeanStatisticsLocal bsl = (BeanStatisticsLocal) lookup("BeanStatisticsBean/local");
 
         it.interceptedCall("");
         long duration = bsl.getMethodTotalDuration().get(interceptedMethod).longValue();
@@ -95,8 +78,8 @@ public class BeanStatisticsInterceptorTest
     public void nonInterceptedMethodCall() throws Exception
     {
 
-        InterceptorTest it = (InterceptorTest) EmbeddedContainerTestHelper.lookup("InterceptorTestBean/local");
-        BeanStatisticsLocal bsl = (BeanStatisticsLocal) EmbeddedContainerTestHelper.lookup("BeanStatisticsBean/local");
+        InterceptorTest it = (InterceptorTest) lookup("InterceptorTestBean/local");
+        BeanStatisticsLocal bsl = (BeanStatisticsLocal) lookup("BeanStatisticsBean/local");
 
         int startsize = bsl.getMethodUsage().size();
         it.nonInterceptedCall("");
