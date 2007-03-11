@@ -61,6 +61,8 @@ public class Konzert {
 
 	private int ticketkontingent;
 	
+	private float ticketpreis;
+	
 
 	@Id
 	@TableGenerator(name = "KonzertPKGen", table = "PK_GEN", pkColumnName = "GEN_KEY", valueColumnName = "GEN_VALUE", pkColumnValue = "KONZERT_ID")
@@ -179,6 +181,14 @@ public class Konzert {
 			// Kapazität des Veranstaltungsorts.
 			this.ticketkontingent = this.ort.getKapazitaet();
 		}
+	}
+
+	public float getTicketpreis() {
+		return ticketpreis;
+	}
+
+	public void setTicketpreis(float ticketpreis) {
+		this.ticketpreis = ticketpreis;
 	}
 
 }

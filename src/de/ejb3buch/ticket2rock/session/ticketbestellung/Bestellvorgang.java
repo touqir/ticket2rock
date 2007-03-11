@@ -29,6 +29,14 @@ public interface Bestellvorgang {
 	public Collection<Ticketbestellung> getTicketbestellungen(); 	
 	
 	/**
+	 * Berechnet den Preis aller Ticketbestellungen, die diesem Bestellvorgang
+	 * zugeordnet sind
+	 * @return der aktuelle Wert der Bestellung
+	 */
+	public float getGesamtpreis();	
+	
+	
+	/**
 	 * Alle Ticketbestellungen werden verworfen. 
 	 *
 	 */
@@ -50,9 +58,9 @@ public interface Bestellvorgang {
 	 * @throws KapazitaetErschoepftException 
 	 * @param email Email Adresse des Kunden, von dem die Tickets reserviert 
 	 * werden.
-	 * @throws KapazitaetErschoepftException 
+	 * @return Collection aller der bezahlten Ticketbestellungen
 	 */
-	public void bezahleTickets(String email) throws KapazitaetErschoepftException;
+	public Collection<Ticketbestellung> bezahleTickets(String email) throws KapazitaetErschoepftException;
 	
     /**
      * 

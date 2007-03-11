@@ -26,6 +26,13 @@ public interface BestellvorgangLocal  {
      * sind
      */
 	public Collection<Ticketbestellung> getTicketbestellungen(); 	
+
+	/**
+	 * Berechnet den Preis aller Ticketbestellungen, die diesem Bestellvorgang
+	 * zugeordnet sind
+	 * @return der aktuelle Wert der Bestellung
+	 */
+	public float getGesamtpreis();	
 	
 	/**
 	 * Alle Ticketbestellungen werden verworfen. 
@@ -42,11 +49,16 @@ public interface BestellvorgangLocal  {
 	public void verwerfeTicketbestellung(Ticketbestellung bestellung);
 	
 	/**
-	 * alle gebuchten Tickets werden bezahlt.
+	 * Alle gebuchten Tickets werden bezahlt.
+	 * Ticketbestellungen werden in der Datenbank persisitiert. Das Ticketkontingent der
+	 * betroffenen Konzerte wird angepasst und in der Datenbank gespeichert. Zusätzlich 
+	 * wird ein Kunden-persistent Entity persistiert. 
+	 * @throws KapazitaetErschoepftException 
 	 * @param email Email Adresse des Kunden, von dem die Tickets reserviert 
 	 * werden.
+	 * @return Collection aller der bezahlten Ticketbestellungen
 	 */
-	public void bezahleTickets(String email)throws KapazitaetErschoepftException;
+	public Collection<Ticketbestellung>  bezahleTickets(String email)throws KapazitaetErschoepftException;
 	
     /**
      * 

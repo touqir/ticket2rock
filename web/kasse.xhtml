@@ -13,7 +13,7 @@
   </div>
   <div class="section">
   		<h:form>
-			<h:dataTable id="items" value="#{TicketController.orders}" var="bestellung"
+		   <h:dataTable id="items" value="#{TicketController.bestellungen}" var="bestellung"
 				 styleClass="datatable">
 				<h:column>
 					<f:facet name="header">
@@ -36,13 +36,32 @@
 				   </f:facet>
 				   <h:outputText value="#{bestellung.konzert.ort.adresse}" />
    				</h:column>
-   			     <h:column>
+   			    <h:column>
 				   <f:facet name="header">
 					  <h:outputText value="#{msg.kasse_numberoftickets}" />
 				   </f:facet>
 				   <h:outputText value="#{bestellung.anzahl}" />
    				</h:column>	
-			</h:dataTable>
+  			    <h:column>
+				   <f:facet name="header">
+					  <h:outputText value="#{msg.konzert_price}" />
+				   </f:facet>
+				   <h:outputText value="#{bestellung.konzert.ticketpreis}">
+					  <f:convertNumber type="currency" currencySymbol="&#8364;"/>
+				   </h:outputText>  
+   				</h:column>	   				
+		  </h:dataTable>
+          <br/>
+          <fieldset>
+		     <div class="entry">
+			   <div class="label"><h:outputLabel value="#{msg.kasse_total}" /></div>
+			   <div class="output">
+				 <h:outputText value="#{TicketController.gesamtpreis}">
+				   <f:convertNumber type="currency" currencySymbol="&#8364;"/>
+				 </h:outputText>				 
+		       </div>	
+		     </div>
+           </fieldset>  			
 
            <fieldset>
 		     <div class="entry">
@@ -60,7 +79,7 @@
 	          <fieldset>
 		        <div class="entry">
 			      <div class="input">
-				     <h:commandButton id="kassenButton" class="button" action="#{TicketController.pay}" 
+				     <h:commandButton id="kassenButton" class="button" action="#{TicketController.bezahle}" 
 		        	     value="#{msg.kasse_payment}" />		        		        	
 			      </div>
 	            </div>	

@@ -72,6 +72,18 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 		ticketBestellungen.add(ticketBestellung);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
+	public float getGesamtpreis() {
+		float bestellungspreis = 0;
+		for (Ticketbestellung bestellung:this.ticketBestellungen) {
+			bestellungspreis += bestellung.getKonzert().getTicketpreis() * bestellung.getAnzahl(); 
+		}
+		return bestellungspreis;
+	}
+	
+	
 
 	/**
 	 * @inheritDoc
@@ -107,7 +119,7 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 	 * @inheritDoc
 	 */
 	@Remove
-	public void bezahleTickets(String email) throws KapazitaetErschoepftException {
+	public Collection<Ticketbestellung> bezahleTickets(String email) throws KapazitaetErschoepftException {
 		
 		// suche nach einen Kunden anhand der übergebenen email Adresse
 		Kunde kunde = kundenverwaltung.getKundeByEmail(email);
@@ -134,6 +146,7 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 		
 		benachrichtigungsService.installiereKonzerterinnerungen(email,
 				ticketBestellungen);
+		return ticketBestellungen;
 	}
 
 	// Live-Statistik zur Nutzung dieser Bean

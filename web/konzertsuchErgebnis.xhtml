@@ -47,7 +47,15 @@
 						<h:outputText value="#{msg.konzertsuchergebnis_tournee}" />
 					</f:facet>
 					<h:outputText value="#{konzert.tournee.name}" />
-				</h:column>			
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.konzert_price}" />
+					</f:facet>
+					<h:outputText value="#{konzert.ticketpreis}">
+					  <f:convertNumber type="currency" currencySymbol="&#8364;"/>
+					</h:outputText>  					
+				</h:column>								
 				<h:column>
    				    <f:facet name="header">
 						<h:outputText value="#{msg.konzertsuchergebnis_actionheader}" />

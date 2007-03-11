@@ -10,8 +10,52 @@
     <h1><h:outputText value="#{msg.ticketkaufmeldung_title}" /></h1>
   </div>
   <div class="section">
-    <h:outputText value="#{msg.ticketkaufmeldung_text}" />
+    <h:outputText value="#{msg.ticketkaufmeldung_text}" /><br/>
+    <h:outputText value="#{msg.ticketkaufmeldung_bill}" />
+    <b>
+      <h:outputText value="#{TicketController.rechnungsBetrag}">
+		<f:convertNumber type="currency" currencySymbol="&#8364;"/>
+	  </h:outputText>
+	</b>
   </div>
+  <div class="section">
+			<h:dataTable id="items" value="#{TicketController.bezahlteBestellungen}" var="bestellung"
+				 styleClass="datatable">
+				<h:column>
+					<f:facet name="header">
+					  <h:outputText value="#{msg.bestellungen_ordernumber}" />
+					</f:facet>
+					<h:outputText value="#{bestellung.id}" />				  
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+					  <h:outputText value="#{msg.bestellungen_interpret}" />
+					</f:facet>
+					<h:outputText value="#{bestellung.konzert.interpret.name}" />				  
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="#{msg.bestellungen_dateOfEvent}" />
+					</f:facet>
+					<h:outputText value="#{bestellung.konzert.datum}">
+					 <f:convertDateTime timeZone="GMT+1" pattern="#{msg.bestellungen_dateformat}" />
+					</h:outputText>
+				</h:column>								 
+				
+				<h:column>
+				   <f:facet name="header">
+					  <h:outputText value="#{msg.bestellungen_address}" />
+				   </f:facet>
+				   <h:outputText value="#{bestellung.konzert.ort.adresse}" />
+   				</h:column>
+   			     <h:column>
+				   <f:facet name="header">
+					  <h:outputText value="#{msg.bestellungen_numberoftickets}" />
+				   </f:facet>
+				   <h:outputText value="#{bestellung.anzahl}" />
+   				</h:column> 					
+			</h:dataTable>
+       </div>
   
   <div class="section">        
 	<h:form id="ticketkaufmeldungForm">

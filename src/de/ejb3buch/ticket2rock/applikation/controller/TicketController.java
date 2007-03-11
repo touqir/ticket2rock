@@ -28,15 +28,19 @@ public class TicketController {
 
 	private BestellvorgangLocal bestellvorgang;
 
-	private DataModel orderListDataModel = new ListDataModel();
+	private DataModel bestellungen = new ListDataModel();
+	
+	private DataModel bezahlteBestellungen = new ListDataModel();
 
 	private Konzert konzert;
 
 	private String availableTicketsExpression;
 
 	private int ticketanzahl;
-
+	
 	private String email;
+
+	private float rechnungsBetrag;
 
 	public ServiceLocator getServiceLocator() {
 		return serviceLocator;
@@ -89,8 +93,8 @@ public class TicketController {
 	 * 
 	 * @return Identifier für den JSF page flow
 	 */
-	public String orderTickets() {
-
+	public String bestelleTickets() {
+        bezahlteBestellungen = new ListDataModel();
 		// hole über den ServiceLocator einen Bestellvorgang, falls dies für
 		// diese Session noch nicht geschehen ist
 		if (bestellvorgang == null) {
@@ -112,12 +116,14 @@ public class TicketController {
 	 * 
 	 * @return DataModel das eine Kollektion von Ticketbestellungen beinhaltet
 	 */
-	public DataModel getOrders() {
+	public DataModel getBestellungen() {
 		Collection<Ticketbestellung> orders = bestellvorgang
 				.getTicketbestellungen();
-		orderListDataModel.setWrappedData(orders);
-		return orderListDataModel;
+		bestellungen.setWrappedData(orders);
+		return bestellungen;
 	}
+	
+
 
 	/**
 	 * Löschen die in der Form selektierte Ticketbestellung
@@ -125,7 +131,7 @@ public class TicketController {
 	 * @return Rückgabewert zur Definition der Folgeseite
 	 */
 	public String deleteOrder() {
-		Ticketbestellung bestellung = (Ticketbestellung) this.orderListDataModel
+		Ticketbestellung bestellung = (Ticketbestellung) this.bestellungen
 				.getRowData();
 		bestellvorgang.verwerfeTicketbestellung(bestellung);
 		bestellungExistiert = bestellvorgang.hasBestellungen();
@@ -137,13 +143,14 @@ public class TicketController {
 	 * 
 	 * @return Rückgabewert zur Definition der Folgeseite
 	 */
-	public String pay() {
+	public String bezahle() {
 		try {
-		  bestellvorgang.bezahleTickets(email);	
+		  rechnungsBetrag = bestellvorgang.getGesamtpreis();
+		  Collection<Ticketbestellung> bestellungen = bestellvorgang.bezahleTickets(email);	
+		  this.bezahlteBestellungen.setWrappedData(bestellungen);
 		} catch (KapazitaetErschoepftException e) {
 			FacesUtils.addMessage(null, "ticketbestellung_exceedsContingent");
-		}
-		
+		}		
 		bestellvorgang = null;
 		bestellungExistiert = false;
 		return "ticketkaufmeldung";
@@ -170,6 +177,16 @@ public class TicketController {
 		}
 
 	}
+	
+	/**
+	 * 
+	 * @return Gesamtpreis aller Bestellungen, die in Zusammenhang mit diesem
+	 * Bestellvorgang bestellt wurden.
+	 * 
+	 */
+	public float getGesamtpreis(){
+		return this.bestellvorgang.getGesamtpreis();		
+	}
 
 	public String getAvailableTicketsExpression() {
 		return availableTicketsExpression;
@@ -181,6 +198,14 @@ public class TicketController {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public float getRechnungsBetrag() {
+		return rechnungsBetrag;
+	}
+
+	public DataModel getBezahlteBestellungen() {
+		return bezahlteBestellungen;
 	}
 
 }

@@ -17,16 +17,16 @@
           <h:outputLabel for="interpret" value="#{msg.ticketbestellung_interpret}"/>
           <h:outputText id="interpret" value="#{TicketController.konzert.interpret.name}" />
           <h:outputLabel for="date" value="#{msg.ticketbestellung_date}" />
-          <h:outputText value="#{TicketController.konzert.datum}">
-					 <f:convertDateTime timeZone="GMT+1" pattern="#{msg.konzertsuchergebnis_dateformat}" />
-					</h:outputText>
+          <h:outputText id="date" value="#{TicketController.konzert.datum}">
+			 <f:convertDateTime timeZone="GMT+1" pattern="#{msg.konzertsuchergebnis_dateformat}" />
+		  </h:outputText>
           <h:outputLabel for="location" value="#{msg.ticketbestellung_location}" />
           <h:outputText id="location" value="#{TicketController.konzert.ort.name}" />
           <h:outputLabel for="ort" value="#{msg.ticketbestellung_address}" />
           <h:outputText id="ort" value="#{TicketController.konzert.ort.adresse}" />
           <h:outputLabel for="tourneename" value="#{msg.ticketbestellung_tournee}" />
           <h:outputText id="tourneename" value="#{TicketController.konzert.tournee.name}" />
-          <h:outputLabel for="aivalableExpresseion" value="#{msg.ticketbestellung_ticketkontingent}" />
+          <h:outputLabel for="availableExpresseion" value="#{msg.ticketbestellung_ticketkontingent}" />
           <h:outputText id="availableExpression" value="#{TicketController.availableTicketsExpression}" />
        </h:panelGrid>
       
@@ -44,7 +44,7 @@
         <div class="entry">
 			<div class="label">&#160;</div>
 			<div class="input">
-				 <h:commandButton id="submitOrder" class="button" action="#{TicketController.orderTickets}" 
+				 <h:commandButton id="submitOrder" class="button" action="#{TicketController.bestelleTickets}" 
 							value="#{msg.ticketbestellung_order}" />&#160;&#160;
 				 <h:commandButton id="submitCancel" class="button" immediate="true" action="cancel" 
 		        	value="#{msg.ticketbestellung_cancel}" />		        		        	

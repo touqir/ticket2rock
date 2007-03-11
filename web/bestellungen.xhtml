@@ -13,7 +13,7 @@
   </div>
   <div class="section">
   		<h:form>
-			<h:dataTable id="items" value="#{TicketController.orders}" var="bestellung"
+			<h:dataTable id="items" value="#{TicketController.bestellungen}" var="bestellung"
 				 styleClass="datatable">
 				<h:column>
 					<f:facet name="header">
@@ -41,7 +41,7 @@
 					  <h:outputText value="#{msg.bestellungen_numberoftickets}" />
 				   </f:facet>
 				   <h:outputText value="#{bestellung.anzahl}" />
-   				</h:column>	
+   				</h:column> 					
  				<h:column>
   				  <f:facet name="header">
 						<h:outputText value="#{msg.bestellungen_delete}" />
@@ -50,6 +50,16 @@
 						value="#{msg.bestellungen_delete}"/>
 				</h:column>
 			</h:dataTable>
+            <fieldset>
+		     <div class="entry">
+			   <div class="label"><h:outputLabel value="#{msg.bestellungen_totalprice}" /></div>
+			   <div class="output">
+				 <h:outputText value="#{TicketController.gesamtpreis}">
+				   <f:convertNumber type="currency" currencySymbol="&#8364;"/>
+				 </h:outputText>				 
+		       </div>		
+		     </div>
+           </fieldset>  			
 			
 			<div class="section">        	
 	          <fieldset>
