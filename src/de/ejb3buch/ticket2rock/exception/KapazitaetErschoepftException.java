@@ -23,12 +23,15 @@
 
 package de.ejb3buch.ticket2rock.exception;
 
+import javax.ejb.ApplicationException;
+
 import de.ejb3buch.ticket2rock.entity.Konzert;
 
 /**
  * Diese Exception wird geworfen, wenn die Kapazität eines Konzerts beim
  * Bestellen von Tickets erschöpft ist.
  */
+@ApplicationException(rollback = true)
 public class KapazitaetErschoepftException extends Exception {
 
 	private static final long serialVersionUID = 1L;
