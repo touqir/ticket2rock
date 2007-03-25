@@ -164,14 +164,17 @@ private AbfangjaegerLocal falcon_methode_dd = null;
 				Band band = (Band) iter.next();
 %>
 
-	<li><%=band.getName()%>
+	<li><%=band.getName()%> (<%=band.getGruendungsjahr()%>)
 	<ul>
 		<%for (Iterator iter2 = band.getMusiker().iterator(); iter2
 						.hasNext();) {
 					Musiker musiker = (Musiker) iter2.next();
 %>
-		<li><%=musiker.getName()%></li>
-
+		<li><%=musiker.getName()%>
+  		<%if (musiker.getGeburtsname() != null) {%>
+			(<i><%=musiker.getGeburtsname()%></i>)
+		<%}%>  
+		</li>
 		<%}%>
 	</ul>
 	</li>
