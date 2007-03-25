@@ -38,7 +38,17 @@ import javax.persistence.ManyToMany;
 @DiscriminatorValue("B")
 public class Band extends Interpret {
 
+	private int gruendungsjahr;
+	
 	private Set<Musiker> musiker;
+
+	public int getGruendungsjahr() {
+		return gruendungsjahr;
+	}
+
+	public void setGruendungsjahr(int gruendungsjahr) {
+		this.gruendungsjahr = gruendungsjahr;
+	}
 
 	// Hier muss der Default Fetch Type (LAZY) überschrieben werden,
 	// sonst beschwert sich JBoss ("org.hibernate.LazyInitializationException:
