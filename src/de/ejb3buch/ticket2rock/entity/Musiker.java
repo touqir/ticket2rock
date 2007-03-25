@@ -39,7 +39,17 @@ import javax.persistence.ManyToMany;
 @DiscriminatorValue("M")
 public class Musiker extends Interpret {
 
+	private String geburtsname;
+
 	private Set<Band> bands;
+
+	public String getGeburtsname() {
+		return geburtsname;
+	}
+
+	public void setGeburtsname(String geburtsname) {
+		this.geburtsname = geburtsname;
+	}
 
 	// Hier muss der Default Fetch Type (LAZY) überschrieben werden,
 	// sonst beschwert sich JBoss ("org.hibernate.LazyInitializationException:
