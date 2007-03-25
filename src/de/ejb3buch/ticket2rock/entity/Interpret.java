@@ -29,6 +29,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -45,7 +46,8 @@ import javax.persistence.OneToMany;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "TYP", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "TYP", discriminatorType = DiscriminatorType.CHAR)
+@DiscriminatorValue("I")
 public abstract class Interpret {
 
 	private int id;
