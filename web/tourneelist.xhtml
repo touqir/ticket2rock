@@ -29,7 +29,9 @@
 						<h:outputText value="Konzerte" />
 					</f:facet>
 				    <ui:repeat value="#{tournee.konzerte}" var="konzert">
-                      <h:outputText value="#{konzert.ort.name}" />,
+                      <h:outputLink value="http://#{konzert.ort.koordinaten.googleMapsUrlString}" target="_newwindow">
+                          <h:outputText value="#{konzert.ort.name}" />
+                      </h:outputLink>,
                       <h:outputText value="#{konzert.ort.adresse}" />,
                       <h:outputText value="#{konzert.datum}">
 					      <f:convertDateTime timeZone="GMT+1" pattern="#{msg.konzertsuchergebnis_dateformat}" />
