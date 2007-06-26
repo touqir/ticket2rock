@@ -82,7 +82,7 @@ private AbfangjaegerLocal falcon_methode_dd = null;
 <img src="images/Ticket2Rock-Logo.jpg" alt="Ticket2Rock Logo">
 <h1>Demo Tape</h1>
 
-<a href="statistics">Bean-Statistik</a>
+<a href="home.faces">Home</a> | <a href="statistics">Bean-Statistik</a>
 
 <h3>Bestellungen</h3>
 <ul>

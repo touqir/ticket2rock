@@ -45,7 +45,10 @@
 <link type="text/css" href="style/ticket2rock.css" rel="stylesheet">
 </head>
 <body>
+<img src="images/Ticket2Rock-Logo.jpg" alt="Ticket2Rock Logo">
 <h1>Ticket2Rock Bean Statistics</h1>
+
+<a href="home.faces">Home</a> | <a href="demo">Demo Tape</a>
 
 <h3>Classes</h3>
 <ul>
