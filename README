@@ -84,9 +84,12 @@ Main targets:
  clean         Removes all generated code and build artifacts
 ...
 
-Fuer das Deployen der Anwendung in den JBoss muss in der build.properties
-der Pfad, wo der JBoss installiert ist, sowie der Name der Konfiguration
-hinterlegt werden.
+Um das Ant-Skript aus Eclipse heraus zu starten, ist es i.d.R. notwendig, das
+JAR-Archiv tools.jar aus dem lib-Verzeichnis des JDK in den Classpath aufzunehmen.
+
+Fuer das Deployment der Anwendung in JBoss müssen in der Datei build.properties
+der JBoss-Installationspfad sowie der Name der JBoss-Serverkonfiguration hinterlegt
+werden.
 
 ---[ Unit-Tests ]------------------------------------------------------------------
 Die Unit Tests basieren auf JUnit 4.x, teilweise benoetigen sie den JBoss Embedded
