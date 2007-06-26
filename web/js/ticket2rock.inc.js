@@ -13,11 +13,18 @@ function createjsDOMenu() {
     addMenuItem(new menuItem("Bestellung stornieren", "", "stornierung.faces"));
   }
   
+  
+  fixedMenu3 = new jsDOMenu(120);
+  with (fixedMenu3) {
+    addMenuItem(new menuItem("Demo Tape", "", "demo"));
+  }
+  
     
   fixedMenuBar = new jsDOMenuBar("static","menubar");
   with (fixedMenuBar) {
     addMenuBarItem(new menuBarItem("Verwaltung", fixedMenu1));
-    addMenuBarItem(new menuBarItem(unescape("Anwendungsf%E4lle"), fixedMenu2));
+    addMenuBarItem(new menuBarItem(unescape("Anwendungsfälle"), fixedMenu2));
+    addMenuBarItem(new menuBarItem("Demo", fixedMenu3));
     moveTo(10, 100);
   }
 }
