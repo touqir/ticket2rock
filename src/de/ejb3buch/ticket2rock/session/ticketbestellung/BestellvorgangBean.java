@@ -4,7 +4,8 @@
  *  Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
  *
  *  Copyright (C) 2006
- *  Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg und Holger Koschek
+ *  Jo Ehm, Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg, Holger Koschek,
+ *  Carsten Sahling, Roman Schloemmer
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
@@ -20,6 +21,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 package de.ejb3buch.ticket2rock.session.ticketbestellung;
 
 import java.util.ArrayList;
@@ -42,141 +44,143 @@ import de.ejb3buch.ticket2rock.entity.Konzert;
 import de.ejb3buch.ticket2rock.entity.Kunde;
 import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
 import de.ejb3buch.ticket2rock.exception.KapazitaetErschoepftException;
+import de.ejb3buch.ticket2rock.migration.session.AuskunftLocal;
 import de.ejb3buch.ticket2rock.session.crud.KundenVerwaltungLocal;
 
 @Stateful
 @SuppressWarnings("unchecked")
 public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 
-	static Logger logger = Logger.getLogger(BestellvorgangBean.class);
+    static Logger logger = Logger.getLogger(BestellvorgangBean.class);
 
-	List<Ticketbestellung> ticketBestellungen = new ArrayList<Ticketbestellung>();
+    List<Ticketbestellung> ticketBestellungen = new ArrayList<Ticketbestellung>();
 
-	@PersistenceContext
-	private EntityManager em;
+    @PersistenceContext
+    private EntityManager em;
 
-	@EJB
-	private BenachrichtigungsserviceLocal benachrichtigungsService;
+    @EJB
+    private BenachrichtigungsserviceLocal benachrichtigungsService;
 
-	@EJB
-	private KundenVerwaltungLocal kundenverwaltung;
+    @EJB
+    private KundenVerwaltungLocal kundenverwaltung;
 
-	/**
-	 * @throws KapazitaetErschoepftException 
-	 * @inheritDoc
-	 */
-	public void bestelleTickets(Konzert konzert, int ticketAnzahl) {
-		Ticketbestellung ticketBestellung = new Ticketbestellung();
-		ticketBestellung.setKonzert(konzert);
-		ticketBestellung.setAnzahl(ticketAnzahl);
-		ticketBestellungen.add(ticketBestellung);
-	}
+    @EJB
+    private AuskunftLocal oldAuskunft;
 
-	/**
-	 * @inheritDoc
-	 */
-	public float getGesamtpreis() {
-		float bestellungspreis = 0;
-		for (Ticketbestellung bestellung:this.ticketBestellungen) {
-			bestellungspreis += bestellung.getKonzert().getTicketpreis() * bestellung.getAnzahl(); 
-		}
-		return bestellungspreis;
-	}
-	
-	
+    /**
+     * @throws KapazitaetErschoepftException
+     * @inheritDoc
+     */
+    public void bestelleTickets(Konzert konzert, int ticketAnzahl) {
+        oldAuskunft.sucheKonzerte(null, null, null);
+        Ticketbestellung ticketBestellung = new Ticketbestellung();
+        ticketBestellung.setKonzert(konzert);
+        ticketBestellung.setAnzahl(ticketAnzahl);
+        ticketBestellungen.add(ticketBestellung);
+    }
 
-	/**
-	 * @inheritDoc
-	 */
-	public Collection<Ticketbestellung> getTicketbestellungen() {
-		return ticketBestellungen;
-	}
+    /**
+     * @inheritDoc
+     */
+    public float getGesamtpreis() {
+        float bestellungspreis = 0;
+        for (Ticketbestellung bestellung : this.ticketBestellungen) {
+            bestellungspreis += bestellung.getKonzert().getTicketpreis() * bestellung.getAnzahl();
+        }
+        return bestellungspreis;
+    }
 
-	/**
-	 * @inheritDoc
-	 */
-	@Remove
-	public void verwerfeTicketbestellungen() {
-		// TODO Auto-generated method stub
+    /**
+     * @inheritDoc
+     */
+    public Collection<Ticketbestellung> getTicketbestellungen() {
+        return ticketBestellungen;
+    }
 
-	}
+    /**
+     * @inheritDoc
+     */
+    @Remove
+    public void verwerfeTicketbestellungen() {
+        // TODO Auto-generated method stub
 
-	/**
-	 * @inheritDoc
-	 */
-	public void verwerfeTicketbestellung(Ticketbestellung bestellung) {
-		ticketBestellungen.remove(bestellung);
-	}
+    }
 
-	/**
-	 * @inheritDoc
-	 */
-	public boolean hasBestellungen() {
-		return !this.ticketBestellungen.isEmpty();
-	}
+    /**
+     * @inheritDoc
+     */
+    public void verwerfeTicketbestellung(Ticketbestellung bestellung) {
+        ticketBestellungen.remove(bestellung);
+    }
 
-	/**
-	 * @inheritDoc
-	 */
-	@Remove
-	public Collection<Ticketbestellung> bezahleTickets(String email) throws KapazitaetErschoepftException {
-		
-		// suche nach einen Kunden anhand der übergebenen email Adresse
-		Kunde kunde = kundenverwaltung.getKundeByEmail(email);
-		if (kunde == null) {
-			// kunde gibt es nicht --> persistiere neuen Kunden 
-			kunde = new Kunde();
-			kunde.setEmail(email);
-			em.persist(kunde);
-		} else {
-			// persistiere vorhandenen Kunden
-			em.merge(kunde);
-		}
-		if ((ticketBestellungen != null)&&(!ticketBestellungen.isEmpty())) {
-		   	for (Ticketbestellung bestellung:ticketBestellungen) {
-	    		Konzert konzert = bestellung.getKonzert();
-	    		konzert = em.find(Konzert.class,konzert.getId());
-	    	    konzert.bestelleTickets(bestellung.getAnzahl());
-	  		    em.merge(konzert);
-	  		    bestellung.setKonzert(konzert);
-	  		    bestellung.setKunde(kunde);
-	  		    em.persist(bestellung);
-		   	}
-		}
-		
-		benachrichtigungsService.installiereKonzerterinnerungen(email,
-				ticketBestellungen);
-		return ticketBestellungen;
-	}
+    /**
+     * @inheritDoc
+     */
+    public boolean hasBestellungen() {
+        return !this.ticketBestellungen.isEmpty();
+    }
 
-	// Live-Statistik zur Nutzung dieser Bean
+    /**
+     * @inheritDoc
+     */
+    @Remove
+    public Collection<Ticketbestellung> bezahleTickets(String email) throws KapazitaetErschoepftException {
 
-	@PostConstruct
-	public void onPostConstruct() {
-		// Session-Statistik aktualisieren
-		BestellvorgangSessionStatistics.totalSessions++;
-		BestellvorgangSessionStatistics.activeSessions++;
-	}
+        // suche nach einen Kunden anhand der übergebenen email Adresse
+        Kunde kunde = kundenverwaltung.getKundeByEmail(email);
+        if (kunde == null) {
+            // kunde gibt es nicht --> persistiere neuen Kunden
+            kunde = new Kunde();
+            kunde.setEmail(email);
+            em.persist(kunde);
+        } else {
+            // persistiere vorhandenen Kunden
+            em.merge(kunde);
+        }
+        if ((ticketBestellungen != null) && (!ticketBestellungen.isEmpty())) {
+            for (Ticketbestellung bestellung : ticketBestellungen) {
+                Konzert konzert = bestellung.getKonzert();
+                konzert = em.find(Konzert.class, konzert.getId());
+                konzert.bestelleTickets(bestellung.getAnzahl());
+                em.merge(konzert);
+                bestellung.setKonzert(konzert);
+                bestellung.setKunde(kunde);
+                em.persist(bestellung);
+            }
+        }
 
-	@PreDestroy
-	public void onPreDestroy() {
-		// Session-Statistik aktualisieren
-		BestellvorgangSessionStatistics.totalSessions--;
-		BestellvorgangSessionStatistics.activeSessions--;
-	}
+        benachrichtigungsService.installiereKonzerterinnerungen(email, ticketBestellungen);
+        return ticketBestellungen;
+    }
 
-	@PrePassivate
-	public void onPrePassivate() {
-		// Session-Statistik aktualisieren
-		BestellvorgangSessionStatistics.passivatedSessions++;
-		BestellvorgangSessionStatistics.activeSessions--;
-	}
+    // Live-Statistik zur Nutzung dieser Bean
 
-	@PostActivate
-	public void onPostActivate() {
-		// Session-Statistik aktualisieren
-		BestellvorgangSessionStatistics.passivatedSessions--;
-		BestellvorgangSessionStatistics.activeSessions++;
-	}
+    @PostConstruct
+    public void onPostConstruct() {
+        // Session-Statistik aktualisieren
+        BestellvorgangSessionStatistics.totalSessions++;
+        BestellvorgangSessionStatistics.activeSessions++;
+    }
+
+    @PreDestroy
+    public void onPreDestroy() {
+        // Session-Statistik aktualisieren
+        BestellvorgangSessionStatistics.totalSessions--;
+        BestellvorgangSessionStatistics.activeSessions--;
+    }
+
+    @PrePassivate
+    public void onPrePassivate() {
+        // Session-Statistik aktualisieren
+        BestellvorgangSessionStatistics.passivatedSessions++;
+        BestellvorgangSessionStatistics.activeSessions--;
+    }
+
+    @PostActivate
+    public void onPostActivate() {
+        // Session-Statistik aktualisieren
+        BestellvorgangSessionStatistics.passivatedSessions--;
+        BestellvorgangSessionStatistics.activeSessions++;
+    }
 
 }
