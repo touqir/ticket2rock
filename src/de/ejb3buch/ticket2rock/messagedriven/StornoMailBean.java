@@ -4,7 +4,8 @@
  *  Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
  *
  *  Copyright (C) 2006
- *  Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg, Holger Koschek, Jo Ehm
+ *  Jo Ehm, Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg, Holger Koschek,
+ *  Carsten Sahling, Roman Schloemmer
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
@@ -42,13 +43,13 @@ import de.ejb3buch.ticket2rock.session.ticketbestellung.StornatorLocal;
  * Mails reagiert, die als neu markiert sind. POP3 kennt diese Markierung nicht.
  * ACHTUNG: übermäßiges Testen kann den Mail-Account sperren!
  */
-@MessageDriven(activationConfig = {
+/*@MessageDriven(activationConfig = {
 		@ActivationConfigProperty(propertyName = "mailServer", propertyValue = "COMMENTED mail.messagingengine.com"),
 		@ActivationConfigProperty(propertyName = "mailFolder", propertyValue = "INBOX"),
 		@ActivationConfigProperty(propertyName = "storeProtocol", propertyValue = "imap"),
 		@ActivationConfigProperty(propertyName = "userName", propertyValue = "COMMENTED ejb3buch@fastmail.fm"),
 		@ActivationConfigProperty(propertyName = "password", propertyValue = "COMMENTED ejb3b5ch") })
-@ResourceAdapter("mail-ra.rar")
+@ResourceAdapter("mail-ra.rar")*/
 public class StornoMailBean implements MailListener {
 	
 	static Logger logger = Logger.getLogger(StornoMailBean.class);

@@ -4,7 +4,8 @@
  *  Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
  *
  *  Copyright (C) 2006
- *  Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg, Holger Koschek, Jo Ehm
+ *  Jo Ehm, Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg, Holger Koschek,
+ *  Carsten Sahling, Roman Schloemmer
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
@@ -25,9 +26,14 @@ package de.ejb3buch.ticket2rock.messagedriven;
 
 import java.util.StringTokenizer;
 
+import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.MessageDriven;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
@@ -36,43 +42,56 @@ import org.apache.log4j.Logger;
 
 import de.ejb3buch.ticket2rock.session.ticketbestellung.StornatorLocal;
 
-@MessageDriven
+@TransactionManagement(
+        TransactionManagementType.CONTAINER)
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
+@MessageDriven(description="Beschreibung",
+   name="StornoMessageBean",
+   activationConfig={
+@ActivationConfigProperty(
+propertyName="destinationType",
+propertyValue="javax.jms.Queue"),
+@ActivationConfigProperty(
+propertyName="destinationName",
+propertyValue="queue/ticket2rock"),
+@ActivationConfigProperty(
+propertyName="keye",
+propertyValue="value")
+})
 public class StornoMessageBean implements MessageListener {
 
-	static Logger logger = Logger.getLogger(StornoMessageBean.class);
+    static Logger logger = Logger.getLogger(StornoMessageBean.class);
 
-	@EJB
-	private StornatorLocal stornator;
+    @EJB
+    private StornatorLocal stornator;
 
-	public void onMessage(Message msg) {
-		try {
-			TextMessage tmsg = (TextMessage) msg;
-			StringTokenizer st = new StringTokenizer(tmsg.getText().trim(), " ");
-			if (st.countTokens() == 2) {
-				String command = st.nextToken();
-				if (!command.equalsIgnoreCase("STORNO")) {
-					throw new EJBException("'" + tmsg.getText().trim()
-							+ "' - Invalid command: '" + command + "'");
-				}
+    public void onMessage(Message msg) {
+        try {
+            TextMessage tmsg = (TextMessage) msg;
+            StringTokenizer st = new StringTokenizer(tmsg.getText().trim(), " ");
+            if (st.countTokens() == 2) {
+                String command = st.nextToken();
+                if (!command.equalsIgnoreCase("STORNO")) {
+                    throw new EJBException("'" + tmsg.getText().trim() + "' - Invalid command: '" + command + "'");
+                }
 
-				String parameter = st.nextToken();
-				long bestellnr;
-				try {
-					bestellnr = Long.parseLong(parameter);
-				} catch (NumberFormatException nfe) {
-					throw new EJBException("'" + tmsg.getText().trim()
-							+ "' - Invalid reservation ID: '" + parameter + "'");
-				}
+                String parameter = st.nextToken();
+                long bestellnr;
+                try {
+                    bestellnr = Long.parseLong(parameter);
+                } catch (NumberFormatException nfe) {
+                    throw new EJBException("'" + tmsg.getText().trim() + "' - Invalid reservation ID: '" + parameter
+                            + "'");
+                }
 
-				logger.info("Storniere Bestellung Nr. " + bestellnr);
-				stornator.storniereBestellung(bestellnr);
+                logger.info("Storniere Bestellung Nr. " + bestellnr);
+                stornator.storniereBestellung(bestellnr);
 
-			} else {
-				throw new EJBException("'" + tmsg.getText().trim()
-						+ "' - Invalid message");
-			}
-		} catch (Exception e) {
-			throw new EJBException(e);
-		}
-	}
+            } else {
+                throw new EJBException("'" + tmsg.getText().trim() + "' - Invalid message");
+            }
+        } catch (Exception e) {
+            throw new EJBException(e);
+        }
+    }
 }
