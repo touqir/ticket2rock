@@ -4,7 +4,8 @@
  *  Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
  *
  *  Copyright (C) 2006
- *  Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg und Holger Koschek
+ *  Jo Ehm, Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg, Holger Koschek,
+ *  Carsten Sahling, Roman Schloemmer
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
@@ -20,6 +21,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
+
 package de.ejb3buch.ticket2rock.entity;
 
 import static org.junit.Assert.assertEquals;
