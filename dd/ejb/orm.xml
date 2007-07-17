@@ -6,7 +6,8 @@
 	Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
 	
 	Copyright (C) 2006
-	Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg und Holger Koschek
+	Jo Ehm, Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg, Holger Koschek,
+	Carsten Sahling, Roman Schloemmer
 	
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License
@@ -36,6 +37,32 @@
 			</entity-listeners>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
+	<named-query name="getKonzertAnzahl">
+		<query>SELECT COUNT(k) FROM Konzert k</query>
+ 	</named-query>
+  <named-native-query name="getKonzerteNative"
+  result-class="de.ejb3buch.ticket2rock.entity.Konzert">
+    <query>
+      SELECT id, interpret_id, datum, veranstalter_hr_nr, veranstalter_amtsgericht,
+      veranstaltungsort_id, tournee_id, kontingent, ticketpreis FROM konzert
+    </query>
+  </named-native-query>
+  <sql-result-set-mapping
+   name="KonzertMapping">
+    <entity-result
+     entity-class="de.ejb3buch.ticket2rock.entity.Konzert">
+      <field-result name="id" column="id"/>
+      <field-result name="datum" column="datum"/>
+      <field-result name="ticketkontingent" column="kontingent"/>
+      <field-result name="ticketpreis" column="ticketpreis"/>
+      <field-result name="interpret" column="interpret_id"/>
+      <field-result name="ort" column="veranstaltungsort_id"/>
+      <field-result name="tournee" column="tournee_id"/>
+      <field-result name="veranstalter.handelsregisternummer" column="veranstalter_hr_nr"/>
+      <field-result name="veranstalter.amtsgericht" column="veranstalter_amtsgericht"/>
+    </entity-result>
+    <column-result name="i_name"/>
+  </sql-result-set-mapping>
 	<entity class="de.ejb3buch.ticket2rock.entity.News" access="PROPERTY">
 		<post-load method-name="pruefeAlter()"/>
 		<attributes>

@@ -4,7 +4,8 @@
  *  Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
  *
  *  Copyright (C) 2006
- *  Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg, Holger Koschek, Jo Ehm
+ *  Jo Ehm, Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg, Holger Koschek,
+ *  Carsten Sahling, Roman Schloemmer
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
