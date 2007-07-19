@@ -28,13 +28,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.ejb.EJB;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
 
 import org.apache.log4j.Logger;
-
-import de.ejb3buch.ticket2rock.session.crud.KonzertVerwaltungLocal;
 
 public class AuskunftBean implements SessionBean {
 

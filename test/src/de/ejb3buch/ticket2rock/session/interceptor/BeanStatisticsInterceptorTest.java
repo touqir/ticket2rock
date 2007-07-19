@@ -30,12 +30,9 @@ import static org.junit.Assert.assertNotSame;
 import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import de.ejb3buch.ticket2rock.EmbeddedContainerTestBase;
-import de.ejb3buch.ticket2rock.EmbeddedContainerTestHelper;
 import de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsLocal;
 
 public class BeanStatisticsInterceptorTest extends EmbeddedContainerTestBase

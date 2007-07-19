@@ -26,14 +26,11 @@ package de.ejb3buch.ticket2rock.messagedriven;
 
 import java.util.StringTokenizer;
 
-import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
-import javax.ejb.MessageDriven;
 import javax.mail.Message;
 
 import org.apache.log4j.Logger;
-import org.jboss.annotation.ejb.ResourceAdapter;
 import org.jboss.resource.adapter.mail.inflow.MailListener;
 
 import de.ejb3buch.ticket2rock.session.ticketbestellung.StornatorLocal;
