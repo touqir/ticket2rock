@@ -45,19 +45,7 @@ import de.ejb3buch.ticket2rock.session.ticketbestellung.StornatorLocal;
 @TransactionManagement(
         TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
-@MessageDriven(description="Beschreibung",
-   name="StornoMessageBean",
-   activationConfig={
-@ActivationConfigProperty(
-propertyName="destinationType",
-propertyValue="javax.jms.Queue"),
-@ActivationConfigProperty(
-propertyName="destinationName",
-propertyValue="queue/ticket2rock"),
-@ActivationConfigProperty(
-propertyName="keye",
-propertyValue="value")
-})
+@MessageDriven
 public class StornoMessageBean implements MessageListener {
 
     static Logger logger = Logger.getLogger(StornoMessageBean.class);
