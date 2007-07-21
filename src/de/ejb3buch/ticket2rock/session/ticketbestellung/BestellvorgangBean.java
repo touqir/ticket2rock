@@ -64,15 +64,11 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
     @EJB
     private KundenVerwaltungLocal kundenverwaltung;
 
-    @EJB
-    private AuskunftLocal oldAuskunft;
-
     /**
      * @throws KapazitaetErschoepftException
      * @inheritDoc
      */
     public void bestelleTickets(Konzert konzert, int ticketAnzahl) {
-        oldAuskunft.sucheKonzerte(null, null, null);
         Ticketbestellung ticketBestellung = new Ticketbestellung();
         ticketBestellung.setKonzert(konzert);
         ticketBestellung.setAnzahl(ticketAnzahl);
