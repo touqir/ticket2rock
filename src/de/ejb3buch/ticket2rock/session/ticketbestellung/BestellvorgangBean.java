@@ -44,7 +44,6 @@ import de.ejb3buch.ticket2rock.entity.Konzert;
 import de.ejb3buch.ticket2rock.entity.Kunde;
 import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
 import de.ejb3buch.ticket2rock.exception.KapazitaetErschoepftException;
-import de.ejb3buch.ticket2rock.migration.session.AuskunftLocal;
 import de.ejb3buch.ticket2rock.session.crud.KundenVerwaltungLocal;
 
 @Stateful
