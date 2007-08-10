@@ -26,7 +26,6 @@ package de.ejb3buch.ticket2rock.messagedriven;
 
 import java.util.StringTokenizer;
 
-import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.MessageDriven;
