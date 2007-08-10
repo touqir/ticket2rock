@@ -63,6 +63,7 @@ public class AuskunftBean implements SessionBean {
 
     public List sucheKonzerte(String ortsName, Date vonDatum, Date bisDatum) {
         logger.info("I did it");
+        logger.debug("SessionContext: " + ctx);
         return new ArrayList();
     }
 }
