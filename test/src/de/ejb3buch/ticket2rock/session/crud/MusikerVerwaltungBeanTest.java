@@ -24,71 +24,102 @@
 
 package de.ejb3buch.ticket2rock.session.crud;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import java.util.Collection;
+
+import javax.naming.NamingException;
+
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
-public class MusikerVerwaltungBeanTest
-{
+import de.ejb3buch.ticket2rock.EmbeddedContainerTestBase;
+import de.ejb3buch.ticket2rock.entity.Musiker;
 
-    @BeforeClass
-    public static void setUpBeforeClass() throws Exception
-    {
-    }
+/**
+ * @author Holger
+ * 
+ */
+public class MusikerVerwaltungBeanTest extends EmbeddedContainerTestBase {
+	private static final Logger logger = Logger
+			.getLogger(MusikerVerwaltungBeanTest.class);
 
-    @AfterClass
-    public static void tearDownAfterClass() throws Exception
-    {
-    }
+	private MusikerVerwaltungLocal getMusikerVerwaltung()
+			throws NamingException, Exception {
+		MusikerVerwaltungLocal musikerVerwaltung = (MusikerVerwaltungLocal) lookup("MusikerVerwaltungBean/local");
+		return musikerVerwaltung;
+	}
 
-    @Test
-    public void testGetMusikerByName()
-    {
-        fail("Not yet implemented"); // TODO
-    }
+	@Test
+	public void testGetMusiker() throws Exception {
+        Collection<Musiker> alleMusiker = getMusikerVerwaltung().getMusiker();
+        assertTrue(alleMusiker.size() > 0);
+	}
 
-    @Test
-    public void testCreateMusiker()
-    {
-        fail("Not yet implemented"); // TODO
-    }
+	@Test
+	public void testGetMusikerById() throws Exception {
+		Musiker musiker = getMusikerVerwaltung().getMusikerById(1);
+		assertNotNull(musiker);
+		
+		musiker = getMusikerVerwaltung().getMusikerById(99999);
+		assertNull(musiker);
+	}
 
-    @Test
-    public void testUpdateMusiker()
-    {
-        fail("Not yet implemented"); // TODO
-    }
+	@Test
+	public void testGetMusikerByName() throws Exception {
+		Musiker musiker = getMusikerVerwaltung().getMusikerByName(
+				"Wildecker Herzbuben");
+		// ...sind keine Musiker ;-)
+		assertNull(musiker);
 
-    @Test
-    public void testDeleteMusiker()
-    {
-        fail("Not yet implemented"); // TODO
-    }
+		musiker = getMusikerVerwaltung().getMusikerByName("Chris Cornell");
+		// ...rockt!
+		assertNotNull(musiker);
+	}
 
-    @Test
-    public void testGetMusiker()
-    {
-        fail("Not yet implemented"); // TODO
-    }
+	@Test
+	public void testCreateMusiker() throws Exception {
+		Musiker musiker = new Musiker();
+		final String MUSIKER_NAME = "Joe Satriani";
+		musiker.setName(MUSIKER_NAME);
 
-    @Test
-    public void testGetBands()
-    {
-        fail("Not yet implemented"); // TODO
-    }
+		int anzahlVorher = getMusikerVerwaltung().getMusiker().size();
 
-    @Test
-    public void testGetBandById()
-    {
-        fail("Not yet implemented"); // TODO
-    }
+		logger.debug("Versuche, einen neuen Musiker zu erzeugen...");
+		getMusikerVerwaltung().createMusiker(musiker);
 
-    @Test
-    public void testGetMusikerById()
-    {
-        fail("Not yet implemented"); // TODO
-    }
+		assertEquals(anzahlVorher + 1, getMusikerVerwaltung().getMusiker()
+				.size());
 
+		assertEquals(getMusikerVerwaltung().getMusikerByName(MUSIKER_NAME)
+				.getName(), musiker.getName());
+	}
+
+	@Test
+	public void testUpdateMusiker() throws Exception {
+		logger.debug("Versuche, einen Musiker zu modifizieren...");
+		Musiker musiker = getMusikerVerwaltung().getMusikerById(1);
+
+		musiker.setName("Ein anderer Mensch");
+
+		getMusikerVerwaltung().updateMusiker(musiker);
+
+		assertEquals(musiker.getName(), getMusikerVerwaltung()
+				.getMusikerById(1).getName());
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testDeleteMusiker() throws Exception {
+		logger.debug("Versuche, einen Musiker zu loeschen");
+		int anzahlVorher = getMusikerVerwaltung().getMusiker().size();
+		getMusikerVerwaltung().deleteMusiker(1);
+
+		assertEquals(anzahlVorher - 1, getMusikerVerwaltung().getMusiker()
+				.size());
+
+		getMusikerVerwaltung().getMusikerById(1).getName();
+	}
 }
