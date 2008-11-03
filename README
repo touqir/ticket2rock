@@ -46,6 +46,8 @@ Getestet wurde Ticket2Rock mit
 * JBoss EJB 3.0 RC9 FD
 * JBoss EJB 3.0 Embeddable APLHA9
 
+Mit neueren Versionen, etwas JBoss 4.2.3 laeuft Ticket2Rock (noch) NICHT.
+
 ---[ JBoss-Konfiguration ]------------------------------------------------------
 Im JBoss muss eine Queue namens 'queue/ticket2rock' eingerichtet sein, um die
 Stornierung der Ticketbestellung mittels JMS-Nachricht durchführen zu können.
