@@ -68,7 +68,7 @@
 		</session>	
 		<session>
  			<ejb-name>AbfangjaegerBeanKlasseninterzeptor</ejb-name>
-			<ejb-class>de.ejb3buch.ticket2rock.session.demo.klasseninterzeptor.AbfangjaegerBean</ejb-class>
+			<ejb-class>de.ejb3buch.ticket2rock.session.demo.klasseninterzeptor.KlassenAbfangjaegerBean</ejb-class>
 		</session>	
 		<session>
  			<ejb-name>AbfangjaegerBeanKlasseninterzeptorDD</ejb-name>
@@ -78,7 +78,7 @@
 		</session>	
 		<session>
 			<ejb-name>AbfangjaegerBeanMethodeninterzeptor</ejb-name>
-			<ejb-class>de.ejb3buch.ticket2rock.session.demo.methodeninterzeptor.AbfangjaegerBean</ejb-class>
+			<ejb-class>de.ejb3buch.ticket2rock.session.demo.methodeninterzeptor.MethodenAbfangjaegerBean</ejb-class>
 		</session>	
 		<session>
 			<ejb-name>AbfangjaegerBeanMethodeninterzeptorDD</ejb-name>

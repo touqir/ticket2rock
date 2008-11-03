@@ -1,4 +1,4 @@
-================================================================================
+*================================================================================
  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3 professionell" (dpunkt).
  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
  Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
@@ -27,6 +27,7 @@ und installieren. Es ist für die Nutzung mit dem JBoss 4.0 Application Server
 inklusive JBoss EJB3 Service optimiert. EJB 3.0 benötigt Java 5.0.
 
 ---[ Bezugsquellen ]------------------------------------------------------------
+
 Ticket2Rock ist als Open Source-Projekt bei JavaForge verfügbar:
   http://www.javaforge.com/proj/summary.do?proj_id=1150
 
@@ -40,13 +41,14 @@ Mehr Informationen zu Ticket2Rock und dem Buch "EJB 3 professionell":
   http://www.ejb3buch.de
 
 ---[ Testumgebung ]-------------------------------------------------------------
+
 Getestet wurde Ticket2Rock mit
-* Sun J2SE Development Kit 5.0 
-* JBoss 4.0.5 GA Patch 1
-* JBoss EJB 3.0 RC9 FD
-* JBoss EJB 3.0 Embeddable APLHA9
 
 Mit neueren Versionen, etwas JBoss 4.2.3 laeuft Ticket2Rock (noch) NICHT.
+
+  * JBoss 4.2.3.GA
+	
+Eine Aeltere Version (Ticket2Rock 1.0.0) lauft auch mit JBoss 4.0.5.GA Patch 1
 
 ---[ JBoss-Konfiguration ]------------------------------------------------------
 Im JBoss muss eine Queue namens 'queue/ticket2rock' eingerichtet sein, um die

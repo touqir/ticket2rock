@@ -22,10 +22,11 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-package de.ejb3buch.ticket2rock.session.demo.methodeninterzeptor;
+package de.ejb3buch.ticket2rock.session.demo.klasseninterzeptor;
 
 import javax.ejb.Stateless;
 import javax.interceptor.AroundInvoke;
+import javax.interceptor.ExcludeClassInterceptors;
 import javax.interceptor.Interceptors;
 import javax.interceptor.InvocationContext;
 
@@ -35,22 +36,22 @@ import de.ejb3buch.ticket2rock.session.demo.Abfangjaeger;
 import de.ejb3buch.ticket2rock.session.demo.AbfangjaegerLocal;
 
 // Eine Stateless Session Bean, für die der Interzeptor "Abfangjaeger"
-// auf Methodenebene per Annonation definiert ist.
+// als Klasseninterzeptor mit Ausnahmen per Annonation definiert ist.
 
 @Stateless
-public class AbfangjaegerBean implements AbfangjaegerLocal {
+@Interceptors(Abfangjaeger.class)
+public class KlassenAbfangjaegerBean implements AbfangjaegerLocal {
 
-	static Logger logger = Logger.getLogger(AbfangjaegerBean.class);
+	static Logger logger = Logger.getLogger(KlassenAbfangjaegerBean.class);
 
-	@Interceptors(Abfangjaeger.class)
 	public void fangMichAb() {
 	}
 
-	@Interceptors(Abfangjaeger.class)
 	public Object michAuch(Object obj) {
 		return obj;
 	}
 
+	@ExcludeClassInterceptors
 	public void michNicht() {
 	}
 

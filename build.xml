@@ -142,10 +142,19 @@
 			</classes>
 			<lib dir="${lib.dir}">		        
 				<include name="jsf-facelets.jar"/>
-				<include name="el-api.jar"/>
+								
 				<include name="el-ri.jar"/>
-				<include name="ajax4jsf.jar"/>
+				
 				<include name="oscache-2.3.2.jar"/>
+				
+				<!-- Rich Faces -->
+				<include name="richfaces-api-3.2.2.GA.jar"/>
+				<include name="richfaces-impl-3.2.2.GA.jar"/>
+				<include name="richfaces-ui-3.2.2.GA.jar"/>
+				
+				<!-- Erforderlich für Faces -->
+				<include name="commons-digester-1.8.jar"/>
+				<include name="commons-beanutils.jar"/>
 			</lib>
 		</war>
 	</target>
@@ -171,4 +180,6 @@
 		<echo message="Undeploying from JBoss" />
 		<delete file="${jboss.deploy.dir}/${ant.project.name}.ear" />
 	</target>
+	
+	<target name="cleanBuildDeploy" depends="clean,main,deploy"/>
 </project>
