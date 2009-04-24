@@ -24,11 +24,12 @@
 	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
 
-<ejb-jar xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi.schemaLocation="http://java.sun.com/xml/ns/javaee
-						http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd"
-	version="3.0">
+<ejb-jar xmlns = "http://java.sun.com/xml/ns/javaee"
+         version = "3.0"
+         xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation = "http://java.sun.com/xml/ns/javaee
+         http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd">
+
 	<enterprise-beans>
 		<message-driven>
 			<ejb-name>StornoMessageBean</ejb-name>
@@ -72,7 +73,7 @@
 		</session>	
 		<session>
  			<ejb-name>AbfangjaegerBeanKlasseninterzeptorDD</ejb-name>
- 			<local>de.ejb3buch.ticket2rock.session.demo.AbfangjaegerLocal</local>
+ 			<business-local>de.ejb3buch.ticket2rock.session.demo.AbfangjaegerLocal</business-local>
 			<ejb-class>de.ejb3buch.ticket2rock.session.demo.klasseninterzeptor.dd.AbfangjaegerBean</ejb-class>
 			<session-type>Stateless</session-type>
 		</session>	
@@ -82,21 +83,21 @@
 		</session>	
 		<session>
 			<ejb-name>AbfangjaegerBeanMethodeninterzeptorDD</ejb-name>
- 			<local>de.ejb3buch.ticket2rock.session.demo.AbfangjaegerLocal</local>
+ 			<business-local>de.ejb3buch.ticket2rock.session.demo.AbfangjaegerLocal</business-local>
 			<ejb-class>de.ejb3buch.ticket2rock.session.demo.methodeninterzeptor.dd.AbfangjaegerBean</ejb-class>
 			<session-type>Stateless</session-type>
 		</session>	
-		<session>
+	    <session>
 			<ejb-name>AuskunftBean</ejb-name>
- 			<local>de.ejb3buch.ticket2rock.session.AuskunftLocal</local>
- 			<remote>de.ejb3buch.ticket2rock.session.Auskunft</remote>
+ 			<business-local>de.ejb3buch.ticket2rock.session.AuskunftLocal</business-local>
+ 			<business-remote>de.ejb3buch.ticket2rock.session.Auskunft</business-remote>
 			<ejb-class>de.ejb3buch.ticket2rock.session.AuskunftBean</ejb-class>
 			<session-type>Stateless</session-type>
-		</session>	
+		</session>
 		<session>
 			<ejb-name>BestellvorgangBean</ejb-name>
- 			<local>de.ejb3buch.ticket2rock.session.ticketbestellung.BestellvorgangLocal</local>
- 			<remote>de.ejb3buch.ticket2rock.session.ticketbestellung.Bestellvorgang</remote>
+ 			<business-local>de.ejb3buch.ticket2rock.session.ticketbestellung.BestellvorgangLocal</business-local>
+ 			<business-remote>de.ejb3buch.ticket2rock.session.ticketbestellung.Bestellvorgang</business-remote>
 			<ejb-class>de.ejb3buch.ticket2rock.session.ticketbestellung.BestellvorgangBean</ejb-class>
 			<session-type>Stateful</session-type>
 		</session>	
@@ -138,7 +139,7 @@
 		-->
 		<interceptor-binding>
 			<ejb-name>BeanStatisticsBean</ejb-name>
-			<exclude-default-interceptors/>
+			<exclude-default-interceptors>true</exclude-default-interceptors>
 		</interceptor-binding>
  		<interceptor-binding>
  			<ejb-name>AbfangjaegerBeanKlasseninterzeptorDD</ejb-name>
@@ -146,21 +147,27 @@
  		</interceptor-binding>
  		<interceptor-binding>
  			<ejb-name>AbfangjaegerBeanKlasseninterzeptorDD</ejb-name>
- 			<exclude-class-interceptors/>
- 			<method-name>michNicht</method-name>
+ 			<exclude-class-interceptors>true</exclude-class-interceptors>
+ 			<method>
+ 			  <method-name>michNicht</method-name>
+ 			</method>
  		</interceptor-binding>
  		<interceptor-binding>
  			<ejb-name>AbfangjaegerBeanMethodeninterzeptorDD</ejb-name>
  			<interceptor-class>de.ejb3buch.ticket2rock.session.demo.Abfangjaeger</interceptor-class>
- 			<method-name>fangMichAb</method-name>
+ 			<method>
+ 			  <method-name>fangMichAb</method-name>
+ 			</method>
  		</interceptor-binding>
 		<interceptor-binding>
  			<ejb-name>AbfangjaegerBeanMethodeninterzeptorDD</ejb-name>
  			<interceptor-class>de.ejb3buch.ticket2rock.session.demo.Abfangjaeger</interceptor-class>
- 			<method-name>michAuch</method-name>
- 			<method-params>
+ 			<method>
+ 			  <method-name>michAuch</method-name>
+ 			  <method-params>
  				<method-param>java.lang.Object</method-param>
- 			</method-params>
+ 			  </method-params>
+ 			</method>
  		</interceptor-binding>
-	</assembly-descriptor>
+	</assembly-descriptor>	
 </ejb-jar>
