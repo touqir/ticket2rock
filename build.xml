@@ -51,7 +51,7 @@
 		<pathelement location="${build.dir}/test"/>
 	</path>
 	
-	<target name="main" description="Does a full build of the J2EE application">
+	<target name="main" description="Does a full build of the JEE application">
 		<antcall target="clean" />
 		<antcall target="package-ejb" />
 		<antcall target="package-web" />
@@ -159,7 +159,7 @@
 		</war>
 	</target>
 
-	<target name="assemble-app" description="Builds the J2EE application (*.ear)">
+	<target name="assemble-app" description="Builds the JEE application (*.ear)">
 		<jar jarfile="${build.dir}/${ant.project.name}.ear">
 
 			<metainf dir="dd/ear">
@@ -171,12 +171,12 @@
 		</jar>
 	</target>
 
-	<target name="deploy" description="Deploys the J2EE application to JBoss">
+	<target name="deploy" description="Deploys the JEE application to JBoss">
 		<echo message="Deploying to JBoss" />
 		<copy file="${build.dir}/${ant.project.name}.ear" todir="${jboss.deploy.dir}" overwrite="true" />
 	</target>
 
-	<target name="undeploy" description="Undeploys the J2EE application from JBoss">
+	<target name="undeploy" description="Undeploys the JEE application from JBoss">
 		<echo message="Undeploying from JBoss" />
 		<delete file="${jboss.deploy.dir}/${ant.project.name}.ear" />
 	</target>
