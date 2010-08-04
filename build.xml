@@ -70,13 +70,13 @@
 	</target>
 
 	<target name="compile" depends="prepare" description="Compiles the source code">
-		<javac destdir="${build.dir}/classes" classpathref="build.classpath" debug="on">
+		<javac destdir="${build.dir}/classes" classpathref="build.classpath" debug="on" encoding="ISO-8859-1">
 			<src path="${src.dir}" />
 		</javac>
 	</target>
 
 	<target name="compile-test" depends="compile" description="Compiles the tests and runs them">
-		<javac destdir="${build.dir}/test" classpathref="test.classpath" debug="on">
+		<javac destdir="${build.dir}/test" classpathref="test.classpath" debug="on" encoding="ISO-8859-1">
 			<src path="${test.src.dir}" />
 		</javac>
 	</target>
