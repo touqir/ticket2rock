@@ -78,23 +78,24 @@
 	</target>
 
 	<target name="compile" depends="prepare" description="Compiles the source code">
-		<javac destdir="${build.dir}/classes" classpathref="build.classpath" debug="on" encoding="ISO-8859-1">
+		<javac destdir="${build.dir}/classes" classpathref="build.classpath" debug="on" encoding="ISO-8859-1"
+			includeantruntime="false">
 			<src path="${src.dir}" />
 		</javac>
 	</target>
 
 	<target name="compile-test" depends="compile" description="Compiles the tests and runs them">
-		<javac destdir="${build.dir}/test" classpathref="test.classpath" debug="on" encoding="ISO-8859-1">
+		<javac destdir="${build.dir}/test" classpathref="test.classpath" debug="on" encoding="ISO-8859-1" includeantruntime="false">
 			<src path="${test.src.dir}" />
 		</javac>
 	</target>
 		
 	<!-- Kopiert die notwendigen Konfigurations- und Klassendateien in das Test-Verzeichnis -->
 	<target name="prepare-test">
-		<copy  todir="${build.dir}/test" >
-			<fileset dir="${home.dir}/test/conf"  />
-			<fileset dir="${home.dir}/dd/ejb"  />
-			<fileset dir="${build.dir}/classes" /> 
+		<copy todir="${build.dir}/test" >
+			<fileset dir="${basedir}/test/conf" includes="*.*" />
+			<fileset dir="${basedir}/dd/ejb" includes="*.*" />
+			<fileset dir="${build.dir}/classes" includes="*.*" />
 		</copy>
 	</target>
 	
