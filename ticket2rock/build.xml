@@ -42,7 +42,6 @@
 		  <include name="*.jar"/>
 		</fileset>
 	</path>
-	<echo message="Apache Ant Version: ${ant.version}" />
 
     <!-- ================================= 
           target: resolve              
@@ -60,6 +59,7 @@
 	</path>
 	
 	<target name="main" depends = "" description="Does a full build of the JEE application">
+		<echo message="Apache Ant Version: ${ant.version}" />
 		<antcall target="clean" />
 		<antcall target="package-ejb" />
 		<antcall target="package-web" />
@@ -99,7 +99,8 @@
 	</target>
 	
 	<target name="junit" depends="compile-test,prepare-test">
-	    <junit fork="false" 
+		<echo message="Apache Ant Version: ${ant.version}" />
+		<junit fork="false" 
 	    	   haltonfailure="true"
 	           showoutput="true"
 	    >
