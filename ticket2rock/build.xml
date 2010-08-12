@@ -94,7 +94,11 @@
 	<target name="prepare-test">
 		<copy todir="${build.dir}/test" >
 			<fileset dir="${basedir}/test/conf" includes="*.*" />
-			<fileset dir="${basedir}/dd/ejb" includes="*.*" />
+			<fileset dir="${basedir}/dd/ejb">
+				<include name="*.*" />
+				<exclude name="persistence.xml"/>
+				
+			</fileset>
 			<fileset dir="${build.dir}/classes" includes="*.*" />
 		</copy>
 	</target>
@@ -105,10 +109,8 @@
 	    	   haltonfailure="true"
 	           showoutput="true"
 	    >
-
 	      <classpath refid="test.classpath"/>
 	      <formatter type="plain" usefile="false"/>
-
 	      <test name="de.ejb3buch.ticket2rock.AllTests"/>
 	    
 	    </junit>		
