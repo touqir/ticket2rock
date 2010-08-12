@@ -1,12 +1,12 @@
 <?xml version="1.0" ?>
 
 <!--
-	Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3 professionell" (dpunkt).
+	Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
 	Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
-	Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
+	Rockkonzerte auf Basis von EJB 3.1 und JavaServer Faces.
 	
-	Copyright (C) 2006
-	Jo Ehm, Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg, Holger Koschek,
+	Copyright (C) 2006, 2010
+	Jo Ehm, Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Holger Koschek,
 	Carsten Sahling, Roman Schloemmer
 	
 	This program is free software; you can redistribute it and/or
@@ -24,7 +24,7 @@
 	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
 
-<project name="ticket2rock" default="main" basedir=".">
+<project name="ticket2rock" default="main" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 	
 	<property file="build.properties"/>
 	
@@ -42,7 +42,15 @@
 		  <include name="*.jar"/>
 		</fileset>
 	</path>
+	<echo message="Apache Ant Version: ${ant.version}" />
 
+    <!-- ================================= 
+          target: resolve              
+         ================================= -->
+    <target name="resolve" description="--> retreive dependencies with ivy">
+        <ivy:retrieve/>
+    </target> 
+	
 	<path id="test.classpath">
 		<fileset dir="${lib.dir}" casesensitive="yes">
 		  <include name="*.jar"/>
@@ -51,7 +59,7 @@
 		<pathelement location="${build.dir}/test"/>
 	</path>
 	
-	<target name="main" description="Does a full build of the JEE application">
+	<target name="main" depends = "" description="Does a full build of the JEE application">
 		<antcall target="clean" />
 		<antcall target="package-ejb" />
 		<antcall target="package-web" />
@@ -93,7 +101,8 @@
 	<target name="junit" depends="compile-test,prepare-test">
 	    <junit fork="false" 
 	    	   haltonfailure="true"
-	           showoutput="false">
+	           showoutput="true"
+	    >
 
 	      <classpath refid="test.classpath"/>
 	      <formatter type="plain" usefile="false"/>
