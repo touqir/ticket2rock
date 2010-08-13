@@ -139,10 +139,7 @@ public class EmbeddedContainerTestHelper
                 }
 
                 deployer = EJB3StandaloneBootstrap.createDeployer();
-                deployer.getDeployDirs().add(getArchiveURL());
-                // changed to the directory, since the 
-                // test prepair is not creating an archive
-                // deployer.getArchives().add(getArchiveURL());
+                deployer.getArchives().add(getArchiveURL());
 
                 deployer.create();
                 deployer.start();
