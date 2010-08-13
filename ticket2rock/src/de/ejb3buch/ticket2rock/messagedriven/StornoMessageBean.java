@@ -38,6 +38,8 @@ import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 import org.apache.log4j.Logger;
+import org.jboss.annotation.ejb.Depends;
+import org.jboss.annotation.ejb.ResourceAdapter;
 
 import de.ejb3buch.ticket2rock.session.ticketbestellung.StornatorLocal;
 
@@ -45,6 +47,8 @@ import de.ejb3buch.ticket2rock.session.ticketbestellung.StornatorLocal;
         TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @MessageDriven
+@ResourceAdapter("hornetq-ra.rar")
+@Depends("module=JMS,name=\"ticket2rock\",type=Queue")
 public class StornoMessageBean implements MessageListener {
 
     static Logger logger = Logger.getLogger(StornoMessageBean.class);
