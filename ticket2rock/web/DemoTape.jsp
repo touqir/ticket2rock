@@ -26,10 +26,10 @@
 	import="javax.naming.*,java.util.*,java.text.SimpleDateFormat,de.ejb3buch.ticket2rock.entity.*,de.ejb3buch.ticket2rock.session.demo.*"%>
 
 <%!private DemoTape demo = null;
-private AbfangjaegerLocal falcon_klasse = null;
-private AbfangjaegerLocal falcon_methode = null;
-private AbfangjaegerLocal falcon_klasse_dd = null;
-private AbfangjaegerLocal falcon_methode_dd = null;
+	private AbfangjaegerLocal falcon_klasse = null;
+	private AbfangjaegerLocal falcon_methode = null;
+	private AbfangjaegerLocal falcon_klasse_dd = null;
+	private AbfangjaegerLocal falcon_methode_dd = null;
 
 	private SimpleDateFormat datumsformat_Jahr = new SimpleDateFormat("yyyy");
 
@@ -43,11 +43,15 @@ private AbfangjaegerLocal falcon_methode_dd = null;
 		try {
 			InitialContext ctx = new InitialContext();
 			demo = (DemoTape) ctx.lookup("ticket2rock/DemoTapeBean/local");
-			falcon_klasse = (AbfangjaegerLocal) ctx.lookup("ticket2rock/AbfangjaegerBeanKlasseninterzeptor/local");
-			falcon_methode = (AbfangjaegerLocal) ctx.lookup("ticket2rock/AbfangjaegerBeanMethodeninterzeptor/local");
-			falcon_klasse_dd = (AbfangjaegerLocal) ctx.lookup("ticket2rock/AbfangjaegerBeanKlasseninterzeptorDD/local");
-			falcon_methode_dd = (AbfangjaegerLocal) ctx.lookup("ticket2rock/AbfangjaegerBeanMethodeninterzeptorDD/local");
-			
+			falcon_klasse = (AbfangjaegerLocal) ctx
+					.lookup("ticket2rock/AbfangjaegerBeanKlasseninterzeptor/local");
+			falcon_methode = (AbfangjaegerLocal) ctx
+					.lookup("ticket2rock/AbfangjaegerBeanMethodeninterzeptor/local");
+			falcon_klasse_dd = (AbfangjaegerLocal) ctx
+					.lookup("ticket2rock/AbfangjaegerBeanKlasseninterzeptorDD/local");
+			falcon_methode_dd = (AbfangjaegerLocal) ctx
+					.lookup("ticket2rock/AbfangjaegerBeanMethodeninterzeptorDD/local");
+
 			testInterceptors();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -58,21 +62,19 @@ private AbfangjaegerLocal falcon_methode_dd = null;
 		falcon_klasse.fangMichAb();
 		falcon_klasse.michAuch(null);
 		falcon_klasse.michNicht();
-		
+
 		falcon_methode.fangMichAb();
 		falcon_methode.michAuch(null);
-		falcon_methode.michNicht();		
+		falcon_methode.michNicht();
 
 		falcon_klasse_dd.fangMichAb();
 		falcon_klasse_dd.michAuch(null);
 		falcon_klasse_dd.michNicht();
-		
+
 		falcon_methode_dd.fangMichAb();
 		falcon_methode_dd.michAuch(null);
-		falcon_methode_dd.michNicht();		
-	}
-	
-%>
+		falcon_methode_dd.michNicht();
+	}%>
 
 <html>
 <head>
@@ -83,160 +85,186 @@ private AbfangjaegerLocal falcon_methode_dd = null;
 <img src="images/Ticket2Rock-Logo.jpg" alt="Ticket2Rock Logo">
 <h1>Demo Tape</h1>
 
-<a href="home.faces">Home</a> | <a href="statistics">Bean-Statistik</a>
+<a href="home.faces">Home</a>
+|
+<a href="statistics">Bean-Statistik</a>
 
 <h3>Bestellungen</h3>
 <ul>
-	<%for (Iterator iter = demo.getBestellungen().iterator(); iter.hasNext();) {
-				Ticketbestellung bestellung = (Ticketbestellung) iter.next();
-				Konzert konzert = bestellung.getKonzert();
-				konzert.bestelleTickets(2);
-%>
+	<%
+		for (Ticketbestellung bestellung : demo.getBestellungen()) {
+			Konzert konzert = bestellung.getKonzert();
+			konzert.bestelleTickets(2);
+	%>
 
-	<li><%=bestellung.getKunde().getEmail()%>:  <%=bestellung.getAnzahl()%> Tickets f&uuml;r <%=konzert.getInterpret().getName()%> am <%=datumsformat_TagMonatJahr.format(konzert
-									.getDatum())%> in <%=konzert.getOrt().getAdresse()%> (Kapazität: <%=konzert.getOrt().getKapazitaet()%>, Restkontingent: <%=konzert.getTicketkontingent()%>)</li>
+	<li><%=bestellung.getKunde().getEmail()%>: <%=bestellung.getAnzahl()%>
+	Tickets f&uuml;r <%=konzert.getInterpret().getName()%> am <%=datumsformat_TagMonatJahr.format(konzert.getDatum())%>
+	in <%=konzert.getOrt().getAdresse()%> (Kapazität: <%=konzert.getOrt().getKapazitaet()%>,
+	Restkontingent: <%=konzert.getTicketkontingent()%>)</li>
 
-	<%}%>
+	<%
+		}
+	%>
 </ul>
 
 <h3>News</h3>
 <ul>
-	<%for (Iterator iter = demo.getNews().iterator(); iter.hasNext();) {
-				News news = (News) iter.next();
-%>
+	<%
+		for (News news : demo.getNews()) {
+	%>
 
-	<li><%=datumsformat_TagMonatJahrStundeMinute.format(news.getDatum())%> - <%=news.getNachricht()%></li>
+	<li><%=datumsformat_TagMonatJahrStundeMinute.format(news
+						.getDatum())%> - <%=news.getNachricht()%></li>
 
-	<%}%>
+	<%
+		}
+	%>
 </ul>
 
 <h3>Tourneen</h3>
 <ul>
-	<%for (Iterator iter = demo.getTourneen().iterator(); iter.hasNext();) {
-				Tournee tour = (Tournee) iter.next();
-%>
+	<%
+		for (Tournee tour : demo.getTourneen()) {
+	%>
 
 	<li><%=tour.getInterpret().getName()%> - <%=tour.getName()%>
 	<ul>
-		<%for (Iterator iter2 = tour.getKonzerte().iterator(); iter2
-						.hasNext();) {
-					Konzert konzert = (Konzert) iter2.next();
-%>
+		<%
+			for (Konzert konzert : tour.getKonzerte()) {
+		%>
 		<li><%=datumsformat_TagMonatJahr.format(konzert
-									.getDatum())%> <%=konzert.getOrt().getName()%>,
-		<%=konzert.getOrt().getAdresse()%></li>
+							.getDatum())%> <%=konzert.getOrt().getName()%>, <%=konzert.getOrt().getAdresse()%></li>
 
-		<%}%>
+		<%
+			}
+		%>
 	</ul>
 	</li>
 
-	<%}%>
+	<%
+		}
+	%>
 </ul>
 
 <h3>Konzerte</h3>
 <ul>
-	<%for (Iterator iter2 = demo.getKonzerte().iterator(); iter2
-					.hasNext();) {
-				Konzert konzert = (Konzert) iter2.next();
+	<%
+		for (Konzert konzert : demo.getKonzerte()) {
 	%>
-		<li>
-		<%=konzert.getInterpret().getName()%>
-		<%if (konzert.getTournee() != null) {%>
-		(<%=konzert.getTournee().getName()%>)
-		<%}%>
-		-
-		<%=datumsformat_TagMonatJahr.format(konzert.getDatum())%>
-		<%if (konzert.getOrt().getKoordinaten() != null) {%>
-			<a href="http://<%=konzert.getOrt().getKoordinaten().getGoogleMapsUrlString()%>" target="_newwindow">
-		<%}%>
-		<%=konzert.getOrt().getName()%>,
-		<%=konzert.getOrt().getAdresse()%>
-		<%if (konzert.getOrt().getKoordinaten() != null) {%>
-			</a>
-		<%}%>
-		- <%=konzert.getVeranstalter().getName()%>
-		</li>
-	<%}%>
+	<li><%=konzert.getInterpret().getName()%> <%
+ 	if (konzert.getTournee() != null) {
+ %> (<%=konzert.getTournee().getName()%>) <%
+ 	}
+ %> - <%=datumsformat_TagMonatJahr.format(konzert.getDatum())%> <%
+ 	if (konzert.getOrt().getKoordinaten() != null) {
+ %> <a
+		href="http://<%=konzert.getOrt().getKoordinaten()
+							.getGoogleMapsUrlString()%>"
+		target="_newwindow"> <%
+ 	}
+ %> <%=konzert.getOrt().getName()%>, <%=konzert.getOrt().getAdresse()%>
+	<%
+		if (konzert.getOrt().getKoordinaten() != null) {
+	%> </a> <%
+ 	}
+ %> - <%=konzert.getVeranstalter().getName()%></li>
+	<%
+		}
+	%>
 </ul>
 
 <h3>Bands</h3>
 <ul>
-	<%for (Iterator iter = demo.getBands().iterator(); iter.hasNext();) {
-				Band band = (Band) iter.next();
-%>
+	<%
+		for (Band band : demo.getBands()) {
+	%>
 
 	<li><%=band.getName()%> (<%=band.getGruendungsjahr()%>)
 	<ul>
-		<%for (Iterator iter2 = band.getMusiker().iterator(); iter2
-						.hasNext();) {
-					Musiker musiker = (Musiker) iter2.next();
-%>
-		<li><%=musiker.getName()%>
-  		<%if (musiker.getGeburtsname() != null) {%>
-			(<i><%=musiker.getGeburtsname()%></i>)
-		<%}%>  
+		<%
+			for (Musiker musiker : band.getMusiker()) {
+		%>
+		<li><%=musiker.getName()%> <%
+ 	if (musiker.getGeburtsname() != null) {
+ %> (<i><%=musiker.getGeburtsname()%></i>) <%
+ 	}
+ %>
 		</li>
-		<%}%>
+		<%
+			}
+		%>
 	</ul>
 	</li>
 
-	<%}%>
+	<%
+		}
+	%>
 </ul>
 
 <h3>Musiker</h3>
 <ul>
-	<%for (Iterator iter = demo.getMusiker().iterator(); iter.hasNext();) {
-				Musiker musiker = (Musiker) iter.next();
-%>
+	<%
+		for (Musiker musiker : demo.getMusiker()) {
+	%>
 
 	<li><%=musiker.getName()%>
 	<ul>
-		<%for (Iterator iter2 = musiker.getBands().iterator(); iter2
-						.hasNext();) {
-					Band band = (Band) iter2.next();
-%>
+		<%
+			for (Band band : musiker.getBands()) {
+		%>
 		<li><%=band.getName()%></li>
 
-		<%}%>
+		<%
+			}
+		%>
 	</ul>
 	</li>
 
-	<%}%>
+	<%
+		}
+	%>
 </ul>
 
 <h3>Alben</h3>
 <ul>
-	<%for (Iterator iter = demo.getAlben().iterator(); iter.hasNext();) {
-				Album album = (Album) iter.next();
-%>
+	<%
+		for (Album album : demo.getAlben()) {
+	%>
 
-	<li><%=album.getTitel()%> - <%=album.getInterpret().getName()%> (<%=datumsformat_Jahr
-								.format(album.getErscheinungsdatum())%>)
+	<li><%=album.getTitel()%> - <%=album.getInterpret().getName()%> (<%=datumsformat_Jahr.format(album.getErscheinungsdatum())%>)
 	<ol>
-		<%for (Iterator iter2 = album.getSongs().iterator(); iter2
-						.hasNext();) {
-					Song song = (Song) iter2.next();
-%>
+		<%
+			for (Song song : album.getSongs()) {
+		%>
 		<li><%=song.getTitel()%> (<%=song.getGenre().getName()%>)</li>
 
-		<%}%>
+		<%
+			}
+		%>
 	</ol>
 	</li>
 
-	<%}%>
+	<%
+		}
+	%>
 </ul>
 
 <h3>Songs</h3>
 <ul>
-	<%for (Iterator iter = demo.getSongs().iterator(); iter.hasNext();) {
-				Song song = (Song) iter.next();
-%>
+	<%
+		for (Song song : demo.getSongs()) {
+	%>
 
-	<li><%=song.getTitel()%> - <%=song.getInterpret().getName()%> <%if (song.getAlbum() != null) {
+	<li><%=song.getTitel()%> - <%=song.getInterpret().getName()%> <%
+ 	if (song.getAlbum() != null) {
+ %> (<%=song.getAlbum().getTitel()%>) <%
+ 	}
+ %>
+	</li>
 
-					%> (<%=song.getAlbum().getTitel()%>) <%}%></li>
-
-	<%}%>
+	<%
+		}
+	%>
 </ul>
 
 <p>&nbsp;<br>
