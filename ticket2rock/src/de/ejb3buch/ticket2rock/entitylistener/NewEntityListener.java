@@ -57,7 +57,7 @@ public class NewEntityListener {
 		try {
 			Context ctx = new InitialContext(System.getProperties());
 			EntityManager em = (EntityManager) ctx
-					.lookup("java:/ticket2rockEntityManager");
+					.lookup("ticket2rockEntityManager");
 			return em;
 		} catch (Exception e) {
 			return null;
