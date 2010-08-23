@@ -5,7 +5,7 @@
 	Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
 	Rockkonzerte auf Basis von EJB 3.1 und JavaServer Faces.
 	
-	Copyright (C) 2006, 2010
+	Copyright (C) 2006-2010
 	Jo Ehm, Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Holger Koschek,
 	Carsten Sahling, Roman Schloemmer
 	
@@ -25,9 +25,9 @@
 -->
 
 <project name="ticket2rock" default="main" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
-	
-	<property file="build.properties"/>
-	
+
+	<property file="build.properties" />
+
 	<property name="home.dir" value="." />
 	<property name="src.dir" value="${home.dir}/src" />
 	<property name="test.src.dir" value="${home.dir}/test/src" />
@@ -36,29 +36,45 @@
 	<property name="jboss.deploy.dir" value="${jboss.server.dir}/deploy" />
 	<property name="lib.dir" value="${home.dir}/lib" />
 
-	
+
 	<path id="build.classpath">
+		<!-- jboss-ejb3-all.jar muss NACH den EJB-3.1-JARs in den Classpath eingebunden werden, damit die EJB-3.1-API "zieht" -->
 		<fileset dir="${lib.dir}" casesensitive="yes">
-		  <include name="*.jar"/>
+			<include name="*.jar" />
+			<exclude name="jboss-ejb3-all.jar" />
+		</fileset>
+		<fileset dir="${lib.dir}" casesensitive="yes">
+			<include name="jboss-ejb3-all.jar" />
 		</fileset>
 	</path>
 
-    <!-- ================================= 
+	<!-- ================================= 
           target: resolve              
          ================================= -->
-    <target name="resolve" description="--> retreive dependencies with ivy">
-        <ivy:retrieve/>
-    </target> 
-	
+	<target name="resolve" description="--> retreive dependencies with ivy">
+		<ivy:retrieve />
+	</target>
+
 	<path id="test.classpath">
 		<fileset dir="${lib.dir}" casesensitive="yes">
-		  <include name="*.jar"/>
+			<include name="*.jar" />
 		</fileset>
-		<pathelement location="${build.dir}/classes"/>		
-		<pathelement location="${build.dir}/test"/>
+		<pathelement location="${build.dir}/classes" />
+		<pathelement location="${build.dir}/test" />
 	</path>
-	
-	<target name="main" depends = "" description="Does a full build of the JEE application">
+
+	<path id="interceptor-test.classpath">
+		<fileset dir="${lib.dir}" casesensitive="yes">
+			<include name="junit-4.1.jar" />
+		</fileset>
+		<fileset dir="${jboss.home}/client" casesensitive="yes">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement location="${build.dir}/classes" />
+		<pathelement location="${build.dir}/interceptor-tests" />
+	</path>
+
+	<target name="main" depends="" description="Does a full build of the JEE application">
 		<echo message="Apache Ant Version: ${ant.version}" />
 		<antcall target="clean" />
 		<antcall target="package-ejb" />
@@ -78,8 +94,7 @@
 	</target>
 
 	<target name="compile" depends="prepare" description="Compiles the source code">
-		<javac destdir="${build.dir}/classes" classpathref="build.classpath" debug="on" encoding="ISO-8859-1"
-			includeantruntime="false">
+		<javac destdir="${build.dir}/classes" classpathref="build.classpath" debug="on" encoding="ISO-8859-1" includeantruntime="false">
 			<src path="${src.dir}" />
 		</javac>
 	</target>
@@ -89,41 +104,58 @@
 			<src path="${test.src.dir}" />
 		</javac>
 	</target>
-		
+
 	<!-- Kopiert die notwendigen Konfigurations- und Klassendateien in das Test-Verzeichnis -->
 	<target name="prepare-test">
-		<copy todir="${build.dir}/test" >
+		<copy todir="${build.dir}/test">
 			<fileset dir="${basedir}/test/conf" includes="*.*" />
 			<fileset dir="${basedir}/dd/ejb">
 				<include name="*.*" />
-				<exclude name="persistence.xml"/>
-				
+				<exclude name="persistence.xml" />
+
 			</fileset>
 			<fileset dir="${build.dir}/classes" includes="*.*" />
 		</copy>
 	</target>
-	
+
 	<target name="junit" depends="compile-test,prepare-test">
 		<echo message="Apache Ant Version: ${ant.version}" />
-		<junit fork="false" 
-	    	   haltonfailure="true"
-	           showoutput="true"
-	    >
-	      <classpath refid="test.classpath"/>
-	      <formatter type="plain" usefile="false"/>
-	      <test name="de.ejb3buch.ticket2rock.AllTests"/>
-	    
-	    </junit>		
+		<junit fork="false" haltonfailure="true" showoutput="true">
+			<classpath refid="test.classpath" />
+			<formatter type="plain" usefile="false" />
+			<test name="de.ejb3buch.ticket2rock.AllTests" />
+
+		</junit>
 	</target>
-	
-	
+
+	<!-- Interzeptor-Tests laufen remote als JUnit-Tests -->
+	<target name="compile-interceptor-tests" depends="compile">
+		<javac destdir="${build.dir}/interceptor-tests" classpathref="interceptor-test.classpath" debug="on" encoding="ISO-8859-1" includeantruntime="false">
+			<src path="test/src/de/ejb3buch/ticket2rock/session/interceptor/demo" />
+		</javac>
+	</target>
+
+	<target name="prepare-interceptor-tests">
+		<copy todir="${build.dir}/interceptor-tests">
+			<fileset dir="${basedir}/test/conf/interceptor-tests" includes="*.*" />
+		</copy>
+	</target>
+
+	<target name="run-interceptor-tests" depends="compile-interceptor-tests,prepare-test">
+		<junit>
+			<classpath refid="interceptor-test.classpath" />
+			<formatter type="plain" usefile="false" />
+			<test name="de.ejb3buch.ticket2rock.session.interceptor.demo.AbfangjaegerTest" />
+		</junit>
+	</target>
+
 	<target name="package-ejb" depends="compile" description="Builds the EJB module (*.jar)">
 		<jar jarfile="${build.dir}/jar/${ant.project.name}.jar">
 			<fileset dir="${build.dir}/classes">
 				<include name="de/ejb3buch/${ant.project.name}/**" />
-				<exclude name="de/ejb3buch/${ant.project.name}/applikation/**"/>
+				<exclude name="de/ejb3buch/${ant.project.name}/applikation/**" />
 			</fileset>
-			
+
 			<fileset dir="dd/ejb">
 				<include name="import.sql" />
 				<include name="*.properties" />
@@ -144,30 +176,30 @@
 				<include name="**/*" />
 			</fileset>
 			<webinf dir="dd/web">
-			   <include name="*.xml"/>
-			   <exclude name="web.xml"/>
+				<include name="*.xml" />
+				<exclude name="web.xml" />
 			</webinf>
 			<classes dir="${build.dir}/classes">
-				<include name="de/ejb3buch/${ant.project.name}/applikation/**" />			
+				<include name="de/ejb3buch/${ant.project.name}/applikation/**" />
 			</classes>
 			<classes dir="${src.dir}">
-				<include name="de/ejb3buch/${ant.project.name}/applikation/resources/**" />			
+				<include name="de/ejb3buch/${ant.project.name}/applikation/resources/**" />
 			</classes>
-			<lib dir="${lib.dir}">		        
-				<include name="jsf-facelets.jar"/>
-								
-				<include name="el-ri.jar"/>
-				
-				<include name="oscache-2.3.2.jar"/>
-				
+			<lib dir="${lib.dir}">
+				<include name="jsf-facelets.jar" />
+
+				<include name="el-ri.jar" />
+
+				<include name="oscache-2.3.2.jar" />
+
 				<!-- Rich Faces -->
-				<include name="richfaces-api-3.2.2.GA.jar"/>
-				<include name="richfaces-impl-3.2.2.GA.jar"/>
-				<include name="richfaces-ui-3.2.2.GA.jar"/>
-				
+				<include name="richfaces-api-3.2.2.GA.jar" />
+				<include name="richfaces-impl-3.2.2.GA.jar" />
+				<include name="richfaces-ui-3.2.2.GA.jar" />
+
 				<!-- Erforderlich für Faces -->
-				<include name="commons-digester-1.8.jar"/>
-				<include name="commons-beanutils.jar"/>
+				<include name="commons-digester-1.8.jar" />
+				<include name="commons-beanutils.jar" />
 			</lib>
 		</war>
 	</target>
@@ -193,6 +225,6 @@
 		<echo message="Undeploying from JBoss" />
 		<delete file="${jboss.deploy.dir}/${ant.project.name}.ear" />
 	</target>
-	
-	<target name="cleanBuildDeploy" depends="clean,main,deploy"/>
+
+	<target name="cleanBuildDeploy" depends="clean,main,deploy" />
 </project>
