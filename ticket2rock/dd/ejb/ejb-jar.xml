@@ -66,14 +66,19 @@
 		<session>
  			<ejb-name>Admin</ejb-name>
 			<ejb-class>de.ejb3buch.ticket2rock.session.admin.AdminBean</ejb-class>
-			<!--
-				Die Deklaration der Lebenszyklus-Callbacks ist spezifisch für
-				den JBoss-Applikationsserver, da sich die Spezifikation an dieser
-				Stelle leider ausschweigt.
-			-->
 			<post-construct>
 				<lifecycle-callback-method>onPostConstruct</lifecycle-callback-method>
 			</post-construct>
+		</session>	
+		<session>
+ 			<ejb-name>ZielobjektBeanKlasseninterzeptorDD</ejb-name>
+			<ejb-class>de.ejb3buch.ticket2rock.session.demo.klasseninterzeptor.dd.ZielobjektBean</ejb-class>
+			<session-type>Stateless</session-type>
+		</session>	
+		<session>
+ 			<ejb-name>ZielobjektBeanMethodeninterzeptorDD</ejb-name>
+			<ejb-class>de.ejb3buch.ticket2rock.session.demo.methodeninterzeptor.dd.ZielobjektBean</ejb-class>
+			<session-type>Stateless</session-type>
 		</session>	
 		<session>
  			<ejb-name>AbfangjaegerBeanKlasseninterzeptor</ejb-name>
@@ -150,6 +155,55 @@
 		<interceptor-binding>
 			<ejb-name>BeanStatisticsBean</ejb-name>
 			<exclude-default-interceptors>true</exclude-default-interceptors>
+		</interceptor-binding>
+ 		<interceptor-binding>
+			<ejb-name>ZielobjektBeanKlasseninterzeptorDD</ejb-name>
+			<interceptor-class>
+				de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger
+			</interceptor-class>
+		</interceptor-binding>
+		<interceptor-binding>
+			<ejb-name>ZielobjektBeanKlasseninterzeptorDD</ejb-name>
+			<exclude-class-interceptors>true</exclude-class-interceptors>
+			<method>
+				<method-name>lassMichInRuhe</method-name>
+			</method>
+		</interceptor-binding>
+ 		<interceptor-binding>
+			<ejb-name>ZielobjektBeanMethodeninterzeptorDD</ejb-name>
+			<interceptor-class>
+				de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger
+			</interceptor-class>
+			<method>
+				<method-name>fangMichAb</method-name>
+			</method>
+		</interceptor-binding>
+ 		<interceptor-binding>
+			<ejb-name>ZielobjektBeanMethodeninterzeptorDD</ejb-name>
+			<interceptor-class>
+				de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger
+			</interceptor-class>
+			<method>
+				<method-name>duKriegstMichNicht</method-name>
+			</method>
+		</interceptor-binding>
+ 		<interceptor-binding>
+			<ejb-name>ZielobjektBeanMethodeninterzeptorDD</ejb-name>
+			<interceptor-class>
+				de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger
+			</interceptor-class>
+			<method>
+				<method-name>gibMirZeit</method-name>
+			</method>
+		</interceptor-binding>
+ 		<interceptor-binding>
+			<ejb-name>ZielobjektBeanMethodeninterzeptorDD</ejb-name>
+			<interceptor-class>
+				de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger
+			</interceptor-class>
+			<method>
+				<method-name>bruete</method-name>
+			</method>
 		</interceptor-binding>
  		<interceptor-binding>
  			<ejb-name>AbfangjaegerBeanKlasseninterzeptorDD</ejb-name>
