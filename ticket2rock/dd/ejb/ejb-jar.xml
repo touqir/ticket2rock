@@ -184,6 +184,15 @@
 				de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger
 			</interceptor-class>
 			<method>
+				<method-name>michAuch</method-name>
+			</method>
+		</interceptor-binding>
+ 		<interceptor-binding>
+			<ejb-name>ZielobjektBeanMethodeninterzeptorDD</ejb-name>
+			<interceptor-class>
+				de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger
+			</interceptor-class>
+			<method>
 				<method-name>duKriegstMichNicht</method-name>
 			</method>
 		</interceptor-binding>

@@ -26,6 +26,9 @@ public class ZielobjektBase implements Zielobjekt {
 	public void fangMichAb() {
 	}
 
+	public void michAuch() {
+	}
+
 	public void duKriegstMichNicht() {
 		throw new RuntimeException("Mich kriegst Du nicht!");
 	}
