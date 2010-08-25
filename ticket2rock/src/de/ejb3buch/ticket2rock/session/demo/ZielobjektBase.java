@@ -17,7 +17,7 @@ public class ZielobjektBase implements Zielobjekt {
 
 	@Resource
 	private TimerService timerService;
-	
+
 	@PersistenceContext
 	private EntityManager em;
 
@@ -26,7 +26,8 @@ public class ZielobjektBase implements Zielobjekt {
 	public void fangMichAb() {
 	}
 
-	public void michAuch() {
+	public String michAuch(Object obj) {
+		return obj == null ? "" : obj.toString();
 	}
 
 	public void duKriegstMichNicht() {
@@ -47,7 +48,7 @@ public class ZielobjektBase implements Zielobjekt {
 		timerService.createTimer(timerCal.getTime(), info);
 		logger.info("Timer created");
 	}
-	
+
 	public Enti bruete() {
 		Enti enti = new Enti();
 		enti.setName("Alfred Jodocus Kwack");

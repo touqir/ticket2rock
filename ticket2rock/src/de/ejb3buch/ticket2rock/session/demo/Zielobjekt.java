@@ -7,7 +7,7 @@ import de.ejb3buch.ticket2rock.entity.demo.Enti;
 public interface Zielobjekt {
 
 	public void fangMichAb();
-	public void michAuch();
+	public String michAuch(Object obj);
 	public void duKriegstMichNicht();
 	public void lassMichInRuhe();
 	public void gibMirZeit();

@@ -65,7 +65,7 @@ public class AbfangjaegerTest {
 			alleAufrufe = aufrufstatistik.gibAnzahlMethodenaufrufe();
 			fehlgeschlageneAufrufe = aufrufstatistik.gibAnzahlAusnahmen();
 			zielobjekt.fangMichAb();
-			zielobjekt.michAuch();
+			zielobjekt.michAuch(null);
 			assertEquals(alleAufrufe + 2,
 					aufrufstatistik.gibAnzahlMethodenaufrufe());
 			assertEquals(fehlgeschlageneAufrufe,

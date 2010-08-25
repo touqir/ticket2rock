@@ -8,7 +8,7 @@ import javax.interceptor.Interceptors;
 
 import de.ejb3buch.ticket2rock.session.demo.ZielobjektBase;
 
-@Stateless(name="ZielobjektBeanKlasseninterzeptor")
+@Stateless(name = "ZielobjektBeanKlasseninterzeptor")
 @Interceptors(de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger.class)
 public class ZielobjektBean extends ZielobjektBase {
 

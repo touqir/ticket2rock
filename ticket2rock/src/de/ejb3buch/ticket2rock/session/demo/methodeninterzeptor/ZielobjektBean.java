@@ -8,7 +8,7 @@ import javax.interceptor.Interceptors;
 import de.ejb3buch.ticket2rock.entity.demo.Enti;
 import de.ejb3buch.ticket2rock.session.demo.ZielobjektBase;
 
-@Stateless(name="ZielobjektBeanMethodeninterzeptor")
+@Stateless(name = "ZielobjektBeanMethodeninterzeptor")
 public class ZielobjektBean extends ZielobjektBase {
 
 	@Interceptors(de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger.class)
@@ -17,8 +17,8 @@ public class ZielobjektBean extends ZielobjektBase {
 	}
 
 	@Interceptors(de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger.class)
-	public void michAuch() {
-		super.michAuch();
+	public String michAuch(Object obj) {
+		return super.michAuch(obj);
 	}
 
 	@Interceptors(de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger.class)
