@@ -6,6 +6,8 @@ import java.util.GregorianCalendar;
 import javax.annotation.Resource;
 import javax.ejb.Timer;
 import javax.ejb.TimerService;
+import javax.interceptor.AroundInvoke;
+import javax.interceptor.InvocationContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -58,5 +60,18 @@ public class ZielobjektBase implements Zielobjekt {
 
 	protected void deineZeitIstAbgelaufen(Timer timer) {
 		logger.info("Bean timeout: " + (String) timer.getInfo());
+	}
+
+	@SuppressWarnings("unused")
+	@AroundInvoke
+	private Object umMichSelbst(InvocationContext ctx) throws Exception {
+		logger.info("Vor dem Aufruf von " + ctx.getTarget() + "."
+				+ ctx.getMethod().getName());
+		try {
+			return ctx.proceed();
+		} finally {
+			logger.info("Nach dem Aufruf von " + ctx.getTarget() + "."
+					+ ctx.getMethod().getName());
+		}
 	}
 }
