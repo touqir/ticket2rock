@@ -115,6 +115,18 @@
 	</enterprise-beans>
 	<interceptors>
 		<interceptor>
+			<interceptor-class>de.ejb3buch.ticket2rock.session.interceptor.BeanStatisticsInterceptor</interceptor-class>
+			<around-invoke>
+				<method-name>onMethodCall</method-name>
+			</around-invoke>
+		</interceptor>
+		<interceptor>
+			<interceptor-class>de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger</interceptor-class>
+			<around-invoke>
+				<method-name>onInvocation</method-name>
+			</around-invoke>
+		</interceptor>
+		<interceptor>
 			<interceptor-class>de.ejb3buch.ticket2rock.session.demo.Abfangjaeger</interceptor-class>
 			<around-invoke>
 				<method-name>onMethodCall</method-name>
