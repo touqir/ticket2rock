@@ -13,23 +13,23 @@ import de.ejb3buch.ticket2rock.session.demo.AufrufstatistikBeanLocal;
 public class Abfangjaeger {
 
 	@EJB
-	private AufrufstatistikBeanLocal usageLogger;
+	private AufrufstatistikBeanLocal aufrufstatistik;
 
 	private Logger logger = Logger.getRootLogger();
 
-	@AroundInvoke
+//	@AroundInvoke
 	public Object onInvocation(InvocationContext ctx) {
 		Object result = null;
-		if (usageLogger != null) {
-			usageLogger.notiereMethodenaufruf(ctx.getMethod().getClass()
+		if (aufrufstatistik != null) {
+			aufrufstatistik.notiereMethodenaufruf(ctx.getMethod().getClass()
 					.getName(), ctx.getMethod().getName(),
 					System.currentTimeMillis());
 		}
 		try {
 			result = ctx.proceed();
 		} catch (Exception e) {
-			if (usageLogger != null) {
-				usageLogger.notiereAusnahme(ctx.getMethod().getClass()
+			if (aufrufstatistik != null) {
+				aufrufstatistik.notiereAusnahme(ctx.getMethod().getClass()
 						.getName(), ctx.getMethod().getName(),
 						System.currentTimeMillis(), e);
 			}
@@ -44,8 +44,8 @@ public class Abfangjaeger {
 	@AroundTimeout
 	public Object onTimeout(InvocationContext ctx) throws Exception {
 		Timer timer = (Timer) ctx.getTimer();
-		if (usageLogger != null) {
-			usageLogger.notiereTimeout(timer);
+		if (aufrufstatistik != null) {
+			aufrufstatistik.notiereTimeout(timer);
 		}
 		logger.info("Interceptor timeout: " + (String) timer.getInfo());
 		return ctx.proceed();
