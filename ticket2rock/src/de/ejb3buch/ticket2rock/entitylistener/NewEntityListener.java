@@ -29,6 +29,8 @@ import javax.naming.InitialContext;
 import javax.persistence.EntityManager;
 import javax.persistence.PostPersist;
 
+import org.apache.log4j.Logger;
+
 import de.ejb3buch.ticket2rock.entity.News;
 
 /**
@@ -40,13 +42,18 @@ import de.ejb3buch.ticket2rock.entity.News;
 
 public class NewEntityListener {
 
+	private Logger logger = Logger.getRootLogger();
+	
 	@PostPersist
 	protected void newEntity(Object entity) {
+		logger.info("PostPersist for entity " + entity);
 		try {
 			News news = new News(entity);
 			EntityManager em = getEntityManager();
 			if (em != null) {
 				em.persist(news);
+			} else {
+				logger.error("Cannot get Entity Manager!");
 			}
 		} catch (Exception e) {
 			// Keine Nachrichten sind gute Nachrichten ;-)
@@ -55,7 +62,7 @@ public class NewEntityListener {
 
 	private EntityManager getEntityManager() {
 		try {
-			Context ctx = new InitialContext(System.getProperties());
+			Context ctx = new InitialContext();
 			EntityManager em = (EntityManager) ctx
 					.lookup("ticket2rockEntityManager");
 			return em;
