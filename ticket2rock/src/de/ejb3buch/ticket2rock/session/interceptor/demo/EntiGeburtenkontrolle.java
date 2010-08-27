@@ -15,7 +15,7 @@ public class EntiGeburtenkontrolle {
 	protected void neuesEnti(Object entity) throws NamingException {
 		Context ctx = new InitialContext();
 		EntityManager em = (EntityManager) ctx
-				.lookup("java:/ticket2rockEntityManager");
+				.lookup("ticket2rockEntityManager");
 
 		if (entity instanceof de.ejb3buch.ticket2rock.entity.demo.Enti) {
 			Geburtsanzeige geburtsanzeige = new Geburtsanzeige(
