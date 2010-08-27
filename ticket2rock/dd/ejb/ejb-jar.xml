@@ -15,10 +15,11 @@
 	if not, write to the Free Software Foundation, Inc., 51 Franklin Street, 
 	Fifth Floor, Boston, MA 02110-1301, USA. -->
 
-<ejb-jar xmlns="http://java.sun.com/xml/ns/javaee" version="3.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-         http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd">
+<ejb-jar xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:ejb="http://java.sun.com/xml/ns/javaee/ejb-jar_3_0.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/ejb-jar_3_1.xsd"
+	version="3.1">
 
 	<enterprise-beans>
 		<message-driven>
@@ -125,6 +126,11 @@
 			<around-invoke>
 				<method-name>onInvocation</method-name>
 			</around-invoke>
+			<!-- In JBoss noch nicht implementiert
+			<around-timeout>
+				<method-name>onTimeout</method-name>
+			</around-timeout>
+			-->
 		</interceptor>
 		<interceptor>
 			<interceptor-class>de.ejb3buch.ticket2rock.session.demo.Abfangjaeger</interceptor-class>
