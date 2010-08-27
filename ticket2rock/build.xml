@@ -91,6 +91,7 @@
 		<mkdir dir="${build.dir}/classes" />
 		<mkdir dir="${build.dir}/jar" />
 		<mkdir dir="${build.dir}/test" />
+		<mkdir dir="${build.dir}/interceptor-tests" />
 	</target>
 
 	<target name="compile" depends="prepare" description="Compiles the source code">
@@ -141,7 +142,7 @@
 		</copy>
 	</target>
 
-	<target name="run-interceptor-tests" depends="compile-interceptor-tests,prepare-test">
+	<target name="run-interceptor-tests" depends="compile-interceptor-tests,prepare-interceptor-tests">
 		<junit>
 			<classpath refid="interceptor-test.classpath" />
 			<formatter type="plain" usefile="false" />
