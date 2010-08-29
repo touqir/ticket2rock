@@ -25,7 +25,7 @@
 package de.ejb3buch.ticket2rock.session.ticketbestellung;
 
 /**
- * Live-Statistik über die Nutzung der TicketbestellungBean.
+ * Live-Statistik Ÿber die Nutzung der TicketbestellungBean.
  */
 
 public class BestellvorgangSessionStatistics {
@@ -34,5 +34,5 @@ public class BestellvorgangSessionStatistics {
 
 	public static int activeSessions = 0;
 
-	public static int passivatedSessions = 0;
+	public static int passiveSessions = 0;
 }

@@ -47,7 +47,6 @@ import de.ejb3buch.ticket2rock.exception.KapazitaetErschoepftException;
 import de.ejb3buch.ticket2rock.session.crud.KundenVerwaltungLocal;
 
 @Stateful
-@SuppressWarnings("unchecked")
 public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 
     static Logger logger = Logger.getLogger(BestellvorgangBean.class);
@@ -167,14 +166,14 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
     @PrePassivate
     public void onPrePassivate() {
         // Session-Statistik aktualisieren
-        BestellvorgangSessionStatistics.passivatedSessions++;
+        BestellvorgangSessionStatistics.passiveSessions++;
         BestellvorgangSessionStatistics.activeSessions--;
     }
 
     @PostActivate
     public void onPostActivate() {
         // Session-Statistik aktualisieren
-        BestellvorgangSessionStatistics.passivatedSessions--;
+        BestellvorgangSessionStatistics.passiveSessions--;
         BestellvorgangSessionStatistics.activeSessions++;
     }
 
