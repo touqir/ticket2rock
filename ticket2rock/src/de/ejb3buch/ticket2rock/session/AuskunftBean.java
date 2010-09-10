@@ -88,7 +88,7 @@ public class AuskunftBean implements Auskunft, AuskunftLocal {
 		// generiere den query String dynamisch abhängig von der
 		// Belegung der Übergabeparameter
 		StringBuffer buf = new StringBuffer();
-		buf.append("FROM Konzert k ");
+		buf.append("SELECT k FROM Konzert k ");
 		boolean firstPredicate = true;
 		if ((ortsName != null) && (ortsName.length() > 0)) {
 			buf.append("where ");

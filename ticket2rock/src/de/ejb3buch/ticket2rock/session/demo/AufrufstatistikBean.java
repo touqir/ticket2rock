@@ -1,6 +1,7 @@
 package de.ejb3buch.ticket2rock.session.demo;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.ejb.Timer;
 
@@ -9,8 +10,8 @@ import javax.ejb.Timer;
 // fehlerhaft registriert wurden, wird mit einer IllegalStateException und dem
 // Hinweis "is already registered" abgebrochen.
 // @Singleton
-public class AufrufstatistikBean implements AufrufstatistikBeanLocal,
-		Aufrufstatistik {
+@Local(Aufrufstatistik.class)
+public class AufrufstatistikBean implements AufrufstatistikBeanLocal, Aufrufstatistik {
 
 	private static int alleAufrufe;
 	private static int fehlgeschlageneAufrufe;

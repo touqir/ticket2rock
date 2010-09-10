@@ -31,6 +31,8 @@ import javax.persistence.ExcludeDefaultListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.PostLoad;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * News sind Nachrichten, die den Ticket2Rock-Benutzer z.B. über neue Konzerte
@@ -40,9 +42,9 @@ import javax.persistence.PostLoad;
 @Entity
 @ExcludeDefaultListeners
 public class News {
-
+	@Id
 	private int id;
-
+	@Temporal(value = TemporalType.DATE)
 	private Date datum;
 
 	private String nachricht;

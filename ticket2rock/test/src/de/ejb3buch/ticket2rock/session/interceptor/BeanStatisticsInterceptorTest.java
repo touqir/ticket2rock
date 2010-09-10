@@ -23,7 +23,7 @@
  */
 
 package de.ejb3buch.ticket2rock.session.interceptor;
-
+import static de.ejb3buch.ticket2rock.util.EmbeddedServerTestRunner.lookup;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 
@@ -31,13 +31,16 @@ import java.lang.reflect.Method;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import de.ejb3buch.ticket2rock.EmbeddedContainerTestBase;
 import de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsLocal;
-
-public class BeanStatisticsInterceptorTest extends EmbeddedContainerTestBase
+import de.ejb3buch.ticket2rock.util.EmbeddedServerTestRunner;
+@RunWith(EmbeddedServerTestRunner.class)
+public class BeanStatisticsInterceptorTest
 {
 
+	private static final String JNDI_ADDRESS_INTERCEPTOR_BEAN = "java:global/ticket2rock/ticket2rock/InterceptorTestBean!de.ejb3buch.ticket2rock.session.interceptor.InterceptorTest";
+	private static final String JNDI_ADDRESS_STATISTICS_BEAN = "java:global/ticket2rock/ticket2rock/BeanStatisticsBean!de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsLocal";
 	static Logger logger = Logger.getLogger(BeanStatisticsInterceptorTest.class);
 
     /**
@@ -50,8 +53,8 @@ public class BeanStatisticsInterceptorTest extends EmbeddedContainerTestBase
     {
         Method interceptedMethod = InterceptorTestBean.class.getMethod("interceptedCall", new Class[] { String.class });
 
-        InterceptorTest it = (InterceptorTest) lookup("InterceptorTestBean/local");
-        BeanStatisticsLocal bsl = (BeanStatisticsLocal) lookup("BeanStatisticsBean/local");
+        InterceptorTest it = (InterceptorTest) lookup(JNDI_ADDRESS_INTERCEPTOR_BEAN);
+        BeanStatisticsLocal bsl = (BeanStatisticsLocal) lookup(JNDI_ADDRESS_STATISTICS_BEAN);
 
         it.interceptedCall("");
         long duration = bsl.getMethodTotalDuration().get(interceptedMethod).longValue();
@@ -77,8 +80,8 @@ public class BeanStatisticsInterceptorTest extends EmbeddedContainerTestBase
     public void nonInterceptedMethodCall() throws Exception
     {
 
-        InterceptorTest it = (InterceptorTest) lookup("InterceptorTestBean/local");
-        BeanStatisticsLocal bsl = (BeanStatisticsLocal) lookup("BeanStatisticsBean/local");
+        InterceptorTest it = (InterceptorTest) lookup(JNDI_ADDRESS_INTERCEPTOR_BEAN);
+        BeanStatisticsLocal bsl = (BeanStatisticsLocal) lookup(JNDI_ADDRESS_STATISTICS_BEAN);
 
         int startsize = bsl.getMethodUsage().size();
         it.nonInterceptedCall("");

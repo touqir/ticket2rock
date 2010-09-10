@@ -17,7 +17,7 @@ public class Abfangjaeger {
 
 	private Logger logger = Logger.getRootLogger();
 
-//	@AroundInvoke
+	//@AroundInvoke
 	public Object onInvocation(InvocationContext ctx) {
 		Object result = null;
 		if (aufrufstatistik != null) {

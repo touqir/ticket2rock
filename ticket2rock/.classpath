@@ -13,18 +13,18 @@
 	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar"/>
 	<classpathentry kind="lib" path="lib/oscache-2.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/easymock.jar"/>
-	<classpathentry kind="lib" path="lib/javax.servlet.jar"/>
-	<classpathentry kind="lib" path="lib/hibernate-all.jar"/>
 	<classpathentry kind="lib" path="lib/jcainflow.jar"/>
 	<classpathentry kind="lib" path="lib/jms-ra.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.1.jar"/>
-	<classpathentry kind="lib" path="lib/thirdparty-all.jar"/>
 	<classpathentry kind="lib" path="lib/EasyGloss.jar"/>
 	<classpathentry kind="lib" path="lib/mail-ra.jar"/>
 	<classpathentry kind="lib" path="lib/mail.jar"/>
-	<classpathentry kind="lib" path="lib/jboss-ejb-api_3.1_spec.jar"/>
-	<classpathentry kind="lib" path="lib/jboss-interceptors-api_1.1_spec.jar"/>
-	<classpathentry kind="lib" path="lib/jboss-ejb3-all.jar"/>
+	<classpathentry kind="lib" path="lib/shrinkwrap-api-1.0.0-alpha-11.jar"/>
+	<classpathentry kind="lib" path="lib/shrinkwrap-extension-glassfish-1.0.0-alpha-11.jar"/>
+	<classpathentry kind="lib" path="lib/shrinkwrap-impl-base-1.0.0-alpha-11.jar"/>
+	<classpathentry kind="lib" path="lib/shrinkwrap-spi-1.0.0-alpha-11.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/glassfish-embedded-all-3.1-SNAPSHOT.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="classes"/>

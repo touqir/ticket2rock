@@ -88,7 +88,7 @@ import de.ejb3buch.ticket2rock.exception.KapazitaetErschoepftException;
      resultClass=Konzert.class)
 })
 @NamedQueries( { @NamedQuery(name = "getKonzertAnzahl", query = "SELECT COUNT(k) FROM Konzert k"),
-        @NamedQuery(name = "getKonzerte", query = "FROM Konzert k") })
+        @NamedQuery(name = "getKonzerte", query = "Select k FROM Konzert k") })
 @Entity
 public class Konzert {
 

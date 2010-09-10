@@ -24,17 +24,21 @@
 
 package de.ejb3buch.ticket2rock.session.ticketbestellung;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Collection;
 
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import de.ejb3buch.ticket2rock.entity.Konzert;
 import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
-
+import de.ejb3buch.ticket2rock.util.EmbeddedServerTestRunner;
 public class BestellvorgangBeanTest
 {
     

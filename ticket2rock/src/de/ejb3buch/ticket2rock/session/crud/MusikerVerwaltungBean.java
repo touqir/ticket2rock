@@ -58,7 +58,7 @@ public class MusikerVerwaltungBean implements MusikerVerwaltungLocal {
      */
 	@SuppressWarnings("unchecked")
 	public Musiker getMusikerByName(String name) {
-		Query query = em.createQuery("from Musiker i where i.name = :name");
+		Query query = em.createQuery("select i from Musiker i where i.name = :name");
 		query.setParameter("name", name);
 		// query.setParameter("typ",interpretType);
 		List<Musiker> musiker = (List<Musiker>) query.getResultList();
@@ -115,7 +115,7 @@ public class MusikerVerwaltungBean implements MusikerVerwaltungLocal {
      */
 	@SuppressWarnings("unchecked")
 	public Collection<Musiker> getMusiker() {
-		Query query = em.createQuery("from Musiker");
+		Query query = em.createQuery("select m from Musiker m");
 		return (Collection<Musiker>) query.getResultList();
 	}
 	

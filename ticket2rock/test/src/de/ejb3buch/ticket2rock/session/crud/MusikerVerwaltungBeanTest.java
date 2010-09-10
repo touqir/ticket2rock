@@ -24,6 +24,7 @@
 
 package de.ejb3buch.ticket2rock.session.crud;
 
+import static de.ejb3buch.ticket2rock.util.EmbeddedServerTestRunner.lookup;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -35,35 +36,37 @@ import javax.naming.NamingException;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import de.ejb3buch.ticket2rock.EmbeddedContainerTestBase;
 import de.ejb3buch.ticket2rock.entity.Musiker;
+import de.ejb3buch.ticket2rock.util.EmbeddedServerTestRunner;
+import de.ejb3buch.ticket2rock.util.UserTransactionPerTest;
 
 /**
  * @author Holger
  * 
  */
-public class MusikerVerwaltungBeanTest extends EmbeddedContainerTestBase {
+@RunWith(EmbeddedServerTestRunner.class)
+public class MusikerVerwaltungBeanTest  extends UserTransactionPerTest{
 	private static final Logger logger = Logger
 			.getLogger(MusikerVerwaltungBeanTest.class);
 
 	private MusikerVerwaltungLocal getMusikerVerwaltung()
 			throws NamingException, Exception {
-		MusikerVerwaltungLocal musikerVerwaltung = (MusikerVerwaltungLocal) lookup("MusikerVerwaltungBean/local");
+		MusikerVerwaltungLocal musikerVerwaltung = (MusikerVerwaltungLocal) lookup("java:global/ticket2rock/ticket2rock/MusikerVerwaltungBean!de.ejb3buch.ticket2rock.session.crud.MusikerVerwaltungLocal");
 		return musikerVerwaltung;
 	}
 
 	@Test
 	public void testGetMusiker() throws Exception {
-        Collection<Musiker> alleMusiker = getMusikerVerwaltung().getMusiker();
-        assertTrue(alleMusiker.size() > 0);
+		Collection<Musiker> alleMusiker = getMusikerVerwaltung().getMusiker();
+		assertTrue(alleMusiker.size() > 0);
 	}
 
 	@Test
 	public void testGetMusikerById() throws Exception {
 		Musiker musiker = getMusikerVerwaltung().getMusikerById(1);
 		assertNotNull(musiker);
-		
 		musiker = getMusikerVerwaltung().getMusikerById(99999);
 		assertNull(musiker);
 	}
@@ -74,7 +77,6 @@ public class MusikerVerwaltungBeanTest extends EmbeddedContainerTestBase {
 				"Wildecker Herzbuben");
 		// ...sind keine Musiker ;-)
 		assertNull(musiker);
-
 		musiker = getMusikerVerwaltung().getMusikerByName("Chris Cornell");
 		// ...rockt!
 		assertNotNull(musiker);
@@ -85,12 +87,9 @@ public class MusikerVerwaltungBeanTest extends EmbeddedContainerTestBase {
 		Musiker musiker = new Musiker();
 		final String MUSIKER_NAME = "Joe Satriani";
 		musiker.setName(MUSIKER_NAME);
-
 		int anzahlVorher = getMusikerVerwaltung().getMusiker().size();
-
 		logger.debug("Versuche, einen neuen Musiker zu erzeugen...");
 		getMusikerVerwaltung().createMusiker(musiker);
-
 		assertEquals(anzahlVorher + 1, getMusikerVerwaltung().getMusiker()
 				.size());
 

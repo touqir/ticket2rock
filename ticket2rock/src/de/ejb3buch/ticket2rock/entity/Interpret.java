@@ -34,10 +34,12 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
+import javax.persistence.TableGenerator;
 
 /**
  * Ein Interpret ist entweder ein Musiker oder eine Band. Er hat einen Namen,
@@ -51,7 +53,7 @@ import javax.persistence.OneToMany;
 @DiscriminatorValue("I")
 public abstract class Interpret {
 
-	private int id;
+	private Integer id;
 
 	private String name;
 	
@@ -84,12 +86,13 @@ public abstract class Interpret {
 	}
 
 	@Id
-	@GeneratedValue
-	public int getId() {
+	@GeneratedValue(strategy=GenerationType.TABLE, generator="InterpretGen")
+	@TableGenerator(initialValue =31, name = "InterpretGen")
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

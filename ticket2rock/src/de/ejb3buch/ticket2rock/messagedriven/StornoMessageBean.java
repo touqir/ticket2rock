@@ -26,6 +26,7 @@ package de.ejb3buch.ticket2rock.messagedriven;
 
 import java.util.StringTokenizer;
 
+import javax.ejb.DependsOn;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.ejb.MessageDriven;
@@ -38,8 +39,6 @@ import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 import org.apache.log4j.Logger;
-import org.jboss.annotation.ejb.Depends;
-import org.jboss.annotation.ejb.ResourceAdapter;
 
 import de.ejb3buch.ticket2rock.session.ticketbestellung.StornatorLocal;
 
@@ -47,8 +46,7 @@ import de.ejb3buch.ticket2rock.session.ticketbestellung.StornatorLocal;
         TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @MessageDriven
-@ResourceAdapter("hornetq-ra.rar")
-@Depends("module=JMS,name=\"ticket2rock\",type=Queue")
+@DependsOn("module=JMS,name=\"ticket2rock\",type=Queue")
 public class StornoMessageBean implements MessageListener {
 
     static Logger logger = Logger.getLogger(StornoMessageBean.class);

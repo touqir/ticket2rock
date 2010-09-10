@@ -26,33 +26,36 @@ package de.ejb3buch.ticket2rock.session;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static de.ejb3buch.ticket2rock.util.EmbeddedServerTestRunner.lookup;
 
 import java.util.List;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import de.ejb3buch.ticket2rock.EmbeddedContainerTestBase;
 import de.ejb3buch.ticket2rock.entity.Konzert;
+import de.ejb3buch.ticket2rock.util.EmbeddedServerTestRunner;
+import de.ejb3buch.ticket2rock.util.UserTransactionPerTest;
 
 /**
  * @author Dierk
- * 
  */
-public class AuskunftBeanTest extends EmbeddedContainerTestBase
-{
+@RunWith(EmbeddedServerTestRunner.class)
+public class AuskunftBeanTest  extends UserTransactionPerTest{ 
 
-    /**
+
+    private static final String BEAN_JNDI_ADDRESS = "java:global/ticket2rock/ticket2rock/AuskunftBean!de.ejb3buch.ticket2rock.session.AuskunftLocal";
+
+	/**
      * Test method for
      * {@link de.ejb3buch.ticket2rock.session.AuskunftBean#sucheKonzerte(java.lang.String, java.util.Date, java.util.Date)}.
      */
     @Test
     public void sucheAlleKonzerte() throws Exception
     {
-        AuskunftLocal alleKonzerte = (AuskunftLocal) lookup("AuskunftBean/local");
-
+        AuskunftLocal alleKonzerte = (AuskunftLocal) lookup(BEAN_JNDI_ADDRESS);
         // wir suchen alle Konzerte, daher keine Einschränkung....
         List<Konzert> konzerte = alleKonzerte.sucheKonzerte(null, null, null);
-
         assertTrue(konzerte.size() > 1);
     }
 
@@ -63,7 +66,7 @@ public class AuskunftBeanTest extends EmbeddedContainerTestBase
     @Test
     public void sucheHamburgerKonzerte() throws Exception
     {
-        AuskunftLocal alleKonzerte = (AuskunftLocal) lookup("AuskunftBean/local");
+        AuskunftLocal alleKonzerte = (AuskunftLocal) lookup(BEAN_JNDI_ADDRESS);
 
         // wir suchen ein Konzert in der Colorline Arena....
         List<Konzert> konzerte = alleKonzerte.sucheKonzerte("Olympiastadion", null, null);
@@ -78,11 +81,10 @@ public class AuskunftBeanTest extends EmbeddedContainerTestBase
     @Test
     public void sucheFalschesKonzert() throws Exception
     {
-        AuskunftLocal alleKonzerte = (AuskunftLocal) lookup("AuskunftBean/local");
-
+        AuskunftLocal alleKonzerte = (AuskunftLocal) lookup(BEAN_JNDI_ADDRESS);
         // wir suchen ein Konzert im Kuhstall....
         List<Konzert> konzerte = alleKonzerte.sucheKonzerte("Kuhstall", null, null);
-
         assertEquals(konzerte.size(), 0);
+        
     }
 }

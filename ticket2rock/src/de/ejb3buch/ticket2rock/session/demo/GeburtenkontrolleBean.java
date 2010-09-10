@@ -1,5 +1,6 @@
 package de.ejb3buch.ticket2rock.session.demo;
 
+import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -8,6 +9,7 @@ import javax.persistence.Query;
 import org.apache.log4j.Logger;
 
 @Stateless
+@Local(Geburtenkontrolle.class)
 public class GeburtenkontrolleBean implements Geburtenkontrolle {
 
 	@PersistenceContext

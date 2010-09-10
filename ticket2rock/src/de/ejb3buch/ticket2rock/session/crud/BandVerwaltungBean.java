@@ -43,7 +43,7 @@ import de.ejb3buch.ticket2rock.entity.Musiker;
  * 
  */
 @SuppressWarnings("unchecked")
-@Stateless
+@Stateless()
 public class BandVerwaltungBean implements BandVerwaltungLocal {
 
 	static Logger logger = Logger.getLogger(BandVerwaltungBean.class);
@@ -53,7 +53,7 @@ public class BandVerwaltungBean implements BandVerwaltungLocal {
 
 	public List<Band> getBands() {
 		List resultList = em.createQuery(
-				"FROM Interpret i WHERE typ='B' ORDER BY name").getResultList();
+				"SELECT i FROM Band i ORDER BY i.name").getResultList();
 		logger.debug("Anzahl der gefundenen Bands: " + resultList.size());
 		return resultList;
 	}
@@ -62,7 +62,7 @@ public class BandVerwaltungBean implements BandVerwaltungLocal {
      *@inheritDoc
      */
 	public Band getBandByName(String name) {
-		Query query = em.createQuery("from Band i where i.name = :name");
+		Query query = em.createQuery("select i from Band i where i.name = :name");
 		query.setParameter("name", name);
 		// query.setParameter("typ",interpretType);
 		List<Band> bands = (List<Band>) query.getResultList();

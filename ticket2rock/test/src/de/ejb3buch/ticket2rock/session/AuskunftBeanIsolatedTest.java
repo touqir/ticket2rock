@@ -86,7 +86,7 @@ public class AuskunftBeanIsolatedTest
     public void findeKeinKonzert()
     {
 
-        expect(em.createQuery("FROM Konzert k ")).andReturn(query);
+        expect(em.createQuery("SELECT k FROM Konzert k ")).andReturn(query);
         expect(query.getResultList()).andReturn(null);
         replay(query);
         replay(em);
@@ -100,7 +100,7 @@ public class AuskunftBeanIsolatedTest
     public void findeKonzertMitEinemParameter()
     {
 
-        expect(em.createQuery("FROM Konzert k where upper(k.ort.name) like :ortsName")).andReturn(query);
+        expect(em.createQuery("SELECT k FROM Konzert k where upper(k.ort.name) like :ortsName")).andReturn(query);
         expect(query.setParameter("ortsName", "%HAMBURG%")).andReturn(query);
         expect(query.getResultList()).andReturn(null);
         replay(query);
@@ -115,7 +115,7 @@ public class AuskunftBeanIsolatedTest
     public void findeKonzertMitZweiParametern()
     {
         Date datum = new Date();
-        expect(em.createQuery("FROM Konzert k where upper(k.ort.name) like :ortsName and k.datum >= :vonDatum"))
+        expect(em.createQuery("SELECT k FROM Konzert k where upper(k.ort.name) like :ortsName and k.datum >= :vonDatum"))
                 .andReturn(query);
         expect(query.setParameter("ortsName", "%HAMBURG%")).andReturn(query);
         expect(query.setParameter("vonDatum", datum, TemporalType.DATE)).andReturn(query);
@@ -132,7 +132,7 @@ public class AuskunftBeanIsolatedTest
     public void findeZweiKonzerte()
     {
 
-        expect(em.createQuery("FROM Konzert k ")).andReturn(query);
+        expect(em.createQuery("SELECT k FROM Konzert k ")).andReturn(query);
         expect(query.getResultList()).andReturn(data);
         replay(query);
         replay(em);

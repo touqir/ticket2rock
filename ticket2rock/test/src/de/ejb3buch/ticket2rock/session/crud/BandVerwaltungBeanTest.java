@@ -24,6 +24,7 @@
 
 package de.ejb3buch.ticket2rock.session.crud;
 
+import static de.ejb3buch.ticket2rock.util.EmbeddedServerTestRunner.lookup;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -32,21 +33,30 @@ import static org.junit.Assert.assertTrue;
 import java.util.Collection;
 
 import javax.naming.NamingException;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
 
 import org.apache.log4j.Logger;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import de.ejb3buch.ticket2rock.EmbeddedContainerTestBase;
 import de.ejb3buch.ticket2rock.entity.Band;
-
+import de.ejb3buch.ticket2rock.util.EmbeddedServerTestRunner;
+import de.ejb3buch.ticket2rock.util.UserTransactionPerTest;
 /**
  * @author Dierk
  * 
  */
-public class BandVerwaltungBeanTest extends EmbeddedContainerTestBase {
+
+@RunWith(EmbeddedServerTestRunner.class)
+public class BandVerwaltungBeanTest extends UserTransactionPerTest{
 	private static final Logger logger = Logger
 			.getLogger(BandVerwaltungBeanTest.class);
-
+	
+	
+	
 	/**
 	 * Test method for
 	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getBands()}.
@@ -60,7 +70,7 @@ public class BandVerwaltungBeanTest extends EmbeddedContainerTestBase {
 
 	private BandVerwaltungLocal getBandVerwaltung() throws NamingException,
 			Exception {
-		BandVerwaltungLocal bandVerwaltung = (BandVerwaltungLocal) lookup("BandVerwaltungBean/local");
+		BandVerwaltungLocal bandVerwaltung = (BandVerwaltungLocal) lookup("java:global/ticket2rock/ticket2rock/BandVerwaltungBean!de.ejb3buch.ticket2rock.session.crud.BandVerwaltungLocal");
 		return bandVerwaltung;
 	}
 
@@ -142,7 +152,6 @@ public class BandVerwaltungBeanTest extends EmbeddedContainerTestBase {
 	public void testGetBandById() throws Exception {
 		Band band = getBandVerwaltung().getBandById(10);
 		assertNotNull(band);
-
 		band = getBandVerwaltung().getBandById(99999);
 		assertNull(band);
 	}

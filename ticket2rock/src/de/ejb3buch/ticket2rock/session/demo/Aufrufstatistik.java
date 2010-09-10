@@ -1,8 +1,8 @@
 package de.ejb3buch.ticket2rock.session.demo;
 
-import javax.ejb.Remote;
+import javax.ejb.Local;
 
-@Remote
+@Local
 public interface Aufrufstatistik {
 	public int gibAnzahlMethodenaufrufe();
 

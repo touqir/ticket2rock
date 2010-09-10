@@ -27,6 +27,7 @@ package de.ejb3buch.ticket2rock.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.TableGenerator;
 
 /**
  * Ein Musikgenre beschreibt eine bestimmte Musikrichtung.
@@ -40,7 +41,8 @@ public class Musikgenre {
 	private String name;
 
 	@Id
-	@GeneratedValue
+	@TableGenerator(initialValue =3, name = "GenreGen")
+	@GeneratedValue(generator="GenreGen")
 	public int getId() {
 		return id;
 	}

@@ -25,20 +25,20 @@
 package de.ejb3buch.ticket2rock.session.statistics;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.lang.reflect.Method;
 
 import org.junit.Test;
 
-public class BeanStatisticsBeanTest {
+public class BeanStatisticsBeanTest{
 	/**
 	 * Testen der reportMethodCall Methode. Wir sehen einfach mal nach, ob
 	 * <ul>
 	 * <li> ein Method Call auch nur genau einmal geloggt wird</li>
 	 * <li> ein anderer Method Call anders geloggt wird</li>
-	 * <li> ein weiterer MethodCall zurErhoehung des Counters fuehrt</li>
+	 * <li> ein weiterer MethodCall zur Erhöhung des Counters führt</li>
 	 * </ul>
 	 */
 	@Test

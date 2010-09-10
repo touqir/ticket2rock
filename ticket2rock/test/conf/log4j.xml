@@ -30,7 +30,7 @@
 
 	<appender name="SCREEN" class="org.apache.log4j.ConsoleAppender">
 		<errorHandler
-			class="org.jboss.logging.util.OnlyOnceErrorHandler" />
+			class="org.apache.log4j.helpers.OnlyOnceErrorHandler" />
 		<param name="Target" value="System.out" />
 		<layout class="org.apache.log4j.SimpleLayout" />
 	</appender>

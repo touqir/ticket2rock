@@ -34,6 +34,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Ein Album ist eine Zusammenstellung von Songs eines Interpreten. Es hat einen
@@ -75,7 +77,7 @@ public class Album {
 	public void setTitel(String titel) {
 		this.titel = titel;
 	}
-
+	@Temporal(value = TemporalType.DATE)
 	public Date getErscheinungsdatum() {
 		return erscheinungsdatum;
 	}
