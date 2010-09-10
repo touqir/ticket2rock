@@ -66,7 +66,7 @@ public class DataUtil {
 		EntityTransaction utx = em.getTransaction();
 		@SuppressWarnings("unchecked")
 		List<String> lines = FileUtils.readLines(new File(
-				"test\\conf\\import.sql.test"));
+				"test/conf/import.sql.test"));
 		utx.begin();
 		for (String line : lines) {
 			if (isNotComment(line) && isNotEmpty(line)) {
