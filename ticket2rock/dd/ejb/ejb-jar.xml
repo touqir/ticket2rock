@@ -70,28 +70,6 @@
 			<session-type>Stateless</session-type>
 		</session>
 		<session>
-			<ejb-name>AbfangjaegerBeanKlasseninterzeptor</ejb-name>
-			<ejb-class>de.ejb3buch.ticket2rock.session.demo.klasseninterzeptor.KlassenAbfangjaegerBean</ejb-class>
-			<session-type>Stateless</session-type>
-		</session>
-		<session>
-			<ejb-name>AbfangjaegerBeanKlasseninterzeptorDD</ejb-name>
-			<business-local>de.ejb3buch.ticket2rock.session.demo.AbfangjaegerLocal</business-local>
-			<ejb-class>de.ejb3buch.ticket2rock.session.demo.klasseninterzeptor.dd.AbfangjaegerBean</ejb-class>
-			<session-type>Stateless</session-type>
-		</session>
-		<session>
-			<ejb-name>AbfangjaegerBeanMethodeninterzeptor</ejb-name>
-			<ejb-class>de.ejb3buch.ticket2rock.session.demo.methodeninterzeptor.MethodenAbfangjaegerBean</ejb-class>
-			<session-type>Stateless</session-type>
-		</session>
-		<session>
-			<ejb-name>AbfangjaegerBeanMethodeninterzeptorDD</ejb-name>
-			<business-local>de.ejb3buch.ticket2rock.session.demo.AbfangjaegerLocal</business-local>
-			<ejb-class>de.ejb3buch.ticket2rock.session.demo.methodeninterzeptor.dd.AbfangjaegerBean</ejb-class>
-			<session-type>Stateless</session-type>
-		</session>
-		<session>
 			<ejb-name>AuskunftBean</ejb-name>
 			<business-local>de.ejb3buch.ticket2rock.session.AuskunftLocal</business-local>
 			<business-remote>de.ejb3buch.ticket2rock.session.Auskunft</business-remote>
@@ -117,23 +95,6 @@
 	<interceptors>
 		<interceptor>
 			<interceptor-class>de.ejb3buch.ticket2rock.session.interceptor.BeanStatisticsInterceptor</interceptor-class>
-			<around-invoke>
-				<method-name>onMethodCall</method-name>
-			</around-invoke>
-		</interceptor>
-		<interceptor>
-			<interceptor-class>de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger</interceptor-class>
-			<around-invoke>
-				<method-name>onInvocation</method-name>
-			</around-invoke>
-			<!-- In JBoss noch nicht implementiert
-			<around-timeout>
-				<method-name>onTimeout</method-name>
-			</around-timeout>
-			-->
-		</interceptor>
-		<interceptor>
-			<interceptor-class>de.ejb3buch.ticket2rock.session.demo.Abfangjaeger</interceptor-class>
 			<around-invoke>
 				<method-name>onMethodCall</method-name>
 			</around-invoke>
@@ -211,34 +172,6 @@
 				de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger</interceptor-class>
 			<method>
 				<method-name>bruete</method-name>
-			</method>
-		</interceptor-binding>
-		<interceptor-binding>
-			<ejb-name>AbfangjaegerBeanKlasseninterzeptorDD</ejb-name>
-			<interceptor-class>de.ejb3buch.ticket2rock.session.demo.Abfangjaeger</interceptor-class>
-		</interceptor-binding>
-		<interceptor-binding>
-			<ejb-name>AbfangjaegerBeanKlasseninterzeptorDD</ejb-name>
-			<exclude-class-interceptors>true</exclude-class-interceptors>
-			<method>
-				<method-name>michNicht</method-name>
-			</method>
-		</interceptor-binding>
-		<interceptor-binding>
-			<ejb-name>AbfangjaegerBeanMethodeninterzeptorDD</ejb-name>
-			<interceptor-class>de.ejb3buch.ticket2rock.session.demo.Abfangjaeger</interceptor-class>
-			<method>
-				<method-name>fangMichAb</method-name>
-			</method>
-		</interceptor-binding>
-		<interceptor-binding>
-			<ejb-name>AbfangjaegerBeanMethodeninterzeptorDD</ejb-name>
-			<interceptor-class>de.ejb3buch.ticket2rock.session.demo.Abfangjaeger</interceptor-class>
-			<method>
-				<method-name>michAuch</method-name>
-				<method-params>
-					<method-param>java.lang.Object</method-param>
-				</method-params>
 			</method>
 		</interceptor-binding>
 	</assembly-descriptor>
