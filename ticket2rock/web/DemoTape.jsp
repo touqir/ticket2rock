@@ -26,10 +26,6 @@
 	import="javax.naming.*,java.util.*,java.text.SimpleDateFormat,de.ejb3buch.ticket2rock.entity.*,de.ejb3buch.ticket2rock.session.demo.*"%>
 
 <%!private DemoTape demo = null;
-	private AbfangjaegerLocal falcon_klasse = null;
-	private AbfangjaegerLocal falcon_methode = null;
-	private AbfangjaegerLocal falcon_klasse_dd = null;
-	private AbfangjaegerLocal falcon_methode_dd = null;
 
 	private SimpleDateFormat datumsformat_Jahr = new SimpleDateFormat("yyyy");
 
@@ -43,38 +39,11 @@
 		try {
 			InitialContext ctx = new InitialContext();
 			demo = (DemoTape) ctx.lookup("ticket2rock/DemoTapeBean/local");
-			falcon_klasse = (AbfangjaegerLocal) ctx
-					.lookup("ticket2rock/AbfangjaegerBeanKlasseninterzeptor/local");
-			falcon_methode = (AbfangjaegerLocal) ctx
-					.lookup("ticket2rock/AbfangjaegerBeanMethodeninterzeptor/local");
-			falcon_klasse_dd = (AbfangjaegerLocal) ctx
-					.lookup("ticket2rock/AbfangjaegerBeanKlasseninterzeptorDD/local");
-			falcon_methode_dd = (AbfangjaegerLocal) ctx
-					.lookup("ticket2rock/AbfangjaegerBeanMethodeninterzeptorDD/local");
-
-			testInterceptors();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-	public void testInterceptors() {
-		falcon_klasse.fangMichAb();
-		falcon_klasse.michAuch(null);
-		falcon_klasse.michNicht();
-
-		falcon_methode.fangMichAb();
-		falcon_methode.michAuch(null);
-		falcon_methode.michNicht();
-
-		falcon_klasse_dd.fangMichAb();
-		falcon_klasse_dd.michAuch(null);
-		falcon_klasse_dd.michNicht();
-
-		falcon_methode_dd.fangMichAb();
-		falcon_methode_dd.michAuch(null);
-		falcon_methode_dd.michNicht();
-	}%>
+%>
 
 <html>
 <head>
