@@ -2,7 +2,6 @@ package de.ejb3buch.ticket2rock.session.interceptor.demo;
 
 import javax.ejb.EJB;
 import javax.ejb.Timer;
-import javax.interceptor.AroundInvoke;
 import javax.interceptor.AroundTimeout;
 import javax.interceptor.InvocationContext;
 
