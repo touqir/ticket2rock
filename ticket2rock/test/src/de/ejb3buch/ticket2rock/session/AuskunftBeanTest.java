@@ -24,9 +24,9 @@
 
 package de.ejb3buch.ticket2rock.session;
 
+import static de.ejb3buch.ticket2rock.util.EmbeddedServerTestRunner.lookup;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
-import static de.ejb3buch.ticket2rock.util.EmbeddedServerTestRunner.lookup;
 
 import java.util.List;
 
@@ -35,6 +35,7 @@ import org.junit.runner.RunWith;
 
 import de.ejb3buch.ticket2rock.entity.Konzert;
 import de.ejb3buch.ticket2rock.util.EmbeddedServerTestRunner;
+import de.ejb3buch.ticket2rock.util.ServerUtil;
 import de.ejb3buch.ticket2rock.util.UserTransactionPerTest;
 
 /**
@@ -44,7 +45,8 @@ import de.ejb3buch.ticket2rock.util.UserTransactionPerTest;
 public class AuskunftBeanTest  extends UserTransactionPerTest{ 
 
 
-    private static final String BEAN_JNDI_ADDRESS = "java:global/ticket2rock/ticket2rock/AuskunftBean!de.ejb3buch.ticket2rock.session.AuskunftLocal";
+    private static final String BEAN_JNDI_ADDRESS = ServerUtil.getJNDIAddress(AuskunftBean.class, AuskunftLocal.class);
+    	//"java:global/ticket2rock/ticket2rock/AuskunftBean!de.ejb3buch.ticket2rock.session.AuskunftLocal";
 
 	/**
      * Test method for

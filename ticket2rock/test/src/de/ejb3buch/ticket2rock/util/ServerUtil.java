@@ -106,5 +106,8 @@ public class ServerUtil {
 	private static boolean isNullFolder(File file) {
 		return file.isDirectory() && file.getName().equals("null");
 	}
+	public static String getJNDIAddress(Class beanClass, Class interfaze){
+		return "java:global/ticket2rock/ticket2rock/"+ beanClass.getSimpleName() + "!" + interfaze.getName();
+	}
 
 }

@@ -27,13 +27,13 @@ package de.ejb3buch.ticket2rock.util;
 import static de.ejb3buch.ticket2rock.util.DataUtil.createConnectionPoolAndJDBCResource;
 import static de.ejb3buch.ticket2rock.util.DataUtil.insertTestData;
 import static de.ejb3buch.ticket2rock.util.ServerUtil.createServer;
-import static de.ejb3buch.ticket2rock.util.ServerUtil.deploy;
 import static de.ejb3buch.ticket2rock.util.ServerUtil.deleteFiles;
+import static de.ejb3buch.ticket2rock.util.ServerUtil.deploy;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.transaction.UserTransaction;
-import org.apache.log4j.BasicConfigurator;
-import org.apache.log4j.Level;
+
 import org.apache.log4j.Logger;
 import org.glassfish.api.embedded.LifecycleException;
 import org.glassfish.api.embedded.Server;
