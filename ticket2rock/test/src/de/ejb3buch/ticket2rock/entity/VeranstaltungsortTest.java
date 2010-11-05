@@ -40,16 +40,15 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * Beispiel fuer einen Unit-Test, der ohne Container laeuft, sondern direkt den
  * Entitymanager nutzt
  * 
- * @author Carsten
+ * @author Carsten/Carl
  */
-public class VeranstaltungsortTest{
+public class VeranstaltungsortTest {
 	private static final Logger log = Logger
 			.getLogger(VeranstaltungsortTest.class);
 
@@ -69,7 +68,8 @@ public class VeranstaltungsortTest{
 	 * werden sie hier ueberschrieben.
 	 * 
 	 */
-	//@BeforeClass sonst machts poings
+	@BeforeClass
+	// sonst machts poings
 	public static void setUpEntityManager() throws Exception {
 
 		BasicConfigurator.configure();
@@ -79,35 +79,34 @@ public class VeranstaltungsortTest{
 		em = emf.createEntityManager();
 		long stop = System.currentTimeMillis();
 		log.setLevel(Level.INFO);
-		log.info("Dauer fuer den Start des Entitymanagers: " + (stop-start) + " Millisekunden");
+		log.info("Dauer fuer den Start des Entitymanagers: " + (stop - start)
+				+ " Millisekunden");
 	}
 
 	private static void createEntityManagerFactory() {
 		Map<String, String> configOverrides = new HashMap<String, String>();
 		configOverrides.put("javax.persistence.transactionType",
 				"RESOURCE_LOCAL");
-		configOverrides.put("javax.persistence.jtaDataSource", "jdbc/ticket2rock");
-		
-		emf = Persistence.createEntityManagerFactory("ticket2rock",
-				configOverrides);
+		configOverrides.put("eclipselink.jdbc.url", "jdbc:derby:memory:MyDB;create=true");
+		configOverrides.put("eclipselink.ddl-generation","create-tables");
+		emf = Persistence.createEntityManagerFactory("ticket2rock",	configOverrides);
+				
 	}
 
 	/**
 	 * @throws java.lang.Exception
 	 */
-	//@AfterClass
+	@AfterClass
 	public static void tearDownEntityManager() throws Exception {
 		em.close();
 		emf.close();
 	}
-	
-	
+
 	@Test
-	@Ignore("TODO --> Carl: Warum tut das nich?")
 	public void testInsertVeranstaltungsort() throws NamingException, Exception {
 		Veranstaltungsort ort = new Veranstaltungsort();
 		// id wird automatisch vergeben
-		
+
 		ort.setName(AOL_ARENA);
 		ort.setAdresse(HAMBURG_VOLKSPARK);
 		ort.setKapazitaet(KAPAZITAET);
@@ -120,7 +119,7 @@ public class VeranstaltungsortTest{
 		int volksparkId = ort.getId();
 
 		// Kontrolle über EJBQL
-		Query query = em.createQuery("from Veranstaltungsort v where v.id = "
+		Query query = em.createQuery("Select v from Veranstaltungsort v where v.id = "
 				+ volksparkId);
 		Veranstaltungsort ort2 = (Veranstaltungsort) query.getSingleResult();
 
