@@ -69,7 +69,6 @@ public class VeranstaltungsortTest {
 	 * 
 	 */
 	@BeforeClass
-	// sonst machts poings
 	public static void setUpEntityManager() throws Exception {
 
 		BasicConfigurator.configure();
@@ -87,7 +86,7 @@ public class VeranstaltungsortTest {
 		Map<String, String> configOverrides = new HashMap<String, String>();
 		configOverrides.put("javax.persistence.transactionType",
 				"RESOURCE_LOCAL");
-		configOverrides.put("eclipselink.jdbc.url", "jdbc:derby:memory:MyDB;create=true");
+		configOverrides.put("javax.persistence.jdbc.url", "jdbc:derby:memory:MyDB;create=true");
 		configOverrides.put("eclipselink.ddl-generation","create-tables");
 		emf = Persistence.createEntityManagerFactory("ticket2rock",	configOverrides);
 				
