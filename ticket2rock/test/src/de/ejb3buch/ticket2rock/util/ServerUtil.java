@@ -43,6 +43,7 @@ public class ServerUtil {
 				"ticket2rock.jar");
 		archive.addPackages(true, KonzertDetails.class.getPackage());
 		archive.addPackages(true, BandVerwaltungBean.class.getPackage());
+		//MDBs are not yet supported on embedded jboss
 		Assert.assertTrue(archive.delete(archive.get("/de/ejb3buch/ticket2rock/messagedriven")
 				.getPath()));
 		File persistenceXML = new File("test/conf/META-INF/persistence.xml");
