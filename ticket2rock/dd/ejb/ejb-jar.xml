@@ -53,7 +53,7 @@
 			</activation-config>
 		</message-driven>
 		<session>
-			<ejb-name>Admin</ejb-name>
+			<ejb-name>AdminBean</ejb-name>
 			<ejb-class>de.ejb3buch.ticket2rock.session.admin.AdminBean</ejb-class>
 			<post-construct>
 				<lifecycle-callback-method>onPostConstruct</lifecycle-callback-method>
