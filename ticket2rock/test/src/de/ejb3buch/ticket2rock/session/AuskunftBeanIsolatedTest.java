@@ -34,10 +34,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
-import static org.easymock.EasyMock.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import com.stvconsultants.easygloss.javaee.JavaEEGloss;
 
@@ -49,97 +49,90 @@ import de.ejb3buch.ticket2rock.entity.Konzert;
  * @author Dierk
  * 
  */
-public class AuskunftBeanIsolatedTest
-{
+public class AuskunftBeanIsolatedTest {
 
-    private EntityManager em;
+	private EntityManager em;
 
-    private Query query;
+	private Query query;
 
-    private JavaEEGloss gloss;
+	private JavaEEGloss gloss;
 
-    private List<Konzert> data;
+	private List<Konzert> data;
 
-    @Before
-    public void umgebungAufbauen()
-    {
-        em = createMock(EntityManager.class);
-        query = createMock(Query.class);
-        gloss = new JavaEEGloss();
-        gloss.addEM(em);
+	private ArrayList<Konzert> konzerteInHamburg;
 
-        Konzert a = new Konzert();
-        Konzert b = new Konzert();
-        data = new ArrayList<Konzert>();
-        data.add(a);
-        data.add(b);
-    }
+	private Konzert konzertInHamburg;
 
-    @After
-    public void mocksChecken()
-    {
-        verify(query);
-        verify(em);
-    }
+	@Before
+	public void umgebungAufbauen() {
+		em = Mockito.mock(EntityManager.class);
+		query = Mockito.mock(Query.class);
+		// em = createMock(EntityManager.class);
+		// query = createMock(Query.class);
+		gloss = new JavaEEGloss();
+		gloss.addEM(em);
 
-    @Test
-    public void findeKeinKonzert()
-    {
+		konzertInHamburg = new Konzert();
+		Konzert b = new Konzert();
+		konzerteInHamburg = new ArrayList<Konzert>();
+		konzerteInHamburg.add(konzertInHamburg);
 
-        expect(em.createQuery("SELECT k FROM Konzert k ")).andReturn(query);
-        expect(query.getResultList()).andReturn(null);
-        replay(query);
-        replay(em);
+		data = new ArrayList<Konzert>();
+		data.add(konzertInHamburg);
+		data.add(b);
+	}
 
-        AuskunftBean auskunft = gloss.make(AuskunftBean.class);
-        auskunft.sucheKonzerte(null, null, null);
+	@After
+	public void mocksChecken() {
+		Mockito.verify(em).createQuery(Mockito.anyString());
+		Mockito.verify(query).getResultList();
+	}
 
-    }
+	@Test
+	public void findeKeinKonzert() {
+		Mockito.when(em.createQuery("SELECT k FROM Konzert k ")).thenReturn(query);
+		Mockito.when(query.getResultList()).thenReturn(null);
 
-    @Test
-    public void findeKonzertMitEinemParameter()
-    {
+		AuskunftBean auskunft = gloss.make(AuskunftBean.class);
+		auskunft.sucheKonzerte(null, null, null);
+	}
 
-        expect(em.createQuery("SELECT k FROM Konzert k where upper(k.ort.name) like :ortsName")).andReturn(query);
-        expect(query.setParameter("ortsName", "%HAMBURG%")).andReturn(query);
-        expect(query.getResultList()).andReturn(null);
-        replay(query);
-        replay(em);
+	@Test
+	public void findeKonzertMitEinemParameter() {
+		Mockito.when(em.createQuery("SELECT k FROM Konzert k where upper(k.ort.name) like :ortsName")).thenReturn(query);
+		Mockito.when(query.setParameter("ortsName", "%HAMBURG%")).thenReturn(query);
+		Mockito.when(query.getResultList()).thenReturn(konzerteInHamburg);
 
-        AuskunftBean auskunft = gloss.make(AuskunftBean.class);
-        auskunft.sucheKonzerte("Hamburg", null, null);
+		AuskunftBean auskunft = gloss.make(AuskunftBean.class);
+		List<Konzert> gefundeneKonzerte = auskunft.sucheKonzerte("Hamburg", null, null);
 
-    }
+		assertEquals(1, gefundeneKonzerte.size());
+		assertEquals(konzertInHamburg, gefundeneKonzerte.get(0));
+	}
 
-    @Test
-    public void findeKonzertMitZweiParametern()
-    {
-        Date datum = new Date();
-        expect(em.createQuery("SELECT k FROM Konzert k where upper(k.ort.name) like :ortsName and k.datum >= :vonDatum"))
-                .andReturn(query);
-        expect(query.setParameter("ortsName", "%HAMBURG%")).andReturn(query);
-        expect(query.setParameter("vonDatum", datum, TemporalType.DATE)).andReturn(query);
+	@Test
+	public void findeKonzertMitZweiParametern() {
+		Date datum = new Date(); 
+		Mockito.when(em.createQuery("SELECT k FROM Konzert k where upper(k.ort.name) like :ortsName and k.datum >= :vonDatum")).thenReturn(query);
+		Mockito.when(query.setParameter("ortsName", "%HAMBURG%")).thenReturn(query);
+		Mockito.when(query.setParameter("vonDatum", datum, TemporalType.DATE)).thenReturn(query);
+		Mockito.when(query.getResultList()).thenReturn(konzerteInHamburg);
 
-        expect(query.getResultList()).andReturn(null);
-        replay(query);
-        replay(em);
+		AuskunftBean auskunft = gloss.make(AuskunftBean.class);
+		List<Konzert> gefundeneKonzerte = auskunft.sucheKonzerte("Hamburg", datum, null);
 
-        AuskunftBean auskunft = gloss.make(AuskunftBean.class);
-        auskunft.sucheKonzerte("Hamburg", datum, null);
-    }
+		assertEquals(1, gefundeneKonzerte.size());
+		assertEquals(konzertInHamburg, gefundeneKonzerte.get(0));
+	}
 
-    @Test
-    public void findeZweiKonzerte()
-    {
+	@Test
+	public void findeZweiKonzerte() {
+		Mockito.when(em.createQuery("SELECT k FROM Konzert k ")).thenReturn(query);
+		Mockito.when(query.getResultList()).thenReturn(data);
 
-        expect(em.createQuery("SELECT k FROM Konzert k ")).andReturn(query);
-        expect(query.getResultList()).andReturn(data);
-        replay(query);
-        replay(em);
+		AuskunftBean auskunft = gloss.make(AuskunftBean.class);
+		List<Konzert> gefundeneKonzerte = auskunft.sucheKonzerte(null, null, null);
 
-        AuskunftBean auskunft = gloss.make(AuskunftBean.class);
-        List result = auskunft.sucheKonzerte(null, null, null);
-
-        assertEquals(result, data);
-    }
+		assertEquals(2, gefundeneKonzerte.size());
+	}
 }
