@@ -34,6 +34,8 @@
 			<property name="hibernate.hbm2ddl.auto" value="create-drop" />
 			<!-- EntityManager-Zugriff per JNDI aktivieren -->
 			<property name="jboss.entity.manager.jndi.name" value="ticket2rockEntityManager"/>
+			<!-- old generators have bug which leads to disrespect for the initial value. -->
+			<property name="hibernate.id.new_generator_mappings" value="true"/>
 		</properties>
 	</persistence-unit>
 </persistence>
