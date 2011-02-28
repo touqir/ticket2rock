@@ -28,8 +28,9 @@ import java.lang.reflect.Method;
 
 import javax.interceptor.InvocationContext;
 
-import static org.easymock.EasyMock.*;
+import static org.mockito.Mockito.*;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 import de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsLocal;
 
@@ -44,18 +45,12 @@ public class BeanStatisticsInterceptorTestSimple
         BeanStatisticsInterceptor classUnderTest = new BeanStatisticsInterceptor();
 
         // Mockobjekt fuer den InvocationContext zusammenbauen
-        InvocationContext icMock = createMock(InvocationContext.class);
-        expect(icMock.getMethod()).andReturn(interceptedMethod);
-        expect(icMock.proceed()).andReturn(null);
-        expect(icMock.getMethod()).andReturn(interceptedMethod);
-        replay(icMock);
+        InvocationContext icMock = mock(InvocationContext.class);
+        Mockito.when(icMock.getMethod()).thenReturn(interceptedMethod);
+        Mockito.when(icMock.proceed()).thenReturn(null);
 
         // Mockobject fuer die Beanstatistics zusammenbauen
-        BeanStatisticsLocal bslMock = createMock(BeanStatisticsLocal.class);
-
-        bslMock.reportMethodCall(interceptedMethod);
-        bslMock.reportMethodDuration(interceptedMethod, 0);
-        replay(bslMock);
+        BeanStatisticsLocal bslMock = mock(BeanStatisticsLocal.class);
 
         // injizieren der BeanStatistic in den Interzeptor
         classUnderTest.setBeanStatisticsBean(bslMock);
@@ -63,7 +58,8 @@ public class BeanStatisticsInterceptorTestSimple
         classUnderTest.onMethodCall(icMock);
 
         // pruefen, ob das Ergebnis dem Erwarteten entspricht
-        verify(bslMock);
+        verify(bslMock).reportMethodCall(interceptedMethod);
+        verify(bslMock).reportMethodDuration(interceptedMethod, 0);
     }
 
 }
