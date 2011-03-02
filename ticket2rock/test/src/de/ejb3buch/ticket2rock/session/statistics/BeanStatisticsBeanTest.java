@@ -91,39 +91,39 @@ public class BeanStatisticsBeanTest{
 	}
 	
 
-	// TODO Test geht nicht. Muss repariert werden.
-//	@Test
-//	public void testReportMethodDuration() {
-//		BeanStatisticsBean bs = new BeanStatisticsBean();
-//
-//		Method dummyMethodOne = this.getClass().getMethods()[0];
-//
-//		// mal schau'n, wie lange die Methodenaufrufe bisher gedauert haben
-//		int currentMethodDuration = bs.getMethodTotalDuration().size();
-//
-//		boolean methodOneHasBeenCalledBefore = (bs.getMethodUsage().get(
-//				dummyMethodOne) != null);
-//
-//		Long methodOneDuration = 0L;
-//		if (methodOneHasBeenCalledBefore) {
-//			methodOneDuration = bs.getMethodTotalDuration().get(dummyMethodOne);
-//		}
-//
-//		// einmal loggen mit Dauer = 100
-//		bs.reportMethodDuration(dummyMethodOne, 100L);
-//		if (!methodOneHasBeenCalledBefore) {
-//			assertEquals(currentMethodDuration + 1, bs.getMethodTotalDuration()
-//					.size());
-//		}
-//		assertNotNull(bs.getMethodTotalDuration().get(dummyMethodOne));
-//		assertEquals(methodOneDuration + 100L, bs.getMethodTotalDuration().get(
-//				dummyMethodOne));
-//
-//		// nochmal loggen mit Dauer = 400
-//		bs.reportMethodDuration(dummyMethodOne, 400L);
-//		assertEquals(methodOneDuration + 500L, bs.getMethodTotalDuration().get(
-//				dummyMethodOne));
-//
-//	}
+
+	@Test
+	public void testReportMethodDuration() {
+		BeanStatisticsBean bs = new BeanStatisticsBean();
+
+		Method dummyMethodOne = this.getClass().getMethods()[0];
+
+		// mal schau'n, wie lange die Methodenaufrufe bisher gedauert haben
+		int currentMethodDuration = bs.getMethodTotalDuration().size();
+
+		boolean methodOneHasBeenCalledBefore = (bs.getMethodUsage().get(
+				dummyMethodOne) != null);
+
+		Long methodOneDuration = 0L;
+		if (methodOneHasBeenCalledBefore) {
+			methodOneDuration = bs.getMethodTotalDuration().get(dummyMethodOne);
+		}
+
+		// einmal loggen mit Dauer = 100
+		bs.reportMethodDuration(dummyMethodOne, 100L);
+		if (!methodOneHasBeenCalledBefore) {
+			assertEquals(currentMethodDuration + 1, bs.getMethodTotalDuration()
+					.size());
+		}
+		assertNotNull(bs.getMethodTotalDuration().get(dummyMethodOne));
+		assertEquals(methodOneDuration + 100L, bs.getMethodTotalDuration().get(
+				dummyMethodOne));
+
+		// nochmal loggen mit Dauer = 400
+		bs.reportMethodDuration(dummyMethodOne, 400L);
+		assertEquals(methodOneDuration + 500L, bs.getMethodTotalDuration().get(
+				dummyMethodOne));
+
+	}
 
 }
