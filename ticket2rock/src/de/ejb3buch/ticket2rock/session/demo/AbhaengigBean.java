@@ -15,6 +15,7 @@ public class AbhaengigBean {
 	public void init() {
 		System.out.println("Abhaengig konstruiert!");
 	}
-	
-	public void doSomething() {}
+
+	public void doSomething() {
+	}
 }
