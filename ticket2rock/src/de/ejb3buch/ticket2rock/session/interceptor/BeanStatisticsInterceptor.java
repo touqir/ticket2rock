@@ -27,11 +27,13 @@ package de.ejb3buch.ticket2rock.session.interceptor;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.interceptor.AroundInvoke;
+import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 
 import de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsLocal;
 
-public class BeanStatisticsInterceptor {
+
+public @BeanStatistics @Interceptor class BeanStatisticsInterceptor {
 
 	private BeanStatisticsLocal beanstats;
 
