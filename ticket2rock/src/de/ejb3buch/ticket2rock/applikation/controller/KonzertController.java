@@ -24,23 +24,37 @@
 
 package de.ejb3buch.ticket2rock.applikation.controller;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.enterprise.context.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
-import de.ejb3buch.ticket2rock.applikation.servicelocator.ServiceLocator;
 import de.ejb3buch.ticket2rock.entity.Konzert;
+import de.ejb3buch.ticket2rock.session.AuskunftLocal;
 
-public class KonzertController {
+@Named("KonzertController")
+@SessionScoped
+public class KonzertController implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	static Logger logger = Logger.getLogger(KonzertController.class);
 
-	private ServiceLocator serviceLocator;
+	@Inject
 	private TicketController ticketController;
+	
+	@Inject
+	private AuskunftLocal auskunftLocal;
 	
 	private String ortsName;
 	
@@ -52,14 +66,6 @@ public class KonzertController {
 	
 	private Konzert konzert;
 	
-	public ServiceLocator getServiceLocator() {
-		return serviceLocator;
-	}
-
-	public void setServiceLocator(ServiceLocator serviceLocator) {
-		this.serviceLocator = serviceLocator;
-	}	
-	
 
 	public String getOrtsName() {
 		return ortsName;
@@ -70,7 +76,7 @@ public class KonzertController {
 	}	
 
 	public String search() {
-		List<Konzert> konzerte = this.serviceLocator.getAuskunft().sucheKonzerte(ortsName,vonDatum,bisDatum);
+		List<Konzert> konzerte = auskunftLocal.sucheKonzerte(ortsName,vonDatum,bisDatum);
 		logger.debug("detected number of concerts: " + konzerte.size());
 		this.konzertListDataModel.setWrappedData(konzerte);
 		return "konzertsuchergebnis";

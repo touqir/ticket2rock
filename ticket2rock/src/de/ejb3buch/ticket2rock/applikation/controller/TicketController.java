@@ -24,32 +24,39 @@
 
 package de.ejb3buch.ticket2rock.applikation.controller;
 
+import java.io.Serializable;
 import java.util.Collection;
 
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
 import de.ejb3buch.ticket2rock.applikation.helper.FacesUtils;
-import de.ejb3buch.ticket2rock.applikation.servicelocator.ServiceLocator;
 import de.ejb3buch.ticket2rock.entity.Konzert;
 import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
 import de.ejb3buch.ticket2rock.exception.KapazitaetErschoepftException;
 import de.ejb3buch.ticket2rock.session.ticketbestellung.BestellvorgangLocal;
 
-public class TicketController {
+@Named("TicketController")
+@SessionScoped
+public class TicketController implements Serializable{
+
+	
+	private static final long serialVersionUID = 1L;
 
 	static Logger logger = Logger.getLogger(TicketController.class);
 
-	private ServiceLocator serviceLocator;
-
 	private boolean bestellungExistiert = false;
 
+	@Inject
 	private BestellvorgangLocal bestellvorgang;
 
 	private DataModel bestellungen = new ListDataModel();
@@ -65,14 +72,6 @@ public class TicketController {
 	private String email;
 
 	private float rechnungsBetrag;
-
-	public ServiceLocator getServiceLocator() {
-		return serviceLocator;
-	}
-
-	public void setServiceLocator(ServiceLocator serviceLocator) {
-		this.serviceLocator = serviceLocator;
-	}
 
 	public boolean isTicketOrdered() {
 		return bestellungExistiert;
@@ -121,9 +120,9 @@ public class TicketController {
         bezahlteBestellungen = new ListDataModel();
 		// hole über den ServiceLocator einen Bestellvorgang, falls dies für
 		// diese Session noch nicht geschehen ist
-		if (bestellvorgang == null) {
-			bestellvorgang = serviceLocator.getBestellvorgang();
-		}
+//		if (bestellvorgang == null) {
+//			bestellvorgang = serviceLocator.getBestellvorgang();
+//		}
 		bestellvorgang.bestelleTickets(this.konzert, ticketanzahl);
 
 		this.bestellungExistiert = true;

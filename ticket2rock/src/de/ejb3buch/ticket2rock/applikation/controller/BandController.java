@@ -24,6 +24,7 @@
 
 package de.ejb3buch.ticket2rock.applikation.controller;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -33,6 +34,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.html.HtmlSelectManyListbox;
 import javax.faces.context.FacesContext;
@@ -40,6 +42,8 @@ import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
@@ -47,17 +51,27 @@ import de.ejb3buch.ticket2rock.applikation.helper.IViewCollectionBuilder;
 import de.ejb3buch.ticket2rock.applikation.helper.SelectItemsComparator;
 import de.ejb3buch.ticket2rock.applikation.helper.SelectItemsMapBuilder;
 import de.ejb3buch.ticket2rock.applikation.model.BandBackingBean;
-import de.ejb3buch.ticket2rock.applikation.servicelocator.ServiceLocator;
 import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Musiker;
 import de.ejb3buch.ticket2rock.session.crud.BandVerwaltungLocal;
+import de.ejb3buch.ticket2rock.session.crud.MusikerVerwaltungLocal;
 
-public class BandController {
+@Named("BandController")
+@SessionScoped
+public class BandController implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 
 	static Logger logger = Logger.getLogger(BandController.class);
 
+	@Inject
+	private BandVerwaltungLocal bandVerwaltungLocal;
 	
-	private ServiceLocator serviceLocator;
+	@Inject
+	private MusikerVerwaltungLocal musikVerwaltungLocal;
+	
+//	@Inject @Credit
+//	private PaymentProcessor paymentProcessor;
 
 	private boolean editMode = false;
 
@@ -81,6 +95,17 @@ public class BandController {
 
 	// ajax test
 	private String textAjax;
+	
+	public String getMessage(){
+		return "yeah";
+	}
+	
+	// look for injected paymentProcessor
+//	public String getPaymentProcessorType(){
+//		return paymentProcessor.getType();
+//	}
+
+	
 	public String getTextAjax() {
 		return textAjax;
 	}
@@ -98,7 +123,7 @@ public class BandController {
 	 */
 	public DataModel getBands() {
 		List<BandBackingBean> bandBackingBeans = new ArrayList<BandBackingBean>();
-		Collection<Band> bands = serviceLocator.getBandVerwaltung().getBands();
+		Collection<Band> bands = bandVerwaltungLocal.getBands();
 		for (Band band:bands) {
 		   	bandBackingBeans.add(new BandBackingBean(band));
 		}
@@ -144,9 +169,8 @@ public class BandController {
 	 * @return Identifier für die JSF Navigation
 	 */
 	public String addBand() {
-		BandVerwaltungLocal bandVerwaltung = serviceLocator.getBandVerwaltung();
 		// Überprüfe, ob es eine Band mit diesem Namen bereits gibt		
-		if (bandVerwaltung.getBandByName(bandBackingBean.getName()) != null) {
+		if (bandVerwaltungLocal.getBandByName(bandBackingBean.getName()) != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			FacesMessage msg = MessageUtils.createErrorMessage(
 					"bandform_error_bandexists", context);
@@ -155,7 +179,7 @@ public class BandController {
 		}
 		// setzen der ausgewählten Bandmusiker im BandBackingBean
 		bandBackingBean.setMusikerIdListe(this.bandMusikerMap.keySet());
-		bandVerwaltung.createBand(bandBackingBean.getBand());
+		bandVerwaltungLocal.createBand(bandBackingBean.getBand());
 		return "bandlist";
 	}
 
@@ -171,7 +195,7 @@ public class BandController {
 	public String updateBand() {
 		logger.debug("T2RController.updateBand() called ");
 		bandBackingBean.setMusikerIdListe(this.bandMusikerMap.keySet());
-		serviceLocator.getBandVerwaltung().updateBand(bandBackingBean.getBand());
+		bandVerwaltungLocal.updateBand(bandBackingBean.getBand());
 		return "bandlist";
 	}
 
@@ -181,7 +205,7 @@ public class BandController {
 	 */
 	public String deleteBand() {
 		bandBackingBean = (BandBackingBean) bandListDataModel.getRowData();
-		serviceLocator.getBandVerwaltung().deleteBand(bandBackingBean.getId());
+		bandVerwaltungLocal.deleteBand(bandBackingBean.getId());
 		return "bandlist";
 	}
 
@@ -293,7 +317,7 @@ public class BandController {
      * im View verwendet werden kann
      */
 	private void buildBandMusikerCollection(IViewCollectionBuilder collectionBuilder,Integer bandId) {
-		Band band = serviceLocator.getBandVerwaltung().getBandById(bandId);
+		Band band = bandVerwaltungLocal.getBandById(bandId);
 		Set<Musiker> musikerSet = band.getMusiker();
 		if (musikerSet != null) {
 			for (Musiker musiker : musikerSet) {
@@ -310,7 +334,7 @@ public class BandController {
      * im View verwendet werden kann
      */
 	private void buildMusikerCollection(IViewCollectionBuilder collectionBuilder) {
-		Collection<Musiker> musikerSet = serviceLocator.getMusikerVerwaltung().getMusiker();
+		Collection<Musiker> musikerSet = musikVerwaltungLocal.getMusiker();
 		if (musikerSet != null) {
 			for (Musiker musiker : musikerSet) {
               collectionBuilder.buildItem(Integer.toString(musiker.getId()),musiker.getName());
@@ -343,14 +367,6 @@ public class BandController {
 	public void setMusikerSelectComponent(
 			HtmlSelectManyListbox musikerSelectComponent) {
 		this.musikerSelectComponent = musikerSelectComponent;
-	}
-
-	public ServiceLocator getServiceLocator() {
-		return serviceLocator;
-	}
-
-	public void setServiceLocator(ServiceLocator serviceLocator) {
-		this.serviceLocator = serviceLocator;
 	}
 
 }

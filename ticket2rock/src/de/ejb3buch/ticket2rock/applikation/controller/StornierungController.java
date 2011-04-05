@@ -24,6 +24,10 @@
 
 package de.ejb3buch.ticket2rock.applikation.controller;
 
+import java.io.Serializable;
+
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import javax.jms.Queue;
 import javax.jms.QueueConnection;
 import javax.jms.QueueConnectionFactory;
@@ -34,25 +38,17 @@ import javax.naming.InitialContext;
 
 import org.apache.log4j.Logger;
 
-import de.ejb3buch.ticket2rock.applikation.servicelocator.ServiceLocator;
+@Named("StornierungsController")
+@SessionScoped
+public class StornierungController implements Serializable {
 
-public class StornierungController {
+	private static final long serialVersionUID = 1L;
 
 	static Logger logger = Logger.getLogger(StornierungController.class);
-
-	private ServiceLocator serviceLocator;
 
 	private String messageQueue;
 
 	private String bestellnummer;
-
-	public ServiceLocator getServiceLocator() {
-		return serviceLocator;
-	}
-
-	public void setServiceLocator(ServiceLocator serviceLocator) {
-		this.serviceLocator = serviceLocator;
-	}
 
 	public String getMessageQueue() {
 		return messageQueue;

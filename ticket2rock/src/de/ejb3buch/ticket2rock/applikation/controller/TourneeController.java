@@ -24,22 +24,30 @@
 
 package de.ejb3buch.ticket2rock.applikation.controller;
 
+import java.io.Serializable;
 import java.util.Collection;
 
+import javax.enterprise.context.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.log4j.Logger;
 
-import de.ejb3buch.ticket2rock.applikation.servicelocator.ServiceLocator;
 import de.ejb3buch.ticket2rock.entity.Tournee;
+import de.ejb3buch.ticket2rock.session.crud.TourneeVerwaltungLocal;
 
-public class TourneeController {
+@Named("TourneeController")
+@SessionScoped
+public class TourneeController implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	static Logger logger = Logger.getLogger(TourneeController.class);
-
 	
-	private ServiceLocator serviceLocator;
+	@Inject
+	private TourneeVerwaltungLocal tourneeVerwaltungLocal;
 
 	private boolean editMode = false;
 
@@ -62,21 +70,13 @@ public class TourneeController {
 	 * @return DataModel Objekt, das alle Tourneen beinhaltet.
 	 */
 	public DataModel getTourneen() {
-		Collection<Tournee> tourneen = serviceLocator.getTourneeVerwaltung().getTourneen();
+		Collection<Tournee> tourneen = tourneeVerwaltungLocal.getTourneen();
 		tourneeListDataModel.setWrappedData(tourneen);
 		return tourneeListDataModel;
 	}
 
 	public boolean isEditMode() {
 		return editMode;
-	}
-
-	public ServiceLocator getServiceLocator() {
-		return serviceLocator;
-	}
-
-	public void setServiceLocator(ServiceLocator serviceLocator) {
-		this.serviceLocator = serviceLocator;
 	}
 
 }
