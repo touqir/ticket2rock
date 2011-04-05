@@ -79,7 +79,7 @@
 		<antcall target="clean" />
 		<antcall target="package-ejb" />
 		<antcall target="package-web" />
-		<antcall target="assemble-app" />
+		<!-- <antcall target="assemble-app" /> -->
 	</target>
 
 	<target name="clean" description="Removes all generated code and build artifacts">
@@ -90,6 +90,7 @@
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${build.dir}/classes" />
 		<mkdir dir="${build.dir}/jar" />
+		<mkdir dir="${build.dir}/lib" />
 		<mkdir dir="${build.dir}/test" />
 		<mkdir dir="${build.dir}/interceptor-tests" />
 	</target>
@@ -152,8 +153,10 @@
 
 	<target name="package-ejb" depends="compile" description="Builds the EJB module (*.jar)">
 		<jar jarfile="${build.dir}/jar/${ant.project.name}.jar">
+
 			<fileset dir="${build.dir}/classes">
-				<include name="de/ejb3buch/${ant.project.name}/**" />
+				<!--	<include name="de/ejb3buch/${ant.project.name}/**" /> -->
+				<include name="de/ejb3buch/${ant.project.name}/entity/**" />
 				<exclude name="de/ejb3buch/${ant.project.name}/applikation/**" />
 			</fileset>
 
@@ -163,30 +166,16 @@
 			</fileset>
 
 			<metainf dir="dd/ejb">
-				<include name="ejb-jar.xml" />
+				<!-- <include name="ejb-jar.xml" /> -->
 				<include name="orm.xml" />
 				<include name="persistence.xml" />
 			</metainf>
 		</jar>
 	</target>
 
-	<target name="package-web" depends="compile" description="Builds the Web module (*.war)">
-		<war warfile="${build.dir}/jar/${ant.project.name}.war" webxml="dd/web/web.xml">
-
-			<fileset dir="web">
-				<include name="**/*" />
-			</fileset>
-			<webinf dir="dd/web">
-				<include name="*.xml" />
-				<exclude name="web.xml" />
-			</webinf>
-			<classes dir="${build.dir}/classes">
-				<include name="de/ejb3buch/${ant.project.name}/applikation/**" />
-			</classes>
-			<classes dir="${src.dir}">
-				<include name="de/ejb3buch/${ant.project.name}/applikation/resources/**" />
-			</classes>
-			<lib dir="${lib.dir}">
+	<target name="package-web" depends="package-ejb" description="Builds the Web module (*.war)">
+		<copy todir="${build.dir}/lib">
+			<fileset dir="${lib.dir}">
 				<include name="jsf-facelets.jar" />
 
 				<include name="el-ri.jar" />
@@ -201,25 +190,54 @@
 				<!-- Erforderlich für Faces -->
 				<include name="commons-digester-1.8.jar" />
 				<include name="commons-beanutils.jar" />
+			</fileset>
+		</copy>
+		<copy file="${build.dir}/jar/${ant.project.name}.jar" todir="${build.dir}/lib" overwrite="true" />
+		<war warfile="${build.dir}/jar/${ant.project.name}.war" webxml="dd/web/web.xml">
+
+			<fileset dir="web">
+				<include name="**/*" />
+			</fileset>
+
+			<!-- cdi -->
+			<webinf dir="dd/ejb">
+				<include name="ejb-jar.xml" />
+			</webinf>
+
+			<webinf dir="dd/web">
+				<include name="*.xml" />
+				<exclude name="web.xml" />
+			</webinf>
+			<classes dir="${build.dir}/classes">
+				<include name="de/ejb3buch/${ant.project.name}/**" />
+				<exclude name="de/ejb3buch/${ant.project.name}/entity/**" />
+			</classes>
+			<classes dir="${src.dir}">
+				<include name="de/ejb3buch/${ant.project.name}/applikation/resources/**" />
+			</classes>
+			<lib dir="${build.dir}/lib">
+				<include name="*.jar"/>
 			</lib>
 		</war>
 	</target>
 
-	<target name="assemble-app" description="Builds the JEE application (*.ear)">
+	<!--<target name="assemble-app" description="Builds the JEE application (*.ear)">
 		<jar jarfile="${build.dir}/${ant.project.name}.ear">
 
 			<metainf dir="dd/ear">
-				<include name="application.xml" />
+				<include name="application.xml" /> -->
 				<!--				<include name="jboss-app.xml" />-->
-			</metainf>
+		<!--	</metainf>
 
 			<fileset dir="${build.dir}/jar" includes="${ant.project.name}.jar,${ant.project.name}.war" />
 		</jar>
-	</target>
+	</target> -->
 
 	<target name="deploy" description="Deploys the JEE application to JBoss">
 		<echo message="Deploying to JBoss" />
-		<copy file="${build.dir}/${ant.project.name}.ear" todir="${jboss.deploy.dir}" overwrite="true" />
+		<!-- <copy file="${build.dir}/${ant.project.name}.ear" todir="${jboss.deploy.dir}" overwrite="true" /> -->
+		<copy file="${build.dir}/jar/${ant.project.name}.war" todir="${jboss.deploy.dir}" overwrite="true" />
+		<!-- <copy file="${build.dir}/jar/${ant.project.name}.jar" todir="${jboss.deploy.dir}" overwrite="true" /> -->
 	</target>
 
 	<target name="undeploy" description="Undeploys the JEE application from JBoss">
