@@ -169,7 +169,9 @@ public class TicketController implements Serializable{
 	public String bezahle() {
 		try {
 		  rechnungsBetrag = bestellvorgang.getGesamtpreis();
-		  Collection<Ticketbestellung> bestellungen = bestellvorgang.bezahleTickets(email);	
+		  Collection<Ticketbestellung> bestellungen = bestellvorgang.bezahleTickets(email);
+		  // remove EJB;
+		//  bestellvorgang.destroy();
 		  this.bezahlteBestellungen.setWrappedData(bestellungen);
 		} catch (KapazitaetErschoepftException e) {
 			FacesUtils.addMessage(null, "ticketbestellung_exceedsContingent");

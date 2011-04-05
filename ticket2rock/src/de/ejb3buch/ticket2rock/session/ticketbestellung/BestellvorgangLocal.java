@@ -84,6 +84,8 @@ public interface BestellvorgangLocal  {
 	 */
 	public Collection<Ticketbestellung>  bezahleTickets(String email)throws KapazitaetErschoepftException;
 	
+	public void destroy();
+	
     /**
      * 
      * @return true falls diesem Bestellvorgang  Bestellungen enthält, false falls nicht

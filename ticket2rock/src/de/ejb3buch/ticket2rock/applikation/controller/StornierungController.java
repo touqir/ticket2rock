@@ -26,6 +26,7 @@ package de.ejb3buch.ticket2rock.applikation.controller;
 
 import java.io.Serializable;
 
+import javax.annotation.Resource;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.jms.Queue;
@@ -38,25 +39,21 @@ import javax.naming.InitialContext;
 
 import org.apache.log4j.Logger;
 
-@Named("StornierungsController")
+@Named("StornierungController")
 @SessionScoped
 public class StornierungController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	static Logger logger = Logger.getLogger(StornierungController.class);
-
-	private String messageQueue;
-
+	
+	@Resource(mappedName="queue/ticket2rock")
+	private Queue queue;
+	
+	@Resource(mappedName="ConnectionFactory")
+	private QueueConnectionFactory factory;
+	
 	private String bestellnummer;
-
-	public String getMessageQueue() {
-		return messageQueue;
-	}
-
-	public void setMessageQueue(String messageQueue) {
-		this.messageQueue = messageQueue;
-	}
 
 	public String getBestellnummer() {
 		return bestellnummer;
@@ -70,20 +67,9 @@ public class StornierungController implements Serializable {
 		QueueConnection cnn = null;
 		QueueSender sender = null;
 		QueueSession sess = null;
-		Queue queue = null;
+//		Queue queue = null;
 
 		try {
-			InitialContext ctx = new InitialContext(System.getProperties());
-
-			// Der Name der JMS-Queue wurde in eine <managed-property>
-			// (in faces-config.xml) ausgelagert, um ihn beim Deployment
-			// an eine konkrete Queue in einer Applikationsserver-Instanz
-			// anpassen zu können.
-			// Für die Message-Driven Bean ist der Queue-Name im
-			// Deployment-Deskriptor ejb-jar.xml festgelegt.
-			queue = (Queue) ctx.lookup(this.messageQueue);
-			QueueConnectionFactory factory = (QueueConnectionFactory) ctx
-					.lookup("ConnectionFactory");
 			cnn = factory.createQueueConnection();
 			sess = cnn.createQueueSession(false, QueueSession.AUTO_ACKNOWLEDGE);
 

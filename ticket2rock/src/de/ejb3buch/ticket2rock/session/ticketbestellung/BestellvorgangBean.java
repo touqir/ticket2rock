@@ -35,6 +35,9 @@ import javax.ejb.PostActivate;
 import javax.ejb.PrePassivate;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
+import javax.enterprise.context.Conversation;
+import javax.enterprise.context.ConversationScoped;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -47,6 +50,7 @@ import de.ejb3buch.ticket2rock.exception.KapazitaetErschoepftException;
 import de.ejb3buch.ticket2rock.session.crud.KundenVerwaltungLocal;
 
 @Stateful
+@ConversationScoped
 public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 
     static Logger logger = Logger.getLogger(BestellvorgangBean.class);
@@ -55,6 +59,8 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 
     @PersistenceContext
     private EntityManager em;
+    
+    private @Inject Conversation conversation;
 
     @EJB
     private BenachrichtigungsserviceLocal benachrichtigungsService;
@@ -70,6 +76,7 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
         Ticketbestellung ticketBestellung = new Ticketbestellung();
         ticketBestellung.setKonzert(konzert);
         ticketBestellung.setAnzahl(ticketAnzahl);
+        if (!hasBestellungen()) conversation.begin();
         ticketBestellungen.add(ticketBestellung);
     }
 
@@ -97,6 +104,7 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
     @Remove
     public void verwerfeTicketbestellungen() {
         // TODO Auto-generated method stub
+    	conversation.end();
 
     }
 
@@ -117,7 +125,6 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
     /**
      * @inheritDoc
      */
-    @Remove
     public Collection<Ticketbestellung> bezahleTickets(String email) throws KapazitaetErschoepftException {
 
         // suche nach einen Kunden anhand der übergebenen email Adresse
@@ -132,19 +139,26 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
             em.merge(kunde);
         }
         if ((ticketBestellungen != null) && (!ticketBestellungen.isEmpty())) {
+        	kunde.setBestellungen(ticketBestellungen);
             for (Ticketbestellung bestellung : ticketBestellungen) {
                 Konzert konzert = bestellung.getKonzert();
                 konzert = em.find(Konzert.class, konzert.getId());
-                konzert.bestelleTickets(bestellung.getAnzahl());
-                em.merge(konzert);
+//                konzert.bestelleTickets(bestellung.getAnzahl());
+                //konzert = em.merge(konzert);
                 bestellung.setKonzert(konzert);
                 bestellung.setKunde(kunde);
+                
                 em.persist(bestellung);
             }
         }
 
         benachrichtigungsService.installiereKonzerterinnerungen(email, ticketBestellungen);
+    	conversation.end();
         return ticketBestellungen;
+    }
+    
+    @Remove
+    public void destroy(){
     }
 
     // Live-Statistik zur Nutzung dieser Bean
