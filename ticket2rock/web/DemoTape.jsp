@@ -23,9 +23,11 @@
 -->
 
 <%@ page
-	import="javax.naming.*,java.util.*,java.text.SimpleDateFormat,de.ejb3buch.ticket2rock.entity.*,de.ejb3buch.ticket2rock.session.demo.*"%>
+	import="javax.naming.*,java.util.*,java.text.SimpleDateFormat,de.ejb3buch.ticket2rock.entity.*,de.ejb3buch.ticket2rock.session.demo.*,javax.inject.Inject"%>
 
-<%!private DemoTape demo = null;
+<%!
+@Inject
+private DemoTape demo;
 
 	private SimpleDateFormat datumsformat_Jahr = new SimpleDateFormat("yyyy");
 
@@ -34,15 +36,6 @@
 
 	private SimpleDateFormat datumsformat_TagMonatJahrStundeMinute = new SimpleDateFormat(
 			"dd.MM.yyyy HH:mm");
-
-	public void jspInit() {
-		try {
-			InitialContext ctx = new InitialContext();
-			demo = (DemoTape) ctx.lookup("ticket2rock/DemoTapeBean/local");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 %>
 
 <html>
