@@ -176,7 +176,7 @@ public class TicketController implements Serializable{
 		} catch (KapazitaetErschoepftException e) {
 			FacesUtils.addMessage(null, "ticketbestellung_exceedsContingent");
 		}		
-		bestellvorgang = null;
+		//bestellvorgang = null;
 		bestellungExistiert = false;
 		return "ticketkaufmeldung";
 	}
