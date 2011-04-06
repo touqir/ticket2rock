@@ -84,6 +84,7 @@ public class StornierungController implements Serializable {
 			sender = sess.createSender(queue);
 			sender.send(msg);
 			sess.close();
+			cnn.close();
 		} catch (Exception e) {
 			logger.error(e);
 		}

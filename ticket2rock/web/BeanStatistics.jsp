@@ -23,19 +23,11 @@
 -->
 
 <%@ page
-	import="javax.naming.InitialContext,java.util.Map,java.lang.reflect.Method,java.util.Iterator,de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsLocal"%>
+	import="javax.naming.InitialContext,java.util.Map,java.lang.reflect.Method,java.util.Iterator,de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsLocal,javax.inject.Inject"%>
 
-<%!private BeanStatisticsLocal beanstats = null;
-
-	public void jspInit() {
-		try {
-			InitialContext ctx = new InitialContext();
-			beanstats = (BeanStatisticsLocal) ctx
-					.lookup("ticket2rock/BeanStatisticsBean/local");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+<%!
+@Inject
+private BeanStatisticsLocal beanstats;
 
 	
 %>
