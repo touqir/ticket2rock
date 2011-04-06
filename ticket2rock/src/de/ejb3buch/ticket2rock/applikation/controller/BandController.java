@@ -28,6 +28,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -88,10 +89,6 @@ public class BandController implements Serializable {
 
 	//TODO might be obsolete
 	private List<String> bandMusikerList = new ArrayList<String>();
-
-	private HtmlSelectManyListbox musikerSelectComponent;
-
-	private HtmlSelectManyListbox bandMusikerSelectComponent;
 
 	// ajax test
 	private String textAjax;
@@ -242,42 +239,21 @@ public class BandController implements Serializable {
 	public void musikerSelected(ValueChangeEvent event) {
 
 		List<Long> newValues = (ArrayList<Long>) event.getNewValue();
-		boolean removedItem = false;
 		for (Long musikerId : newValues) {
 			SelectItem musikerSelectItem = musikerMap.get(musikerId.toString());
 			bandMusikerMap.put(musikerId.toString(), musikerSelectItem);
 			musikerMap.remove(musikerId.toString());
-			removedItem = true;
 		}
-		if (removedItem) {
-			// nowendig, damit sich das Entfernen eines Items nicht als
-			// valueChange in der Komponente registriert wird
-			musikerSelectComponent.setSubmittedValue(null);
-			musikerSelectComponent.setValue(null);
-		}
-
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.renderResponse();
 	}
 
 	@SuppressWarnings("unchecked")
 	public void bandMusikerSelected(ValueChangeEvent event) {
 		List<Long> newValues = (ArrayList<Long>) event.getNewValue();
-		boolean removedItem = false;
 		for (Long musikerId : newValues) {
 			SelectItem selectItem = bandMusikerMap.get(musikerId.toString());
 			musikerMap.put(musikerId.toString(), selectItem);
 			bandMusikerMap.remove(musikerId.toString());
-			removedItem = true;
 		}
-		if (removedItem) {
-			// nowendig, damit sich das Entfernen eines Items nicht als
-			// valueChange in der Komponente registriert wird
-			bandMusikerSelectComponent.setSubmittedValue(null);
-			bandMusikerSelectComponent.setValue(null);
-		}
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.renderResponse();
 	}
 
 	//TODO might be obsolete
@@ -349,24 +325,6 @@ public class BandController implements Serializable {
 
 	public void setBandMusikerList(List<String> bandMusikerList) {
 		this.bandMusikerList = bandMusikerList;
-	}
-
-	public HtmlSelectManyListbox getBandMusikerSelectComponent() {
-		return bandMusikerSelectComponent;
-	}
-
-	public void setBandMusikerSelectComponent(
-			HtmlSelectManyListbox bandMusikerSelectComponent) {
-		this.bandMusikerSelectComponent = bandMusikerSelectComponent;
-	}
-
-	public HtmlSelectManyListbox getMusikerSelectComponent() {
-		return musikerSelectComponent;
-	}
-
-	public void setMusikerSelectComponent(
-			HtmlSelectManyListbox musikerSelectComponent) {
-		this.musikerSelectComponent = musikerSelectComponent;
 	}
 
 }

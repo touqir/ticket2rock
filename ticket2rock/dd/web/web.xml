@@ -42,15 +42,6 @@
 	</context-param>
 
 
-	<context-param>
-
-		<param-name>org.richfaces.SKIN</param-name>
-
-		<param-value>blueSky</param-value>
-
-	</context-param>
-
-
 	<!-- MyFaces -->
 
 
@@ -85,26 +76,6 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.faces</url-pattern>
 	</servlet-mapping>
-
-	<filter>
-		<display-name>RichFaces Filter</display-name>
-		<filter-name>richfaces</filter-name>
-		<filter-class>org.ajax4jsf.Filter</filter-class>
-	</filter>
-
-	<filter-mapping>
-
-		<filter-name>richfaces</filter-name>
-
-		<servlet-name>Faces Servlet</servlet-name>
-
-		<dispatcher>REQUEST</dispatcher>
-
-		<dispatcher>FORWARD</dispatcher>
-
-		<dispatcher>INCLUDE</dispatcher>
-
-	</filter-mapping>
 
 	<welcome-file-list>
 		<welcome-file>facesindex.html</welcome-file>

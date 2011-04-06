@@ -24,93 +24,95 @@
 
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	    		xmlns:ui="http://java.sun.com/jsf/facelets"
-	  			xmlns:h="http://java.sun.com/jsf/html"
-	  			xmlns:f="http://java.sun.com/jsf/core"
-	  			xmlns:a4j="https://ajax4jsf.dev.java.net/ajax"
-				template="template.xhtml">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui" template="template.xhtml">
 
-<ui:define name="content">
-  <div class="section">
-    <h1><h:outputText value="#{msg.bandform_title}" /></h1>
-  </div>
-  
-  <div class="section">     
-	<h:form id="bandForm">      
-	  <fieldset>
-		<div class="entry">
-			<div class="label"><h:outputLabel for="bandname" value="#{msg.bandform_name}" /></div>
-			<div class="input">
-				<h:inputText id="bandname" value="#{BandController.band.name}" required="true" />
-		    </div>
-		    <span class="errors"><h:message for="bandname" /></span>		
+	<ui:define name="content">
+		<div class="section">
+			<h1>
+				<h:outputText value="#{msg.bandform_title}" />
+			</h1>
 		</div>
-        <div class="entry errors"><h:messages globalOnly="true" /></div>
-            
-		<table align="center" style="border:0;border-bottom:0;border-left:0">
-		  <tr>
-		    <td>
-		      <h:outputLabel for="bandMusikerList" value="#{msg.bandform_bandmusicians}" />
-		    </td>
-		    <td>
-		    </td>
-		    <td>
-		    <h:outputLabel for="musikerList" value="#{msg.bandform_availablemusicians}" />
-		    </td>
-		  </tr>
-		  <tr>
-		    <td>
-             <h:selectManyListbox id="bandMusikerList" size="8" value="#{BandController.bandMusikerList}" 
-             immediate="true" valueChangeListener="#{BandController.bandMusikerSelected}" 
-             binding="#{BandController.bandMusikerSelectComponent}" style="width:170px">
-               <f:convertNumber/>
-               <f:selectItems value="#{BandController.bandMusikerSelectItems}" />
-             </h:selectManyListbox>
-			</td>		
-			<td>
-			   <h:commandButton id="deselectButton" class="button" value="&#60;&#60;"/><br/>
-			   <h:commandButton id="selectButton" class="button" value="&#62;&#62;"/>
-			</td>
-			<td>
-	         <h:selectManyListbox id="musikerList" size="7" 
-                value="#{BandController.musikerList}" immediate="true" 
-                valueChangeListener="#{BandController.musikerSelected}" 
-                binding="#{BandController.musikerSelectComponent}" style="width:170px">
-               <f:convertNumber/>
-               <f:selectItems value="#{BandController.musikerSelectItems}" />
-             </h:selectManyListbox>
-			</td>
-		   </tr>
-		 </table>  
-		<div class="entry">
-			<div class="label">&#160;</div>
-			<div class="input">
-				 <h:commandButton id="submitAdd" class="button" action="#{BandController.addBand}" 
-							value="#{msg.bandform_save}" rendered="#{not BandController.editMode}" />
-		         <h:commandButton id="submitUpdate" class="button" action="#{BandController.updateBand}" 
-		        	value="#{msg.bandform_save}" rendered="#{BandController.editMode}" />&#160;&#160;
-		         <h:commandButton id="submitCancel" class="button" immediate="true" action="#{BandController.cancel}" 
-		        	value="#{msg.bandform_cancel}" />		        		        	
-			</div>
-	    </div>
-	  </fieldset>
-   <h:commandLink action="ajaxtest">
-	  <h:outputText value="ajaxtest" />
-   </h:commandLink>						 
-   
-   </h:form>
 
-  
-  </div>
-</ui:define>
+		<div class="section">
+			<h:form id="bandForm">
+				<fieldset>
+					<div class="entry">
+						<div class="label">
+							<h:outputLabel for="bandname" value="#{msg.bandform_name}" />
+						</div>
+						<div class="input">
+							<h:inputText id="bandname" value="#{BandController.band.name}"
+								required="true" />
+						</div>
+						<span class="errors"><h:message for="bandname" /> </span>
+					</div>
+					<div class="entry errors">
+						<h:messages globalOnly="true" />
+					</div>
 
-<!-- sidebar -->
-<ui:define name="sidebar">
-<p>
-Verwaltung einer Persistent Entity vom Typ <em>Band</em>.
-Hier wird der Name der Band festgelegt.
-Ausserdem k&#246;nnen der Band einer oder mehrere Musiker zugeordnet werden.
-</p>
-</ui:define>
+					<table align="center"
+						style="border: 0; border-bottom: 0; border-left: 0">
+						<tr>
+							<td><h:outputLabel for="bandMusikerList"
+									value="#{msg.bandform_bandmusicians}" /></td>
+							<td></td>
+							<td><h:outputLabel for="musikerList"
+									value="#{msg.bandform_availablemusicians}" /></td>
+						</tr>
+						<tr>
+							<td><h:selectManyListbox id="bandMusikerList" size="8"
+									value="#{BandController.bandMusikerList}" immediate="true"
+									valueChangeListener="#{BandController.bandMusikerSelected}"
+									style="width:170px">
+									<f:convertNumber />
+									<f:selectItems value="#{BandController.bandMusikerSelectItems}" />
+								</h:selectManyListbox></td>
+							<td><h:commandButton id="deselectButton" class="button"
+									value="&#60;&#60;" /><br /> <h:commandButton
+									id="selectButton" class="button" value="&#62;&#62;" /></td>
+							<td><h:selectManyListbox id="musikerList" size="7"
+									value="#{BandController.musikerList}" immediate="true"
+									valueChangeListener="#{BandController.musikerSelected}"
+									style="width:170px">
+									<f:convertNumber />
+									<f:selectItems value="#{BandController.musikerSelectItems}" />
+								</h:selectManyListbox></td>
+						</tr>
+					</table>
+					<div class="entry">
+						<div class="label">&#160;</div>
+						<div class="input">
+							<h:commandButton id="submitAdd" class="button"
+								action="#{BandController.addBand}" value="#{msg.bandform_save}"
+								rendered="#{not BandController.editMode}" />
+							<h:commandButton id="submitUpdate" class="button"
+								action="#{BandController.updateBand}"
+								value="#{msg.bandform_save}"
+								rendered="#{BandController.editMode}" />
+							&#160;&#160;
+							<h:commandButton id="submitCancel" class="button"
+								immediate="true" action="#{BandController.cancel}"
+								value="#{msg.bandform_cancel}" />
+						</div>
+					</div>
+				</fieldset>
+				<h:commandLink action="ajaxtest">
+					<h:outputText value="ajaxtest" />
+				</h:commandLink>
+			</h:form>
+		</div>
+	</ui:define>
+
+	<!-- sidebar -->
+	<ui:define name="sidebar">
+		<p>
+			Verwaltung einer Persistent Entity vom Typ <em>Band</em>. Hier wird
+			der Name der Band festgelegt. Ausserdem k&#246;nnen der Band einer
+			oder mehrere Musiker zugeordnet werden.
+		</p>
+	</ui:define>
 
 </ui:composition>
