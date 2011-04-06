@@ -67,7 +67,6 @@ public class StornierungController implements Serializable {
 		QueueConnection cnn = null;
 		QueueSender sender = null;
 		QueueSession sess = null;
-//		Queue queue = null;
 
 		try {
 			cnn = factory.createQueueConnection();
