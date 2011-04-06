@@ -79,7 +79,7 @@ public class KonzertController implements Serializable {
 		List<Konzert> konzerte = auskunftLocal.sucheKonzerte(ortsName,vonDatum,bisDatum);
 		logger.debug("detected number of concerts: " + konzerte.size());
 		this.konzertListDataModel.setWrappedData(konzerte);
-		return "konzertsuchergebnis";
+		return "konzertsuchErgebnis";
 	}
 	
 	public String selectConcert() {

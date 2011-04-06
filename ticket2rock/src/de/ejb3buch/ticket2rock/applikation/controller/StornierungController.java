@@ -88,6 +88,6 @@ public class StornierungController implements Serializable {
 			logger.error(e);
 		}
 
-		return "stornierungsergebnis";
+		return "stornierungErgebnis";
 	}
 }

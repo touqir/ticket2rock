@@ -138,7 +138,7 @@ public class BandController implements Serializable {
 		// fülle die Musiker Maps
 		this.bandMusikerMap = new HashMap<String, SelectItem>();
 		this.musikerMap = this.populateMusikerMap();
-		return "bandform";
+		return "band";
 	}
 
 	/**
@@ -158,7 +158,7 @@ public class BandController implements Serializable {
 				musikerMap.remove(bandMusikerName);
 			}
 		}
-		return "bandform";
+		return "band";
 	}
 
 	/**

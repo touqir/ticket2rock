@@ -158,7 +158,7 @@ public class TicketController implements Serializable{
 				.getRowData();
 		bestellvorgang.verwerfeTicketbestellung(bestellung);
 		bestellungExistiert = bestellvorgang.hasBestellungen();
-		return "showBestellungen";
+		return "bestellungen";
 	}
 
 	/**
@@ -177,7 +177,7 @@ public class TicketController implements Serializable{
 		//bestellvorgang = null;
 		bestellungExistiert = false;
 		// remove EJB;
-		bestellvorgang.destroy();
+		// bestellvorgang.destroy();
 		return "ticketkaufmeldung";
 	}
 
