@@ -22,7 +22,7 @@
 	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-function createjsDOMenu() {
+function createjsDOMenu(cid) {
   fixedMenu1 = new jsDOMenu(120);
   with (fixedMenu1) {
     addMenuItem(new menuItem("Band", "", "bandlist.faces"));
@@ -32,9 +32,16 @@ function createjsDOMenu() {
   
   
   fixedMenu2 = new jsDOMenu(120);
+  if (cid == undefined){
   with (fixedMenu2) {
     addMenuItem(new menuItem("Konzert suchen", "", "konzertsuche.faces"));
     addMenuItem(new menuItem("Bestellung stornieren", "", "stornierung.faces"));
+  }
+  }else{
+	  with (fixedMenu2) {
+		    addMenuItem(new menuItem("Konzert suchen", "", "konzertsuche.faces?cid="+cid));
+		    addMenuItem(new menuItem("Bestellung stornieren", "", "stornierung.faces?cid="+cid));
+		  }
   }
   
   

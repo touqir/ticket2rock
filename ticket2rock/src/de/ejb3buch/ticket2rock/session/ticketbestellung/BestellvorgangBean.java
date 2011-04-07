@@ -114,6 +114,8 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
      */
     public void verwerfeTicketbestellung(Ticketbestellung bestellung) {
         ticketBestellungen.remove(bestellung);
+        if(!hasBestellungen())
+        	conversation.end();
     }
 
     /**

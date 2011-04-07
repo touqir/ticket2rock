@@ -1140,9 +1140,9 @@ function setPopUpMenu(menuObj) { // Public method
 /*
 Check browser compatibility and create the menus.
 */
-function initjsDOMenu() { // Public method
+function initjsDOMenu(cid) { // Public method
   if (document.createElement && document.getElementById) {
-    createjsDOMenu();
+    createjsDOMenu(cid);
   }
 }
 

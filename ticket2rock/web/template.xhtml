@@ -37,7 +37,7 @@
     <script type="text/javascript" src="./js/ticket2rock.inc.js"></script>
     <script type="text/javascript" src="./js/utils.js"></script>
 </head>
-<body onload="initjsDOMenu()">
+<body onload="initjsDOMenu(#{javax.enterprise.context.conversation.id})">
 <f:loadBundle basename="de.ejb3buch.ticket2rock.applikation.resources.Message" var="msg" />
 <div id="document">
 	<div id="header">	
