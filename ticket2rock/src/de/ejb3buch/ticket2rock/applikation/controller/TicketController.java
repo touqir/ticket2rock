@@ -119,10 +119,6 @@ public class TicketController implements Serializable{
 	public String bestelleTickets() {
         bezahlteBestellungen = new ListDataModel();
 		// hole über den ServiceLocator einen Bestellvorgang, falls dies für
-		// diese Session noch nicht geschehen ist
-//		if (bestellvorgang == null) {
-//			bestellvorgang = serviceLocator.getBestellvorgang();
-//		}
 		bestellvorgang.bestelleTickets(this.konzert, ticketanzahl);
 
 		this.bestellungExistiert = true;
@@ -174,10 +170,7 @@ public class TicketController implements Serializable{
 		} catch (KapazitaetErschoepftException e) {
 			FacesUtils.addMessage(null, "ticketbestellung_exceedsContingent");
 		}		
-		//bestellvorgang = null;
 		bestellungExistiert = false;
-		// remove EJB;
-		// bestellvorgang.destroy();
 		return "ticketkaufmeldung";
 	}
 

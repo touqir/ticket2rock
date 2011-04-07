@@ -76,7 +76,8 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
         Ticketbestellung ticketBestellung = new Ticketbestellung();
         ticketBestellung.setKonzert(konzert);
         ticketBestellung.setAnzahl(ticketAnzahl);
-        if (!hasBestellungen()) conversation.begin();
+        if (!hasBestellungen())
+        	conversation.begin();
         ticketBestellungen.add(ticketBestellung);
     }
 
