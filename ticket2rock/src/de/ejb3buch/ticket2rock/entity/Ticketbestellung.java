@@ -26,8 +26,10 @@ package de.ejb3buch.ticket2rock.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.TableGenerator;
 
 /**
  * Eine Ticketbestellung bezieht sich immer auf ein einzelnes Konzert, kann
@@ -36,6 +38,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 public class Ticketbestellung {
+
 	private int id;
 
 	private Konzert konzert;
@@ -43,13 +46,13 @@ public class Ticketbestellung {
 	private Kunde kunde;
 
 	private int anzahl;
-	
 
 	/**
 	 * ID ist zugleich Primärschlüssel und (fachliche) Bestell-ID
 	 */
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "TicketbestellungGen")
+	@TableGenerator(initialValue = 2, name = "TicketbestellungGen")
 	public int getId() {
 		return id;
 	}

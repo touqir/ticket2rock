@@ -31,8 +31,10 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.TableGenerator;
 
 /**
  * Ein Kunde kann Konzerttickets bestellen. Er wird derzeit nur über eine
@@ -46,11 +48,11 @@ public class Kunde {
 
 	private String email;
 
-	private List<Ticketbestellung> bestellungen = null;
-	
+	private List<Ticketbestellung> bestellungen;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "KundeGen")
+	@TableGenerator(initialValue = 2, name = "KundeGen")
 	public int getId() {
 		return id;
 	}
