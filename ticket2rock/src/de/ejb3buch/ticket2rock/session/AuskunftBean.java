@@ -29,6 +29,7 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
@@ -42,8 +43,7 @@ import org.apache.log4j.Logger;
 import de.ejb3buch.ticket2rock.entity.Konzert;
 
 @Stateless
-@SuppressWarnings("unchecked")
-@WebService
+@WebService(serviceName="KonzertInfo")
 @SOAPBinding(style = Style.RPC)
 public class AuskunftBean implements Auskunft, AuskunftLocal {
 
@@ -56,7 +56,7 @@ public class AuskunftBean implements Auskunft, AuskunftLocal {
 	 * @inheritDoc
 	 */
 	@WebMethod
-	public String sucheKonzerteWeb(String ortsName, Date vonDatum, Date bisDatum) {
+	public String sucheKonzerteWeb(@WebParam(name="Ortsname")String ortsName,@WebParam(name="Startdatum") Date vonDatum,@WebParam(name="Enddatum") Date bisDatum) {
 		List<Konzert> konzerte = sucheKonzerte(ortsName, vonDatum, bisDatum);
 		StringBuffer resultate = new StringBuffer("<konzert-liste>\n");
 		for (Konzert konzert : konzerte) {
@@ -81,7 +81,7 @@ public class AuskunftBean implements Auskunft, AuskunftLocal {
 		resultate.append("</konzert-liste>");
 		return resultate.toString();
 	}
-
+	@WebMethod(exclude=true)
 	public List<Konzert> sucheKonzerte(String ortsName, Date vonDatum,
 			Date bisDatum) {
 
