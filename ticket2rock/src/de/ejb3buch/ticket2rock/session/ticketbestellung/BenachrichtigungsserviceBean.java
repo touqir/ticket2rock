@@ -1,10 +1,12 @@
 /**
- *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3 professionell" (dpunkt).
+ *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
  *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
- *  Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
+ *  Rockkonzerten. 
  *
- *  Copyright (C) 2006
- *  Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jörg und Holger Koschek
+ *  Copyright (C) 2011
+ *  Jo Ehm, Stefan M. Heldt, Oliver Ihns, Holger Koschek,
+ *  Carsten Sahling, Roman Schloemmer, Norman Erck, Daniel Steinhöfer,
+ *  Carl A. Düvel.
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
