@@ -1,12 +1,14 @@
 /*
-	Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3 professionell" (dpunkt).
-	Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fï¿½r
-	Rockkonzerte auf Basis von EJB 3.0 und JavaServer Faces.
+
+	Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
+	Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+	Rockkonzerte auf Basis von EJB 3.1 und JavaServer Faces.
 	
-	Copyright (C) 2006
-	Jo Ehm, Dierk Harbeck, Stefan M. Heldt, Oliver Ihns, Jochen Jï¿½rg, Holger Koschek,
-	Carsten Sahling, Roman Schloemmer
-	
+	Copyright (C) 2006-2011
+	Jo Ehm, Stefan M. Heldt, Oliver Ihns, Holger Koschek,
+	Carsten Sahling, Roman Schloemmer, Norman Erck, Daniel Steinhöfer,
+	Carl A. Düvel.
+
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License
 	as published by the Free Software Foundation; either version 2
@@ -20,6 +22,7 @@
 	You should have received a copy of the GNU General Public License
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+
 */
 
 function createjsDOMenu(cid) {
