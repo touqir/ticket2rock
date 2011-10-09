@@ -60,8 +60,7 @@ public class AbfangjaegerTest {
 		}
 	}
 
-	@Test
-	@Ignore("TODO Carl: Make it work")
+	@Test 
 	public void erfolgreicherAufruf() {
 		int alleAufrufe;
 		int fehlgeschlageneAufrufe;

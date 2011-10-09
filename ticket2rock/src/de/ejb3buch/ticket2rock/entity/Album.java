@@ -95,11 +95,7 @@ public class Album {
 		this.interpret = interpret;
 	}
 
-	// Hier muss der Default Fetch Type (LAZY) überschrieben werden,
-	// sonst beschwert sich JBoss ("org.hibernate.LazyInitializationException:
-	// failed to lazily initialize a collection of role:
-	// de.ejb3buch.ticket2rock.entity.Album.songs,
-	// no session or session was closed")
+
 	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "album")
 	public List<Song> getSongs() {
 		return songs;

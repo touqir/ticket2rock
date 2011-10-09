@@ -37,6 +37,7 @@ import javax.inject.Named;
 import org.apache.log4j.Logger;
 
 import de.ejb3buch.ticket2rock.entity.Konzert;
+import de.ejb3buch.ticket2rock.session.AuskunftHeuteLocal;
 import de.ejb3buch.ticket2rock.session.AuskunftLocal;
 
 @Named("KonzertController")
@@ -52,20 +53,22 @@ public class KonzertController implements Serializable {
 
 	@Inject
 	private TicketController ticketController;
-	
+
 	@Inject
 	private AuskunftLocal auskunftLocal;
-	
+
+	@Inject
+	private AuskunftHeuteLocal auskunftHeute;
+
 	private String ortsName;
-	
+
 	private Date vonDatum;
-	
+
 	private Date bisDatum;
-	
+
 	private DataModel konzertListDataModel = new ListDataModel();
-	
+
 	private Konzert konzert;
-	
 
 	public String getOrtsName() {
 		return ortsName;
@@ -73,21 +76,31 @@ public class KonzertController implements Serializable {
 
 	public void setOrtsName(String ortsName) {
 		this.ortsName = ortsName;
-	}	
+	}
+
+	public DataModel getTagesaktuelleKonzerte() {
+		List<Konzert> konzerte = auskunftHeute.sucheTagesaktuelleKonzerte();
+
+		logger.debug("detected number of concerts: " + konzerte.size());
+		this.konzertListDataModel.setWrappedData(konzerte);
+
+		return konzertListDataModel;
+	}
 
 	public String search() {
-		List<Konzert> konzerte = auskunftLocal.sucheKonzerte(ortsName,vonDatum,bisDatum);
+
+		List<Konzert> konzerte = auskunftLocal.sucheKonzerte(ortsName, vonDatum, bisDatum);
+
 		logger.debug("detected number of concerts: " + konzerte.size());
 		this.konzertListDataModel.setWrappedData(konzerte);
 		return "konzertsuchErgebnis";
 	}
-	
+
 	public String selectConcert() {
-		konzert = (Konzert) this.konzertListDataModel.getRowData();	
+		konzert = (Konzert) this.konzertListDataModel.getRowData();
 		ticketController.setKonzert(konzert);
 		return "ticketbestellung";
-	}	
-	
+	}
 
 	public DataModel getKonzertSuchErgebnis() {
 		return konzertListDataModel;
@@ -96,7 +109,7 @@ public class KonzertController implements Serializable {
 	public void setVonDatum(Date vonDatum) {
 		this.vonDatum = vonDatum;
 	}
-	
+
 	public Date getVonDatum() {
 		return vonDatum;
 	}

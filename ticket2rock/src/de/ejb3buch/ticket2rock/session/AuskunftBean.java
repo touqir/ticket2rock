@@ -26,7 +26,11 @@ package de.ejb3buch.ticket2rock.session;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.Future;
 
+import javax.ejb.AsyncResult;
+import javax.ejb.Asynchronous;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -41,9 +45,10 @@ import javax.persistence.TemporalType;
 import org.apache.log4j.Logger;
 
 import de.ejb3buch.ticket2rock.entity.Konzert;
+import de.ejb3buch.ticket2rock.session.crud.KonzertVerwaltungLocal;
 
 @Stateless
-@WebService(serviceName="KonzertInfo")
+@WebService(serviceName = "KonzertInfo")
 @SOAPBinding(style = Style.RPC)
 public class AuskunftBean implements Auskunft, AuskunftLocal {
 
@@ -52,11 +57,14 @@ public class AuskunftBean implements Auskunft, AuskunftLocal {
 	@PersistenceContext
 	private EntityManager em;
 
+	@EJB
+	private KonzertVerwaltungLocal konzertVerwaltung;
+
 	/**
 	 * @inheritDoc
 	 */
 	@WebMethod
-	public String sucheKonzerteWeb(@WebParam(name="Ortsname")String ortsName,@WebParam(name="Startdatum") Date vonDatum,@WebParam(name="Enddatum") Date bisDatum) {
+	public String sucheKonzerteWeb(@WebParam(name = "Ortsname") String ortsName, @WebParam(name = "Startdatum") Date vonDatum, @WebParam(name = "Enddatum") Date bisDatum) {
 		List<Konzert> konzerte = sucheKonzerte(ortsName, vonDatum, bisDatum);
 		StringBuffer resultate = new StringBuffer("<konzert-liste>\n");
 		for (Konzert konzert : konzerte) {
@@ -81,9 +89,9 @@ public class AuskunftBean implements Auskunft, AuskunftLocal {
 		resultate.append("</konzert-liste>");
 		return resultate.toString();
 	}
-	@WebMethod(exclude=true)
-	public List<Konzert> sucheKonzerte(String ortsName, Date vonDatum,
-			Date bisDatum) {
+
+	@WebMethod(exclude = true)
+	public List<Konzert> sucheKonzerte(String ortsName, Date vonDatum, Date bisDatum) {
 
 		// generiere den query String dynamisch abhängig von der
 		// Belegung der Übergabeparameter
@@ -128,11 +136,27 @@ public class AuskunftBean implements Auskunft, AuskunftLocal {
 
 		List resultList = query.getResultList();
 		if (logger.isDebugEnabled() && resultList != null) {
-			logger
-					.debug("Anzahl der gefundenen Konzerte: "
-							+ resultList.size());
+			logger.debug("Anzahl der gefundenen Konzerte: " + resultList.size());
 		}
 		return resultList;
+	}
+
+	@Override
+	@Asynchronous
+	public Future<Integer> schaetzeErwarteteBesucher(int konzertId) {
+		Integer result;
+		// Sehr komplexe Berechnung der zu erwartenden Besucher eines Konzert
+		// basierend auf statistischen Werten, die
+		// empirisch Ÿber die gloreichen Jahre der Rockgeschichte hinweg
+		// ermittelt worden sind ;-)
+		Konzert konzert = konzertVerwaltung.getConcertWithDetailsById(konzertId);
+		int maxBesucher = konzert.getOrt().getKapazitaet(); 
+		int anzahlKonzerte = konzert.getInterpret().getKonzerte().size();
+		int anzahlAlben = konzert.getInterpret().getAlben().size();
+
+		result = new Integer((int) Math.min(maxBesucher, Math.round(maxBesucher * 0.7 + 0.05 * (anzahlAlben +  anzahlKonzerte))));
+
+		return new AsyncResult<Integer>(result);
 	}
 
 }

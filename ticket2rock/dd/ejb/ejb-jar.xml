@@ -86,6 +86,13 @@
 			<ejb-class>de.ejb3buch.ticket2rock.session.AuskunftBean</ejb-class>
 			<session-type>Stateless</session-type>
 		</session>
+    	<session>
+			<ejb-name>AuskunftHeuteBean</ejb-name>
+			<business-local>de.ejb3buch.ticket2rock.session.AuskunftHeuteLocal</business-local>
+			<business-remote>de.ejb3buch.ticket2rock.session.AuskunftHeute</business-remote>
+			<ejb-class>de.ejb3buch.ticket2rock.session.AuskunftHeuteBean</ejb-class>
+			<session-type>Singleton</session-type>
+		</session>
 		<session>
 			<ejb-name>BestellvorgangBean</ejb-name>
 			<business-local>de.ejb3buch.ticket2rock.session.ticketbestellung.BestellvorgangLocal</business-local>

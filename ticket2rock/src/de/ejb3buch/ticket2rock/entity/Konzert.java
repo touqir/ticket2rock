@@ -123,7 +123,7 @@ public class Konzert {
     public Interpret getInterpret() {
         // Bei Konzerten im Rahmen einer Tournee wird der Interpret bei der
         // Tournee gespeichert.
-        if (interpret == null && tournee != null) {
+        if (interpret == null && tournee != null) {        	
             return tournee.getInterpret();
         } else {
             return interpret;

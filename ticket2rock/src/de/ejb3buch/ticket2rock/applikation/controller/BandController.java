@@ -28,7 +28,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -37,7 +36,6 @@ import java.util.TreeSet;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.html.HtmlSelectManyListbox;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.DataModel;
@@ -71,9 +69,6 @@ public class BandController implements Serializable {
 	@Inject
 	private MusikerVerwaltungLocal musikVerwaltungLocal;
 	
-//	@Inject @Credit
-//	private PaymentProcessor paymentProcessor;
-
 	private boolean editMode = false;
 
 	private BandBackingBean bandBackingBean = null;
@@ -96,12 +91,6 @@ public class BandController implements Serializable {
 	public String getMessage(){
 		return "yeah";
 	}
-	
-	// look for injected paymentProcessor
-//	public String getPaymentProcessorType(){
-//		return paymentProcessor.getType();
-//	}
-
 	
 	public String getTextAjax() {
 		return textAjax;
@@ -129,7 +118,7 @@ public class BandController implements Serializable {
 	}
 
 	/**
-	 * Vorbereitungen treffen, um eine weiter Band anzulegen
+	 * Vorbereitungen treffen, um eine weitere Band anzulegen
 	 */
 	public String addNewBand() {
 		logger.debug("preparing bandBackingBean input form");
@@ -255,13 +244,11 @@ public class BandController implements Serializable {
 			bandMusikerMap.remove(musikerId.toString());
 		}
 	}
-
-	//TODO might be obsolete
+ 
 	public List<String> getMusikerList() {
 		return musikerList;
 	}
-
-	//TODO might be obsolete
+ 
 	public void setMusikerList(List<String> musikerList) {
 		this.musikerList = musikerList;
 	}

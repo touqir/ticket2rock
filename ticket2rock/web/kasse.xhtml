@@ -7,7 +7,7 @@
 	Jo Ehm, Stefan M. Heldt, Oliver Ihns, Holger Koschek,
 	Carsten Sahling, Roman Schloemmer, Norman Erck, Daniel Steinhöfer,
 	Carl A. Düvel.
-
+	
 	This program is free software; you can redistribute it and/or
 	modify it under the terms of the GNU General Public License
 	as published by the Free Software Foundation; either version 2
@@ -74,7 +74,13 @@
 				   <h:outputText value="#{bestellung.konzert.ticketpreis}">
 					  <f:convertNumber type="currency" currencySymbol="&#8364;"/>
 				   </h:outputText>  
-   				</h:column>	   				
+   				</h:column>	
+   				  			    <h:column>
+				   <f:facet name="header">
+					  <h:outputText value="#{msg.anzahlbesucher_title}" />
+				   </f:facet>
+				   <h:outputText value="#{bestellung.erwarteteBesucher}"/>  
+   				</h:column>	    				
 		  </h:dataTable>
           <br/>
           <fieldset>

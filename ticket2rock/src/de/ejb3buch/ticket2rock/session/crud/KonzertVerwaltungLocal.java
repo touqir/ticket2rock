@@ -67,5 +67,12 @@ public interface KonzertVerwaltungLocal {
 	 */
 	public Konzert getConcertById(Integer konzertId);
     
+	/**
+	 * Selektiert ein Konzert für eine gegebene Id und lädt die Beziehungen für das Konzert.
+	 * @param konzertId
+	 * @return Konzert Entität, null fallse keine Konzert-Entität
+	 * mit dieser id existiert
+	 */
+	public Konzert getConcertWithDetailsById(Integer konzertId);
 
 }

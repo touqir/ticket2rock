@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
 	Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
 	Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
@@ -24,7 +23,6 @@
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -->
-
 <entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm/orm_2_0.xsd"
@@ -32,10 +30,7 @@
 	<persistence-unit-metadata>
 		<persistence-unit-defaults>
 			<entity-listeners>
-				<entity-listener
-					class="de.ejb3buch.ticket2rock.entitylistener.NewEntityListener" />
-<!--				<entity-listener
-					class="de.ejb3buch.ticket2rock.session.interceptor.demo.EntiGeburtenkontrolle" /> -->
+				<entity-listener class="de.ejb3buch.ticket2rock.entitylistener.NewEntityListener" />
 			</entity-listeners>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>

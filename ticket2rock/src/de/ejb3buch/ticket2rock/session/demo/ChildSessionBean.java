@@ -33,4 +33,8 @@ public class ChildSessionBean extends ParentSessionBean {
 	public void doSomethingElse() {
 		System.out.println("Did something else.");
 	}
+
+	void defaultVisibility() {
+		System.out.println("Did something visible.");
+	}
 }

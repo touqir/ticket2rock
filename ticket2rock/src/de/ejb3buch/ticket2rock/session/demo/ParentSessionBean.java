@@ -24,13 +24,24 @@
  */
 package de.ejb3buch.ticket2rock.session.demo;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
 
 @LocalBean
 @Stateless
+@WebService
 public class ParentSessionBean {
+	
+	@WebMethod
 	public void doSomething() {
 		System.out.println("Did something.");
+	}
+	
+	@PostConstruct
+	public void callback() {
+		System.out.println("Blub"+this.getClass().getName());
 	}
 }

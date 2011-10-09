@@ -50,7 +50,7 @@ import javax.persistence.TableGenerator;
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "TYP", discriminatorType = DiscriminatorType.CHAR)
-@DiscriminatorValue("I")
+@DiscriminatorValue("I") 
 public abstract class Interpret {
 
 	private Integer id;

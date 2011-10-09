@@ -52,11 +52,6 @@ public class Musiker extends Interpret {
 		this.geburtsname = geburtsname;
 	}
 
-	// Hier muss der Default Fetch Type (LAZY) überschrieben werden,
-	// sonst beschwert sich JBoss ("org.hibernate.LazyInitializationException:
-	// failed to lazily initialize a collection of role:
-	// de.ejb3buch.ticket2rock.entity.Musiker.bands,
-	// no session or session was closed")
 	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "musiker")
 	public Set<Band> getBands() {
 		return bands;

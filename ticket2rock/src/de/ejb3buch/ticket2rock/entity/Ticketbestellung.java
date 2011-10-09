@@ -30,6 +30,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.TableGenerator;
+import javax.persistence.Transient;
 
 /**
  * Eine Ticketbestellung bezieht sich immer auf ein einzelnes Konzert, kann
@@ -46,6 +47,10 @@ public class Ticketbestellung {
 	private Kunde kunde;
 
 	private int anzahl;
+	
+	
+	private int erwarteteBesucher;
+	
 
 	/**
 	 * ID ist zugleich Primärschlüssel und (fachliche) Bestell-ID
@@ -87,5 +92,12 @@ public class Ticketbestellung {
 		this.anzahl = anzahl;
 	}
 	
+	@Transient
+	public int getErwarteteBesucher() {
+		return erwarteteBesucher;
+	}
 	
+	public void setErwarteteBesucher(int besucher) {
+		this.erwarteteBesucher = besucher;		
+	}
 }

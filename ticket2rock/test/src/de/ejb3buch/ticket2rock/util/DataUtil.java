@@ -3,6 +3,9 @@ package de.ejb3buch.ticket2rock.util;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.naming.NamingException;
@@ -30,16 +33,13 @@ public class DataUtil {
 	private static void createConnectionPool(Server server) {
 		String com = "create-jdbc-connection-pool";
 		ParameterMap props = new ParameterMap();
-		props.add("datasourceclassname",
-				"org.apache.derby.jdbc.EmbeddedDataSource");
+		props.add("datasourceclassname", "org.apache.derby.jdbc.EmbeddedDataSource");
 		props.add("restype", "javax.sql.DataSource");
 		props.add("ping", "true");
-		props.add("property",
-				"ConnectionAttributes=create\\=true:DatabaseName=target/ticket2rock");
+		props.add("property", "ConnectionAttributes=create\\=true:DatabaseName=target/ticket2rock");
 
 		props.add("DEFAULT", "ticket2rock");
-		CommandRunner run = server.getHabitat().getComponent(
-				CommandRunner.class);
+		CommandRunner run = server.getHabitat().getComponent(CommandRunner.class);
 		ActionReport rep = server.getHabitat().getComponent(ActionReport.class);
 		run.getCommandInvocation(com, rep).parameters(props).execute();
 	}
@@ -49,34 +49,26 @@ public class DataUtil {
 		ParameterMap par = new ParameterMap();
 		par.add("connectionpoolid", "ticket2rock");
 		par.add("jndi_name", "jdbc/ticket2rock");
-		CommandRunner runner = server.getHabitat().getComponent(
-				CommandRunner.class);
-		ActionReport report = server.getHabitat().getComponent(
-				ActionReport.class);
+		CommandRunner runner = server.getHabitat().getComponent(CommandRunner.class);
+		ActionReport report = server.getHabitat().getComponent(ActionReport.class);
 		runner.getCommandInvocation(command, report).parameters(par).execute();
 	}
 
-	static void insertTestData() throws NamingException, SQLException,
-			IOException, NotSupportedException, SystemException,
-			SecurityException, IllegalStateException, RollbackException,
-			HeuristicMixedException, HeuristicRollbackException {
-		EntityManager em = Persistence
-				.createEntityManagerFactory("ticket2rock")
-				.createEntityManager();
+	static void insertTestData() throws NamingException, SQLException, IOException, NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException {
+		EntityManager em = Persistence.createEntityManagerFactory("ticket2rock").createEntityManager();
 		EntityTransaction utx = em.getTransaction();
 		@SuppressWarnings("unchecked")
-		List<String> lines = FileUtils.readLines(new File(
-				"test/conf/import.sql.test"));
+		List<String> lines = FileUtils.readLines(new File("test/conf/import.sql.test"));
 		utx.begin();
 		for (String line : lines) {
 			if (isNotComment(line) && isNotEmpty(line)) {
-				em.createNativeQuery(line.replace(";", "")).executeUpdate();
+	 			em.createNativeQuery(line.replace(";", "")).executeUpdate();
 			}
 		}
 		utx.commit();
 		em.close();
 	}
-	
+
 	static boolean isNotComment(String line) {
 		return !line.trim().startsWith("--");
 	}
@@ -84,5 +76,4 @@ public class DataUtil {
 	static boolean isNotEmpty(String line) {
 		return !line.trim().equals("");
 	}
-
 }

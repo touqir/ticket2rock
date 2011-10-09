@@ -62,7 +62,7 @@ private DemoTape demo;
 
 	<li><%=bestellung.getKunde().getEmail()%>: <%=bestellung.getAnzahl()%>
 	Tickets f&uuml;r <%=konzert.getInterpret().getName()%> am <%=datumsformat_TagMonatJahr.format(konzert.getDatum())%>
-	in <%=konzert.getOrt().getAdresse()%> (Kapazität: <%=konzert.getOrt().getKapazitaet()%>,
+	in <%=konzert.getOrt().getAdresse()%> (Kapazit&auml;t Verantstaltungsort: <%=konzert.getOrt().getKapazitaet()%>,
 	Restkontingent: <%=konzert.getTicketkontingent()%>)</li>
 
 	<%

@@ -49,29 +49,27 @@ public class KonzertVerwaltungBean implements KonzertVerwaltungLocal {
 	private EntityManager em;
 
 	public List<Konzert> getConcerts() {
-		List resultList = em.createQuery(
-				"FROM Konzert").getResultList();
+		List resultList = em.createQuery("FROM Konzert").getResultList();
 		return resultList;
 	}
 
-
-    /**
-     *@inheritDoc
-     */
+	/**
+	 * @inheritDoc
+	 */
 	public void createConcert(Konzert konzert) {
 		em.persist(konzert);
 	}
 
-    /**
-     *@inheritDoc
-     */
+	/**
+	 * @inheritDoc
+	 */
 	public void updateConcert(Konzert konzert) {
 		em.merge(konzert);
 	}
 
-    /**
-     *@inheritDoc
-     */	
+	/**
+	 * @inheritDoc
+	 */
 	public void deleteConcert(Integer konzertId) {
 		Konzert konzert = em.find(Konzert.class, konzertId.intValue());
 		try {
@@ -83,13 +81,22 @@ public class KonzertVerwaltungBean implements KonzertVerwaltungLocal {
 		}
 
 	}
-	
-    /**
-     *@inheritDoc
-     */	
+
+	/**
+	 * @inheritDoc
+	 */
 	public Konzert getConcertById(Integer konzertId) {
 		return em.find(Konzert.class, konzertId);
 	}
 
- 
+	@Override
+	public Konzert getConcertWithDetailsById(Integer konzertId) {
+		Konzert konzert = em.find(Konzert.class, konzertId);
+		konzert.getInterpret().getAlben().size();
+		konzert.getInterpret().getKonzerte().size();
+		konzert.getInterpret().getSongs().size();
+		konzert.getInterpret().getTourneen().size();
+		return konzert;
+	}
+
 }
