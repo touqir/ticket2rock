@@ -37,8 +37,8 @@ import de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsLocal;
 public class BeanStatisticsInterceptorTest
 {
 
-	private static final String JNDI_ADDRESS_INTERCEPTOR_BEAN = "java:global/ticket2rock/ticket2rock/InterceptorTestBean!de.ejb3buch.ticket2rock.session.interceptor.InterceptorTest";
-	private static final String JNDI_ADDRESS_STATISTICS_BEAN = "java:global/ticket2rock/ticket2rock/BeanStatisticsBean!de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsLocal";
+	//private static final String JNDI_ADDRESS_INTERCEPTOR_BEAN = "java:global/ticket2rock/ticket2rock/InterceptorTestBean!de.ejb3buch.ticket2rock.session.interceptor.InterceptorTest";
+	//private static final String JNDI_ADDRESS_STATISTICS_BEAN = "java:global/ticket2rock/ticket2rock/BeanStatisticsBean!de.ejb3buch.ticket2rock.session.statistics.BeanStatisticsLocal";
 	static Logger logger = Logger.getLogger(BeanStatisticsInterceptorTest.class);
 	InterceptorTest it;
 	BeanStatisticsLocal bsl;
