@@ -1,31 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="dd/ejb"/>
-	<classpathentry kind="src" path="test/conf"/>
-	<classpathentry kind="src" path="test/src"/>
-	<classpathentry kind="src" path="web"/>
-	<classpathentry kind="lib" path="lib/ajax4jsf.jar"/>
-	<classpathentry kind="lib" path="lib/el-api.jar"/>
-	<classpathentry kind="lib" path="lib/el-ri.jar"/>
-	<classpathentry kind="lib" path="lib/jsf-api.jar"/>
-	<classpathentry kind="lib" path="lib/jsf-facelets.jar"/>
-	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar"/>
-	<classpathentry kind="lib" path="lib/oscache-2.3.2.jar"/>
-	<classpathentry kind="lib" path="lib/easymock.jar"/>
-	<classpathentry kind="lib" path="lib/jcainflow.jar"/>
-	<classpathentry kind="lib" path="lib/jms-ra.jar"/>
-	<classpathentry kind="lib" path="lib/junit-4.1.jar"/>
-	<classpathentry kind="lib" path="lib/EasyGloss.jar"/>
-	<classpathentry kind="lib" path="lib/mail-ra.jar"/>
-	<classpathentry kind="lib" path="lib/mail.jar"/>
-	<classpathentry kind="lib" path="lib/shrinkwrap-api-1.0.0-alpha-11.jar"/>
-	<classpathentry kind="lib" path="lib/shrinkwrap-extension-glassfish-1.0.0-alpha-11.jar"/>
-	<classpathentry kind="lib" path="lib/shrinkwrap-impl-base-1.0.0-alpha-11.jar"/>
-	<classpathentry kind="lib" path="lib/shrinkwrap-spi-1.0.0-alpha-11.jar"/>
-	<classpathentry kind="lib" path="lib/commons-io-1.4.jar"/>
-	<classpathentry kind="lib" path="lib/glassfish-embedded-all-3.1-SNAPSHOT.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="output" path="classes"/>
+	<classpathentry kind="src" output="target/classes" path="src/main/java"/>
+	<classpathentry excluding="**" kind="src" output="target/classes" path="src/main/resources"/>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
+	<classpathentry excluding="**" kind="src" output="target/test-classes" path="src/test/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>
