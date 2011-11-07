@@ -47,17 +47,17 @@ public class BestellvorgangBeanTest
     {
         testKonzert1 = new Konzert();
         testKonzert1.setId(1);
-        
         testKonzert2 = new Konzert();
         testKonzert2.setId(2);
     }
     BestellvorgangLocal bv;
     
-    @Test
+    //TODO: Carl fix test.
     @Ignore
+    @Test
     public void testBestelleTickets()
     {
-        
+    	BestellvorgangLocal bv = new BestellvorgangBean();
         assertFalse(bv.hasBestellungen());
     
         bv.bestelleTickets(testKonzert1, 1);

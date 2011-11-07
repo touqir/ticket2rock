@@ -22,7 +22,7 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.ejb3buch.ticket2rock.session.demo;
+package de.ejb3buch.ticket2rock.session.interceptor.demo;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -37,7 +37,6 @@ import javax.persistence.PersistenceContext;
 
 import org.apache.log4j.Logger;
 
-import de.ejb3buch.ticket2rock.entity.demo.Enti;
 
 public class ZielobjektBase implements Zielobjekt {
 

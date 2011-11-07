@@ -113,12 +113,6 @@
 			</embedded-id>
 		</attributes>
 	</entity>
-	<entity class="de.ejb3buch.ticket2rock.entity.demo.Enti">
-		<entity-listeners>
-			<entity-listener class="de.ejb3buch.ticket2rock.session.interceptor.demo.EntiGeburtenkontrolle" />
-		</entity-listeners>
-		<pre-persist method-name="onPrePersist" />
-	</entity>
 	<embeddable class="de.ejb3buch.ticket2rock.entity.embedded.GeoKoordinaten"
 		access="PROPERTY">
 		<attributes>

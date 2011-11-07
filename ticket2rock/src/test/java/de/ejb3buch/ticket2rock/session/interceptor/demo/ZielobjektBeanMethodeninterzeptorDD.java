@@ -22,11 +22,10 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.ejb3buch.ticket2rock.session.demo.methodeninterzeptor.dd;
+package de.ejb3buch.ticket2rock.session.interceptor.demo;
 
 import javax.ejb.Stateless;
 
-import de.ejb3buch.ticket2rock.session.demo.ZielobjektBase;
 @Stateless(name="ZielobjektBeanMethodeninterzeptorDD")
-public class ZielobjektBean extends ZielobjektBase {
+public class ZielobjektBeanMethodeninterzeptorDD extends ZielobjektBase {
 }

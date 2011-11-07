@@ -24,9 +24,9 @@
 
 package de.ejb3buch.ticket2rock.session.interceptor;
 
-import javax.ejb.Local;
+import javax.ejb.Remote;
 
-@Local
+@Remote
 public interface InterceptorTest
 {
 

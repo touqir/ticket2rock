@@ -3,52 +3,80 @@ package de.ejb3buch.ticket2rock.session.interceptor.demo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
+import javax.ejb.EJB;
 import javax.naming.NamingException;
 
+import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ArchivePaths;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
-import de.ejb3buch.ticket2rock.entity.demo.Enti;
 import de.ejb3buch.ticket2rock.session.demo.Aufrufstatistik;
+import de.ejb3buch.ticket2rock.session.demo.AufrufstatistikBean;
+import de.ejb3buch.ticket2rock.session.demo.AufrufstatistikBeanLocal;
 import de.ejb3buch.ticket2rock.session.demo.Geburtenkontrolle;
-import de.ejb3buch.ticket2rock.session.demo.Zielobjekt;
-//TODO: Carl port to Arquillian.
-public class AbfangjaegerTest {
+import de.ejb3buch.ticket2rock.session.demo.GeburtenkontrolleBean;
 
-	private static Aufrufstatistik aufrufstatistik;
-	private static Geburtenkontrolle geburtenkontrolle;
-	private static List<Zielobjekt> zielobjekte;
+@RunWith(Arquillian.class)
+public class AbfangjaegerIT {
 
-	//@BeforeClass
-	public static void init() throws NamingException {
-		Context ctx = new InitialContext();
+	@EJB
+	private Aufrufstatistik aufrufstatistik;
 
-		aufrufstatistik = (Aufrufstatistik) ctx
-				.lookup("java:global/ticket2rock/ticket2rock/AufrufstatistikBean!de.ejb3buch.ticket2rock.session.demo.Aufrufstatistik");
-						 
-		geburtenkontrolle = (Geburtenkontrolle) ctx
-		.lookup("java:global/ticket2rock/ticket2rock/GeburtenkontrolleBean!de.ejb3buch.ticket2rock.session.demo.Geburtenkontrolle");
+	@EJB
+	private Geburtenkontrolle geburtenkontrolle;
 
-		zielobjekte = new ArrayList<Zielobjekt>();
-		zielobjekte.add((Zielobjekt) ctx
-				.lookup("java:global/ticket2rock/ticket2rock/ZielobjektBeanKlasseninterzeptor"));
-		zielobjekte
-				.add((Zielobjekt) ctx
-						.lookup("java:global/ticket2rock/ticket2rock/ZielobjektBeanKlasseninterzeptorDD"));
-		zielobjekte
-				.add((Zielobjekt) ctx
-						.lookup("java:global/ticket2rock/ticket2rock/ZielobjektBeanMethodeninterzeptor"));
-		zielobjekte
-				.add((Zielobjekt) ctx
-						.lookup("java:global/ticket2rock/ticket2rock/ZielobjektBeanMethodeninterzeptorDD"));
+	@EJB(mappedName = "ZielobjektBeanKlasseninterzeptorDD/no-interface")
+	private Zielobjekt zielobjektBeanKlassenMitInterzeptorDD;
+
+	@EJB(mappedName = "ZielobjektBeanKlasseninterzeptor/no-interface")
+	private Zielobjekt zielobjektBeanMitKlassenMitInterzeptor;
+
+	@EJB(mappedName = "ZielobjektBeanMitMethodeninterzeptor/no-interface")
+	private Zielobjekt ZielobjektBeanMitMethodeninterzeptor;
+
+	@EJB(mappedName = "ZielobjektBeanMethodeninterzeptorDD/no-interface")
+	private Zielobjekt ZielobjektBeanMitMethodeninterzeptorDD;
+
+	private List<Zielobjekt> zielobjekte = new ArrayList<Zielobjekt>();
+
+	@Deployment
+	public static JavaArchive createDeployment() {
+		return ShrinkWrap
+				.create(JavaArchive.class, "test.jar")
+				.addAsManifestResource(
+						new File("src/main/resources/META-INF/persistence.xml"),
+						ArchivePaths.create("persistence.xml"))
+				.addAsManifestResource(new File("src/test/java/de/ejb3buch/ticket2rock/session/interceptor/demo/ejb-jar.xml"), ArchivePaths.create("ejb-jar.xml"))
+				.addAsManifestResource(new File("src/test/java/de/ejb3buch/ticket2rock/session/interceptor/demo/orm.xml"), ArchivePaths.create("orm.xml"))
+				.addPackage(AbfangjaegerIT.class.getPackage())
+				.addClasses(Aufrufstatistik.class, GeburtenkontrolleBean.class,Geburtenkontrolle.class,AufrufstatistikBeanLocal.class,AufrufstatistikBean.class);
+
 	}
 
-	@Ignore @Test
+	boolean intialized = false;
+
+	@Before
+	public void init() throws NamingException {
+		if (!intialized) {
+			zielobjekte.add(zielobjektBeanKlassenMitInterzeptorDD);
+			zielobjekte.add(zielobjektBeanMitKlassenMitInterzeptor);
+			zielobjekte.add(ZielobjektBeanMitMethodeninterzeptor);
+			zielobjekte.add(ZielobjektBeanMitMethodeninterzeptorDD);
+			intialized = true;
+		}
+	}
+
+	@Test
 	public void entfernteObjekteSindErreichbar() {
 		assertNotNull(aufrufstatistik);
 		assertNotNull(geburtenkontrolle);
@@ -57,7 +85,10 @@ public class AbfangjaegerTest {
 		}
 	}
 
-	@Ignore @Test 
+	
+	//TODO: Carl fix test.
+    @Ignore
+	@Test
 	public void erfolgreicherAufruf() {
 		int alleAufrufe;
 		int fehlgeschlageneAufrufe;
@@ -74,8 +105,9 @@ public class AbfangjaegerTest {
 		}
 	}
 
+    //TODO: Carl fix test.
+    @Ignore
 	@Test
-	@Ignore("TODO Carl: Reinschauen")
 	public void aufrufMitAusnahme() throws InterruptedException {
 		int alleAufrufe;
 		int fehlgeschlageneAufrufe;
@@ -90,9 +122,8 @@ public class AbfangjaegerTest {
 					aufrufstatistik.gibAnzahlAusnahmen());
 		}
 	}
-	
+
 	@Test
-	@Ignore
 	public void aufrufOhneInterzeptor() {
 		int alleAufrufe = aufrufstatistik.gibAnzahlMethodenaufrufe();
 		int fehlgeschlageneAufrufe = aufrufstatistik.gibAnzahlAusnahmen();
@@ -122,8 +153,9 @@ public class AbfangjaegerTest {
 		}
 	}
 
+    //TODO: Carl fix test.
+    @Ignore
 	@Test
-	@Ignore("TODO Carl: Make it work")
 	public void entiGeburt() throws NamingException {
 		int anzahlGeburten;
 

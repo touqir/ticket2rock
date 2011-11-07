@@ -22,18 +22,47 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.ejb3buch.ticket2rock.session.demo;
-import javax.ejb.Remote;
+package de.ejb3buch.ticket2rock.session.interceptor.demo;
 
-import de.ejb3buch.ticket2rock.entity.demo.Enti;
+import java.io.Serializable;
 
-@Remote
-public interface Zielobjekt {
+import javax.persistence.Entity;
+import javax.persistence.ExcludeDefaultListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-	public void fangMichAb();
-	public String michAuch(Object obj);
-	public void duKriegstMichNicht();
-	public void lassMichInRuhe();
-	public void gibMirZeit();
-	public Enti bruete();
+@Entity
+@ExcludeDefaultListeners
+public class Geburtsanzeige implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	private int id;
+	private int babyId;
+
+	// Default-Konstruktor ist Pflicht
+	public Geburtsanzeige() {
+	}
+	
+	public Geburtsanzeige(final int babyId) {
+		this.babyId = babyId;
+	}
+
+	@Id
+	@GeneratedValue
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getBabyId() {
+		return babyId;
+	}
+
+	public void setBabyId(final int babyId) {
+		this.babyId = babyId;
+	}
 }

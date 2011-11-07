@@ -23,9 +23,8 @@
 	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ================================================================================
 
-Ticket2Rock lässt sich in Eclipse integrieren sowie mit Hilfe von Ant übersetzen
-und installieren. Es ist für die Nutzung mit dem JBoss 4.0 Application Server
-inklusive JBoss EJB3 Service optimiert. EJB 3.0 benötigt Java 5.0.
+Ticket2Rock ist ein Maven Projekt und läßt sich mittels Plugins in alle gängigen
+IDE's integrieren.
 
 ---[ Bezugsquellen ]------------------------------------------------------------
 

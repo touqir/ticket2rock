@@ -29,32 +29,61 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.util.Collection;
 
+import javax.ejb.EJB;
+
 import org.apache.log4j.Logger;
-import org.junit.Ignore;
+import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.ArchivePaths;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import de.ejb3buch.ticket2rock.entity.Band;
-/**
- * @author Dierk
- * 
- */
+import de.ejb3buch.ticket2rock.entity.Konzert;
+import de.ejb3buch.ticket2rock.entitylistener.NewEntityListener;
+import de.ejb3buch.ticket2rock.exception.KapazitaetErschoepftException;
+import de.ejb3buch.ticket2rock.session.interceptor.demo.EntiGeburtenkontrolle;
 
-//TODO: Carl Has to be ported to Arquillian.
-public class BandVerwaltungBeanTest{
-	private static final Logger logger = Logger
-			.getLogger(BandVerwaltungBeanTest.class);
-	
+@RunWith(Arquillian.class)
+public class BandVerwaltungBeanIT {
+
+	@Deployment
+	public static JavaArchive createTestArchive() {
+		return ShrinkWrap
+				.create(JavaArchive.class, "test.jar")
+				.addClasses(BandVerwaltung.class, BandVerwaltungLocal.class,
+						BandVerwaltungBean.class)
+				.addPackages(true, Konzert.class.getPackage())
+				.addClass(NewEntityListener.class)
+				.addClass(EntiGeburtenkontrolle.class)
+				.addClass(KapazitaetErschoepftException.class)
+				.addAsManifestResource(
+						new File("src/main/resources/META-INF/persistence.xml"),
+						ArchivePaths.create("persistence.xml"))
+				.addAsManifestResource(
+						new File("src/main/resources/META-INF/orm.xml"),
+						ArchivePaths.create("orm.xml"))
+				.addAsResource(new File("src/main/resources/import.sql"),
+						ArchivePaths.create("import.sql"));
+	}
+
+	@EJB(mappedName="BandVerwaltung/local")
 	BandVerwaltungLocal bandVerwaltung;
-	
-	
+
+	private static final Logger logger = Logger
+			.getLogger(BandVerwaltungBeanIT.class);
+
 	/**
 	 * Test method for
-	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getBands()}.
+	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getBands()}
+	 * .
 	 */
 	@Test
-	@Ignore
 	public void testGetBands() throws Exception {
 
 		Collection<Band> alleBands = bandVerwaltung.getBands();
@@ -63,26 +92,26 @@ public class BandVerwaltungBeanTest{
 
 	/**
 	 * Test method for
-	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getBandByName(java.lang.String)}.
+	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getBandByName(java.lang.String)}
+	 * .
 	 */
-	@Test @Ignore
+	@Test
 	public void testGetBandByName() throws Exception {
 
 		Band dieBand = bandVerwaltung.getBandByName("Green Day");
-		assertTrue(dieBand.getAlben().size() > 0);
 		assertTrue(dieBand.getMusiker().size() > 0);
 	}
 
 	/**
 	 * Test method for
-	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#createBand(de.ejb3buch.ticket2rock.entity.Band)}.
+	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#createBand(de.ejb3buch.ticket2rock.entity.Band)}
+	 * .
 	 */
-	@Test @Ignore
+	@Test
 	public void testCreateBand() throws Exception {
 		Band dieBand = new Band();
 		final String BANDNAME = "Baumanns Tod";
 		dieBand.setName(BANDNAME);
-
 
 		int anzahlVorher = bandVerwaltung.getBands().size();
 
@@ -91,15 +120,16 @@ public class BandVerwaltungBeanTest{
 
 		assertEquals(anzahlVorher + 1, bandVerwaltung.getBands().size());
 
-		assertEquals(bandVerwaltung.getBandByName(BANDNAME).getName(), dieBand
-				.getName());
+		assertEquals(bandVerwaltung.getBandByName(BANDNAME).getName(),
+				dieBand.getName());
 	}
 
 	/**
 	 * Test method for
-	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#updateBand(de.ejb3buch.ticket2rock.entity.Band)}.
+	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#updateBand(de.ejb3buch.ticket2rock.entity.Band)}
+	 * .
 	 */
-	@Test @Ignore
+	@Test
 	public void testUpdateBand() throws Exception {
 		logger.debug("Versuche eine neue Band zu modifizieren...");
 		Band dieBand = bandVerwaltung.getBandById(10);
@@ -114,12 +144,12 @@ public class BandVerwaltungBeanTest{
 
 	/**
 	 * Test method for
-	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#deleteBand(java.lang.Integer)}.
+	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#deleteBand(java.lang.Integer)}
+	 * .
 	 */
 	@Test(expected = NullPointerException.class)
-	@Ignore
 	public void testDeleteBand() throws Exception {
-		BandVerwaltungLocal bv = bandVerwaltung;
+		BandVerwaltung bv = bandVerwaltung;
 
 		logger.debug("Versuche eine neue Band zu loeschen");
 		int anzahlVorher = bv.getBands().size();
@@ -132,11 +162,12 @@ public class BandVerwaltungBeanTest{
 
 	/**
 	 * Test method for
-	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getBandById(java.lang.Integer)}.
+	 * {@link de.ejb3buch.ticket2rock.session.crud.BandVerwaltungBean#getBandById(java.lang.Integer)}
+	 * .
 	 */
-	@Test @Ignore
+	@Test
 	public void testGetBandById() throws Exception {
-		Band band = bandVerwaltung.getBandById(10);
+		Band band = bandVerwaltung.getBandById(5);
 		assertNotNull(band);
 		band = bandVerwaltung.getBandById(99999);
 		assertNull(band);

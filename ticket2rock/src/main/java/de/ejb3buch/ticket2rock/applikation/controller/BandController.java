@@ -53,6 +53,7 @@ import de.ejb3buch.ticket2rock.applikation.model.BandBackingBean;
 import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Musiker;
 import de.ejb3buch.ticket2rock.session.crud.BandVerwaltungLocal;
+import de.ejb3buch.ticket2rock.session.crud.MusikerVerwaltung;
 import de.ejb3buch.ticket2rock.session.crud.MusikerVerwaltungLocal;
 
 @Named("BandController")

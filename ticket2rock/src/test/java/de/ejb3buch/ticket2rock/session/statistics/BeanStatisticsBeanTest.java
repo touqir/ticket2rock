@@ -92,7 +92,6 @@ public class BeanStatisticsBeanTest{
 	}
 	
 
-	@Ignore("Bean will be rewritten anyways")
 	@Test
 	public void testReportMethodDuration() {
 		BeanStatisticsBean bs = new BeanStatisticsBean();

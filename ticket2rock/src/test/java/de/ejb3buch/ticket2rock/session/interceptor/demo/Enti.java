@@ -22,22 +22,44 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.ejb3buch.ticket2rock.session.statistics;
+package de.ejb3buch.ticket2rock.session.interceptor.demo;
 
-import java.lang.reflect.Method;
-import java.util.Map;
+import java.io.Serializable;
 
-import javax.ejb.Remote;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
-@Remote
-public interface BeanStatisticsRemote {
+@Entity
+//@EntityListeners(de.ejb3buch.ticket2rock.session.interceptor.demo.EntiGeburtenkontrolle.class)
+public class Enti implements Serializable {
 
-	public Map<Class, Integer> getClassUsage();
+	private static final long serialVersionUID = 1L;
+	
+	private int id;
+	private String name;
 
-	public Map<Method, Integer> getMethodUsage();
+	@Id
+	@GeneratedValue
+	public int getId() {
+		return this.id;
+	}
 
-	public Map<Method, Long> getMethodTotalDuration();
+	public void setId(final int id) {
+		this.id = id;
+	}
 
-	// Das lokale Interface BeanStatisticsLocal hat weitere
-	// Methoden zu bieten.
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
+	}
+	
+	@SuppressWarnings("unused")
+//	@PrePersist
+	private void onPrePersist() {
+		name = "Enti " + name;
+	}
 }

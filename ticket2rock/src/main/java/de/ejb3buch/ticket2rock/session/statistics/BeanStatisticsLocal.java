@@ -25,21 +25,14 @@
 package de.ejb3buch.ticket2rock.session.statistics;
 
 import java.lang.reflect.Method;
-import java.util.Map;
 
 import javax.ejb.Local;
 
 @Local
-public interface BeanStatisticsLocal {
-
-	public Map<Class, Integer> getClassUsage();
-
-	public Map<Method, Integer> getMethodUsage();
-
-	public Map<Method, Long> getMethodTotalDuration();
+public interface BeanStatisticsLocal  extends BeanStatistics{
 
 	// Die folgenden beiden Methoden sind im Remote-Interface
-	// BeanStatisticsRemote nicht verfügbar - sie werden nur lokal
+	// BeanStatisticsRemote nicht verfügbar, da sie nur lokal
 	// zum Melden von Objektinstanziierungen und Methodenaufrufen
 	// benötigt.
 

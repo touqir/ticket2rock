@@ -22,18 +22,16 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.ejb3buch.ticket2rock.session.demo.methodeninterzeptor;
+package de.ejb3buch.ticket2rock.session.interceptor.demo;
 
 import javax.ejb.Stateless;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.interceptor.Interceptors;
 
-import de.ejb3buch.ticket2rock.entity.demo.Enti;
-import de.ejb3buch.ticket2rock.session.demo.ZielobjektBase;
 
-@Stateless(name = "ZielobjektBeanMethodeninterzeptor")
-public class ZielobjektBean extends ZielobjektBase {
+@Stateless(name = "ZielobjektBeanMitMethodeninterzeptor")
+public class ZielobjektBeanMitMethodeninterzeptor extends ZielobjektBase {
 
 	@Interceptors(de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger.class)
 	public void fangMichAb() {

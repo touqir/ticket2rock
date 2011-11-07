@@ -43,6 +43,7 @@ import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
 import org.apache.log4j.Logger;
+import org.jboss.ejb3.annotation.RemoteBinding;
 
 import de.ejb3buch.ticket2rock.entity.Konzert;
 import de.ejb3buch.ticket2rock.session.crud.KonzertVerwaltungLocal;
@@ -50,8 +51,9 @@ import de.ejb3buch.ticket2rock.session.crud.KonzertVerwaltungLocal;
 @Stateless
 @WebService(serviceName = "KonzertInfo")
 @SOAPBinding(style = Style.RPC)
+@RemoteBinding(jndiBinding=AuskunftBean.JNDI_REMOTE)
 public class AuskunftBean implements Auskunft, AuskunftLocal {
-
+	public static final String  JNDI_REMOTE = "Auskunft/remote";
 	static Logger logger = Logger.getLogger(AuskunftBean.class);
 
 	@PersistenceContext

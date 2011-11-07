@@ -26,6 +26,7 @@ package de.ejb3buch.ticket2rock.session.interceptor.demo;
 
 import javax.ejb.EJB;
 import javax.ejb.Timer;
+import javax.interceptor.AroundInvoke;
 import javax.interceptor.AroundTimeout;
 import javax.interceptor.InvocationContext;
 
@@ -40,7 +41,7 @@ public class Abfangjaeger {
 
 	private Logger logger = Logger.getRootLogger();
 
-	//@AroundInvoke
+	@AroundInvoke
 	public Object onInvocation(InvocationContext ctx) {
 		Object result = null;
 		if (aufrufstatistik != null) {

@@ -28,52 +28,49 @@ import java.util.Collection;
 
 import javax.ejb.Remote;
 
-import de.ejb3buch.ticket2rock.entity.Band;
+import de.ejb3buch.ticket2rock.entity.Musiker;
 
 @Remote
-public interface BandVerwaltung {
+public interface MusikerVerwaltung {
 
     /**
-     * Legt eine Band-Entität in der Persistenzschicht an
-     * @param band band pojo mit den Attributen der Band
+     * Legt eine Musiker-Entität in der Persistenzschicht an
+     * @param musiker Musiker-POJO mit den Attributen der Band
      */
-	public void createBand(Band band);
+	public void createMusiker(Musiker musiker);
 	
 	/**
-	 * Selektiert eine Band-Entität mit einen gegebenen Namen
-	 * @param name Name der Band, die selektiert werden soll
-	 * @return Band Objekt, das den bestimmten Namen besitzt.
-	 * Existiert keine Band mit diesem Namen, ist der Rückgabewert null
+	 * Selektiert eine Musiker-Entität mit einen gegebenen Namen
+	 * @param name Name der Musiker, die selektiert werden soll
+	 * @return Musiker Objekt, das den bestimmten Namen besitzt.
+	 * Existiert kein Musiker mit diesem Namen, ist der Rückgabewert null
 	 */
-	public Band getBandByName(String name);
+	public Musiker getMusikerByName(String name);
 
 	/**
-	 * Aktualisiert eine Band-Entität in der Persistenzschicht
-	 * @param band Band Objekt, das persistiert werden soll
+	 * Aktualisiert eine Musiker-Entität in der Persistenzschicht
+	 * @param Musiker Musiker Objekt, das persistiert werden soll
 	 */
-	public void updateBand(Band band);
+	public void updateMusiker(Musiker musiker);
+	/**
+	 * Löscht eine Musiker-Entität aus der Persistenzschicht
+	 * @param musiker id des zu löschenden Musikers
+	 */
+	public void deleteMusiker(Integer musikerId);
 
 	/**
-	 * Löscht eine Band-Entität aus der Persistenzschicht
-	 * @param bandId id der zu löschenden Band
+	 * selektiert alle Musiker-Entitäten
+	 * @return Musiker-Entitäten
 	 */
-	public void deleteBand(Integer bandId);
+	public Collection<Musiker> getMusiker();
 
-
-	
+    
 	/**
-	 * selektiert alle Band-Entitäten
-	 * @return Band-Entitäten
-	 */
-	public Collection<Band> getBands();
-	
-	/**
-	 * Selektiert eine Band für eine gegebene Id
-	 * @param bandId
-	 * @return Band Entität, null fallse keine Band-Entität
+	 * Selektiert einen Musiker für eine gegebene Id
+	 * @param musikerId
+	 * @return Musiker Entität, null falls kein Musiker-Entität
 	 * mit dieser id existiert
 	 */
-	public Band getBandById(Integer bandId);
-    
+	public Musiker getMusikerById(Integer musikerId);
 
 }

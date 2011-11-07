@@ -34,6 +34,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.apache.log4j.Logger;
+import org.jboss.ejb3.annotation.LocalBinding;
 
 import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Musiker;
@@ -43,7 +44,8 @@ import de.ejb3buch.ticket2rock.entity.Musiker;
  * 
  */
 @SuppressWarnings("unchecked")
-@Stateless()
+@Stateless
+@LocalBinding(jndiBinding = BandVerwaltungLocal.JNDI_BINDING)
 public class BandVerwaltungBean implements BandVerwaltungLocal {
 
 	static Logger logger = Logger.getLogger(BandVerwaltungBean.class);
@@ -64,7 +66,6 @@ public class BandVerwaltungBean implements BandVerwaltungLocal {
 	public Band getBandByName(String name) {
 		Query query = em.createQuery("select i from Band i where i.name = :name");
 		query.setParameter("name", name);
-		// query.setParameter("typ",interpretType);
 		List<Band> bands = (List<Band>) query.getResultList();
 		if ((bands == null) || (bands.isEmpty())) {
 			return null;

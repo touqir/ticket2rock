@@ -23,28 +23,16 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 package de.ejb3buch.ticket2rock.session.interceptor.demo;
+import javax.ejb.Remote;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.persistence.EntityManager;
-import javax.persistence.PostPersist;
 
-import de.ejb3buch.ticket2rock.entity.demo.Enti;
-import de.ejb3buch.ticket2rock.entity.demo.Geburtsanzeige;
+@Remote
+public interface Zielobjekt {
 
-public class EntiGeburtenkontrolle {
-
-	@PostPersist
-	protected void neuesEnti(Object entity) throws NamingException {
-		Context ctx = new InitialContext();
-		EntityManager em = (EntityManager) ctx
-				.lookup("ticket2rockEntityManager");
-
-		if (entity instanceof de.ejb3buch.ticket2rock.entity.demo.Enti) {
-			Geburtsanzeige geburtsanzeige = new Geburtsanzeige(
-					((Enti) entity).getId());
-			em.persist(geburtsanzeige);
-		}
-	}
+	public void fangMichAb();
+	public String michAuch(Object obj);
+	public void duKriegstMichNicht();
+	public void lassMichInRuhe();
+	public void gibMirZeit();
+	public Enti bruete();
 }

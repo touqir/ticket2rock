@@ -22,47 +22,11 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.ejb3buch.ticket2rock.entity.demo;
+package de.ejb3buch.ticket2rock.session.interceptor.demo;
 
-import java.io.Serializable;
+import javax.ejb.Stateless;
 
-import javax.persistence.Entity;
-import javax.persistence.ExcludeDefaultListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
-@Entity
-@ExcludeDefaultListeners
-public class Geburtsanzeige implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	private int id;
-	private int babyId;
-
-	// Default-Konstruktor ist Pflicht
-	public Geburtsanzeige() {
-	}
-	
-	public Geburtsanzeige(final int babyId) {
-		this.babyId = babyId;
-	}
-
-	@Id
-	@GeneratedValue
-	public int getId() {
-		return this.id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getBabyId() {
-		return babyId;
-	}
-
-	public void setBabyId(final int babyId) {
-		this.babyId = babyId;
-	}
+@Stateless(name="ZielobjektBeanKlasseninterzeptorDD")
+public class ZielobjektBeanKlasseninterzeptorDD extends ZielobjektBase {
 }

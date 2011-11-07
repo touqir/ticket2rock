@@ -2,17 +2,14 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.ejbbuch</groupId>
-	<!-- TODO: ändere artifactid -->
-	<artifactId>ticket2rock-new</artifactId>
+	<artifactId>ticket2rock</artifactId>
 	<version>2.0</version>
 	<packaging>war</packaging>
 	<name>ticket2rock</name>
-	<description>
-	Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
+	<description>Ticket2Rock ist die Beispielanwendung des Buchs &quot;EJB 3.1 professionell&quot; (dpunkt).
 	Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
 	Rockkonzerte auf Basis von EJB 3.1 und JavaServer Faces.
-	Weitere Informationen finden sich unter: http://www.holisticon.de/cms/EJB31Buch/Startseite
-	</description>
+	Weitere Informationen finden sich unter: http://www.holisticon.de/cms/EJB31Buch/Startseite</description>
 	<organization>
 		<name>holisticon AG</name>
 		<url>http://www.holisticon.de</url>
@@ -65,8 +62,37 @@
 	<properties>
 		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
 		<project.build.sourceEncoding>ISO-8859-1</project.build.sourceEncoding>
+		<arquillian.version>1.0.0.Alpha5</arquillian.version>
 	</properties>
+	<profiles>
+		<profile>
+			<id>jbossas-remote-6</id>
+			<activation>
+				<property>
+					<name>env.JBOSS_HOME</name>
+				</property>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.jboss.arquillian.container</groupId>
+					<artifactId>arquillian-jbossas-remote-6</artifactId>
+					<version>${arquillian.version}</version>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.jboss.jbossas</groupId>
+					<artifactId>jboss-as-client</artifactId>
+					<version>6.0.0.20100216-M2</version>
+					<type>pom</type>
+					<scope>test</scope>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
 	<dependencies>
+		<!-- <dependency> <groupId>com.sun.xml.ws</groupId> <artifactId>policy</artifactId> 
+			<version>2.2</version> <scope>test</scope> </dependency> -->
+
 		<dependency>
 			<groupId>org.jboss.spec</groupId>
 			<artifactId>jboss-javaee-6.0</artifactId>
@@ -108,6 +134,12 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>1.8.5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jboss.arquillian</groupId>
+			<artifactId>arquillian-junit</artifactId>
+			<version>${arquillian.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -191,6 +223,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.3.2</version>
 			</plugin>
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -203,6 +236,24 @@
 						<fileName>${project.build.directory}/${project.name}.${project.packaging}</fileName>
 					</fileNames>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>2.10</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.10</version>
 			</plugin>
 		</plugins>
 		<testResources>

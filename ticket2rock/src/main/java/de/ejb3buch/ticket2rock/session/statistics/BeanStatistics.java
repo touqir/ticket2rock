@@ -22,44 +22,21 @@
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package de.ejb3buch.ticket2rock.entity.demo;
+package de.ejb3buch.ticket2rock.session.statistics;
 
-import java.io.Serializable;
+import java.lang.reflect.Method;
+import java.util.Map;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.ejb.Remote;
 
-@Entity
-//@EntityListeners(de.ejb3buch.ticket2rock.session.interceptor.demo.EntiGeburtenkontrolle.class)
-public class Enti implements Serializable {
+@Remote
+public interface BeanStatistics {
 
-	private static final long serialVersionUID = 1L;
-	
-	private int id;
-	private String name;
+	@SuppressWarnings("rawtypes")
+	public Map<Class, Integer> getClassUsage();
 
-	@Id
-	@GeneratedValue
-	public int getId() {
-		return this.id;
-	}
+	public Map<Method, Integer> getMethodUsage();
 
-	public void setId(final int id) {
-		this.id = id;
-	}
+	public Map<Method, Long> getMethodTotalDuration();
 
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(final String name) {
-		this.name = name;
-	}
-	
-	@SuppressWarnings("unused")
-//	@PrePersist
-	private void onPrePersist() {
-		name = "Enti " + name;
-	}
 }

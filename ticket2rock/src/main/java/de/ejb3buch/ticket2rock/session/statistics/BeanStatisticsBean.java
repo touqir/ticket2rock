@@ -25,73 +25,80 @@
 package de.ejb3buch.ticket2rock.session.statistics;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 
-import javax.ejb.Stateless;
+import javax.ejb.Singleton;
 import javax.interceptor.ExcludeDefaultInterceptors;
 
 /**
  * Diese Bean führt mittels statische Felder eine Statistik von Methodenaufrufen,
  * deren Dauer und die Benutzung von Klassen. 
- * TODO: Carl MkSingleton! 
  */
 
 
-@Stateless
+@Singleton
 @ExcludeDefaultInterceptors
 public class BeanStatisticsBean implements BeanStatisticsLocal,
-		BeanStatisticsRemote {
+		BeanStatistics {
+
+	Map<Class, Integer> classUsage = new HashMap<Class, Integer>();
+
+	Map<Method, Integer> methodUsage = new HashMap<Method, Integer>();
+
+	Map<Method, Long> methodDuration = new HashMap<Method, Long>();
+
 
 	@SuppressWarnings("rawtypes")
 	public Map<Class, Integer> getClassUsage() {
-		return BeanStatisticsRecord.classUsage;
+		return classUsage;
 	}
 
 	public Map<Method, Integer> getMethodUsage() {
-		return BeanStatisticsRecord.methodUsage;
+		return methodUsage;
 	}
 
 	public Map<Method, Long> getMethodTotalDuration() {
-		return BeanStatisticsRecord.methodDuration;
+		return methodDuration;
 	}
 
 	public void reportNewObject(Object object) {
-		if (!BeanStatisticsRecord.classUsage.containsKey(object.getClass())) {
+		if (!classUsage.containsKey(object.getClass())) {
 			// First object of the given class
-			BeanStatisticsRecord.classUsage.put(object.getClass(), 1);
+			classUsage.put(object.getClass(), 1);
 		} else {
 			// Other objects of this class already exist
-			Integer currentCount = BeanStatisticsRecord.classUsage.get(object
+			Integer currentCount = classUsage.get(object
 					.getClass());
 			currentCount++;
-			BeanStatisticsRecord.classUsage
+			classUsage
 					.put(object.getClass(), currentCount);
 		}
 	}
 
 	public void reportMethodCall(Method method) {
-		if (!BeanStatisticsRecord.methodUsage.containsKey(method)) {
+		if (!methodUsage.containsKey(method)) {
 			// First object of the given class
-			BeanStatisticsRecord.methodUsage.put(method, 1);
+			methodUsage.put(method, 1);
 		} else {
 			// Other objects of this class already exist
-			Integer currentCount = BeanStatisticsRecord.methodUsage.get(method);
+			Integer currentCount = methodUsage.get(method);
 			currentCount++;
-			BeanStatisticsRecord.methodUsage.put(method, currentCount);
-			BeanStatisticsRecord.methodUsage.put(method, currentCount++);
+			methodUsage.put(method, currentCount);
+			methodUsage.put(method, currentCount++);
 		}
 	}
 
 	public void reportMethodDuration(Method method, long duration) {
-		if (!BeanStatisticsRecord.methodDuration.containsKey(method)) {
+		if (!methodDuration.containsKey(method)) {
 			// First object of the given class
-			BeanStatisticsRecord.methodDuration.put(method, duration);
+			methodDuration.put(method, duration);
 		} else {
 			// Other objects of this class already exist
-			Long totalDuration = BeanStatisticsRecord.methodDuration
+			Long totalDuration = methodDuration
 					.get(method);
 			totalDuration += duration;
-			BeanStatisticsRecord.methodDuration.put(method, totalDuration);
+			methodDuration.put(method, totalDuration);
 		}
 	}
 }

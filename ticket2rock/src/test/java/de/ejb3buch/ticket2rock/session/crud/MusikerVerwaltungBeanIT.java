@@ -31,31 +31,44 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 
-import org.apache.log4j.Logger;
-import org.junit.Ignore;
-import org.junit.Test;
+import javax.ejb.EJB;
 
+import org.apache.log4j.Logger;
+import org.jboss.arquillian.api.Deployment;
+import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import de.ejb3buch.ticket2rock.SystestUtils;
 import de.ejb3buch.ticket2rock.entity.Musiker;
 
 /**
  * @author Holger
  * 
  */
-// TODO: Carl Has to be ported to Arquillian.
-public class MusikerVerwaltungBeanTest {
+@RunWith(Arquillian.class)
+public class MusikerVerwaltungBeanIT {
+
+	@Deployment
+	public static JavaArchive createTestArchive() {
+		return SystestUtils.getArchiveWithPersistenceUnit().addClasses(
+				MusikerVerwaltung.class, MusikerVerwaltungLocal.class,
+				MusikerVerwaltungBean.class);
+	}
+
 	private static final Logger logger = Logger
-			.getLogger(MusikerVerwaltungBeanTest.class);
-	MusikerVerwaltungLocal musikerVerwaltung;
+			.getLogger(MusikerVerwaltungBeanIT.class);
+	@EJB
+	MusikerVerwaltung musikerVerwaltung;
 
 	@Test
-	@Ignore
 	public void testGetMusiker() throws Exception {
 		Collection<Musiker> alleMusiker = musikerVerwaltung.getMusiker();
 		assertTrue(alleMusiker.size() > 0);
 	}
 
 	@Test
-	@Ignore
 	public void testGetMusikerById() throws Exception {
 		Musiker musiker = musikerVerwaltung.getMusikerById(1);
 		assertNotNull(musiker);
@@ -64,7 +77,6 @@ public class MusikerVerwaltungBeanTest {
 	}
 
 	@Test
-	@Ignore
 	public void testGetMusikerByName() throws Exception {
 		Musiker musiker = musikerVerwaltung
 				.getMusikerByName("Wildecker Herzbuben");
@@ -76,7 +88,6 @@ public class MusikerVerwaltungBeanTest {
 	}
 
 	@Test
-	@Ignore
 	public void testCreateMusiker() throws Exception {
 		Musiker musiker = new Musiker();
 		final String MUSIKER_NAME = "Joe Satriani";
@@ -92,7 +103,6 @@ public class MusikerVerwaltungBeanTest {
 	}
 
 	@Test
-	@Ignore
 	public void testUpdateMusiker() throws Exception {
 		logger.debug("Versuche, einen Musiker zu modifizieren...");
 		Musiker musiker = musikerVerwaltung.getMusikerById(1);
@@ -106,7 +116,6 @@ public class MusikerVerwaltungBeanTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	@Ignore
 	public void testDeleteMusiker() throws Exception {
 		logger.debug("Versuche, einen Musiker zu loeschen");
 		int anzahlVorher = musikerVerwaltung.getMusiker().size();

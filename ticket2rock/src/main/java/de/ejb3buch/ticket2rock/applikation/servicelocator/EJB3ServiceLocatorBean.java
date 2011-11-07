@@ -35,6 +35,7 @@ import de.ejb3buch.ticket2rock.session.AuskunftLocal;
 import de.ejb3buch.ticket2rock.session.crud.BandVerwaltungLocal;
 import de.ejb3buch.ticket2rock.session.crud.KonzertVerwaltungLocal;
 import de.ejb3buch.ticket2rock.session.crud.KundenVerwaltungLocal;
+import de.ejb3buch.ticket2rock.session.crud.MusikerVerwaltung;
 import de.ejb3buch.ticket2rock.session.crud.MusikerVerwaltungLocal;
 import de.ejb3buch.ticket2rock.session.crud.TourneeVerwaltungLocal;
 import de.ejb3buch.ticket2rock.session.ticketbestellung.BestellvorgangLocal;
