@@ -30,7 +30,6 @@ import static org.junit.Assert.assertNull;
 
 import java.lang.reflect.Method;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class BeanStatisticsBeanTest{
