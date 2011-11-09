@@ -22,7 +22,8 @@
 --	Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 
--- ATTENTION: Hibernate uses the default platform encoding to read this file:https://hibernate.onjira.com/browse/HBX-711
+-- ATTENTION: Hibernate uses the default platform encoding to read this file:https://hibernate.onjira.com/browse/HBX-711. 
+-- Setting file.encoding system property helps in case of encoding errors. HTML entities don't work as the ampersand is escaped in JSF components.
 
 INSERT INTO MUSIKGENRE (ID, NAME) VALUES (1, 'Alternative & Punk');
 INSERT INTO MUSIKGENRE (ID, NAME) VALUES (2, 'Rock');
