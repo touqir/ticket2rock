@@ -4,7 +4,7 @@
 	Rockkonzerte auf Basis von EJB 3.1 und JavaServer Faces.
 	
 	Copyright (C) 2006-2011
-	Jo Ehm, Stefan M. Heldt, Oliver Ihns, Holger Koschek,
+	Holisticon AG
 	Carsten Sahling, Roman Schloemmer, Norman Erck, Daniel Steinhöfer,
 	Carl A. Düvel.
 
