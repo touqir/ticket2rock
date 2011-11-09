@@ -11,20 +11,44 @@ Weitere Informationen zur Anwendung finden sich auf der {Seite zum Buch}[http://
 Das Projekt kann mit Maven gebaut und gestartet werden und läßt sich in alle bekannten IDE's integrieren.
 Netbeans und IntelliJ bringen die Unterstützung von Haus aus mit. Unter Eclipse läßt sich diese per {Plugin}[http://eclipse.org/m2e/] nachrüsten.
 
-==Maven
+== Maven
+
 Natürlich spricht auch nichts gegen die direkte Verwendung von Maven (am Besten in der Version 3).
 Für Maven-Neulinge hier die wichtigsten Befehle in der Übersicht:
 
-* TODO
+* <tt>mvn package</tt> kompiliert die Anwendung, läßt alle Unittests laufen und erstellt das war.
+* <tt>mvn clean</tt> kaum zu glauben: Löscht alle Buildartefakte! ;)
 
-==Plattform
+Für die folgenden Befehle muss die Umgebungsvariable JBOSS_HOME gesetzt werden:
+
+* <tt>mvn integration-test</tt> startet die Integrationstests (Vorher sollte der JBoss gestartet werden)
+* <tt>mvn jboss:start</tt>  startet den JBoss.
+* <tt>mvn jboss:stop</tt>  stoppt den JBoss.
+* <tt>mvn jboss:hard-deploy</tt> deployt die Anwendung.
+* <tt>mvn jboss:hard-undeploy</tt> undeployt die Anwendung.
+
+=== Schnellstart
+
+Um die Anwendung zu kompilieren und zu deployen müssen sie im Projektverzeichnis also diese Befehele ausführen:
+1. <tt>mvn package</tt>
+2. Unter Linux/Mac <tt>export JBOSS_HOME=/path/to/jboss-6.0.0.Final</tt> bzw. unter Windows <tt>set JBOSS_HOME=/path/to/jboss-6.0.0.Final</tt>
+3. <tt>mvn jboss:start</tt>
+4. <tt>mvn jboss:hard-deploy</tt>
+
+== Plattform
 
 Wir haben die Anwendung mit JBoss 6.0.0. Final getestet.
 
 = Probleme
+
 == Umlautfehler
 
 Umlautfehler in der Anwendung enstehen dadurch, dass die import.sql Datei im Standardencoding der Plattform eingelesen wird. Starten des JBoss mit -Dfile.encoding=ISO-8859-1 hilft.
+
+== Sonstiges
+
+Die Systemtests laufen teilweise auf Fehler, wenn die Anwendung gleichzeitig deployt ist. Damit alle Tests erfolgreich sind,
+einfach die Anwendung undeployen.
 
 = Sonstiges
 
@@ -33,6 +57,8 @@ Umlautfehler in der Anwendung enstehen dadurch, dass die import.sql Datei im Sta
 Statt einen embedded Containers wird für Integrationstests Arquillian verwendet.
 {Arquillian}[http://www.jboss.org/arquillian] deployt Tests auf dem konfigurierten JavaEE-Container und führt diese aus.
 Dieser Ansatz gefällt uns sehr gut, da er den Code auf der Plattform testet, auf der der Code später auch ausgeführt wird.
+
+
 
 == Lizenz
 Die Anwendung steht unter der GPL v2 (s. LICENSE Datei).
