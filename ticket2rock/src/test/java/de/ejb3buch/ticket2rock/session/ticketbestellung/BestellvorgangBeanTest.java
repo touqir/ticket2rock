@@ -30,17 +30,23 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Collection;
 
+import javax.enterprise.context.Conversation;
+import javax.inject.Inject;
+
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.Mockito;
+
+import com.stvconsultants.easygloss.javaee.JavaEEGloss;
 
 import de.ejb3buch.ticket2rock.entity.Konzert;
 import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
 
 public class BestellvorgangBeanTest
 {
-    
-    static Konzert testKonzert1, testKonzert2;
+	
+	static Konzert testKonzert1, testKonzert2;
+	BestellvorgangBean bv;
 
     @Before
     public void baueKonzerte()
@@ -49,27 +55,20 @@ public class BestellvorgangBeanTest
         testKonzert1.setId(1);
         testKonzert2 = new Konzert();
         testKonzert2.setId(2);
+        bv = new BestellvorgangBean();
+        JavaEEGloss.apply(Inject.class, bv,Mockito.mock(Conversation.class));
     }
-    BestellvorgangLocal bv;
     
-    //TODO: Carl fix test.
-    @Ignore
     @Test
     public void testBestelleTickets()
     {
-    	BestellvorgangLocal bv = new BestellvorgangBean();
+    	
         assertFalse(bv.hasBestellungen());
-    
         bv.bestelleTickets(testKonzert1, 1);
         bv.bestelleTickets(testKonzert2, 2);
-        
         assertTrue(bv.hasBestellungen());
-        
-        
         Collection<Ticketbestellung> liste = bv.getTicketbestellungen();
-        
         assertEquals(2, liste.size());
-        
     }
 
 }
