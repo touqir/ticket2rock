@@ -1,0 +1,38 @@
+= Was ist Ticket2Rock?
+
+Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
+Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für Rockkonzerte auf Basis von EJB 3.1 und JavaServer Faces.
+Weitere Informationen zur Anwendung finden sich auf der [Seite zum Buch](http://ejb3buch.de).
+
+= Wie kann ich Ticket2Rock benutzen?
+
+== IDE
+
+Das Projekt kann mit Maven gebaut und gestartet werden und läßt sich in alle bekannten IDE's integrieren.
+Netbeans und IntelliJ bringen die Unterstützung von Haus aus mit. Unter Eclipse läßt sich diese per [Plugin](http://eclipse.org/m2e/) nachrüsten.
+
+==Maven
+Natürlich spricht auch nichts gegen die direkte Verwendung von Maven (am Besten in der Version 3).
+Für Maven-Neulinge hier die wichtigsten Befehle in der Übersicht:
+
+* TODO
+
+==Plattform
+
+Wir haben die Anwendung mit JBoss 6.0.0. Final getestet.
+
+= Probleme
+== Umlautfehler
+
+Umlautfehler in der Anwendung enstehen dadurch, dass die import.sql Datei im Standardencoding der Plattform eingelesen wird. Starten des JBoss mit -Dfile.encoding=ISO-8859-1 hilft.
+
+= Sonstiges
+
+== Systemtests
+
+Statt einen embedded Containers wird für Integrationstests Arquillian verwendet.
+[Arquillian](http://www.jboss.org/arquillian) deployt Tests auf dem konfigurierten JavaEE-Container und führt diese aus.
+Dieser Ansatz gefällt uns sehr gut, da er den Code auf der Plattform testet, auf der der Code später auch ausgeführt wird.
+
+== Lizenz
+Die Anwendung steht unter der GPL v2 (s. LICENSE Datei).
