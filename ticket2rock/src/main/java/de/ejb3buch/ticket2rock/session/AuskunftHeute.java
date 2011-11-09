@@ -3,10 +3,8 @@
  *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
  *  Rockkonzerten. 
  *
- *  Copyright (C) 2011
- *  Jo Ehm, Stefan M. Heldt, Oliver Ihns, Holger Koschek,
- *  Carsten Sahling, Roman Schloemmer, Norman Erck, Daniel Steinhöfer,
- *  Carl A. Düvel.
+ *  Copyright (C) 2006-2011
+ *  Holisticon AG
  *
  *  This program is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU General Public License
