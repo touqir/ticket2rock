@@ -58,7 +58,5 @@ Statt einen embedded Containers wird für Integrationstests Arquillian verwendet.
 {Arquillian}[http://www.jboss.org/arquillian] deployt Tests auf dem konfigurierten JavaEE-Container und führt diese aus.
 Dieser Ansatz gefällt uns sehr gut, da er den Code auf der Plattform testet, auf der der Code später auch ausgeführt wird.
 
-
-
 == Lizenz
 Die Anwendung steht unter der GPL v2 (s. LICENSE Datei).
