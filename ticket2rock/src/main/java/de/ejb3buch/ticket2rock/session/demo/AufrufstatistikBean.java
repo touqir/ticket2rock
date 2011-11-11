@@ -22,30 +22,17 @@
  */
 package de.ejb3buch.ticket2rock.session.demo;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.Local;
-import javax.ejb.Stateless;
+import javax.ejb.Singleton;
 import javax.ejb.Timer;
 
-@Stateless
-// Fehler im JBoss AS 6.0.0.M4: Das Deployment von Singletons, die einmal
-// fehlerhaft registriert wurden, wird mit einer IllegalStateException und dem
-// Hinweis "is already registered" abgebrochen.
-// @Singleton
+@Singleton
 @Local(Aufrufstatistik.class)
 public class AufrufstatistikBean implements AufrufstatistikBeanLocal, Aufrufstatistik {
 
-	private static int alleAufrufe;
-	private static int fehlgeschlageneAufrufe;
-	private static int timeouts;
-
-	@SuppressWarnings("unused")
-	@PostConstruct
-	private void init() {
-		alleAufrufe = 0;
-		fehlgeschlageneAufrufe = 0;
-		timeouts = 0;
-	}
+	private int alleAufrufe;
+	private int fehlgeschlageneAufrufe;
+	private int timeouts;
 
 	public void notiereMethodenaufruf(final String className,
 			final String methodName, final long callTime) {
