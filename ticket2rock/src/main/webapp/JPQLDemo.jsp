@@ -45,7 +45,7 @@
 <link type="text/css" href="style/ticket2rock.css" rel="stylesheet">
 </head>
 <body>
-<img src="images/Ticket2Rock-Logo.jpg" alt="Ticket2Rock Logo">
+<img src="images/Ticket2Rock-Logo.png" alt="Ticket2Rock Logo">
 <h1>JPQL Demo</h1>
 <form action="JPQLDemo.jsp" method="post">
   <h2>JPQL String</h2>
