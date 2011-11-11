@@ -26,7 +26,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -37,8 +37,8 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.JavaArchive;
+import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -47,6 +47,7 @@ import de.ejb3buch.ticket2rock.session.demo.AufrufstatistikBean;
 import de.ejb3buch.ticket2rock.session.demo.AufrufstatistikBeanLocal;
 import de.ejb3buch.ticket2rock.session.demo.Geburtenkontrolle;
 import de.ejb3buch.ticket2rock.session.demo.GeburtenkontrolleBean;
+import de.ejb3buch.ticket2rock.session.interceptor.BeanStatisticsInterceptor;
 
 @RunWith(Arquillian.class)
 public class AbfangjaegerIT {
@@ -58,44 +59,52 @@ public class AbfangjaegerIT {
 	private Geburtenkontrolle geburtenkontrolle;
 
 	@EJB(mappedName = "ZielobjektBeanKlasseninterzeptorDD/no-interface")
-	private Zielobjekt zielobjektBeanKlassenMitInterzeptorDD;
+	private Zielobjekt zielobjektBeanMitKlassenInterzeptorDD;
 
 	@EJB(mappedName = "ZielobjektBeanKlasseninterzeptor/no-interface")
-	private Zielobjekt zielobjektBeanMitKlassenMitInterzeptor;
+	private Zielobjekt zielobjektBeanMitKlassenInterzeptor;
 
 	@EJB(mappedName = "ZielobjektBeanMitMethodeninterzeptor/no-interface")
-	private Zielobjekt ZielobjektBeanMitMethodeninterzeptor;
+	private Zielobjekt zielobjektBeanMitMethodeninterzeptor;
 
 	@EJB(mappedName = "ZielobjektBeanMethodeninterzeptorDD/no-interface")
-	private Zielobjekt ZielobjektBeanMitMethodeninterzeptorDD;
+	private Zielobjekt zielobjektBeanMitMethodeninterzeptorDD;
 
-	private List<Zielobjekt> zielobjekte = new ArrayList<Zielobjekt>();
+	private List<Zielobjekt> zielobjekte;
+
+	@Before
+	public void mkList() {
+		if (zielobjekte == null) {
+			zielobjekte = Arrays.asList(new Zielobjekt[] {
+			zielobjektBeanMitKlassenInterzeptor,
+			zielobjektBeanMitMethodeninterzeptor,
+			zielobjektBeanMitMethodeninterzeptorDD,
+			zielobjektBeanMitKlassenInterzeptorDD
+			});
+		}
+	}
 
 	@Deployment
-	public static JavaArchive createDeployment() {
+	public static WebArchive createDeployment() {
 		return ShrinkWrap
-				.create(JavaArchive.class, "test.jar")
+				.create(WebArchive.class, "AbfangjaegerIT.war")
 				.addAsManifestResource(
 						new File("src/main/resources/META-INF/persistence.xml"),
 						ArchivePaths.create("persistence.xml"))
-				.addAsManifestResource(new File("src/test/java/de/ejb3buch/ticket2rock/session/interceptor/demo/ejb-jar.xml"), ArchivePaths.create("ejb-jar.xml"))
-				.addAsManifestResource(new File("src/test/java/de/ejb3buch/ticket2rock/session/interceptor/demo/orm.xml"), ArchivePaths.create("orm.xml"))
+				.addAsWebInfResource(
+						new File(
+								"src/test/java/de/ejb3buch/ticket2rock/session/interceptor/demo/ejb-jar.xml"),
+						ArchivePaths.create("ejb-jar.xml"))
+				.addAsManifestResource(
+						new File(
+								"src/test/java/de/ejb3buch/ticket2rock/session/interceptor/demo/orm.xml"),
+						ArchivePaths.create("orm.xml"))
 				.addPackage(AbfangjaegerIT.class.getPackage())
-				.addClasses(Aufrufstatistik.class, GeburtenkontrolleBean.class,Geburtenkontrolle.class,AufrufstatistikBeanLocal.class,AufrufstatistikBean.class);
+				.addClasses(Aufrufstatistik.class, GeburtenkontrolleBean.class,
+						Geburtenkontrolle.class,BeanStatisticsInterceptor.class,
+						AufrufstatistikBeanLocal.class,
+						AufrufstatistikBean.class);
 
-	}
-
-	boolean intialized = false;
-
-	@Before
-	public void init() throws NamingException {
-		if (!intialized) {
-			zielobjekte.add(zielobjektBeanKlassenMitInterzeptorDD);
-			zielobjekte.add(zielobjektBeanMitKlassenMitInterzeptor);
-			zielobjekte.add(ZielobjektBeanMitMethodeninterzeptor);
-			zielobjekte.add(ZielobjektBeanMitMethodeninterzeptorDD);
-			intialized = true;
-		}
 	}
 
 	@Test
@@ -107,9 +116,6 @@ public class AbfangjaegerIT {
 		}
 	}
 
-	
-	//TODO: Carl fix test.
-    @Ignore
 	@Test
 	public void erfolgreicherAufruf() {
 		int alleAufrufe;
@@ -120,15 +126,18 @@ public class AbfangjaegerIT {
 			fehlgeschlageneAufrufe = aufrufstatistik.gibAnzahlAusnahmen();
 			zielobjekt.fangMichAb();
 			zielobjekt.michAuch(null);
-			assertEquals(alleAufrufe + 2,
+			assertEquals(baueFehlerNachricht(zielobjekt), alleAufrufe + 2,
 					aufrufstatistik.gibAnzahlMethodenaufrufe());
-			assertEquals(fehlgeschlageneAufrufe,
+			assertEquals(baueFehlerNachricht(zielobjekt),
+					fehlgeschlageneAufrufe,
 					aufrufstatistik.gibAnzahlAusnahmen());
 		}
 	}
 
-    //TODO: Carl fix test.
-    @Ignore
+	private String baueFehlerNachricht(Zielobjekt zielobjekt) {
+		return String.format("Fehlgeschlagen für %s", zielobjekt);
+	}
+
 	@Test
 	public void aufrufMitAusnahme() throws InterruptedException {
 		int alleAufrufe;
@@ -138,9 +147,10 @@ public class AbfangjaegerIT {
 			alleAufrufe = aufrufstatistik.gibAnzahlMethodenaufrufe();
 			fehlgeschlageneAufrufe = aufrufstatistik.gibAnzahlAusnahmen();
 			zielobjekt.duKriegstMichNicht();
-			assertEquals(alleAufrufe + 1,
+			assertEquals(baueFehlerNachricht(zielobjekt), alleAufrufe + 1,
 					aufrufstatistik.gibAnzahlMethodenaufrufe());
-			assertEquals(fehlgeschlageneAufrufe + 1,
+			assertEquals(baueFehlerNachricht(zielobjekt),
+					fehlgeschlageneAufrufe + 1,
 					aufrufstatistik.gibAnzahlAusnahmen());
 		}
 	}
@@ -152,31 +162,25 @@ public class AbfangjaegerIT {
 
 		for (Zielobjekt zielobjekt : zielobjekte) {
 			zielobjekt.lassMichInRuhe();
-			assertEquals(alleAufrufe,
+			assertEquals(baueFehlerNachricht(zielobjekt), alleAufrufe,
 					aufrufstatistik.gibAnzahlMethodenaufrufe());
-			assertEquals(fehlgeschlageneAufrufe,
+			assertEquals(baueFehlerNachricht(zielobjekt),
+					fehlgeschlageneAufrufe,
 					aufrufstatistik.gibAnzahlAusnahmen());
 		}
 	}
 
-	// @AroundTimeout interception for timeout method need to be implemented.
-	// It's currently missing from AS 6.0.0.M4.
-	// https://jira.jboss.org/browse/EJBTHREE-2142
 	@Test
-	@Ignore
 	public void aufrufMitTimeout() throws InterruptedException {
 		int anzahlTimeouts;
-
 		for (Zielobjekt zielobjekt : zielobjekte) {
 			anzahlTimeouts = aufrufstatistik.gibAnzahlTimeouts();
 			zielobjekt.gibMirZeit();
-			assertEquals(anzahlTimeouts + 1,
+			assertEquals(baueFehlerNachricht(zielobjekt), anzahlTimeouts + 1,
 					aufrufstatistik.gibAnzahlTimeouts());
 		}
 	}
 
-    //TODO: Carl fix test.
-    @Ignore
 	@Test
 	public void entiGeburt() throws NamingException {
 		int anzahlGeburten;
@@ -186,7 +190,7 @@ public class AbfangjaegerIT {
 			Enti enti = zielobjekt.bruete();
 			assertNotNull(enti);
 			assertEquals("Enti Alfred Jodocus Kwack", enti.getName());
-			assertEquals(anzahlGeburten + 1,
+			assertEquals(baueFehlerNachricht(zielobjekt), anzahlGeburten + 1,
 					geburtenkontrolle.gibAnzahlGeburten());
 		}
 	}
