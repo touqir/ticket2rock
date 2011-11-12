@@ -24,29 +24,33 @@ package de.ejb3buch.ticket2rock.messagedriven;
 
 import java.util.StringTokenizer;
 
+import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.ejb.MessageDriven;
 import javax.mail.Message;
 
 import org.apache.log4j.Logger;
+import org.jboss.ejb3.annotation.ResourceAdapter;
 import org.jboss.resource.adapter.mail.inflow.MailListener;
 
 import de.ejb3buch.ticket2rock.session.ticketbestellung.StornatorLocal;
 
-/**
+/*
  * ACHTUNG: Der Mail Resource Adapter funktioniert nur mit IMAP, da er nur auf
  * Mails reagiert, die als neu markiert sind. POP3 kennt diese Markierung nicht.
  * ACHTUNG: übermäßiges Testen kann den Mail-Account sperren!
  */
-/*@MessageDriven(activationConfig = {
-		@ActivationConfigProperty(propertyName = "mailServer", propertyValue = "COMMENTED mail.messagingengine.com"),
-		@ActivationConfigProperty(propertyName = "mailFolder", propertyValue = "INBOX"),
-		@ActivationConfigProperty(propertyName = "storeProtocol", propertyValue = "imap"),
-		@ActivationConfigProperty(propertyName = "userName", propertyValue = "COMMENTED ejb3buch@fastmail.fm"),
-		@ActivationConfigProperty(propertyName = "password", propertyValue = "COMMENTED ejb3b5ch") })
-@ResourceAdapter("mail-ra.rar")*/
+
+ @MessageDriven(activationConfig = {
+ @ActivationConfigProperty(propertyName = "mailServer", propertyValue = "COMMENTED mail.messagingengine.com"),
+ @ActivationConfigProperty(propertyName = "mailFolder", propertyValue = "INBOX"),
+ @ActivationConfigProperty(propertyName = "storeProtocol", propertyValue = "imap"),
+ @ActivationConfigProperty(propertyName = "userName", propertyValue = "COMMENTED ejb3buch@fastmail.fm"),
+ @ActivationConfigProperty(propertyName = "password", propertyValue = "COMMENTED ejb3b5ch") })
+ @ResourceAdapter("mail-ra.rar")
 public class StornoMailBean implements MailListener {
-	
+
 	static Logger logger = Logger.getLogger(StornoMailBean.class);
 
 	@EJB
