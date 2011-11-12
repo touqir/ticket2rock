@@ -36,9 +36,9 @@ import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.shrinkwrap.api.ArchivePaths;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -120,7 +120,6 @@ public class AbfangjaegerIT {
 	public void erfolgreicherAufruf() {
 		int alleAufrufe;
 		int fehlgeschlageneAufrufe;
-
 		for (Zielobjekt zielobjekt : zielobjekte) {
 			alleAufrufe = aufrufstatistik.gibAnzahlMethodenaufrufe();
 			fehlgeschlageneAufrufe = aufrufstatistik.gibAnzahlAusnahmen();
@@ -170,12 +169,13 @@ public class AbfangjaegerIT {
 		}
 	}
 
+	@Ignore
 	@Test
 	public void aufrufMitTimeout() throws InterruptedException {
 		int anzahlTimeouts;
 		for (Zielobjekt zielobjekt : zielobjekte) {
 			anzahlTimeouts = aufrufstatistik.gibAnzahlTimeouts();
-			zielobjekt.gibMirZeit();
+			zielobjekt.erzeugeTimer();
 			assertEquals(baueFehlerNachricht(zielobjekt), anzahlTimeouts + 1,
 					aufrufstatistik.gibAnzahlTimeouts());
 		}

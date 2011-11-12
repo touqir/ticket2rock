@@ -61,14 +61,12 @@ public class Abfangjaeger {
 	}
 
 	// @AroundTimeout interception for timeout method need to be implemented.
-	// It's currently missing from AS 6.0.0.M4.
-	// https://jira.jboss.org/browse/EJBTHREE-2142
+	// It's missing from JBOSS AS 6 until version 6.1.
+	// https://jira.jboss.org/browse/EJBTHREE-2142 & https://issues.jboss.org/browse/JBAS-8306
 	@AroundTimeout
 	public Object onTimeout(InvocationContext ctx) throws Exception {
 		Timer timer = (Timer) ctx.getTimer();
-		if (aufrufstatistik != null) {
-			aufrufstatistik.notiereTimeout(timer);
-		}
+		aufrufstatistik.notiereTimeout(timer);
 		logger.info("Interceptor timeout: " + (String) timer.getInfo());
 		return ctx.proceed();
 	}

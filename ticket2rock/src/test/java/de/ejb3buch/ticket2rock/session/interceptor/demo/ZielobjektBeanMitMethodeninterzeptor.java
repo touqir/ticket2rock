@@ -52,8 +52,8 @@ public class ZielobjektBeanMitMethodeninterzeptor extends ZielobjektBase {
 	}
 
 	@Interceptors(de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger.class)
-	public void gibMirZeit() {
-		super.gibMirZeit();
+	public void erzeugeTimer() {
+		super.erzeugeTimer();
 	}
 
 	@Interceptors(de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger.class)
@@ -61,6 +61,7 @@ public class ZielobjektBeanMitMethodeninterzeptor extends ZielobjektBase {
 		return super.bruete();
 	}
 
+	@Interceptors(de.ejb3buch.ticket2rock.session.interceptor.demo.Abfangjaeger.class)
 	@Timeout
 	protected void deineZeitIstAbgelaufen(Timer timer) {
 		super.deineZeitIstAbgelaufen(timer);

@@ -60,10 +60,10 @@ public class ZielobjektBase implements Zielobjekt {
 	public void lassMichInRuhe() {
 	}
 
-	public void gibMirZeit() {
+	public void erzeugeTimer() {
 		Calendar timerCal = GregorianCalendar.getInstance();
 		timerCal.add(Calendar.MILLISECOND, 1);
-		String info = "Deine Zeit läuft ab um "
+		String info = "Deine Zeit l‰uft ab um "
 				+ timerCal.get(Calendar.HOUR_OF_DAY) + " Uhr "
 				+ timerCal.get(Calendar.MINUTE) + " Minuten, "
 				+ timerCal.get(Calendar.SECOND) + " Sekunden und "

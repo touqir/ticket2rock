@@ -31,6 +31,6 @@ public interface Zielobjekt {
 	public String michAuch(Object obj);
 	public void duKriegstMichNicht();
 	public void lassMichInRuhe();
-	public void gibMirZeit();
+	public void erzeugeTimer();
 	public Enti bruete();
 }
