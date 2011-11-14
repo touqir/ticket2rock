@@ -32,5 +32,4 @@ public interface Zielobjekt {
 	public void duKriegstMichNicht();
 	public void lassMichInRuhe();
 	public void erzeugeTimer();
-	public Enti bruete();
 }

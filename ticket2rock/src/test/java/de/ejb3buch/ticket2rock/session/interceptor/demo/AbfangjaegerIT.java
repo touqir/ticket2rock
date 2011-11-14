@@ -30,7 +30,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.naming.NamingException;
 
 import org.jboss.arquillian.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -76,11 +75,10 @@ public class AbfangjaegerIT {
 	public void mkList() {
 		if (zielobjekte == null) {
 			zielobjekte = Arrays.asList(new Zielobjekt[] {
-			zielobjektBeanMitKlassenInterzeptor,
-			zielobjektBeanMitMethodeninterzeptor,
-			zielobjektBeanMitMethodeninterzeptorDD,
-			zielobjektBeanMitKlassenInterzeptorDD
-			});
+					zielobjektBeanMitKlassenInterzeptor,
+					zielobjektBeanMitMethodeninterzeptor,
+					zielobjektBeanMitMethodeninterzeptorDD,
+					zielobjektBeanMitKlassenInterzeptorDD });
 		}
 	}
 
@@ -88,20 +86,15 @@ public class AbfangjaegerIT {
 	public static WebArchive createDeployment() {
 		return ShrinkWrap
 				.create(WebArchive.class, "AbfangjaegerIT.war")
-				.addAsManifestResource(
-						new File("src/main/resources/META-INF/persistence.xml"),
-						ArchivePaths.create("persistence.xml"))
+
 				.addAsWebInfResource(
 						new File(
 								"src/test/java/de/ejb3buch/ticket2rock/session/interceptor/demo/ejb-jar.xml"),
 						ArchivePaths.create("ejb-jar.xml"))
-				.addAsManifestResource(
-						new File(
-								"src/test/java/de/ejb3buch/ticket2rock/session/interceptor/demo/orm.xml"),
-						ArchivePaths.create("orm.xml"))
 				.addPackage(AbfangjaegerIT.class.getPackage())
 				.addClasses(Aufrufstatistik.class, GeburtenkontrolleBean.class,
-						Geburtenkontrolle.class,BeanStatisticsInterceptor.class,
+						Geburtenkontrolle.class,
+						BeanStatisticsInterceptor.class,
 						AufrufstatistikBeanLocal.class,
 						AufrufstatistikBean.class);
 
@@ -169,7 +162,7 @@ public class AbfangjaegerIT {
 		}
 	}
 
-	@Ignore
+	@Ignore("AroundInvoke funktioniert im JBoss 6.X nicht.")
 	@Test
 	public void aufrufMitTimeout() throws InterruptedException {
 		int anzahlTimeouts;
@@ -178,20 +171,6 @@ public class AbfangjaegerIT {
 			zielobjekt.erzeugeTimer();
 			assertEquals(baueFehlerNachricht(zielobjekt), anzahlTimeouts + 1,
 					aufrufstatistik.gibAnzahlTimeouts());
-		}
-	}
-
-	@Test
-	public void entiGeburt() throws NamingException {
-		int anzahlGeburten;
-
-		for (Zielobjekt zielobjekt : zielobjekte) {
-			anzahlGeburten = geburtenkontrolle.gibAnzahlGeburten();
-			Enti enti = zielobjekt.bruete();
-			assertNotNull(enti);
-			assertEquals("Enti Alfred Jodocus Kwack", enti.getName());
-			assertEquals(baueFehlerNachricht(zielobjekt), anzahlGeburten + 1,
-					geburtenkontrolle.gibAnzahlGeburten());
 		}
 	}
 }

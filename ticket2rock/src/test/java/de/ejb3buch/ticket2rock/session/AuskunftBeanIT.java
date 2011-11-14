@@ -44,7 +44,6 @@ import de.ejb3buch.ticket2rock.entitylistener.NewEntityListener;
 import de.ejb3buch.ticket2rock.exception.KapazitaetErschoepftException;
 import de.ejb3buch.ticket2rock.session.crud.KonzertVerwaltungBean;
 import de.ejb3buch.ticket2rock.session.crud.KonzertVerwaltungLocal;
-import de.ejb3buch.ticket2rock.session.interceptor.demo.EntiGeburtenkontrolle;
 
 @RunWith(Arquillian.class)
 public class AuskunftBeanIT {
@@ -58,7 +57,6 @@ public class AuskunftBeanIT {
 						KonzertVerwaltungLocal.class)
 						.addPackages(true, Konzert.class.getPackage())
 						.addClass(NewEntityListener.class)
-						.addClass(EntiGeburtenkontrolle.class)
 						.addClass(KapazitaetErschoepftException.class)
 						.addAsManifestResource(
 								new File("src/main/resources/META-INF/persistence.xml"),
@@ -71,7 +69,7 @@ public class AuskunftBeanIT {
 
 
 	}
-	//TODO: Carl aufräumen: JNDI Konstante sollte in Interface stehen.
+	
 	@EJB(mappedName=AuskunftBean.JNDI_REMOTE)
 	Auskunft alleKonzerte;
 

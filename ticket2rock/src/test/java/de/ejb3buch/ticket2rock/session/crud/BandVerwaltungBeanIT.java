@@ -45,7 +45,6 @@ import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Konzert;
 import de.ejb3buch.ticket2rock.entitylistener.NewEntityListener;
 import de.ejb3buch.ticket2rock.exception.KapazitaetErschoepftException;
-import de.ejb3buch.ticket2rock.session.interceptor.demo.EntiGeburtenkontrolle;
 
 @RunWith(Arquillian.class)
 public class BandVerwaltungBeanIT {
@@ -58,7 +57,6 @@ public class BandVerwaltungBeanIT {
 						BandVerwaltungBean.class)
 				.addPackages(true, Konzert.class.getPackage())
 				.addClass(NewEntityListener.class)
-				.addClass(EntiGeburtenkontrolle.class)
 				.addClass(KapazitaetErschoepftException.class)
 				.addAsManifestResource(
 						new File("src/main/resources/META-INF/persistence.xml"),

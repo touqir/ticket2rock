@@ -30,8 +30,6 @@ import javax.ejb.Timer;
 import javax.ejb.TimerService;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import org.apache.log4j.Logger;
 
@@ -40,9 +38,6 @@ public class ZielobjektBase implements Zielobjekt {
 
 	@Resource
 	private TimerService timerService;
-
-	@PersistenceContext
-	private EntityManager em;
 
 	private Logger logger = Logger.getRootLogger();
 
@@ -70,13 +65,6 @@ public class ZielobjektBase implements Zielobjekt {
 				+ timerCal.get(Calendar.MILLISECOND) + " Millisekunden!";
 		timerService.createTimer(timerCal.getTime(), info);
 		logger.info("Timer created");
-	}
-
-	public Enti bruete() {
-		Enti enti = new Enti();
-		enti.setName("Alfred Jodocus Kwack");
-		em.persist(enti);
-		return enti;
 	}
 
 	protected void deineZeitIstAbgelaufen(Timer timer) {
