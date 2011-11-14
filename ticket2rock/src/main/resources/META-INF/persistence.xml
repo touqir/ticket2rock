@@ -33,6 +33,8 @@
 			<property name="jboss.entity.manager.jndi.name" value="ticket2rockEntityManager"/>
 			<!-- old generators have bug which leads to disrespect for the initial value. -->
 			<property name="hibernate.id.new_generator_mappings" value="true"/>
+			<!-- show sql as hint for debugging. -->
+			<property name="hibernate.show_sql" value="true"/>
 		</properties>
 	</persistence-unit>
 </persistence>
