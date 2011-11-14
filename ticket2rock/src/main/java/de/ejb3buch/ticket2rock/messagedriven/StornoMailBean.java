@@ -63,7 +63,7 @@ public class StornoMailBean implements MailListener {
 			String command = tokenizer.nextToken();
 			if ("STORNO".equalsIgnoreCase(command)) {
 				String bestellNrAsString = tokenizer.nextToken();
-				long bestellnr = Long.parseLong(bestellNrAsString);
+				int bestellnr = Integer.parseInt(bestellNrAsString);
 				stornator.storniereBestellung(bestellnr);
 				logger.info("Stornierung von Bestellnr. " + bestellnr
 						+ " durchgefuehrt");

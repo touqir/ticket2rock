@@ -63,9 +63,9 @@ public class StornoMessageBean implements MessageListener {
                 }
 
                 String parameter = st.nextToken();
-                long bestellnr;
+                int bestellnr;
                 try {
-                    bestellnr = Long.parseLong(parameter);
+                    bestellnr = Integer.parseInt(parameter);
                 } catch (NumberFormatException nfe) {
                     throw new EJBException("'" + tmsg.getText().trim() + "' - Invalid reservation ID: '" + parameter
                             + "'");

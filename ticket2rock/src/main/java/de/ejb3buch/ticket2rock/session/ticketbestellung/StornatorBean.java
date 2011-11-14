@@ -22,19 +22,36 @@
  */
 package de.ejb3buch.ticket2rock.session.ticketbestellung;
 
+import javax.ejb.Local;
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.apache.log4j.Logger;
 
+import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
+
 @Stateless
-public class StornatorBean implements Stornator, StornatorLocal {
+@Local(StornatorLocal.class)
+@Remote(Stornator.class)
+public class StornatorBean implements StornatorLocal {
+
+	@PersistenceContext
+	EntityManager em;
 
 	static Logger logger = Logger.getLogger(StornatorBean.class);
 
-	public void storniereBestellung(long bestellnr) {
+	public void storniereBestellung(int bestellnr) {
 
-		// TODO: Storniere Bestellung
-
+		Ticketbestellung bestellung = em
+				.find(Ticketbestellung.class, bestellnr);
+		if (bestellung == null) {
+			throw new IllegalArgumentException(String.format(
+					"Es gibt keine Ticketbestellung mit der id '%d'!",
+					bestellnr));
+		}
 		logger.info("Storniere Bestellung Nr. " + bestellnr);
+		em.remove(bestellung);
 	}
 }
