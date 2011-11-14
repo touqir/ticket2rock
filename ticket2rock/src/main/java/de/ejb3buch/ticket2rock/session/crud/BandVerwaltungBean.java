@@ -25,7 +25,6 @@ package de.ejb3buch.ticket2rock.session.crud;
 import java.util.List;
 import java.util.Set;
 
-import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -58,11 +57,12 @@ public class BandVerwaltungBean implements BandVerwaltungLocal {
 		return resultList;
 	}
 
-    /**
-     *@inheritDoc
-     */
+	/**
+	 * @inheritDoc
+	 */
 	public Band getBandByName(String name) {
-		Query query = em.createQuery("select i from Band i where i.name = :name");
+		Query query = em
+				.createQuery("select i from Band i where i.name = :name");
 		query.setParameter("name", name);
 		List<Band> bands = (List<Band>) query.getResultList();
 		if ((bands == null) || (bands.isEmpty())) {
@@ -71,65 +71,40 @@ public class BandVerwaltungBean implements BandVerwaltungLocal {
 		return bands.iterator().next();
 	}
 
-
-    /**
-     *@inheritDoc
-     */
+	/**
+	 * @inheritDoc
+	 */
 	public void createBand(Band band) {
 		em.persist(band);
 	}
 
-    /**
-     *@inheritDoc
-     */
+	/**
+	 * @inheritDoc
+	 */
 	public void updateBand(Band band) {
 		em.merge(band);
 	}
 
-    /**
-     *@inheritDoc
-     */	
+	/**
+	 * @inheritDoc
+	 */
 	public void deleteBand(Integer bandId) {
 		Band band = em.find(Band.class, bandId.intValue());
-		try {
-
-			if (band == null) {
-				logger.debug("band is null");
-			} else {
-				logger.debug("band is not null");
+		Set<Musiker> bandmusiker = (Set<Musiker>) band.getMusiker();
+		for (Musiker musiker : bandmusiker) {
+			Set<Band> bandsOfMusiker = musiker.getBands();
+			if ((bandsOfMusiker != null) && (!bandsOfMusiker.isEmpty())) {
+				logger.debug("removed band " + band.getName()
+						+ " from Musiker " + musiker.getName());
+				bandsOfMusiker.remove(band);
 			}
-			//TODO move into entity Band
-			Set<Musiker> bandmusiker = (Set<Musiker>) band.getMusiker();
-			if (bandmusiker == null) {
-				logger.debug("bandmusiker is null");
-			} else {
-				logger.debug("bandmusiker is not null");
-			}
-			if (bandmusiker != null) {
-				for (Musiker musiker : bandmusiker) {
-					Set<Band> bandsOfMusiker = musiker.getBands();
-					if ((bandsOfMusiker != null) && (!bandsOfMusiker.isEmpty())) {
-						logger.debug("removed band " + band.getName()
-								+ " from Musiker " + musiker.getName());
-						bandsOfMusiker.remove(band);
-					}
-				}
-			}
-			em.remove(band);
-
-		} catch (Exception ex) {
-			logger.error(ex);
-			throw new EJBException("Error while deleting a band");
 		}
-		logger.debug("removed band " + band.getName());
-		logger.debug("end of method deleteBand()");
-
+		em.remove(band);
 	}
-		
 
-    /**
-     *@inheritDoc
-     */	
+	/**
+	 * @inheritDoc
+	 */
 	public Band getBandById(Integer bandId) {
 		return em.find(Band.class, bandId);
 	}
