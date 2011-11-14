@@ -221,7 +221,6 @@ public class BandController implements Serializable {
 		return mapBuilder.getSelectItemsMap();
 	}
 
-	// TODO refacture subsequent two methods
 	@SuppressWarnings("unchecked")
 	public void musikerSelected(ValueChangeEvent event) {
 
