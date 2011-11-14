@@ -32,12 +32,16 @@ Für die folgenden Befehle muss die Umgebungsvariable JBOSS_HOME gesetzt werden:
 Um die Anwendung zu kompilieren und zu deployen müssen sie im Projektverzeichnis also diese Befehele ausführen:
 1. <tt>mvn package</tt>
 2. Unter Linux/Mac <tt>export JBOSS_HOME=/path/to/jboss-6.0.0.Final</tt> bzw. unter Windows <tt>set JBOSS_HOME=/path/to/jboss-6.0.0.Final</tt>
+3. Eine erforderliche Queue im JBoss installieren.
 3. <tt>mvn jboss:start</tt>
 4. <tt>mvn jboss:hard-deploy</tt>
 
 == Plattform
-
-Wir haben die Anwendung mit JBoss 6.0.0. Final getestet.
+Wir haben die Anwendung mit JBoss 6.0.0 und JBoss 6.1.0 Final getestet.
+Im JBoss muss eine Queue namens 'queue/ticket2rock' eingerichtet sein, um die
+Stornierung der Ticketbestellung mittels JMS-Nachricht durchführen zu können.
+Dafür kopieren Sie einfach die im Projektverzeichnis vorhandene Konfigurationsdatei ticket2rock-hornetq-jms.xml in das
+deploy Verzeichnis der gewählten Serverkonfiguration (also z. Bsp.: $JBOSS_HOME/server/default/deploy).
 
 = Probleme
 
@@ -57,6 +61,13 @@ einfach die Anwendung undeployen.
 Statt einen embedded Containers wird für Integrationstests Arquillian verwendet.
 {Arquillian}[http://www.jboss.org/arquillian] deployt Tests auf dem konfigurierten JavaEE-Container und führt diese aus.
 Dieser Ansatz gefällt uns sehr gut, da er den Code auf der Plattform testet, auf der der Code später auch ausgeführt wird.
+
+== Ruby Client
+
+Der Ruby Client benötigt eine Bibliothek, die Sie einfach über das Paketmanagement von Ruby installieren können:
+"gem install soap4r --include-dependencies"
+In der aktuellen Ruby Version (1.9.1) führt das zu einem Fehler.
+In der Version 1.8 funktioniert es aber noch.
 
 == Lizenz
 Die Anwendung steht unter der GPL v2 (s. LICENSE Datei).
