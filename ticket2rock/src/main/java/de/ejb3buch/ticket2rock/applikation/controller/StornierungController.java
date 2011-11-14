@@ -33,7 +33,6 @@ import javax.jms.QueueConnectionFactory;
 import javax.jms.QueueSender;
 import javax.jms.QueueSession;
 import javax.jms.TextMessage;
-import javax.naming.InitialContext;
 
 import org.apache.log4j.Logger;
 
