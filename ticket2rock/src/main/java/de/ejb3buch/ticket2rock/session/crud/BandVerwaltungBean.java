@@ -52,7 +52,7 @@ public class BandVerwaltungBean implements BandVerwaltungLocal {
 	private EntityManager em;
 
 	public List<Band> getBands() {
-		List resultList = em.createQuery(
+		List<Band> resultList = em.createQuery(
 				"SELECT i FROM Band i ORDER BY i.name").getResultList();
 		logger.debug("Anzahl der gefundenen Bands: " + resultList.size());
 		return resultList;
@@ -98,8 +98,6 @@ public class BandVerwaltungBean implements BandVerwaltungLocal {
 			} else {
 				logger.debug("band is not null");
 			}
-			// em.merge(band);
-			// logger.debug("after merge");
 			//TODO move into entity Band
 			Set<Musiker> bandmusiker = (Set<Musiker>) band.getMusiker();
 			if (bandmusiker == null) {
