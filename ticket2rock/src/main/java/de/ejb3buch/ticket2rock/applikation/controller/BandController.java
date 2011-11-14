@@ -77,10 +77,10 @@ public class BandController implements Serializable {
 
 	private Map<String, SelectItem> bandMusikerMap;
 
-	//TODO might be obsolete
+	//Used in the view.
 	private List<String> musikerList = new ArrayList<String>();
 
-	//TODO might be obsolete
+	//Used in the view.
 	private List<String> bandMusikerList = new ArrayList<String>();
 
 	// ajax test
