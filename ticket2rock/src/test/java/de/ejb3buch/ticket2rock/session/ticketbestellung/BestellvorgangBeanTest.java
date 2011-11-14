@@ -60,7 +60,6 @@ public class BestellvorgangBeanTest
     @Test
     public void testBestelleTickets()
     {
-    	
         assertFalse(bv.hasBestellungen());
         bv.bestelleTickets(testKonzert1, 1);
         bv.bestelleTickets(testKonzert2, 2);
