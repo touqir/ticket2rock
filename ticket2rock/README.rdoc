@@ -52,12 +52,12 @@ Umlautfehler in der Anwendung enstehen dadurch, dass die import.sql Datei im Sta
 
 == Sonstiges
 
-Die Systemtests laufen teilweise auf Fehler, wenn die Anwendung gleichzeitig deployt ist. Damit alle Tests erfolgreich sind,
+Die Integrationstests laufen teilweise auf Fehler, wenn die Anwendung gleichzeitig deployt ist. Damit alle Tests erfolgreich sind,
 einfach die Anwendung undeployen.
 
 = Sonstiges
 
-== Systemtests
+== Integrationstest
 
 Statt einen embedded Containers wird für Integrationstests Arquillian verwendet.
 {Arquillian}[http://www.jboss.org/arquillian] deployt Tests auf dem konfigurierten JavaEE-Container und führt diese aus.
