@@ -22,8 +22,6 @@ Für Maven-Neulinge hier die wichtigsten Befehle in der Übersicht:
 Für die folgenden Befehle muss die Umgebungsvariable JBOSS_HOME gesetzt werden:
 
 * <tt>mvn integration-test</tt> startet die Integrationstests (Vorher muss der JBoss gestartet werden)
-* <tt>mvn jboss:start</tt>  startet den JBoss.
-* <tt>mvn jboss:stop</tt>  stoppt den JBoss.
 * <tt>mvn jboss:hard-deploy</tt> deployt die Anwendung.
 * <tt>mvn jboss:hard-undeploy</tt> undeployt die Anwendung.
 
@@ -31,9 +29,9 @@ Für die folgenden Befehle muss die Umgebungsvariable JBOSS_HOME gesetzt werden:
 
 Um die Anwendung zu kompilieren und zu deployen müssen sie im Projektverzeichnis also diese Befehele ausführen:
 1. <tt>mvn package</tt>
-2. Unter Linux/Mac <tt>export JBOSS_HOME=/path/to/jboss-6.0.0.Final</tt> bzw. unter Windows <tt>set JBOSS_HOME=/path/to/jboss-6.0.0.Final</tt>
+2. Unter Linux/Mac <tt>export JBOSS_HOME=/path/to/jboss-6.0.0.Final</tt> bzw. unter Windows setzen Sie die Variable in der Systemsteuerung.
 3. Die erforderliche Queue im JBoss installieren (s.u.).
-3. <tt>mvn jboss:start</tt>
+3. JBoss starten.
 4. <tt>mvn jboss:hard-deploy</tt>
 
 == Plattform
