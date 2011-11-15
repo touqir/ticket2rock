@@ -67,7 +67,7 @@ Dieser Ansatz gefällt uns sehr gut, da er den Code auf der Plattform testet, auf
 
 Der Ruby Client benötigt eine Bibliothek, die Sie einfach über das Paketmanagement von Ruby installieren können:
 "gem install soap4r --include-dependencies"
-In der aktuellen Ruby Version (1.9.1) führt das zu einem Fehler.
+In der aktuellen Ruby Version (1.9.1) führt das zu einem Fehler (die Lösung findet sich hier: http://railsforum.com/viewtopic.php?id=41231).
 In der Version 1.8 funktioniert es aber noch.
 
 == Lizenz

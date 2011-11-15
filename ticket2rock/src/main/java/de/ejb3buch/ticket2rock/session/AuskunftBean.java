@@ -49,9 +49,9 @@ import de.ejb3buch.ticket2rock.session.crud.KonzertVerwaltungLocal;
 @Stateless
 @WebService(serviceName = "KonzertInfo")
 @SOAPBinding(style = Style.RPC)
-@RemoteBinding(jndiBinding=AuskunftBean.JNDI_REMOTE)
+@RemoteBinding(jndiBinding = AuskunftBean.JNDI_REMOTE)
 public class AuskunftBean implements Auskunft, AuskunftLocal {
-	public static final String  JNDI_REMOTE = "Auskunft/remote";
+	public static final String JNDI_REMOTE = "Auskunft/remote";
 	static Logger logger = Logger.getLogger(AuskunftBean.class);
 
 	@PersistenceContext
@@ -64,7 +64,10 @@ public class AuskunftBean implements Auskunft, AuskunftLocal {
 	 * @inheritDoc
 	 */
 	@WebMethod
-	public String sucheKonzerteWeb(@WebParam(name = "Ortsname") String ortsName, @WebParam(name = "Startdatum") Date vonDatum, @WebParam(name = "Enddatum") Date bisDatum) {
+	public String sucheKonzerteWeb(
+			@WebParam(name = "Ortsname") String ortsName,
+			@WebParam(name = "Startdatum") Date vonDatum,
+			@WebParam(name = "Enddatum") Date bisDatum) {
 		List<Konzert> konzerte = sucheKonzerte(ortsName, vonDatum, bisDatum);
 		StringBuffer resultate = new StringBuffer("<konzert-liste>\n");
 		for (Konzert konzert : konzerte) {
@@ -81,9 +84,11 @@ public class AuskunftBean implements Auskunft, AuskunftLocal {
 			resultate.append("    <interpret>");
 			resultate.append(konzert.getInterpret().getName());
 			resultate.append("</interpret>\n");
-			resultate.append("    <tournee>");
-			resultate.append(konzert.getTournee().getName());
-			resultate.append("</tournee>\n");
+			if (konzert.getTournee() != null) {
+				resultate.append("    <tournee>");
+				resultate.append(konzert.getTournee().getName());
+				resultate.append("</tournee>\n");
+			}
 			resultate.append("  </konzert>\n");
 		}
 		resultate.append("</konzert-liste>");
@@ -91,7 +96,8 @@ public class AuskunftBean implements Auskunft, AuskunftLocal {
 	}
 
 	@WebMethod(exclude = true)
-	public List<Konzert> sucheKonzerte(String ortsName, Date vonDatum, Date bisDatum) {
+	public List<Konzert> sucheKonzerte(String ortsName, Date vonDatum,
+			Date bisDatum) {
 
 		// generiere den query String dynamisch abhängig von der
 		// Belegung der Übergabeparameter
@@ -149,12 +155,16 @@ public class AuskunftBean implements Auskunft, AuskunftLocal {
 		// basierend auf statistischen Werten, die
 		// empirisch Ÿber die gloreichen Jahre der Rockgeschichte hinweg
 		// ermittelt worden sind ;-)
-		Konzert konzert = konzertVerwaltung.getConcertWithDetailsById(konzertId);
-		int maxBesucher = konzert.getOrt().getKapazitaet(); 
+		Konzert konzert = konzertVerwaltung
+				.getConcertWithDetailsById(konzertId);
+		int maxBesucher = konzert.getOrt().getKapazitaet();
 		int anzahlKonzerte = konzert.getInterpret().getKonzerte().size();
 		int anzahlAlben = konzert.getInterpret().getAlben().size();
 
-		result = new Integer((int) Math.min(maxBesucher, Math.round(maxBesucher * 0.7 + 0.05 * (anzahlAlben +  anzahlKonzerte))));
+		result = new Integer((int) Math.min(
+				maxBesucher,
+				Math.round(maxBesucher * 0.7 + 0.05
+						* (anzahlAlben + anzahlKonzerte))));
 
 		return new AsyncResult<Integer>(result);
 	}
