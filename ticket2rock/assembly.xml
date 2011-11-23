@@ -12,9 +12,10 @@
 			<excludes>
 				<exclude>.project</exclude>
 				<exclude>.classpath</exclude>
-				<exclude>.settings</exclude>
+				<exclude>.settings/**</exclude>
 				<exclude>target/**</exclude>
 				<exclude>assembly.xml</exclude>
+				<exclude>transaction.log</exclude>
 			</excludes>
 		</fileSet>
 	</fileSets>
