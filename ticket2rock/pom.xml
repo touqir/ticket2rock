@@ -93,6 +93,13 @@
 	</profiles>
 	<dependencies>
 		<dependency>
+			<groupId>org.jboss.spec</groupId>
+			<artifactId>jboss-javaee-6.0</artifactId>
+			<version>1.0.0.Final</version>
+			<scope>provided</scope>
+			<type>pom</type>
+		</dependency>
+		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>3.6.0.Final</version>
@@ -103,12 +110,6 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>4.0.0.GA</version>
 			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<artifactId>activation</artifactId>
-					<groupId>javax.activation</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
@@ -153,175 +154,21 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.jboss.spec.javax.ejb</groupId>
+			<artifactId>jboss-ejb-api_3.1_spec</artifactId>
+			<version>1.0.1.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>javax.mail-api</artifactId>
 			<version>1.4.4</version>
 			<scope>provided</scope>
-			<exclusions>
-				<exclusion>
-					<artifactId>activation</artifactId>
-					<groupId>javax.activation</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.jbossas</groupId>
 			<artifactId>jboss-as-connector</artifactId>
 			<version>6.0.0.Final</version>
-			<scope>provided</scope>
-			<exclusions>
-				<exclusion>
-					<artifactId>jboss-jms-api_1.1_spec</artifactId>
-					<groupId>org.jboss.spec.javax.jms</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-jaxb-api_2.2_spec</artifactId>
-					<groupId>org.jboss.spec.javax.xml.bind</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-logging</artifactId>
-					<groupId>org.jboss.logging</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jbosssx-client</artifactId>
-					<groupId>org.picketbox</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>quartz</artifactId>
-					<groupId>org.quartz-scheduler</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-vfs</artifactId>
-					<groupId>org.jboss</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-common-core</artifactId>
-					<groupId>org.jboss</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-as-system-jmx</artifactId>
-					<groupId>org.jboss.jbossas</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>
-						jboss-connector-api_1.5_spec
-					</artifactId>
-					<groupId>org.jboss.spec.javax.resource</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-mdr</artifactId>
-					<groupId>org.jboss</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-managed</artifactId>
-					<groupId>org.jboss.man</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-metatype</artifactId>
-					<groupId>org.jboss.man</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-deployers-vfs-spi</artifactId>
-					<groupId>org.jboss.deployers</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-integration</artifactId>
-					<groupId>org.jboss.integration</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-metadata-common</artifactId>
-					<groupId>org.jboss.metadata</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-deployers-core-spi</artifactId>
-					<groupId>org.jboss.deployers</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-as-system</artifactId>
-					<groupId>org.jboss.jbossas</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-security-spi</artifactId>
-					<groupId>org.picketbox</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-ejb-api_3.1_spec</artifactId>
-					<groupId>org.jboss.spec.javax.ejb</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-reflect</artifactId>
-					<groupId>org.jboss</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-threads</artifactId>
-					<groupId>org.jboss.threads</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-serialization</artifactId>
-					<groupId>jboss</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-deployers-spi</artifactId>
-					<groupId>org.jboss.deployers</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jbossxb</artifactId>
-					<groupId>org.jboss</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-aop-mc-int</artifactId>
-					<groupId>org.jboss.kernel</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-as-server</artifactId>
-					<groupId>org.jboss.jbossas</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-stdio</artifactId>
-					<groupId>org.jboss.stdio</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>
-						jboss-deployers-structure-spi
-					</artifactId>
-					<groupId>org.jboss.deployers</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-metadata-rar</artifactId>
-					<groupId>org.jboss.metadata</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-classloading</artifactId>
-					<groupId>org.jboss.cl</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>xml-apis</artifactId>
-					<groupId>xml-apis</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-j2se</artifactId>
-					<groupId>org.jboss.mx</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>mail</artifactId>
-					<groupId>javax.mail</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jboss-deployers-client-spi</artifactId>
-					<groupId>org.jboss.deployers</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-api</artifactId>
-			<version>6.0</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.ejb3</groupId>
-			<artifactId>jboss-ejb3-ext-api</artifactId>
-			<version>1.0.0</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
