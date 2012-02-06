@@ -71,6 +71,7 @@ IDE
 Das Projekt kann mit Maven gebaut und gestartet werden und läßt sich in alle bekannten IDE's integrieren.
 Netbeans und IntelliJ bringen die Maven-Unterstützung von Haus aus mit. Unter Eclipse läßt sich das 
 m2Eclipse-Plugin über die Update-Site [http://download.eclipse.org/technology/m2e/releases] nachrüsten.
+Dann läßt sich das Projekt als "Maven Project" in die IDE importieren.
 
 Wir empfehlen, vor dem Import das Projekt einmal mit 'mvn package' zu bauen, damit u.a. alle 
 benötigten Bibliotheken erstmalig geladen werden (das geht schneller als über Eclipse).
