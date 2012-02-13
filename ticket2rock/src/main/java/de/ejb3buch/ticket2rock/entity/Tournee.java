@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -36,7 +36,7 @@ import javax.persistence.TableGenerator;
 
 /**
  * Im Rahmen einer Tournee werden ein oder mehrere Konzerte von einem
- * Interpreten durchgeführt. Eine Tournee hat einen Namen.
+ * Interpreten durchgefÃ¼hrt. Eine Tournee hat einen Namen.
  */
 
 @Entity

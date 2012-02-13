@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -100,7 +100,7 @@ public class BandController implements Serializable {
 
 	/**
 	 * Hole die Liste aller Band EJBs und konvertiere diese in eine Liste von
-	 * BandBacking Beans, die anschließend im DataModel Objekt gesetzt
+	 * BandBacking Beans, die anschlieÃŸend im DataModel Objekt gesetzt
 	 * wird
 	 * 
 	 * @return DataModel Objekt, das alle Bands beinhaltet.
@@ -122,7 +122,7 @@ public class BandController implements Serializable {
 		logger.debug("preparing bandBackingBean input form");
 		editMode = false;
 		bandBackingBean = new BandBackingBean();
-		// fülle die Musiker Maps
+		// fÃ¼lle die Musiker Maps
 		this.bandMusikerMap = new HashMap<String, SelectItem>();
 		this.musikerMap = this.populateMusikerMap();
 		return "band";
@@ -134,10 +134,10 @@ public class BandController implements Serializable {
 	public String editBand() {
 		bandBackingBean = (BandBackingBean) bandListDataModel.getRowData();
 		this.editMode = true;
-		// fülle die Musiker Maps
+		// fÃ¼lle die Musiker Maps
 		this.bandMusikerMap = this.populateBandMusikerMap();
 		this.musikerMap = this.populateMusikerMap();
-		// entferne die bereits zugeordeneten Musiker von der Map der zu Verfügung
+		// entferne die bereits zugeordeneten Musiker von der Map der zu VerfÃ¼gung
 		// stehenden Musiker
 		if (bandMusikerMap != null) {
 			Collection<String> bandMusikerNamen = bandMusikerMap.keySet();
@@ -149,11 +149,11 @@ public class BandController implements Serializable {
 	}
 
 	/**
-	 * erstellt und persistiert eine neue Band Entität
-	 * @return Identifier für die JSF Navigation
+	 * erstellt und persistiert eine neue Band EntitÃ¤t
+	 * @return Identifier fÃ¼r die JSF Navigation
 	 */
 	public String addBand() {
-		// Überprüfe, ob es eine Band mit diesem Namen bereits gibt		
+		// ÃœberprÃ¼fe, ob es eine Band mit diesem Namen bereits gibt		
 		if (bandVerwaltungLocal.getBandByName(bandBackingBean.getName()) != null) {
 			FacesContext context = FacesContext.getCurrentInstance();
 			FacesMessage msg = MessageUtils.createErrorMessage(
@@ -161,7 +161,7 @@ public class BandController implements Serializable {
 			context.addMessage("bandForm:bandname", msg);
 			return "error";
 		}
-		// setzen der ausgewählten Bandmusiker im BandBackingBean
+		// setzen der ausgewÃ¤hlten Bandmusiker im BandBackingBean
 		bandBackingBean.setMusikerIdListe(this.bandMusikerMap.keySet());
 		bandVerwaltungLocal.createBand(bandBackingBean.getBand());
 		return "bandlist";
@@ -172,9 +172,9 @@ public class BandController implements Serializable {
 	}
 
 	/**
-	 * Aktualisiert eine Band Entität mit den aktuellen Werten und persistiert 
+	 * Aktualisiert eine Band EntitÃ¤t mit den aktuellen Werten und persistiert 
 	 * diese in der Datenbank.
-	 * @return Identifier für die JSF Navigation
+	 * @return Identifier fÃ¼r die JSF Navigation
 	 */
 	public String updateBand() {
 		logger.debug("T2RController.updateBand() called ");
@@ -184,8 +184,8 @@ public class BandController implements Serializable {
 	}
 
 	/**
-	 * Löscht eine Band Entität
-	 * @return Identifier für die JSF Navigation
+	 * LÃ¶scht eine Band EntitÃ¤t
+	 * @return Identifier fÃ¼r die JSF Navigation
 	 */
 	public String deleteBand() {
 		bandBackingBean = (BandBackingBean) bandListDataModel.getRowData();
@@ -195,7 +195,7 @@ public class BandController implements Serializable {
 
 	/**
 	 * 
-	 * @return Identifier für die JSF Navigation
+	 * @return Identifier fÃ¼r die JSF Navigation
 	 */
 	public String cancel() {
 		return "bandlist";
@@ -270,8 +270,8 @@ public class BandController implements Serializable {
 	}
 	
     /**
-     * generiere eine Kollektion der Musiker-Entitäten. 
-     * Die Representation der Kollektion ist abhängig vom übergebenen
+     * generiere eine Kollektion der Musiker-EntitÃ¤ten. 
+     * Die Representation der Kollektion ist abhÃ¤ngig vom Ã¼bergebenen
      * Builder Objekt (Anwendung des GoF Builder-Patterns)
      * @param collectionBuilder Ein Builder, der eine Kollektion erstellt, die
      * im View verwendet werden kann
@@ -288,7 +288,7 @@ public class BandController implements Serializable {
 	
 	 /**
      * generiere eine Kollektion der Musiker einer Band. 
-     * Die Representation der Kollektion ist abhängig vom übergebenen
+     * Die Representation der Kollektion ist abhÃ¤ngig vom Ã¼bergebenen
      * Builder Objekt (Anwendung des GoF Builder-Patterns)
      * @param collectionBuilder Ein Builder, der eine Kollektion erstellt, die
      * im View verwendet werden kann

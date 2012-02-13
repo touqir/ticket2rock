@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -37,8 +37,8 @@ import javax.persistence.TemporalType;
 
 /**
  * Ein Album ist eine Zusammenstellung von Songs eines Interpreten. Es hat einen
- * Titel und ein Erscheinungsdatum. Ein Interpret kann mehrere Alben veröffent-
- * lichen. Ein Album wird von genau einem Interpreten veröffentlicht.
+ * Titel und ein Erscheinungsdatum. Ein Interpret kann mehrere Alben verÃ¶ffent-
+ * lichen. Ein Album wird von genau einem Interpreten verÃ¶ffentlicht.
  */
 
 @Entity
@@ -55,7 +55,7 @@ public class Album {
 	// Songs werden in einer List gehalten, um die Ordnung
 	// sicherzustellen (der Einfachheit halber wird angenommen, dass die
 	// Reihenfolge der Songs in der Datenbank mit der Reihenfolge auf dem Album
-	// übereinstimmt).
+	// Ã¼bereinstimmt).
 	private List<Song> songs;
 
 	@Id

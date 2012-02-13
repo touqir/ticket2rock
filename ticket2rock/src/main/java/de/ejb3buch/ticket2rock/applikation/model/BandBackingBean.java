@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -32,9 +32,9 @@ import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Musiker;
 
 /**
- * Band Baking Bean für die Verwendung im JSF-Frameworks
+ * Band Baking Bean fÃ¼r die Verwendung im JSF-Frameworks
  * 
- * @author Jochen Jörg
+ * @author Jochen JÃ¶rg
  */
 public class BandBackingBean {
 
@@ -107,7 +107,7 @@ public class BandBackingBean {
 	}
 
 	/**
-	 * Instanziiere ein Musiker Objekt prop übergebene Id. Lege die Musiker
+	 * Instanziiere ein Musiker Objekt prop Ã¼bergebene Id. Lege die Musiker
 	 * Objekte in ein Set ab und weise dieses dem Band Objekt zu 
 	 * @param musikerIdListe String Collection bestehend aus musiker Ids
 	 */
@@ -122,7 +122,7 @@ public class BandBackingBean {
 	}
 
 	/**
-	 * gibt das persistent Band Entity Objekt zurück, das durch die BackingBean
+	 * gibt das persistent Band Entity Objekt zurÃ¼ck, das durch die BackingBean
 	 * gewrapped ist.
 	 * @return Band Persistent Entity Objekt
 	 */

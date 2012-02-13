@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -23,7 +23,7 @@
 package de.ejb3buch.ticket2rock.session.ticketbestellung;
 
 /**
- * Live-Statistik Ÿber die Nutzung der TicketbestellungBean.
+ * Live-Statistik ÂŸber die Nutzung der TicketbestellungBean.
  */
 
 public class BestellvorgangSessionStatistics {

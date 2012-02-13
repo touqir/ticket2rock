@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -84,7 +84,7 @@ public class VeranstaltungsortTest {
 		em.persist(ort);
 		// und die neue automatisch vergebene ID ist im Objekt vorhanden
 		int volksparkId = ort.getId();
-		// Kontrolle über JPAQL
+		// Kontrolle Ã¼ber JPAQL
 		Query query = em.createQuery("from Veranstaltungsort v where v.id = "
 				+ volksparkId);
 		Veranstaltungsort ort2 = (Veranstaltungsort) query.getSingleResult();

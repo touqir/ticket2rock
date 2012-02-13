@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -35,9 +35,9 @@ public interface BestellvorgangLocal  {
 
 	/**
 	 * bucht eine Anzahl von Tickets zu einer Konzertveranstaltung. Falls das Konzert
-	 * schon ausgebucht ist bzw. die Tickets nicht mehr verfügbar sind wird eine Exception
+	 * schon ausgebucht ist bzw. die Tickets nicht mehr verfÃ¼gbar sind wird eine Exception
 	 * geworfen.
-	 * @param konzert das Konzert, für das Tickets gebucht werden
+	 * @param konzert das Konzert, fÃ¼r das Tickets gebucht werden
 	 * @param ticketAnzahl Anzahl der zu buchenden Tickets
 	 */
 	public void bestelleTickets(Konzert konzert, int ticketAnzahl);
@@ -73,7 +73,7 @@ public interface BestellvorgangLocal  {
 	/**
 	 * Alle gebuchten Tickets werden bezahlt.
 	 * Ticketbestellungen werden in der Datenbank persisitiert. Das Ticketkontingent der
-	 * betroffenen Konzerte wird angepasst und in der Datenbank gespeichert. Zusätzlich 
+	 * betroffenen Konzerte wird angepasst und in der Datenbank gespeichert. ZusÃ¤tzlich 
 	 * wird ein Kunden-persistent Entity persistiert. 
 	 * @throws KapazitaetErschoepftException 
 	 * @param email Email Adresse des Kunden, von dem die Tickets reserviert 
@@ -86,7 +86,7 @@ public interface BestellvorgangLocal  {
 	
     /**
      * 
-     * @return true falls diesem Bestellvorgang  Bestellungen enthält, false falls nicht
+     * @return true falls diesem Bestellvorgang  Bestellungen enthÃ¤lt, false falls nicht
      */	
 	public boolean hasBestellungen();
 

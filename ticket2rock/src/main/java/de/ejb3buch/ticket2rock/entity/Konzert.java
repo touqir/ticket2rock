@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -46,7 +46,7 @@ import javax.persistence.TemporalType;
 import de.ejb3buch.ticket2rock.exception.KapazitaetErschoepftException;
 
 /**
- * Ein Konzert ist eine Veranstaltung, bei dem ein Interpreten einige seiner Songs vorträgt. Ein Konzert findet zu einem
+ * Ein Konzert ist eine Veranstaltung, bei dem ein Interpreten einige seiner Songs vortrÃ¤gt. Ein Konzert findet zu einem
  * Zeitpunkt an einem Veranstaltungsort statt. Ein Konzert besitzt ein Ticketkontingent.
  */
 
@@ -142,7 +142,7 @@ public class Konzert {
     }
 
     @ManyToOne
-    // Die JoinColumn muss benannt werden, da das Attribut nur "ort" heißt
+    // Die JoinColumn muss benannt werden, da das Attribut nur "ort" heiÃŸt
     @JoinColumn(name = "VERANSTALTUNGSORT_ID")
     public Veranstaltungsort getOrt() {
         return ort;
@@ -151,7 +151,7 @@ public class Konzert {
     public void setOrt(Veranstaltungsort ort) {
         this.ort = ort;
         if (ort != null) {
-            // Das Ticketkontingent wird mit der Kapazität des
+            // Das Ticketkontingent wird mit der KapazitÃ¤t des
             // Veranstaltungsortes initialisiert.
             this.ticketkontingent = ort.getKapazitaet();
         }
@@ -181,19 +181,19 @@ public class Konzert {
     }
 
     // Das Ticketkontingent kann nicht direkt gesetzt werden;
-    // es wird der EInfachheit halber über die Kapazität des
+    // es wird der EInfachheit halber Ã¼ber die KapazitÃ¤t des
     // Veranstaltungsortes bestimmt.
     protected void setTicketkontingent(int ticketkontingent) {
         this.ticketkontingent = ticketkontingent;
     }
 
     /**
-     * Bestellt eine Anzahl von Tickets für dieses Konzert. Prüft die Verfügbarkeit und reduziert das Ticketkontingent
+     * Bestellt eine Anzahl von Tickets fÃ¼r dieses Konzert. PrÃ¼ft die VerfÃ¼gbarkeit und reduziert das Ticketkontingent
      * entsprechend.
      * 
      * @param anzahl die Anzahl der bestellten Tickets
      * @return das verbleibende Ticketkontingent
-     * @throws KapazitaetErschoepftException wenn das Ticketkontingent nicht ausreicht, um die Bestellung auszuführen
+     * @throws KapazitaetErschoepftException wenn das Ticketkontingent nicht ausreicht, um die Bestellung auszufÃ¼hren
      */
     public synchronized int bestelleTickets(int anzahl) throws KapazitaetErschoepftException {
         if (anzahl <= this.ticketkontingent) {
@@ -205,7 +205,7 @@ public class Konzert {
     }
 
     /**
-     * Storniert eine Anzahl von Tickets für dieses Konzert und erhöht das Ticketkontingent entsprechend.
+     * Storniert eine Anzahl von Tickets fÃ¼r dieses Konzert und erhÃ¶ht das Ticketkontingent entsprechend.
      * 
      * @param anzahl die Anzahl der stornierten Tickets
      */
@@ -213,7 +213,7 @@ public class Konzert {
         this.ticketkontingent += anzahl;
         if (this.ort != null && this.ticketkontingent > this.ort.getKapazitaet()) {
             // Das maximale Kontingent ist begrenzt durch die
-            // Kapazität des Veranstaltungsorts.
+            // KapazitÃ¤t des Veranstaltungsorts.
             this.ticketkontingent = this.ort.getKapazitaet();
         }
     }

@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -32,43 +32,43 @@ import de.ejb3buch.ticket2rock.entity.Band;
 public interface BandVerwaltung {
 
     /**
-     * Legt eine Band-Entität in der Persistenzschicht an
+     * Legt eine Band-EntitÃ¤t in der Persistenzschicht an
      * @param band band pojo mit den Attributen der Band
      */
 	public void createBand(Band band);
 	
 	/**
-	 * Selektiert eine Band-Entität mit einen gegebenen Namen
+	 * Selektiert eine Band-EntitÃ¤t mit einen gegebenen Namen
 	 * @param name Name der Band, die selektiert werden soll
 	 * @return Band Objekt, das den bestimmten Namen besitzt.
-	 * Existiert keine Band mit diesem Namen, ist der Rückgabewert null
+	 * Existiert keine Band mit diesem Namen, ist der RÃ¼ckgabewert null
 	 */
 	public Band getBandByName(String name);
 
 	/**
-	 * Aktualisiert eine Band-Entität in der Persistenzschicht
+	 * Aktualisiert eine Band-EntitÃ¤t in der Persistenzschicht
 	 * @param band Band Objekt, das persistiert werden soll
 	 */
 	public void updateBand(Band band);
 
 	/**
-	 * Löscht eine Band-Entität aus der Persistenzschicht
-	 * @param bandId id der zu löschenden Band
+	 * LÃ¶scht eine Band-EntitÃ¤t aus der Persistenzschicht
+	 * @param bandId id der zu lÃ¶schenden Band
 	 */
 	public void deleteBand(Integer bandId);
 
 
 	
 	/**
-	 * selektiert alle Band-Entitäten
-	 * @return Band-Entitäten
+	 * selektiert alle Band-EntitÃ¤ten
+	 * @return Band-EntitÃ¤ten
 	 */
 	public Collection<Band> getBands();
 	
 	/**
-	 * Selektiert eine Band für eine gegebene Id
+	 * Selektiert eine Band fÃ¼r eine gegebene Id
 	 * @param bandId
-	 * @return Band Entität, null fallse keine Band-Entität
+	 * @return Band EntitÃ¤t, null fallse keine Band-EntitÃ¤t
 	 * mit dieser id existiert
 	 */
 	public Band getBandById(Integer bandId);

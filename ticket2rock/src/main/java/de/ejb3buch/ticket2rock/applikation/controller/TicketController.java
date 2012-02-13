@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -112,23 +112,23 @@ public class TicketController implements Serializable {
 	}
 
 	/**
-	 * legt die ausgewählten Konzerttickets in den Einkaufswagen, sofern diese
-	 * noch zur Verfügung stehen. Falls noch kein Einkaufswagen-Objekt vorhanden
-	 * ist, wird dieses über den ServiceLocator allokiert und implizit der
+	 * legt die ausgewÃ¤hlten Konzerttickets in den Einkaufswagen, sofern diese
+	 * noch zur VerfÃ¼gung stehen. Falls noch kein Einkaufswagen-Objekt vorhanden
+	 * ist, wird dieses Ã¼ber den ServiceLocator allokiert und implizit der
 	 * Session zugeordnet. Deshalb sollte das TicketController Bean unbedingt im
 	 * Scope session Kontext sein.
 	 * 
-	 * @return Identifier für den JSF page flow
+	 * @return Identifier fÃ¼r den JSF page flow
 	 */
 	public String bestelleTickets() {
 		bezahlteBestellungen = new ListDataModel();
-		// hole über den ServiceLocator einen Bestellvorgang, falls dies für
+		// hole Ã¼ber den ServiceLocator einen Bestellvorgang, falls dies fÃ¼r
 		bestellvorgang.bestelleTickets(this.konzert, ticketanzahl);
 
 		this.bestellungExistiert = true;
 
-		// Falls das die erste Buchung des Kunden fŸr ein Konzert ist, wird die
-		// Berechnung der zu erwartenden Besucher fŸr ein Konzert angesto§en.
+		// Falls das die erste Buchung des Kunden fÂŸr ein Konzert ist, wird die
+		// Berechnung der zu erwartenden Besucher fÂŸr ein Konzert angestoÂ§en.
 		if (!besucherVorhersage.containsKey(konzert)) {
 			besucherVorhersage.put(konzert, auskunft.schaetzeErwarteteBesucher(konzert.getId()));
 		}
@@ -136,7 +136,7 @@ public class TicketController implements Serializable {
 		// nach einer Bestellung wird die ticketanzahl wieder auf 0 gesetzt, so
 		// dass in der entsprechenden JSF das Eingabefeld nicht den Wert der
 		// vorherigen
-		// Bestellung enthält
+		// Bestellung enthÃ¤lt
 		ticketanzahl = 0;
 		return "reservierungsmeldung";
 	}
@@ -162,9 +162,9 @@ public class TicketController implements Serializable {
 	}
 
 	/**
-	 * Löschen die in der Form selektierte Ticketbestellung
+	 * LÃ¶schen die in der Form selektierte Ticketbestellung
 	 * 
-	 * @return Rückgabewert zur Definition der Folgeseite
+	 * @return RÃ¼ckgabewert zur Definition der Folgeseite
 	 */
 	public String deleteOrder() {
 		Ticketbestellung bestellung = (Ticketbestellung) this.bestellungen.getRowData();
@@ -176,7 +176,7 @@ public class TicketController implements Serializable {
 	/**
 	 * Bezahlung der bestellten Tickets
 	 * 
-	 * @return Rückgabewert zur Definition der Folgeseite
+	 * @return RÃ¼ckgabewert zur Definition der Folgeseite
 	 */
 	public String bezahle() {
 		try {

@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -31,9 +31,9 @@ import org.apache.log4j.Logger;
 import de.ejb3buch.ticket2rock.entity.News;
 
 /**
- * Der NewEntityListener "lauscht" auf neue Entitäten in der ticket2rock-
- * Datenbank. Für bestimmte Objekttypen (z.B. Konzerte) wird ein News- Objekt
- * erzeugt, das wiederum über verschiedene Kanäle publiziert wird (siehe Klasse
+ * Der NewEntityListener "lauscht" auf neue EntitÃ¤ten in der ticket2rock-
+ * Datenbank. FÃ¼r bestimmte Objekttypen (z.B. Konzerte) wird ein News- Objekt
+ * erzeugt, das wiederum Ã¼ber verschiedene KanÃ¤le publiziert wird (siehe Klasse
  * de.ejb3buch.ticket2rock.entity.News).
  */
 

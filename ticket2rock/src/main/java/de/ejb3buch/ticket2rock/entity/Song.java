@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -28,8 +28,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 /**
- * Ein Song ist ein Musikstück, das von einem Interpreten (Musiker oder Band)
- * veröffentlicht wird. Ein Song hat einen Titel. Ferner lässt sich ein Song
+ * Ein Song ist ein MusikstÃ¼ck, das von einem Interpreten (Musiker oder Band)
+ * verÃ¶ffentlicht wird. Ein Song hat einen Titel. Ferner lÃ¤sst sich ein Song
  * einem Musikgenre zuordnen. Ein Song kann Bestandteil eines Albums sein.
  */
 

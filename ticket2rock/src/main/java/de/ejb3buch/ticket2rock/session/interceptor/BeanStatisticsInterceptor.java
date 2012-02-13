@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -40,9 +40,9 @@ public @BeanStatistics @Interceptor class BeanStatisticsInterceptor {
 		beanstats = c;
 	}
 
-	// Lebenszyklus-Interzeptoren und Geschäftsmethoden-Interzeptoren
-	// können in derselben Interzeptor-Klasse definiert werden.
-	// Interzeptoren dürfen keine applikationsspezifischen Exceptions
+	// Lebenszyklus-Interzeptoren und GeschÃ¤ftsmethoden-Interzeptoren
+	// kÃ¶nnen in derselben Interzeptor-Klasse definiert werden.
+	// Interzeptoren dÃ¼rfen keine applikationsspezifischen Exceptions
 	// werfen.
 	@PostConstruct
 	public void onPostConstruct(InvocationContext ctx) throws Exception {

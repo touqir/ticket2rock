@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -34,7 +34,7 @@ import javax.naming.directory.InitialDirContext;
 import org.apache.log4j.Logger;
 
 /**
- * Services für die Administration des Ticket2Rock-Systems 
+ * Services fÃ¼r die Administration des Ticket2Rock-Systems 
  */
 
 @Stateful
@@ -56,7 +56,7 @@ public class AdminBean implements Admin {
 			// Stelle Verbindung zum LDAP-Server her
 			ldapCtx = new InitialDirContext(env);
 		} catch (NamingException ne) {
-			// In Callback-Methoden dürfen keine applikationsspezifischen
+			// In Callback-Methoden dÃ¼rfen keine applikationsspezifischen
 			// Exceptions geworfen werden.
 			// ...und JBoss hat sowieso ein Problem damit :-(
 			// throw new RuntimeException(ne);

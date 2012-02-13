@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -58,7 +58,7 @@ public class ZielobjektBase implements Zielobjekt {
 	public void erzeugeTimer() {
 		Calendar timerCal = GregorianCalendar.getInstance();
 		timerCal.add(Calendar.MILLISECOND, 1);
-		String info = "Deine Zeit läuft ab um "
+		String info = "Deine Zeit lÃ¤uft ab um "
 				+ timerCal.get(Calendar.HOUR_OF_DAY) + " Uhr "
 				+ timerCal.get(Calendar.MINUTE) + " Minuten, "
 				+ timerCal.get(Calendar.SECOND) + " Sekunden und "

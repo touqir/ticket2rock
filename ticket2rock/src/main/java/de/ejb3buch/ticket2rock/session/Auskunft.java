@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -33,9 +33,9 @@ import de.ejb3buch.ticket2rock.entity.Konzert;
 public interface Auskunft {
 
 	/**
-	 * Sucht nach Konzerten anhand übergebener Suchkriterien. Falls ein
+	 * Sucht nach Konzerten anhand Ã¼bergebener Suchkriterien. Falls ein
 	 * Suchkriterion null oder leer ist, wird es nicht bei der Suche
-	 * berücksichtigt
+	 * berÃ¼cksichtigt
 	 * 
 	 * @param ortsname
 	 *            Name des Veranstaltungsortes
@@ -43,7 +43,7 @@ public interface Auskunft {
 	 *            untere Datumsgrenze des Veranstaltungszeitraums
 	 * @param bisDatum
 	 *            obere Datumsgrenze des Veranstaltungszeitraums
-	 * @return Liste von Konzert Entitäten, die anhand der übergebenen Parameter
+	 * @return Liste von Konzert EntitÃ¤ten, die anhand der Ã¼bergebenen Parameter
 	 *         gefunden wurden
 	 */
 	public List<Konzert> sucheKonzerte(String ortsname, Date vonDatum,

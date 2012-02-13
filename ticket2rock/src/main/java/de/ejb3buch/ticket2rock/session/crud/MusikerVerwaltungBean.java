@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -38,7 +38,7 @@ import de.ejb3buch.ticket2rock.entity.Band;
 import de.ejb3buch.ticket2rock.entity.Musiker;
 
 /**
- * Stateless Session Bean zur Verwaltung der Musiker Entitäten.
+ * Stateless Session Bean zur Verwaltung der Musiker EntitÃ¤ten.
  *
  */
 @Stateless
@@ -102,7 +102,7 @@ public class MusikerVerwaltungBean implements MusikerVerwaltungLocal {
 
 		} catch (Exception ex) {
 			logger.error(ex);
-			throw new EJBException("Fehler beim Löschen eines Musikers");
+			throw new EJBException("Fehler beim LÃ¶schen eines Musikers");
 		}
 
 	}

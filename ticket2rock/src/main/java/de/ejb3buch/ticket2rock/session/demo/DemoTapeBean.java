@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -38,7 +38,7 @@ import de.ejb3buch.ticket2rock.entity.Ticketbestellung;
 import de.ejb3buch.ticket2rock.entity.Tournee;
 
 /**
- * DemoTape ist die Testklasse des Ticket2Rock-Systems - die Spielwiese für
+ * DemoTape ist die Testklasse des Ticket2Rock-Systems - die Spielwiese fÃ¼r
  * neugierige EJB3-Forscher.
  */
 

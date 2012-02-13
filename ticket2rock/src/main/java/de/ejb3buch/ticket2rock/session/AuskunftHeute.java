@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -34,7 +34,7 @@ public interface AuskunftHeute {
 	/**
 	 * Liefert alle Konzerte, die am heutigen Tag stattfinden.
 	 * 
-	 * @return Liste der Konzert-EntitŠten, die am heutigen Tag stattfinden.
+	 * @return Liste der Konzert-EntitÂŠten, die am heutigen Tag stattfinden.
 	 */
 	public List<Konzert> sucheTagesaktuelleKonzerte();
 }

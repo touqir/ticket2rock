@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets f¸r
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets f√ºr
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -62,7 +62,7 @@ public class TourneeController implements Serializable {
 	}
 
 	/**
-	 * Hole die Liste aller Tournee EJBs, die anschlieﬂend im DataModel Objekt gesetzt
+	 * Hole die Liste aller Tournee EJBs, die anschlie√üend im DataModel Objekt gesetzt
 	 * wird
 	 * 
 	 * @return DataModel Objekt, das alle Tourneen beinhaltet.

@@ -5,9 +5,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 /**
- * Dieser Driver wird von Cucumber für ein Szenario benutzt und danach
+ * Dieser Driver wird von Cucumber fÃ¼r ein Szenario benutzt und danach
  * geschlossen. Es erbt von {@link EventFiringWebDriver}, da kein Adapter in
- * Selenium zu Verfügung steht.
+ * Selenium zu VerfÃ¼gung steht.
  */
 public class SharedDriver extends EventFiringWebDriver {
 	public SharedDriver() {

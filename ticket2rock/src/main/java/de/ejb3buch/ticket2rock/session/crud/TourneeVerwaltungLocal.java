@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -32,41 +32,41 @@ import de.ejb3buch.ticket2rock.entity.Tournee;
 public interface TourneeVerwaltungLocal {
 
     /**
-     * Legt eine Tournee-Entität in der Persistenzschicht an
+     * Legt eine Tournee-EntitÃ¤t in der Persistenzschicht an
      * @param tournee pojo mit den Attributen der Tournee
      */
 	public void createTournee(Tournee tournee);
 	
 	/**
-	 * Selektiert eine Tournee-Entität mit einen gegebenen Namen
+	 * Selektiert eine Tournee-EntitÃ¤t mit einen gegebenen Namen
 	 * @param name Name der Tournee, die selektiert werden soll
 	 * @return Tournee Objekt, das den bestimmten Namen besitzt.
-	 * Existiert keine Tournee mit diesem Namen, ist der Rückgabewert null
+	 * Existiert keine Tournee mit diesem Namen, ist der RÃ¼ckgabewert null
 	 */
 	public Tournee getTourneeByName(String name);
 
 	/**
-	 * Aktualisiert eine Tournee-Entität in der Persistenzschicht
+	 * Aktualisiert eine Tournee-EntitÃ¤t in der Persistenzschicht
 	 * @param tournee Tournee Objekt, das persistiert werden soll
 	 */
 	public void updateTournee(Tournee tournee);
 
 	/**
-	 * Löscht eine Tournee-Entität aus der Persistenzschicht
-	 * @param tourneeId id der zu löschenden Tournee
+	 * LÃ¶scht eine Tournee-EntitÃ¤t aus der Persistenzschicht
+	 * @param tourneeId id der zu lÃ¶schenden Tournee
 	 */
 	public void deleteTournee(Integer tourneeId);
 
 	/**
-	 * selektiert alle Tournee-Entitäten
-	 * @return Tournee-Entitäten
+	 * selektiert alle Tournee-EntitÃ¤ten
+	 * @return Tournee-EntitÃ¤ten
 	 */
 	public Collection<Tournee> getTourneen();
 	
 	/**
-	 * Selektiert eine Tournee für eine gegebene Id
+	 * Selektiert eine Tournee fÃ¼r eine gegebene Id
 	 * @param tourneeId
-	 * @return Tournee Entität, null fallse keine Tournee-Entität
+	 * @return Tournee EntitÃ¤t, null fallse keine Tournee-EntitÃ¤t
 	 * mit dieser id existiert
 	 */
 	public Tournee getTourneeById(Integer tourneeId);

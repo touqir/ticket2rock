@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -69,25 +69,25 @@ public class EJB3ServiceLocatorBean implements ServiceLocator {
 		try {
 			ctx = new InitialContext();
 			myBandVerwaltung = (BandVerwaltungLocal) ctx.lookup("ticket2rock/BandVerwaltungBean/local");
-			logger.info("Service BandVerwaltungLocal steht zur Verfügung");
+			logger.info("Service BandVerwaltungLocal steht zur VerfÃ¼gung");
 
 			myMusikerVerwaltung = (MusikerVerwaltungLocal) ctx.lookup("ticket2rock/MusikerVerwaltungBean/local");
-			logger.info("Service MusikerVerwaltungLocal steht zur Verfügung");
+			logger.info("Service MusikerVerwaltungLocal steht zur VerfÃ¼gung");
 
 			myTourneeVerwaltung = (TourneeVerwaltungLocal) ctx.lookup("ticket2rock/TourneeVerwaltungBean/local");
-			logger.info("Service TourneeVerwaltungLocal steht zur Verfügung");
+			logger.info("Service TourneeVerwaltungLocal steht zur VerfÃ¼gung");
 
 			myKonzertVerwaltung = (KonzertVerwaltungLocal) ctx.lookup("ticket2rock/KonzertVerwaltungBean/local");
-			logger.info("Service KonzertVerwaltungLocal steht zur Verfügung");
+			logger.info("Service KonzertVerwaltungLocal steht zur VerfÃ¼gung");
 
 			myKundenVerwaltung = (KundenVerwaltungLocal) ctx.lookup("ticket2rock/KundenVerwaltungBean/local");
-			logger.info("Service Kundenverwaltung steht zur Verfügung");
+			logger.info("Service Kundenverwaltung steht zur VerfÃ¼gung");
 
 			myAuskunft = (AuskunftLocal) ctx.lookup("ticket2rock/AuskunftBean/local");
-			logger.info("Service AuskunftLocal steht zur Verfügung");
+			logger.info("Service AuskunftLocal steht zur VerfÃ¼gung");
 
 			myAuskunftCache = (AuskunftHeuteLocal) ctx.lookup("ticket2rock/AuskunftHeuteBean/local");
-			logger.info("Service AuskunftCacheBean steht zur Verfügung");
+			logger.info("Service AuskunftCacheBean steht zur VerfÃ¼gung");
 
 		} catch (Exception e) {
 			logger.error(e);

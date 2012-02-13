@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -80,7 +80,7 @@ public class AuskunftBeanIT {
 	 */
 	@Ignore
 	public void sucheAlleKonzerte() throws Exception {
-		// wir suchen alle Konzerte, daher keine Einschränkung....
+		// wir suchen alle Konzerte, daher keine EinschrÃ¤nkung....
 		List<Konzert> konzerte = alleKonzerte.sucheKonzerte(null, null, null);
 		assertTrue(konzerte.size() > 1);
 	}

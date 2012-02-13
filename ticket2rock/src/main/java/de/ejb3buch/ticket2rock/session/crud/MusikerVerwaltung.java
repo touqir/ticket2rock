@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -32,41 +32,41 @@ import de.ejb3buch.ticket2rock.entity.Musiker;
 public interface MusikerVerwaltung {
 
     /**
-     * Legt eine Musiker-Entität in der Persistenzschicht an
+     * Legt eine Musiker-EntitÃ¤t in der Persistenzschicht an
      * @param musiker Musiker-POJO mit den Attributen der Band
      */
 	public void createMusiker(Musiker musiker);
 	
 	/**
-	 * Selektiert eine Musiker-Entität mit einen gegebenen Namen
+	 * Selektiert eine Musiker-EntitÃ¤t mit einen gegebenen Namen
 	 * @param name Name der Musiker, die selektiert werden soll
 	 * @return Musiker Objekt, das den bestimmten Namen besitzt.
-	 * Existiert kein Musiker mit diesem Namen, ist der Rückgabewert null
+	 * Existiert kein Musiker mit diesem Namen, ist der RÃ¼ckgabewert null
 	 */
 	public Musiker getMusikerByName(String name);
 
 	/**
-	 * Aktualisiert eine Musiker-Entität in der Persistenzschicht
+	 * Aktualisiert eine Musiker-EntitÃ¤t in der Persistenzschicht
 	 * @param Musiker Musiker Objekt, das persistiert werden soll
 	 */
 	public void updateMusiker(Musiker musiker);
 	/**
-	 * Löscht eine Musiker-Entität aus der Persistenzschicht
-	 * @param musiker id des zu löschenden Musikers
+	 * LÃ¶scht eine Musiker-EntitÃ¤t aus der Persistenzschicht
+	 * @param musiker id des zu lÃ¶schenden Musikers
 	 */
 	public void deleteMusiker(Integer musikerId);
 
 	/**
-	 * selektiert alle Musiker-Entitäten
-	 * @return Musiker-Entitäten
+	 * selektiert alle Musiker-EntitÃ¤ten
+	 * @return Musiker-EntitÃ¤ten
 	 */
 	public Collection<Musiker> getMusiker();
 
     
 	/**
-	 * Selektiert einen Musiker für eine gegebene Id
+	 * Selektiert einen Musiker fÃ¼r eine gegebene Id
 	 * @param musikerId
-	 * @return Musiker Entität, null falls kein Musiker-Entität
+	 * @return Musiker EntitÃ¤t, null falls kein Musiker-EntitÃ¤t
 	 * mit dieser id existiert
 	 */
 	public Musiker getMusikerById(Integer musikerId);

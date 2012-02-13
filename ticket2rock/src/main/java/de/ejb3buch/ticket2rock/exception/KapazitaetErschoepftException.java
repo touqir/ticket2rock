@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -27,8 +27,8 @@ import javax.ejb.ApplicationException;
 import de.ejb3buch.ticket2rock.entity.Konzert;
 
 /**
- * Diese Exception wird geworfen, wenn die Kapazität eines Konzerts beim
- * Bestellen von Tickets erschöpft ist.
+ * Diese Exception wird geworfen, wenn die KapazitÃ¤t eines Konzerts beim
+ * Bestellen von Tickets erschÃ¶pft ist.
  */
 @ApplicationException(rollback = true)
 public class KapazitaetErschoepftException extends Exception {
@@ -42,6 +42,6 @@ public class KapazitaetErschoepftException extends Exception {
 				+ konzert.getDatum() + " in " + konzert.getOrt().getName()
 				+ " (" + konzert.getTicketkontingent()
 				+ " Tickets) reicht nicht aus, um die Bestellung ("
-				+ anzahl_bestellungen + " Tickets) auszuführen.");
+				+ anzahl_bestellungen + " Tickets) auszufÃ¼hren.");
 	}
 }

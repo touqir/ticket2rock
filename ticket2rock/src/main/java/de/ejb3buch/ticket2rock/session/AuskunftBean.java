@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -99,8 +99,8 @@ public class AuskunftBean implements Auskunft, AuskunftLocal {
 	public List<Konzert> sucheKonzerte(String ortsName, Date vonDatum,
 			Date bisDatum) {
 
-		// generiere den query String dynamisch abhängig von der
-		// Belegung der Übergabeparameter
+		// generiere den query String dynamisch abhÃ¤ngig von der
+		// Belegung der Ãœbergabeparameter
 		StringBuffer buf = new StringBuffer();
 		buf.append("SELECT k FROM Konzert k ");
 		boolean firstPredicate = true;
@@ -153,7 +153,7 @@ public class AuskunftBean implements Auskunft, AuskunftLocal {
 		Integer result;
 		// Sehr komplexe Berechnung der zu erwartenden Besucher eines Konzert
 		// basierend auf statistischen Werten, die
-		// empirisch Ÿber die gloreichen Jahre der Rockgeschichte hinweg
+		// empirisch ÂŸber die gloreichen Jahre der Rockgeschichte hinweg
 		// ermittelt worden sind ;-)
 		Konzert konzert = konzertVerwaltung
 				.getConcertWithDetailsById(konzertId);

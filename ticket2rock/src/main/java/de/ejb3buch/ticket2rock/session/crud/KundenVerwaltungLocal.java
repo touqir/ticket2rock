@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -30,17 +30,17 @@ import de.ejb3buch.ticket2rock.entity.Kunde;
 public interface KundenVerwaltungLocal {
 
     /**
-     * Legt eine Kunden-Entität in der Persistenzschicht an
+     * Legt eine Kunden-EntitÃ¤t in der Persistenzschicht an
      * @param musiker Kunden-POJO mit den Attributen des anzulegenden
      * Kunden.
      */
 	public void createKunde(Kunde kunde);
 	
 	/**
-	 * Selektiert eine Kunden-Entität mit einer gegebenen Email Adresse
+	 * Selektiert eine Kunden-EntitÃ¤t mit einer gegebenen Email Adresse
 	 * @param email email Adresse
 	 * @return Kunden Objekt, das die bestimmte email Adresse besitzt.
-	 * Existiert kein Kunde mit dieser email Adresse, ist der Rückgabewert null
+	 * Existiert kein Kunde mit dieser email Adresse, ist der RÃ¼ckgabewert null
 	 */
 	public Kunde getKundeByEmail(String email);
 

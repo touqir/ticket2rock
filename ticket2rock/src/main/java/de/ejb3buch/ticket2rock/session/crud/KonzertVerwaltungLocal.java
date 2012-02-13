@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets f¸r
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets f√ºr
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -32,43 +32,43 @@ import de.ejb3buch.ticket2rock.entity.Konzert;
 public interface KonzertVerwaltungLocal {
 
     /**
-     * Legt eine Konzert-Entit‰t in der Persistenzschicht an
+     * Legt eine Konzert-Entit√§t in der Persistenzschicht an
      * @param konzert pojo mit den Attributen des anzulegenden Konzerts
      */
 	public void createConcert(Konzert konzert);
 	
 
 	/**
-	 * Aktualisiert eine Konzert-Entit‰t in der Persistenzschicht
+	 * Aktualisiert eine Konzert-Entit√§t in der Persistenzschicht
 	 * @param konzert Konzert, das persistiert werden soll
 	 */
 	public void updateConcert(Konzert konzert);
 
 	/**
-	 * Lˆscht eine Konzert-Entit‰t aus der Persistenzschicht
-	 * @param konzertId id des zu lˆschenden Konzerts
+	 * L√∂scht eine Konzert-Entit√§t aus der Persistenzschicht
+	 * @param konzertId id des zu l√∂schenden Konzerts
 	 */
 	public void deleteConcert(Integer konzertId);
 
 	
 	/**
-	 * selektiert alle Konzert-Entit‰ten
-	 * @return Konzert-Entit‰ten
+	 * selektiert alle Konzert-Entit√§ten
+	 * @return Konzert-Entit√§ten
 	 */
 	public Collection<Konzert> getConcerts();
 	
 	/**
-	 * Selektiert ein Konzert f¸r eine gegebene Id
+	 * Selektiert ein Konzert f√ºr eine gegebene Id
 	 * @param konzertId
-	 * @return Konzert Entit‰t, null fallse keine Konzert-Entit‰t
+	 * @return Konzert Entit√§t, null fallse keine Konzert-Entit√§t
 	 * mit dieser id existiert
 	 */
 	public Konzert getConcertById(Integer konzertId);
     
 	/**
-	 * Selektiert ein Konzert f¸r eine gegebene Id und l‰dt die Beziehungen f¸r das Konzert.
+	 * Selektiert ein Konzert f√ºr eine gegebene Id und l√§dt die Beziehungen f√ºr das Konzert.
 	 * @param konzertId
-	 * @return Konzert Entit‰t, null fallse keine Konzert-Entit‰t
+	 * @return Konzert Entit√§t, null fallse keine Konzert-Entit√§t
 	 * mit dieser id existiert
 	 */
 	public Konzert getConcertWithDetailsById(Integer konzertId);

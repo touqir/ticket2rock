@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -30,9 +30,9 @@ import javax.ejb.Local;
 public interface BeanStatisticsLocal  extends BeanStatistics{
 
 	// Die folgenden beiden Methoden sind im Remote-Interface
-	// BeanStatisticsRemote nicht verfügbar, da sie nur lokal
+	// BeanStatisticsRemote nicht verfÃ¼gbar, da sie nur lokal
 	// zum Melden von Objektinstanziierungen und Methodenaufrufen
-	// benötigt.
+	// benÃ¶tigt.
 
 	public void reportNewObject(Object object);
 

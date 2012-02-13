@@ -2,7 +2,7 @@ Was ist Ticket2Rock?
 ====================
 
 Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt.verlag).
-Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für Rockkonzerte auf 
+Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r Rockkonzerte auf 
 Basis von EJB 3.1 und JavaServer Faces. Weitere Informationen zur Anwendung finden sich auf der 
 Webseite zum Buch [http://ejb3buch.de].
 
@@ -13,11 +13,11 @@ Wie kann ich Ticket2Rock benutzen?
 Schnellstart
 ------------
 
-Um Ticket2Rock zu kompilieren und auszuführen ist Maven (am Besten in der Version 3) [http://maven.apache.org/download.html]
+Um Ticket2Rock zu kompilieren und auszufÃ¼hren ist Maven (am Besten in der Version 3) [http://maven.apache.org/download.html]
 sowie ein JBoss Applikationsserver [http://download.jboss.org/jbossas/6.1/jboss-as-distribution-6.1.0.Final.zip]
 notwendig.
 
-Um die Anwendung zu bauen und zu deployen müssen sie im Projektverzeichnis also diese Befehle ausführen:
+Um die Anwendung zu bauen und zu deployen mÃ¼ssen sie im Projektverzeichnis also diese Befehle ausfÃ¼hren:
 
 1. 'mvn package'
 2. Unter Linux/Mac 'export JBOSS_HOME=/path/to/jboss-6.1.0.Final' bzw. unter Windows setzen Sie die Variable in der Systemsteuerung.
@@ -34,7 +34,7 @@ JBoss
 Wir haben die Anwendung mit JBoss 6.0.0 und JBoss 6.1.0 Final getestet.
 
 Im JBoss muss eine Queue namens 'queue/ticket2rock' eingerichtet sein, um die Stornierung der 
-Ticketbestellung mittels JMS-Nachricht durchführen zu können. Dafür muss in der entsprechenden 
+Ticketbestellung mittels JMS-Nachricht durchfÃ¼hren zu kÃ¶nnen. DafÃ¼r muss in der entsprechenden 
 Konfigurationsdatei '$JBOSS_HOME/server/default/deploy/hornetq/hornetq-jms.xml' folgende Queue 
 eingetragen werden:
 	
@@ -47,18 +47,18 @@ Bekannte Stolpersteine:
 Umlautfehler in der Anwendung enstehen dadurch, dass die Datei 'import.sql' im Standardencoding 
 der Plattform eingelesen wird. Starten des JBoss mit der Java-Option '-Dfile.encoding=ISO-8859-1' 
 hilft. Die Option ist am besten in der Datei '$JBOSS_HOME/bin/run.conf' (bzw. run.conf.bat) zu
-ergänzen.
+ergÃ¤nzen.
 
 
 Maven
 -----
 
-Für Maven-Neulinge hier die wichtigsten Befehle in der Übersicht:
+FÃ¼r Maven-Neulinge hier die wichtigsten Befehle in der Ãœbersicht:
 
-* 'mvn package' kompiliert die Anwendung, läßt alle Unittests laufen und erstellt das war.
-* 'mvn clean' kaum zu glauben: Löscht alle Buildartefakte! ;)
+* 'mvn package' kompiliert die Anwendung, lÃ¤ÃŸt alle Unittests laufen und erstellt das war.
+* 'mvn clean' kaum zu glauben: LÃ¶scht alle Buildartefakte! ;)
 
-Für die folgenden Befehle muss die Umgebungsvariable JBOSS_HOME gesetzt werden:
+FÃ¼r die folgenden Befehle muss die Umgebungsvariable JBOSS_HOME gesetzt werden:
 
 * 'mvn integration-test' startet die Integrationstests (Vorher muss der JBoss gestartet werden)
 * 'mvn jboss:hard-deploy' deployt die Anwendung.
@@ -68,13 +68,13 @@ Für die folgenden Befehle muss die Umgebungsvariable JBOSS_HOME gesetzt werden:
 IDE
 ---
 
-Das Projekt kann mit Maven gebaut und gestartet werden und läßt sich in alle bekannten IDE's integrieren.
-Netbeans und IntelliJ bringen die Maven-Unterstützung von Haus aus mit. Unter Eclipse läßt sich das 
-m2Eclipse-Plugin über die Update-Site [http://download.eclipse.org/technology/m2e/releases] nachrüsten.
-Dann läßt sich das Projekt als "Maven Project" in die IDE importieren.
+Das Projekt kann mit Maven gebaut und gestartet werden und lÃ¤ÃŸt sich in alle bekannten IDE's integrieren.
+Netbeans und IntelliJ bringen die Maven-UnterstÃ¼tzung von Haus aus mit. Unter Eclipse lÃ¤ÃŸt sich das 
+m2Eclipse-Plugin Ã¼ber die Update-Site [http://download.eclipse.org/technology/m2e/releases] nachrÃ¼sten.
+Dann lÃ¤ÃŸt sich das Projekt als "Maven Project" in die IDE importieren.
 
 Wir empfehlen, vor dem Import das Projekt einmal mit 'mvn package' zu bauen, damit u.a. alle 
-benötigten Bibliotheken erstmalig geladen werden (das geht schneller als über Eclipse).
+benÃ¶tigten Bibliotheken erstmalig geladen werden (das geht schneller als Ã¼ber Eclipse).
 
 
 Sonstiges
@@ -83,10 +83,10 @@ Sonstiges
 Integrationstest
 ----------------
 
-Statt eines Embedded Containers verwenden wir Arquillian [http://www.jboss.org/arquillian] für den
-Integrationstest. Arquillian deployt die Tests auf dem konfigurierten JavaEE-Container und führt 
-diese dort aus. Dieser Ansatz gefällt uns sehr gut, da er den Code auf der Plattform testet, auf der 
-er später auch ausgeführt wird.
+Statt eines Embedded Containers verwenden wir Arquillian [http://www.jboss.org/arquillian] fÃ¼r den
+Integrationstest. Arquillian deployt die Tests auf dem konfigurierten JavaEE-Container und fÃ¼hrt 
+diese dort aus. Dieser Ansatz gefÃ¤llt uns sehr gut, da er den Code auf der Plattform testet, auf der 
+er spÃ¤ter auch ausgefÃ¼hrt wird.
 
 Bekannte Stolpersteine:
 
@@ -97,11 +97,11 @@ Damit alle Tests erfolgreich sind, einfach die Anwendung undeployen.
 Ruby Client
 -----------
 
-Der Ruby Client benötigt eine Bibliothek, die Sie einfach über das Paketmanagement von Ruby installieren können:
+Der Ruby Client benÃ¶tigt eine Bibliothek, die Sie einfach Ã¼ber das Paketmanagement von Ruby installieren kÃ¶nnen:
 
    "gem install soap4r --include-dependencies"
    
-In der aktuellen Ruby Version (1.9.1) führt das zu einem Fehler (die Lösung findet sich hier: 
+In der aktuellen Ruby Version (1.9.1) fÃ¼hrt das zu einem Fehler (die LÃ¶sung findet sich hier: 
 http://railsforum.com/viewtopic.php?id=41231). In der Version 1.8 funktioniert es aber noch.
 
 

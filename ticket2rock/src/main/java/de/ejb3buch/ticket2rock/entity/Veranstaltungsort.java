@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -33,9 +33,9 @@ import javax.persistence.Id;
 import de.ejb3buch.ticket2rock.entity.embedded.GeoKoordinaten;
 
 /**
- * An einen Veranstaltungsort finden kommt es zur Durchführung eines oder
+ * An einen Veranstaltungsort finden kommt es zur DurchfÃ¼hrung eines oder
  * mehrerer Konzerte. Ein Veranstaltungsort besitzt eine Adresse und eine
- * Zuschauerkapazität.
+ * ZuschauerkapazitÃ¤t.
  */
 
 @Entity

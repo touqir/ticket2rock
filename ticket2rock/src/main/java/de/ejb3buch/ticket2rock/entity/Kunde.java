@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -35,7 +35,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.TableGenerator;
 
 /**
- * Ein Kunde kann Konzerttickets bestellen. Er wird derzeit nur über eine
+ * Ein Kunde kann Konzerttickets bestellen. Er wird derzeit nur Ã¼ber eine
  * E-Mail-Adresse identifiziert.
  */
 
@@ -73,7 +73,7 @@ public class Kunde {
 	}
 
 	/**
-	 * fügt eine Liste von Ticketbestellungen den Ticketbestellungen, die diesem
+	 * fÃ¼gt eine Liste von Ticketbestellungen den Ticketbestellungen, die diesem
 	 * Kunden zugeordnet sind hinzu
 	 * 
 	 * @param bestellungen

@@ -1,6 +1,6 @@
 /**
  *  Ticket2Rock ist die Beispielanwendung des Buchs "EJB 3.1 professionell" (dpunkt).
- *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets für
+ *  Es implementiert eine einfache Webanwendung zur Onlinebuchung von Tickets fÃ¼r
  *  Rockkonzerten. 
  *
  *  Copyright (C) 2006-2011
@@ -130,7 +130,7 @@ public class BestellvorgangBean implements Bestellvorgang, BestellvorgangLocal {
 	public Collection<Ticketbestellung> bezahleTickets(String email)
 			throws KapazitaetErschoepftException {
 
-		// suche nach einen Kunden anhand der übergebenen email Adresse
+		// suche nach einen Kunden anhand der Ã¼bergebenen email Adresse
 		Kunde kunde = kundenverwaltung.getKundeByEmail(email);
 		if (kunde == null) {
 			// kunde gibt es nicht --> persistiere neuen Kunden
